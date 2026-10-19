@@ -1,0 +1,159 @@
+{
+  "engine": "real_openai",
+  "model": "deepseek-flash",
+  "status": "passed",
+  "records": [
+    {
+      "input": "算出 12×8，再让表达专家把结果说成一句中文",
+      "result": {
+        "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+        "status": "succeeded",
+        "output": "12×8 的结果是 **96**。\n\n表达专家给出的中文句子是：\n\n> 12乘以8的结果是96。",
+        "usage": {
+          "requests": 4,
+          "input_tokens": 1809,
+          "output_tokens": 256,
+          "complete": true
+        },
+        "error": null
+      }
+    },
+    {
+      "input": "刚才结果是多少？",
+      "result": {
+        "run_id": "98844d59-83d9-489f-a915-4a7400b4a57b",
+        "status": "succeeded",
+        "output": "刚才的结果是 **96**。\n\n表达专家给出的句子是：\n\n> 12乘以8的结果是96。",
+        "usage": {
+          "requests": 1,
+          "input_tokens": 508,
+          "output_tokens": 222,
+          "complete": true
+        },
+        "error": null
+      }
+    }
+  ],
+  "events": [
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "started",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_oIfWqTF74dUrvtudJ4EG6665",
+      "child_run_id": null,
+      "phase": "tool",
+      "status": "started",
+      "name": "multiply",
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_oIfWqTF74dUrvtudJ4EG6665",
+      "child_run_id": null,
+      "phase": "tool",
+      "status": "completed",
+      "name": "multiply",
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_e71rlESol88Sx2oZjUyb9920",
+      "child_run_id": null,
+      "phase": "tool",
+      "status": "started",
+      "name": "delegate",
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_e71rlESol88Sx2oZjUyb9920",
+      "child_run_id": "b50ab5ab-17c3-499f-8a86-125cb3de9cfc",
+      "phase": "delegate",
+      "status": "started",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "b50ab5ab-17c3-499f-8a86-125cb3de9cfc",
+      "parent_run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "started",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "b50ab5ab-17c3-499f-8a86-125cb3de9cfc",
+      "parent_run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "completed",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_e71rlESol88Sx2oZjUyb9920",
+      "child_run_id": "b50ab5ab-17c3-499f-8a86-125cb3de9cfc",
+      "phase": "delegate",
+      "status": "completed",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": "call_00_e71rlESol88Sx2oZjUyb9920",
+      "child_run_id": null,
+      "phase": "tool",
+      "status": "completed",
+      "name": "delegate",
+      "error": null
+    },
+    {
+      "run_id": "0917b836-56f9-460a-8cba-92ad0d91f5b4",
+      "parent_run_id": null,
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "completed",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "98844d59-83d9-489f-a915-4a7400b4a57b",
+      "parent_run_id": null,
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "started",
+      "name": null,
+      "error": null
+    },
+    {
+      "run_id": "98844d59-83d9-489f-a915-4a7400b4a57b",
+      "parent_run_id": null,
+      "tool_call_id": null,
+      "child_run_id": null,
+      "phase": "run",
+      "status": "completed",
+      "name": null,
+      "error": null
+    }
+  ]
+}

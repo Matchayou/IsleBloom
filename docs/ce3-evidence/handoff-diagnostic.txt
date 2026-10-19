@@ -1,0 +1,50 @@
+DELIVER 4540368416 [] 179
+DELIVER 4540625888 ['c08ad1a7faa681115bb6b9af0f4abb25c7218027af868012515dc00a2159355e'] 947
+F
+=================================== FAILURES ===================================
+___ test_report_handoff_requires_manager_read_and_fixed_authorization[True] ____
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x10927b680>, <agent_core.context.scopes.ScopeService object...jectService object at 0x10a71b950>, <agent_core.collaboration.service.CollaborationService object at 0x10a74b6b0>, ...)
+grant = True
+
+    @pytest.mark.parametrize('grant', [True, False])
+    async def test_report_handoff_requires_manager_read_and_fixed_authorization(controlled, grant):
+        _, _, _, tasks, _, c, provider = controlled
+        node, ref, _ = await seed(controlled)
+        upstream = c.delegate_task(command_id=uuid4().hex, node_id=node.id, expert_id='expert_search',
+            task_instruction='Initial report', delivery_requirements='Preserve uncertainty', resource_refs=(ref,))
+        provider.plans.append([answer({'report': 'CE2_PEER_REPORT_MARKER; count 7, unknown market size.'})])
+        source = (await c.execute(upstream.command_id))['receipts'][0]
+        downstream = c.delegate_task(command_id=uuid4().hex, node_id=node.id, expert_id='expert_synthesize',
+            task_instruction='Ask for the peer report', delivery_requirements='Keep its review status', resource_refs=(ref,))
+        observed = []
+        async def ask_after_denial(kwargs):
+            text = json.dumps(kwargs['input'])
+            assert 'authorization_required' in text and 'CE2_PEER_REPORT_MARKER' not in text
+            return call('request_manager_information', question='May I read the peer draft?', progress='No authorized peer body yet.',
+                        requested_result_ids=[source.result_id])
+        async def inspect_grant(kwargs):
+            text = json.dumps(kwargs['input'])
+            assert 'CE2_PEER_REPORT_MARKER' in text and 'pending_review' in text
+            observed.append(True)
+            return answer({'report': 'Compared authorized draft; still pending independent review.'})
+        provider.plans.append([
+            call('read_context', result_ids=[source.result_id]), ask_after_denial,
+            call('read_context', result_ids=[source.result_id]), inspect_grant])
+        manager_plan = [answer({'available': True, 'answer': 'Read this fixed draft, pending review.',
+            'result_ids': [source.result_id]})]
+        if grant:
+            manager_plan.insert(0, call('read_information', result_ids=[source.result_id]))
+        provider.plans.append(manager_plan)
+        result = await c.execute(downstream.command_id)
+>       assert result['intent'].status == ('completed' if grant else 'failed'), result['intent']
+E       AssertionError: DispatchIntent(command_id='0a32efc6385b4f68b54fb7724d104069', fingerprint='124db43f84da1b14b1210514e363f2800b5ea123580...attempt=0, resume_status='pending', resume_error=None, status='failed', error='Expert run failed: Tool handler failed')
+E       assert 'failed' == 'completed'
+E         
+E         - completed
+E         + failed
+
+tests/test_controlled_collaboration.py:229: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_collaboration.py::test_report_handoff_requires_manager_read_and_fixed_authorization[True]
+1 failed, 15 deselected in 1.79s

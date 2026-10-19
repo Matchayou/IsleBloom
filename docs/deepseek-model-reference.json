@@ -1,0 +1,49 @@
+{
+  "checked_on": "2026-10-02",
+  "provider": "DeepSeek",
+  "openai_base_url": "https://api.deepseek.com",
+  "anthropic_base_url": "https://api.deepseek.com/anthropic",
+  "sources": {
+    "models_and_pricing": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "model_metadata": "https://api-docs.deepseek.com/api/list-models/",
+    "flash_release": "https://api-docs.deepseek.com/news/news260910/"
+  },
+  "currency": "USD",
+  "prices_per_million_tokens": true,
+  "pricing_note": "Use peak cache-miss input and peak output rates for conservative admission; actual billing depends on time and cache hits.",
+  "models": [
+    {
+      "id": "deepseek-flash",
+      "display_version": "DeepSeek-V4.1-Flash",
+      "context_tokens": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": ["text", "image"],
+      "output_modalities": ["text"],
+      "json_output": true,
+      "tool_calls": true,
+      "responses_api": true,
+      "reasoning_effort": ["low", "high", "max"],
+      "pricing": {
+        "peak": {"input_cache_hit": 0.006, "input_cache_miss": 0.3, "output": 1.2},
+        "off_peak": {"input_cache_hit": 0.003, "input_cache_miss": 0.15, "output": 0.6}
+      }
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "display_version": "DeepSeek-V4-Pro-0813",
+      "context_tokens": 1048576,
+      "max_output_tokens": 393216,
+      "input_modalities": ["text"],
+      "output_modalities": ["text"],
+      "json_output": true,
+      "tool_calls": true,
+      "responses_api": true,
+      "reasoning_effort": ["low", "high", "max"],
+      "pricing": {
+        "peak": {"input_cache_hit": 0.044, "input_cache_miss": 1.32, "output": 3.96},
+        "off_peak": {"input_cache_hit": 0.022, "input_cache_miss": 0.66, "output": 1.98}
+      }
+    }
+  ],
+  "routing_status": "Model capability order for this research workload is not established; do not assign RouteLLM strong/weak roles from price or model name alone."
+}

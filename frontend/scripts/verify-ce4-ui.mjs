@@ -1,0 +1,57 @@
+import {chromium,expect} from '@playwright/test';
+import {fileURLToPath} from 'node:url';
+import {readFile,writeFile} from 'node:fs/promises';
+const root=new URL('../../',import.meta.url);
+const fixture=JSON.parse(await readFile(new URL('.ce4/20261007/ui/cases.json',root),'utf8'));
+const output=new URL('docs/ce4-evidence/',root);
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1050}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const results=[];
+async function open(name){
+ await page.goto('http://127.0.0.1:8794/');
+ await page.evaluate(()=>localStorage.clear());
+ await page.reload();
+ await expect(page.getByRole('heading',{name:'CE4 浏览器验收',exact:true})).toBeVisible();
+ await page.locator('.react-flow__node').filter({hasText:'CE4 UI '+name}).click();
+ await expect(page.getByRole('region',{name:'专家对话'})).toBeVisible();
+}
+try{
+ await open('完整报告');
+ await expect(page.getByText('已保存待复核',{exact:false}).first()).toBeVisible();
+ await expect(page.getByText('全文末尾标记 CE4_FULL_END',{exact:false})).toHaveCount(0);
+ await page.getByRole('button',{name:'查看完整报告',exact:true}).click();
+ await expect(page.getByText('全文末尾标记 CE4_FULL_END',{exact:false})).toBeVisible();
+ await page.getByText('固定版本与完整性',{exact:true}).click();
+ await expect(page.getByText(fixture.cases['完整报告'].receipt.artifact.sha256,{exact:true})).toBeVisible();
+ await page.screenshot({path:fileURLToPath(new URL('browser-full-report.png',output)),fullPage:true});
+ results.push('pending brief opens exact complete artifact and hash');
+ await open('格式失败');
+ await expect(page.getByRole('button',{name:'查看完整报告',exact:true})).toHaveCount(0);
+ await page.getByRole('button',{name:'任务与执行',exact:true}).click();
+ await expect(page.getByRole('dialog').getByText('需返工',{exact:false}).first()).toBeVisible();
+ await expect(page.getByRole('button',{name:'正式采用已复核结果'})).toHaveCount(0);
+ results.push('failed schema has no artifact or adoption control');
+ const get=await page.request.get(`http://127.0.0.1:8794/api/task_activity?research_id=${fixture.research_id}`);
+ const activities=await get.json();
+ const pending=activities.find(a=>a.spec.id===fixture.cases['可复核报告'].task_id);
+ const receipt=fixture.cases['可复核报告'].receipt;
+ const findings=Object.fromEntries(pending.spec.acceptance.map(i=>[i.number,{status:'passed',evidence:'Synthetic browser fixture checks only; not a real research judgement.'}]));
+ let response=await page.request.post('http://127.0.0.1:8794/api/task_review',{data:{result_id:receipt.result_id,reviewer:'CE4 synthetic UI validator',findings}});
+ expect(response.status()).toBe(200);
+ await open('可复核报告');await page.getByRole('button',{name:'任务与执行',exact:true}).click();
+ await expect(page.getByRole('button',{name:'正式采用已复核结果',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'正式采用已复核结果',exact:true}).click();
+ await expect(page.getByRole('button',{name:'任务与执行',exact:true})).toBeVisible();
+ await expect(page.getByRole('dialog')).toHaveCount(0);
+ await page.getByRole('button',{name:'任务与执行',exact:true}).click();
+ await expect(page.getByRole('dialog').getByText('已采用',{exact:true})).toBeVisible();
+ results.push('independent review and explicit adoption remain separate actions');
+ await page.screenshot({path:fileURLToPath(new URL('browser-adopted.png',output)),fullPage:true});
+ await open('正在收尾');
+ await expect(page.getByText('分析任务：正在收尾',{exact:false})).toBeVisible();
+ results.push('active finalization displays finalizing status');
+ expect(errors).toEqual([]);
+ await writeFile(new URL('browser.json',output),JSON.stringify({status:'passed',synthetic:true,checks:results,page_errors:errors},null,2));
+ console.log(JSON.stringify({status:'passed',checks:results}));
+}catch(error){await page.screenshot({path:fileURLToPath(new URL('browser-failure.png',output)),fullPage:true});throw error}finally{await browser.close()}

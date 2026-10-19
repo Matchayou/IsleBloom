@@ -1,0 +1,26 @@
+{
+  "sdk": "0.22.2",
+  "public_apis": [
+    "FunctionTool.needs_approval",
+    "RunResult.to_state",
+    "RunState.to_json",
+    "RunState.from_json",
+    "RunState.get_interruptions",
+    "RunState.approve",
+    "Runner.run"
+  ],
+  "checks": {
+    "before_tool_boundary": true,
+    "json_disk_round_trip": true,
+    "fresh_agent_restore": true,
+    "first_model_not_repeated": true,
+    "tool_after_resume_once": true,
+    "completed_state_repeats_model": true
+  },
+  "counts": {
+    "model": 3,
+    "tool": 1
+  },
+  "explicit_nullable_tool_field": true,
+  "scope": "Simulated model; SDK state proof, not process-crash or external-model acceptance."
+}

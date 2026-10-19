@@ -1,0 +1,2536 @@
+{
+  "step-4-1": {
+    "title": "保存用户消息",
+    "detail": "chat_send · message_id 幂等",
+    "chapter": 4,
+    "functions": [
+      "ChatService.send"
+    ],
+    "input": "node_id、content、expected_revision、message_id",
+    "output": "新增或已存在的 ChatThread",
+    "role": "把用户输入先持久化，网络重投不会产生重复消息。",
+    "related": [
+      5,
+      20
+    ]
+  },
+  "step-4-2": {
+    "title": "准入回复命令",
+    "detail": "chat_reply · 冻结 revision",
+    "chapter": 4,
+    "functions": [
+      "ChatReplies.start",
+      "ChatReplies._start"
+    ],
+    "input": "node_id、command_id、expected_revision",
+    "output": "固定 NodeCommand 与后台回复任务",
+    "role": "以服务端 revision 准入回复，重投复用同一命令。",
+    "related": [
+      5,
+      6
+    ]
+  },
+  "step-4-3": {
+    "title": "异步执行研究",
+    "detail": "ResearchService.submit",
+    "chapter": 4,
+    "functions": [
+      "ResearchService.submit"
+    ],
+    "input": "NodeCommand(kind=chat_reply)",
+    "output": "运行绑定与已保存命令状态",
+    "role": "在节点锁内准备输入并将计算交给执行器。",
+    "related": [
+      5,
+      11
+    ]
+  },
+  "step-4-4": {
+    "title": "受控模型请求",
+    "detail": "Broker 校验与计量",
+    "chapter": 4,
+    "functions": [
+      "Broker.handle"
+    ],
+    "input": "model Frame、冻结 AgentSpec、输入与预算",
+    "output": "ModelResponse JSON 与 usage/操作回执",
+    "role": "在真正请求 provider 前验证能力、预算和输入，阻止未获准操作。",
+    "related": [
+      6,
+      7,
+      20
+    ]
+  },
+  "step-4-5": {
+    "title": "推送正文预览",
+    "detail": "SSE 累计正文，支持重连",
+    "chapter": 4,
+    "functions": [
+      "ChatReplies.stream",
+      "controlled/streaming.py::stream_model"
+    ],
+    "input": "command_id、node_id；provider 流式事件",
+    "output": "SSE 正文快照、phase、执行状态",
+    "role": "正文只是临时预览；SSE 断线重连复用既有执行。",
+    "related": [
+      7,
+      20,
+      23
+    ]
+  },
+  "step-4-6": {
+    "title": "保存正式回复",
+    "detail": "Commit 后读取完整结果",
+    "chapter": 4,
+    "functions": [
+      "ResearchLedger.commit"
+    ],
+    "input": "Commit、RunResult、NodeRun",
+    "output": "NodeResultVersion、Evidence 与 assistant 消息",
+    "role": "跨正式保存边界后才把回答作为已完成回复展示。",
+    "related": [
+      5,
+      19,
+      20
+    ]
+  },
+  "step-5-1": {
+    "title": "接受节点命令",
+    "detail": "command_id 与 revision 检查",
+    "chapter": 5,
+    "functions": [
+      "ResearchService._accept"
+    ],
+    "input": "NodeCommand、expected_revision",
+    "output": "CommandRecord 和 fresh 标记",
+    "role": "幂等接收业务命令，并校验并发修改。",
+    "related": [
+      4,
+      20
+    ]
+  },
+  "step-5-2": {
+    "title": "选择获准输入",
+    "detail": "资料、历史与上游结果",
+    "chapter": 5,
+    "functions": [
+      "ResearchService._configure_scope",
+      "ResearchService.result_input"
+    ],
+    "input": "节点、ResourceRef 集合、result_ids",
+    "output": "可用 scope、依赖资料与 ResultMount",
+    "role": "显式选择本轮材料；使用上游结果同时保留其来源依赖。",
+    "related": [
+      10,
+      11,
+      19
+    ]
+  },
+  "step-5-3": {
+    "title": "冻结运行快照",
+    "detail": "ContextSnapshot + NodeRun",
+    "chapter": 5,
+    "functions": [
+      "ResearchService._prepare",
+      "ContextBuilder.build"
+    ],
+    "input": "CommandRecord、目标、聊天历史和上游结果",
+    "output": "NodeRun、ContextSnapshot、PreparedInput",
+    "role": "冻结指令、输入和 chat revision，使恢复不能重拼不同请求。",
+    "related": [
+      10,
+      11,
+      20
+    ]
+  },
+  "step-5-4": {
+    "title": "组装执行器",
+    "detail": "AgentSpec、工具与 guards",
+    "chapter": 5,
+    "functions": [
+      "app/research_execution.py::build_execution"
+    ],
+    "input": "database、scopes、节点 bindings、ResearchService",
+    "output": "ResearchExecutor 与 AgentCatalog",
+    "role": "把研究职责转换成 AgentSpec、工具和执行/提交守卫。",
+    "related": [
+      6,
+      7,
+      8
+    ]
+  },
+  "step-5-5": {
+    "title": "完成受控运行",
+    "detail": "Core → ControlledEngine → SDK",
+    "chapter": 5,
+    "functions": [
+      "CoreRunner.execute",
+      "ControlledEngine.execute"
+    ],
+    "input": "RunRequest、AgentSpec、已批准工具",
+    "output": "RunResult、usage、输出修复记录",
+    "role": "在授权和预算之内由 SDK 完成模型与工具循环。",
+    "related": [
+      6,
+      7
+    ]
+  },
+  "step-5-6": {
+    "title": "事务提交结果",
+    "detail": "报告、证据与消息同步保存",
+    "chapter": 5,
+    "functions": [
+      "ResearchLedger.commit"
+    ],
+    "input": "Commit、已校验报告和证据",
+    "output": "正式结果版本、消息和通知消费记录",
+    "role": "保证运行结果和相关业务交付同事务保存。",
+    "related": [
+      19,
+      20,
+      14
+    ]
+  },
+  "step-6-1": {
+    "title": "验证固定准入",
+    "detail": "输入、模型、权限 generation",
+    "chapter": 6,
+    "functions": [
+      "ControlledEngine.binding"
+    ],
+    "input": "RunRequest 与已保存 NodeRun/TaskRun 或辅助 admission",
+    "output": "固定 identity、task_spec、workspace_id",
+    "role": "核对请求、任务版本、模型和授权 generation，阻止自行声称准入。",
+    "related": [
+      10,
+      13,
+      20
+    ]
+  },
+  "step-6-2": {
+    "title": "取得工作区 writer",
+    "detail": "token / epoch 防旧执行者发布",
+    "chapter": 6,
+    "functions": [
+      "ControlledLedger.acquire"
+    ],
+    "input": "workspace_id、frozen binding、limits、process_id",
+    "output": "writer token、递增 epoch、持久 deadline",
+    "role": "建立唯一写入身份，恢复时保留原计数和 deadline。",
+    "related": [
+      20
+    ]
+  },
+  "step-6-3": {
+    "title": "启动 SDK 运行",
+    "detail": "可信 Channel 包装调用",
+    "chapter": 6,
+    "functions": [
+      "controlled/runner.py::run",
+      "OpenAIEngine.execute"
+    ],
+    "input": "request、spec、tools、Workspace、Broker、Checkpoints",
+    "output": "SDK 执行结果，经 result 操作确认",
+    "role": "复用 SDK 循环，同时强制所有调用经过 Channel/Broker。",
+    "related": [
+      7,
+      8,
+      20
+    ]
+  },
+  "step-6-4": {
+    "title": "调用前预留预算",
+    "detail": "model / tool / private / result",
+    "chapter": 6,
+    "functions": [
+      "Broker.handle",
+      "ControlledLedger.reserve"
+    ],
+    "input": "Frame、limits、writer token 与 epoch",
+    "output": "unconfirmed 操作记录和递增预算计数",
+    "role": "副作用发生前先登记操作身份和预算；未知完成态不能偷偷抹掉。",
+    "related": [
+      8,
+      20
+    ]
+  },
+  "step-6-5": {
+    "title": "确认操作回执",
+    "detail": "响应工件、usage、checkpoint",
+    "chapter": 6,
+    "functions": [
+      "Checkpoints.complete",
+      "ControlledLedger.settle"
+    ],
+    "input": "Frame、完整响应、usage、代码快照",
+    "output": "response artifact 与 confirmed 回执",
+    "role": "先保存响应工件，再事务发布引用与用量，最后交给 SDK。",
+    "related": [
+      20,
+      21
+    ]
+  },
+  "step-6-6": {
+    "title": "收尾并再校验",
+    "detail": "释放 writer；交外层提交",
+    "chapter": 6,
+    "functions": [
+      "ControlledEngine.execute",
+      "ProgressPolicy.finish",
+      "ControlledLedger.release"
+    ],
+    "input": "RunResult、当前 binding、writer token/epoch",
+    "output": "结束 phase、释放 writer、返回结果",
+    "role": "运行结束仍重验身份；外层 ExecutionService 另负责业务发布。",
+    "related": [
+      7,
+      20
+    ]
+  },
+  "step-7-1": {
+    "title": "查找 AgentSpec",
+    "detail": "检查 catalog 与 depth",
+    "chapter": 7,
+    "functions": [
+      "AgentCatalog.get",
+      "CoreRunner.execute"
+    ],
+    "input": "agent_id、depth、RunLimits",
+    "output": "AgentSpec 或 unknown_agent/depth_limit",
+    "role": "选择注册角色并限制委派深度，避免运行未登记 agent。",
+    "related": [
+      6,
+      13
+    ]
+  },
+  "step-7-2": {
+    "title": "建立工具 invoke",
+    "detail": "schema、call_id、次数守卫",
+    "chapter": 7,
+    "functions": [
+      "CoreRunner.execute"
+    ],
+    "input": "工具 name、call_id、JSON arguments",
+    "output": "invoke 闭包；ToolResult 或错误",
+    "role": "按名称、参数类型、调用次数和 call_id 去重守卫 handler。",
+    "related": [
+      8
+    ]
+  },
+  "step-7-3": {
+    "title": "构建 SDK Agent",
+    "detail": "指令、工具、输出 schema",
+    "chapter": 7,
+    "functions": [
+      "OpenAIEngine.execute"
+    ],
+    "input": "AgentSpec、ToolBinding、PreparedInput",
+    "output": "SDK Agent、初始或恢复 RunState",
+    "role": "适配自有 contracts 到 SDK，配置工具可见性及输出 schema。",
+    "related": [
+      8,
+      11,
+      20
+    ]
+  },
+  "step-7-4": {
+    "title": "模型 / 工具循环",
+    "detail": "Runner.run 经 BrokerModel",
+    "chapter": 7,
+    "functions": [
+      "OpenAIEngine.execute",
+      "BrokerModel.get_response"
+    ],
+    "input": "SDK history、启用工具、投影输入",
+    "output": "模型响应、工具结果和更新的 SDK history",
+    "role": "SDK 决定下一轮；真实模型请求仍经 Broker，不走远端 conversation。",
+    "related": [
+      6,
+      8,
+      11
+    ]
+  },
+  "step-7-5": {
+    "title": "校验最终输出",
+    "detail": "有限纠错时关闭调查工具",
+    "chapter": 7,
+    "functions": [
+      "OpenAIEngine.execute",
+      "RepairableOutputSchema.validate_json"
+    ],
+    "input": "最终 JSON/报告、schema、validate_output",
+    "output": "有效输出或 OutputRepair/明确失败",
+    "role": "关闭调查工具进行有限格式或证据修复，共用剩余预算。",
+    "related": [
+      19,
+      6
+    ]
+  },
+  "step-7-6": {
+    "title": "返回标准结果",
+    "detail": "succeeded / failed / cancelled",
+    "chapter": 7,
+    "functions": [
+      "CoreRunner.execute",
+      "OpenAIEngine.execute"
+    ],
+    "input": "已校验 output、usage、错误/取消状态",
+    "output": "标准 RunResult",
+    "role": "统一运行结果契约，业务是否已保存由外层提交决定。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "step-8-1": {
+    "title": "选择工具组",
+    "detail": "sources / experts / manage / reports",
+    "chapter": 8,
+    "functions": [
+      "collaboration/tools.py::manager_bindings",
+      "ToolRouter.observe"
+    ],
+    "input": "SelectTaskTools.profile、工具返回的 tool_profile",
+    "output": "当前 ToolRouter.profile",
+    "role": "按明确工具调用加载一组能力，不用额外模型或关键词分类器。",
+    "related": [
+      14,
+      7
+    ]
+  },
+  "step-8-2": {
+    "title": "暴露获准 schema",
+    "detail": "profile 不扩大实际权限",
+    "chapter": 8,
+    "functions": [
+      "ToolRouter.enabled",
+      "OpenAIEngine.execute"
+    ],
+    "input": "profile、tool name、冻结 ToolBinding 集合",
+    "output": "本轮获启用 FunctionTool 和 schema",
+    "role": "工具加载只控制可见性，入口与 scope 仍限制真实权限。",
+    "related": [
+      6,
+      10
+    ]
+  },
+  "step-8-3": {
+    "title": "产生工具调用",
+    "detail": "SDK FunctionTool",
+    "chapter": 8,
+    "functions": [
+      "OpenAIEngine.execute"
+    ],
+    "input": "SDK function_call 的 name/call_id/arguments",
+    "output": "转交 invoke 的类型化工具请求",
+    "role": "把 SDK 调用协议接到可信 Channel，不让 provider 直接执行 handler。",
+    "related": [
+      7,
+      6
+    ]
+  },
+  "step-8-4": {
+    "title": "预留并检查操作",
+    "detail": "稳定 ID、预算与入口集合",
+    "chapter": 8,
+    "functions": [
+      "Channel.call",
+      "Checkpoints.operation",
+      "Broker.handle"
+    ],
+    "input": "tool Frame、稳定 operation ID、writer/预算",
+    "output": "已确认响应复用或新 reservation",
+    "role": "在重启后复用确认回执；未知副作用停止。",
+    "related": [
+      20,
+      6
+    ]
+  },
+  "step-8-5": {
+    "title": "校验后执行 handler",
+    "detail": "Pydantic + scope / task 守卫",
+    "chapter": 8,
+    "functions": [
+      "CoreRunner.execute",
+      "ScopedTool.require"
+    ],
+    "input": "name、JSON 参数、绑定 scope 和业务身份",
+    "output": "handler 的 ToolResult 或 invalid_input/失败",
+    "role": "验证 schema 与实际授权后才运行具体能力。",
+    "related": [
+      10,
+      9
+    ]
+  },
+  "step-8-6": {
+    "title": "落盘结果再返回",
+    "detail": "回执可在重启后复用",
+    "chapter": 8,
+    "functions": [
+      "Checkpoints.complete",
+      "ContextArtifacts.deliver"
+    ],
+    "input": "完整工具结果与 usage/代码快照",
+    "output": "可读结果页/工件、confirmed 回执",
+    "role": "大型内容外置但保留真实首屏，响应确认后才交 SDK。",
+    "related": [
+      11,
+      20
+    ]
+  },
+  "step-9-1": {
+    "title": "上传或发现来源",
+    "detail": "discovery 只代表搜索发现",
+    "chapter": 9,
+    "functions": [
+      "ScopeService.ingest",
+      "SearchService.discover"
+    ],
+    "input": "上传 bytes 或 research_id/query",
+    "output": "上传 ref 或 discovery 候选 refs",
+    "role": "导入原文；搜索发现摘要只供选择，不能直接充当正文证据。",
+    "related": [
+      10,
+      19
+    ]
+  },
+  "step-9-2": {
+    "title": "保存原始内容",
+    "detail": "blob hash + SourceSnapshot",
+    "chapter": 9,
+    "functions": [
+      "ResourceService.ingest"
+    ],
+    "input": "owner、content、media_type、来源/依赖",
+    "output": "Blob hash、SourceSnapshot、ResourceIngestion",
+    "role": "按内容保存原始字节，访问关系与缓存内容分开。",
+    "related": [
+      10,
+      20
+    ]
+  },
+  "step-9-3": {
+    "title": "登记解析任务",
+    "detail": "parser key 与缓存版本",
+    "chapter": 9,
+    "functions": [
+      "ResourceService.ingest"
+    ],
+    "input": "snapshot、parser key、media type",
+    "output": "pending/processing ParseResult 或缓存版本",
+    "role": "登记解析身份与进度，相同内容可复用解析但不复用授权。",
+    "related": [
+      20
+    ]
+  },
+  "step-9-4": {
+    "title": "解析 / OCR",
+    "detail": "Docling、Tesseract、定位片段",
+    "chapter": 9,
+    "functions": [
+      "DocumentParser.parse"
+    ],
+    "input": "原始文件 bytes、media_type、progress 回调",
+    "output": "ParsedContent 的 fragments/issues/ocr_pages",
+    "role": "解析正文、表格和扫描页，保留位置与失败原因。",
+    "related": [
+      19,
+      11
+    ]
+  },
+  "step-9-5": {
+    "title": "返回固定 body ref",
+    "detail": "resource / snapshot / parse",
+    "chapter": 9,
+    "functions": [
+      "ResourceService.ingest",
+      "SearchService.fetch"
+    ],
+    "input": "ParseResult 或获准 discovery ref",
+    "output": "固定正文 ResourceRef(resource/snapshot/parse)",
+    "role": "正文取得新 body ref；解析失败/partial 必须显式保留。",
+    "related": [
+      10,
+      19
+    ]
+  },
+  "step-9-6": {
+    "title": "读取并生成证据",
+    "detail": "search_source → claims",
+    "chapter": 9,
+    "functions": [
+      "ScopedTool.search_binding",
+      "ScopedTool.read_binding",
+      "EvidenceService.prepare"
+    ],
+    "input": "完整 body ref、query/location、claims",
+    "output": "定位摘录与正式 EvidenceBundle",
+    "role": "让报告事实关联实际已保存、获授权的原文片段。",
+    "related": [
+      11,
+      19
+    ]
+  },
+  "step-10-1": {
+    "title": "创建空 scope",
+    "detail": "无默认全局资料授权",
+    "chapter": 10,
+    "functions": [
+      "ScopeService.create"
+    ],
+    "input": "owner、工具和大小限制；无初始 grants",
+    "output": "新的空 RunScope",
+    "role": "授权由程序明确建立，不隐式读全局资料库。",
+    "related": [
+      9,
+      11
+    ]
+  },
+  "step-10-2": {
+    "title": "从来源获得 grant",
+    "detail": "同 owner，固定版本",
+    "chapter": 10,
+    "functions": [
+      "ScopeService.grant"
+    ],
+    "input": "target/source scope、固定 ResourceRef",
+    "output": "含新增 grant 的新 scope version",
+    "role": "确认来源有权读取、owner 相同，并承接资料依赖。",
+    "related": [
+      9
+    ]
+  },
+  "step-10-3": {
+    "title": "显式选择资料",
+    "detail": "allowed / inherited + 依赖闭包",
+    "chapter": 10,
+    "functions": [
+      "ScopeService.select"
+    ],
+    "input": "refs、inherited、获准 web_urls",
+    "output": "更新 allowed/inherited 的 RunScope",
+    "role": "选择本轮输入，不扩大原授权；依赖资料必须在选择闭包内。",
+    "related": [
+      11
+    ]
+  },
+  "step-10-4": {
+    "title": "执行前校验",
+    "detail": "快照与 scope generation",
+    "chapter": 10,
+    "functions": [
+      "ScopeExecutionGate.scope_for",
+      "ControlledEngine.binding"
+    ],
+    "input": "RunRequest、ContextSnapshot、当前 RunScope",
+    "output": "有效 scope/固定身份或拒绝",
+    "role": "在执行入口核对快照与授权版本，旧输入不得绕过撤销。",
+    "related": [
+      6,
+      20
+    ]
+  },
+  "step-10-5": {
+    "title": "读取中重复校验",
+    "detail": "撤销会中断受影响运行",
+    "chapter": 10,
+    "functions": [
+      "ScopeService.valid",
+      "ScopeService.check",
+      "ScopeService._replace"
+    ],
+    "input": "读取 ref、当前 scope；撤销/变更操作",
+    "output": "获准片段或 ScopeDenied/任务取消",
+    "role": "读前读后校验；权限变更推进 generation 并取消相关活跃执行。",
+    "related": [
+      8,
+      9
+    ]
+  },
+  "step-10-6": {
+    "title": "提交前再校验",
+    "detail": "旧权限结果不能有效发布",
+    "chapter": 10,
+    "functions": [
+      "ScopeExecutionGate.validate_commit",
+      "ControlledEngine.validate_run"
+    ],
+    "input": "Commit、固定 scope/binding、当前权限",
+    "output": "有效 Commit 或失效失败结果",
+    "role": "即使旧任务吞掉取消，提交仍不能越过撤销后的权限边界。",
+    "related": [
+      20
+    ]
+  },
+  "step-11-1": {
+    "title": "组装业务上下文",
+    "detail": "ContextBuilder.build",
+    "chapter": 11,
+    "functions": [
+      "ContextBuilder.build"
+    ],
+    "input": "scope、run_id、goal、refs/results/history/packet",
+    "output": "持久 ContextSnapshot 与 PreparedInput",
+    "role": "显式组织来源、历史与交接，不自动装载远端 conversation。",
+    "related": [
+      5,
+      10,
+      13
+    ]
+  },
+  "step-11-2": {
+    "title": "保留用户约束",
+    "detail": "超大可选内容外置",
+    "chapter": 11,
+    "functions": [
+      "context/projection.py::project_payload"
+    ],
+    "input": "全量 payload、maximum byte 预算",
+    "output": "保留用户约束的 messages 与 external_context",
+    "role": "完整保留用户条件；超大可选历史外置，必需输入仍过大则失败。",
+    "related": [
+      12,
+      6
+    ]
+  },
+  "step-11-3": {
+    "title": "保存固定原件",
+    "detail": "artifact ID + JSON pointer",
+    "chapter": 11,
+    "functions": [
+      "ContextArtifacts.save_text"
+    ],
+    "input": "完整 JSON/文本与当前授权",
+    "output": "SHA-256 artifact_id 与私有固定原件",
+    "role": "提供可追溯、可分页回读的无损原文。",
+    "related": [
+      20
+    ]
+  },
+  "step-11-4": {
+    "title": "每轮投影与摘要",
+    "detail": "工具 schema 也纳入预算",
+    "chapter": 11,
+    "functions": [
+      "Compactor.prepare",
+      "ModelProjection.__call__"
+    ],
+    "input": "SDK input、实际启用 tools/schema、预算观测",
+    "output": "摘要覆盖层与最终 ModelInputData",
+    "role": "先归档，必要时摘要，再对真实发送面进行有界投影。",
+    "related": [
+      12,
+      7,
+      6
+    ]
+  },
+  "step-11-5": {
+    "title": "读取真实内容页",
+    "detail": "保留最新工具结果",
+    "chapter": 11,
+    "functions": [
+      "ContextArtifacts.read",
+      "ScopedTool.read_binding"
+    ],
+    "input": "artifact/pointer/range 或 source ref/location",
+    "output": "真实文本页、next_cursor、读取回执",
+    "role": "context 工件与 source 页用不同游标；最新观察不能退化为空引用。",
+    "related": [
+      9,
+      8
+    ]
+  },
+  "step-11-6": {
+    "title": "最终窗口检查",
+    "detail": "manifest 后才调用 provider",
+    "chapter": 11,
+    "functions": [
+      "Broker.handle",
+      "controlled/input_budget.py::estimate_input"
+    ],
+    "input": "最终 public_input、实测观测、Plan 剩余 tokens",
+    "output": "获准 provider 请求或 context_budget 等失败",
+    "role": "发送前把 instructions、schema、工具、输出保留一起核对预算。",
+    "related": [
+      6,
+      16,
+      23
+    ]
+  },
+  "step-12-1": {
+    "title": "确认长期经验",
+    "detail": "preference / experience，版本和期限",
+    "chapter": 12,
+    "functions": [
+      "MemoryService.create",
+      "MemoryService.update"
+    ],
+    "input": "kind/content/source、确认状态与过期时间",
+    "output": "版本化 MemoryEntry(draft/confirmed)",
+    "role": "长期偏好/经验需确认，不把用户事实自动写成知识库。",
+    "related": [
+      13
+    ]
+  },
+  "step-12-2": {
+    "title": "任务显式选择",
+    "detail": "MemoryRef 固定版本",
+    "chapter": 12,
+    "functions": [
+      "MemoryService.select",
+      "MemoryService.validate"
+    ],
+    "input": "research_id、显式 memory IDs/版本 refs",
+    "output": "确认且未过期的记忆或 ScopeDenied",
+    "role": "任务冻结所选记忆；编辑、删除或过期使旧版本不可继续使用。",
+    "related": [
+      13,
+      10
+    ]
+  },
+  "step-12-3": {
+    "title": "构造运行记忆",
+    "detail": "上下文压力时取旧完整 turns",
+    "chapter": 12,
+    "functions": [
+      "Compactor.prepare",
+      "context/compaction.py::complete_groups"
+    ],
+    "input": "SDK/业务历史、完整 tool-call/output groups",
+    "output": "固定旧 source groups 与待摘要 stream",
+    "role": "工作摘要是另一条按窗口压力触发的链路，不是长期记忆自动后续步骤。",
+    "related": [
+      11,
+      7
+    ]
+  },
+  "step-12-4": {
+    "title": "受控摘要调用",
+    "detail": "工具禁用，共用原预算",
+    "chapter": 12,
+    "functions": [
+      "Broker.summary_payload",
+      "Compactor.compact"
+    ],
+    "input": "previous_summary、新 sources、required_source_ids",
+    "output": "summary 模型响应、同原 run 的 usage",
+    "role": "只整理历史，不调用工具，不新开独立研究预算。",
+    "related": [
+      6,
+      11
+    ]
+  },
+  "step-12-5": {
+    "title": "校验覆盖和 quote",
+    "detail": "成功才推进 head / cursor",
+    "chapter": 12,
+    "functions": [
+      "Compactor.compact",
+      "ControlledLedger.save_compaction"
+    ],
+    "input": "MemorySummary、coverage、source quotes、压缩比例",
+    "output": "有效 summary artifact/head 或失败 attempt",
+    "role": "校验引用与覆盖才推进 cursor；失败保留原文和旧 head。",
+    "related": [
+      20,
+      19
+    ]
+  },
+  "step-12-6": {
+    "title": "加入历史覆盖层",
+    "detail": "可回读原文，不作为独立事实",
+    "chapter": 12,
+    "functions": [
+      "Compactor.render"
+    ],
+    "input": "stream、已校验 head 和原文 artifact refs",
+    "output": "historical_data_only assistant 覆盖层",
+    "role": "摘要供工作记忆，能回读来源，但不构成独立事实审查或新授权。",
+    "related": [
+      11,
+      19
+    ]
+  },
+  "step-13-1": {
+    "title": "冻结 TaskSpec",
+    "detail": "目标、方法、输入、验收、预算",
+    "chapter": 13,
+    "functions": [
+      "TaskService.prepare_spec"
+    ],
+    "input": "research_id、kind、要求/refs/results、方法/模型/limits",
+    "output": "不可变 TaskSpec 版本",
+    "role": "把专家职责、资料、验收条件与预算固定成工作单。",
+    "related": [
+      17,
+      18,
+      12
+    ]
+  },
+  "step-13-2": {
+    "title": "准备独立 scope",
+    "detail": "检查 required / optional inputs",
+    "chapter": 13,
+    "functions": [
+      "TaskService._prepare"
+    ],
+    "input": "TaskSpec、根 scope、已审核 required_results",
+    "output": "工具/资料交集构成的独立 RunScope",
+    "role": "检查必需输入与上游交接；可选资料缺失显式保留。",
+    "related": [
+      10,
+      19
+    ]
+  },
+  "step-13-3": {
+    "title": "创建运行绑定",
+    "detail": "TaskRun + ContextSnapshot",
+    "chapter": 13,
+    "functions": [
+      "TaskService._prepare",
+      "ContextBuilder.build"
+    ],
+    "input": "获准 refs/results、packet、memory contributions",
+    "output": "TaskRun、ContextSnapshot、scope",
+    "role": "保存一次准入绑定，恢复不重新拼输入或切换方法。",
+    "related": [
+      11,
+      20
+    ]
+  },
+  "step-13-4": {
+    "title": "执行专家职责",
+    "detail": "受控工具 + 输出契约",
+    "chapter": 13,
+    "functions": [
+      "TaskService._execute_binding"
+    ],
+    "input": "spec、binding、snapshot、scope",
+    "output": "受控 RunResult 与业务执行记录",
+    "role": "构建专家工具/输出契约和多次权限校验；编码使用专属能力。",
+    "related": [
+      6,
+      7,
+      21
+    ]
+  },
+  "step-13-5": {
+    "title": "保存收据与报告",
+    "detail": "程序检查，语义仍 pending",
+    "chapter": 13,
+    "functions": [
+      "TaskLedger.commit",
+      "tasks/service.py::checks"
+    ],
+    "input": "Commit、专家输出、冻结 acceptance",
+    "output": "TaskReceipt、报告 artifact、程序/待语义检查",
+    "role": "保存完成仍先 pending_review；专家自检不是独立证据。",
+    "related": [
+      19,
+      20
+    ]
+  },
+  "step-13-6": {
+    "title": "独立审核和采用",
+    "detail": "review → passed → adopt",
+    "chapter": 13,
+    "functions": [
+      "TaskService.review",
+      "TaskService.adopt"
+    ],
+    "input": "result_id、逐项 findings/reviewer、adoption reason",
+    "output": "passed/partial/rework；passed 可 adopted",
+    "role": "逐项复核后才能正式采用当前任务版本的完整交付。",
+    "related": [
+      19,
+      14
+    ]
+  },
+  "step-14-1": {
+    "title": "发现专家与材料",
+    "detail": "find_experts + read_context",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService.find_experts",
+      "CollaborationService.read_context"
+    ],
+    "input": "research/node、能力过滤、选定 refs/messages/results",
+    "output": "专家目录、选定上下文正文及其状态",
+    "role": "发现与阅读分开，读取必要内容后才能明确交接。",
+    "related": [
+      8,
+      17,
+      10
+    ]
+  },
+  "step-14-2": {
+    "title": "固定交接 packet",
+    "detail": "原要求、精选上下文和交付",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService.delegate_task"
+    ],
+    "input": "当前用户要求、专家/会话、选定材料和交付要求",
+    "output": "固定 ContextPacket、TaskSpec",
+    "role": "把原用户条件与总管要求分开记录，防专家丢失上游约束。",
+    "related": [
+      13,
+      11
+    ]
+  },
+  "step-14-3": {
+    "title": "保存派发意图",
+    "detail": "accepted 或 waiting",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService.delegate_task"
+    ],
+    "input": "稳定 command_id、packet/spec、指定上游任务版本",
+    "output": "accepted/waiting DispatchIntent 和 dependency edges",
+    "role": "接受派发不代表已执行；未来依赖等待指定上游通过审核。",
+    "related": [
+      16,
+      20
+    ]
+  },
+  "step-14-4": {
+    "title": "后台执行专家",
+    "detail": "独立 scope / run / receipt",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService._execute_locked",
+      "TaskService.run_durable"
+    ],
+    "input": "固定 Intent、task version、run_id",
+    "output": "专家保存结果/收据，Intent completed 或 failed",
+    "role": "后台持有工作，不占用总管模型轮反复轮询。",
+    "related": [
+      13,
+      20,
+      6
+    ]
+  },
+  "step-14-5": {
+    "title": "等待同轮 settled",
+    "detail": "completed 仍可能待审核",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService.pending_intents_for_node",
+      "CollaborationService._resume_one_manager"
+    ],
+    "input": "同 manager_run_id 的 intents、最新 chat/node revisions",
+    "output": "可续接任务组或等待/延期状态",
+    "role": "等本轮全部任务 settled，并避免覆盖后续用户新轮。",
+    "related": [
+      5,
+      13
+    ]
+  },
+  "step-14-6": {
+    "title": "自动续接总管",
+    "detail": "按需读取报告，提交后消费通知",
+    "chapter": 14,
+    "functions": [
+      "CollaborationService._resume_one_manager",
+      "ResearchLedger.commit"
+    ],
+    "input": "稳定 resume command、专家报告/失败状态、notification_ids",
+    "output": "新的主线回复与通知已消费状态",
+    "role": "总管按需读正文并继续原目标，有限失败后 deferred。",
+    "related": [
+      5,
+      4,
+      19
+    ]
+  },
+  "step-15-1": {
+    "title": "保存专家问题",
+    "detail": "每 run 固定一次信息请求",
+    "chapter": 15,
+    "functions": [
+      "InformationService.begin"
+    ],
+    "input": "固定 spec/binding、question、progress、requested_result_ids",
+    "output": "按专家 run 唯一的 InformationRequest",
+    "role": "保存已完成进度，重复问题复用原请求而非无限澄清。",
+    "related": [
+      14,
+      20
+    ]
+  },
+  "step-15-2": {
+    "title": "独立咨询总管",
+    "detail": "不拿忙碌主聊天锁",
+    "chapter": 15,
+    "functions": [
+      "InformationService._ask_manager"
+    ],
+    "input": "专家问题、主对话、当前资料/报告目录",
+    "output": "受限 consultation RunResult/InformationAnswer",
+    "role": "独立运行和 workspace，不占主聊天锁，避免互等死锁。",
+    "related": [
+      6,
+      7,
+      14
+    ]
+  },
+  "step-15-3": {
+    "title": "读取指定正文",
+    "detail": "目录不等于已读信息",
+    "chapter": 15,
+    "functions": [
+      "InformationService._ask_manager",
+      "ReportHistory.read"
+    ],
+    "input": "read_information 的 resource_refs/result_ids",
+    "output": "实际正文、复核状态及 read_refs/read_results",
+    "role": "目录不等于正文；只有真正读过的来源才能授予专家。",
+    "related": [
+      19,
+      11
+    ]
+  },
+  "step-15-4": {
+    "title": "校验答复来源",
+    "detail": "所选 ID 必须真正读过",
+    "chapter": 15,
+    "functions": [
+      "InformationService._ask_manager"
+    ],
+    "input": "available answer、message/ref/result IDs、阅读记录",
+    "output": "可追溯 answer 或 unavailable/missing",
+    "role": "阻止咨询引用未读内容、外国研究材料或没有来源的答案。",
+    "related": [
+      10,
+      19
+    ]
+  },
+  "step-15-5": {
+    "title": "授权补充材料",
+    "detail": "固定报告版本与资料依赖",
+    "chapter": 15,
+    "functions": [
+      "InformationService._deliver",
+      "ScopeService.acquire_library"
+    ],
+    "input": "固定 InformationAnswer、report_grants、来源依赖",
+    "output": "获准补充 scope 与包含正文的 ToolResult",
+    "role": "原任务获得具体资料和固定报告版本，不扩大为任意调查。",
+    "related": [
+      10,
+      11
+    ]
+  },
+  "step-15-6": {
+    "title": "继续原专家任务",
+    "detail": "保留无法补齐的 missing",
+    "chapter": 15,
+    "functions": [
+      "InformationService.engine"
+    ],
+    "input": "保存 progress/answer、专家原 request",
+    "output": "继续执行结果，合并咨询 usage 与缺口",
+    "role": "保留原任务、原进度和 unresolved missing；不重新索要信息。",
+    "related": [
+      7,
+      13,
+      20
+    ]
+  },
+  "step-16-1": {
+    "title": "只读生成计划",
+    "detail": "PlanningOutput，不执行研究步骤",
+    "chapter": 16,
+    "functions": [
+      "PlanService.prepare",
+      "research/planning.py::generate"
+    ],
+    "input": "GeneratePlan、origin node/chat revision、获准资料",
+    "output": "只读规划 RunResult / PlanningOutput",
+    "role": "规划可以读既有来源，不能提前联网调查或派发步骤。",
+    "related": [
+      6,
+      11
+    ]
+  },
+  "step-16-2": {
+    "title": "编译和校验 DAG",
+    "detail": "工具权限、依赖、预算",
+    "chapter": 16,
+    "functions": [
+      "research/planning.py::compile_plan",
+      "PlanService.validate_definition"
+    ],
+    "input": "PlanningOutput、原 Proposal、节点工具/预算约束",
+    "output": "PlannedNode 列表、有效 ResearchPlan 或拒绝",
+    "role": "把模型 keys 转为真实 ID，验证 DAG 与能力不越界。",
+    "related": [
+      10,
+      17
+    ]
+  },
+  "step-16-3": {
+    "title": "用户确认版本",
+    "detail": "冻结节点与 approved_revision",
+    "chapter": 16,
+    "functions": [
+      "PlanService.confirm"
+    ],
+    "input": "PlanDecision(proposal_id, expected_revision)",
+    "output": "queued proposal、冻结节点、approved_revision",
+    "role": "人工确认绑定准确版本；旧确认不能用于修改后的提案。",
+    "related": [
+      5,
+      20
+    ]
+  },
+  "step-16-4": {
+    "title": "调度 ready wave",
+    "detail": "依赖满足后有界并发",
+    "chapter": 16,
+    "functions": [
+      "research/plans.py::execute_plan",
+      "Dispatcher.dispatch"
+    ],
+    "input": "批准 DAG、done 集合、ready steps、policy",
+    "output": "有界并发 DispatchGroup 与已提交 run 结果",
+    "role": "只启动依赖满足的一波；不是任意递归自治。",
+    "related": [
+      7,
+      20
+    ]
+  },
+  "step-16-5": {
+    "title": "提交完整上游结果",
+    "detail": "partial 阻断必需下游",
+    "chapter": 16,
+    "functions": [
+      "ResearchService.check_result",
+      "research/plans.py::execute_plan"
+    ],
+    "input": "上游 result ID、completion、缺失状态",
+    "output": "可交接完整 ResultMount 或计划 blocked",
+    "role": "部分交付不能冒充必需上游完成，缺口阻断下游。",
+    "related": [
+      19,
+      11
+    ]
+  },
+  "step-16-6": {
+    "title": "推进下一波或停止",
+    "detail": "未知 run 不盲目重发",
+    "chapter": 16,
+    "functions": [
+      "research/plans.py::execute_plan"
+    ],
+    "input": "波次结果、剩余时间/tokens、已存在 run 状态",
+    "output": "下一 ready wave 或 succeeded/blocked/failed/interrupted",
+    "role": "成功已保存步骤复用；未知步骤停止检查，不盲重发收费请求。",
+    "related": [
+      20,
+      6
+    ]
+  },
+  "step-17-1": {
+    "title": "保存资产版本",
+    "detail": "Method / Workflow / Routing",
+    "chapter": 17,
+    "functions": [
+      "MethodService.save"
+    ],
+    "input": "AssetVersion(method/workflow/routing)",
+    "output": "校验后持久化的不可变资产版本",
+    "role": "复用行为资产不保存某次任务事实；模板还检查引用方法和预算。",
+    "related": [
+      13,
+      18
+    ]
+  },
+  "step-17-2": {
+    "title": "发布 active head",
+    "detail": "expected head + actor / reason",
+    "chapter": 17,
+    "functions": [
+      "MethodService.publish"
+    ],
+    "input": "category/asset/version、expected head、actor/reason",
+    "output": "新 active head 和发布历史",
+    "role": "CAS 发布保护使默认初始化不能覆盖人工发布的 registry。",
+    "related": [
+      22,
+      20
+    ]
+  },
+  "step-17-3": {
+    "title": "冻结任务方法",
+    "detail": "version + method digest",
+    "chapter": 17,
+    "functions": [
+      "MethodService.method",
+      "TaskService.prepare_spec"
+    ],
+    "input": "expert_id、明确 method_version、资产 prompt",
+    "output": "TaskSpec 的 method version 与 prompt digest",
+    "role": "具体任务使用发布版本，运行不漂移到后来修改的指令。",
+    "related": [
+      13
+    ]
+  },
+  "step-17-4": {
+    "title": "绑定模板参数",
+    "detail": "text placeholder / ResourceRef",
+    "chapter": 17,
+    "functions": [
+      "MethodService.instantiate"
+    ],
+    "input": "精确参数集合、类型化 text/resource 值",
+    "output": "已授权 ResourceRef、格式化目标与 bindings",
+    "role": "只允许受约束 placeholder，先校验所有输入再建节点。",
+    "related": [
+      10,
+      11
+    ]
+  },
+  "step-17-5": {
+    "title": "编译已有计划",
+    "detail": "稳定节点 ID 与 ResearchPlan",
+    "chapter": 17,
+    "functions": [
+      "MethodService.instantiate"
+    ],
+    "input": "已验证 template steps 与冻结 methods",
+    "output": "稳定节点、实例 fingerprint 和 ResearchPlan",
+    "role": "中断可用相同 instance ID 续编，不另造第二套调度协议。",
+    "related": [
+      5,
+      16
+    ]
+  },
+  "step-17-6": {
+    "title": "进入确认执行",
+    "detail": "复用 Plan + Dispatcher",
+    "chapter": 17,
+    "functions": [
+      "MethodService.propose",
+      "PlanService.import_plan"
+    ],
+    "input": "未被编辑的 workflow instance 与 origin node",
+    "output": "待用户确认的 PlanProposal",
+    "role": "重验目标、工具、资料后复用既有人工确认和 DAG 执行。",
+    "related": [
+      16
+    ]
+  },
+  "step-18-1": {
+    "title": "确定任务需求",
+    "detail": "批准摘要与预算",
+    "chapter": 18,
+    "functions": [
+      "TaskService.create_routed"
+    ],
+    "input": "approved_summary、kind、refs/tools、budget_usd",
+    "output": "待路由 task 身份与实际需求",
+    "role": "只对 routed task 选择模型，普通聊天和固定任务不自动走 RouteLLM。",
+    "related": [
+      13,
+      17
+    ]
+  },
+  "step-18-2": {
+    "title": "过滤专家能力",
+    "detail": "kind / tools / 可用模型",
+    "chapter": 18,
+    "functions": [
+      "Router.route"
+    ],
+    "input": "任务 kind、required_tools、候选目录与预算",
+    "output": "eligible/excluded 专家及原因",
+    "role": "排除缺职责、能力或可匹配模型的专家。",
+    "related": [
+      17,
+      10
+    ]
+  },
+  "step-18-3": {
+    "title": "选择专家职责",
+    "detail": "用户、唯一候选或固定 policy",
+    "chapter": 18,
+    "functions": [
+      "Router.route"
+    ],
+    "input": "合格专家、preferred_expert、默认 policy",
+    "output": "selected_expert 或 blocked RouteRecord",
+    "role": "显式用户选择也必须合格，无法选择时不静默替代。",
+    "related": [
+      13
+    ]
+  },
+  "step-18-4": {
+    "title": "过滤模型并选择",
+    "detail": "匹配 strong / weak 才用 RouteLLM",
+    "chapter": 18,
+    "functions": [
+      "Router.route"
+    ],
+    "input": "model availability/rank/tools/capacity/cost、强弱模型对",
+    "output": "selected_model 或解释性 blocked",
+    "role": "单候选直接选；多个候选仅在匹配 RouteLLM 对时调用现有 router。",
+    "related": [
+      6,
+      22
+    ]
+  },
+  "step-18-5": {
+    "title": "保存完整路由记录",
+    "detail": "排除原因、策略版本和配置",
+    "chapter": 18,
+    "functions": [
+      "Router.route",
+      "TaskService.create_routed"
+    ],
+    "input": "选择结果、排除依据、版本/config、资料身份",
+    "output": "RouteRecord 与冻结 route_id/model 的 TaskSpec",
+    "role": "保存决策证据，后续 continuation 不偷偷换目录或预算。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "step-18-6": {
+    "title": "组装后再次检查",
+    "detail": "真实输入容量不足须重新路由",
+    "chapter": 18,
+    "functions": [
+      "TaskService._prepare"
+    ],
+    "input": "实际 ContextSnapshot、prompt/tool overhead、路由剩余估计预算",
+    "output": "准许运行或要求重新路由",
+    "role": "路由输入只是估计；组装后需再核对容量，美元估计不是实测用量。",
+    "related": [
+      11,
+      6,
+      23
+    ]
+  },
+  "step-19-1": {
+    "title": "模型提交声明",
+    "detail": "claims / citations / missing",
+    "chapter": 19,
+    "functions": [
+      "EvidenceService.validate_output"
+    ],
+    "input": "result_id、固定 binding、输出 claims",
+    "output": "校验通过或可纠正 output issues",
+    "role": "在 SDK 最终交付前检查候选声明，必要时有限修复。",
+    "related": [
+      7,
+      13
+    ]
+  },
+  "step-19-2": {
+    "title": "核对获准来源",
+    "detail": "必须是固定正文 body ref",
+    "chapter": 19,
+    "functions": [
+      "EvidenceService.prepare",
+      "ScopeService.check"
+    ],
+    "input": "CitationDraft.ref、运行 allowed_refs、根/节点 scope",
+    "output": "合法固定正文来源或拒绝",
+    "role": "完整 ResourceRef 必须属于当前 run；discovery 不作为正文证据。",
+    "related": [
+      9,
+      10
+    ]
+  },
+  "step-19-3": {
+    "title": "检查 quote 和位置",
+    "detail": "保存原文的匹配片段",
+    "chapter": 19,
+    "functions": [
+      "EvidenceService.prepare"
+    ],
+    "input": "quote、location、固定 fragments、可选 fields",
+    "output": "Evidence 与 ClaimEvidence 或 CitationMismatch",
+    "role": "原文空白规范化匹配并检查定位；引用存在不等于语义支持。",
+    "related": [
+      9
+    ]
+  },
+  "step-19-4": {
+    "title": "有界修复候选",
+    "detail": "关闭工具，保留事实与缺口",
+    "chapter": 19,
+    "functions": [
+      "OpenAIEngine.execute",
+      "EvidenceService.validate_output"
+    ],
+    "input": "OutputRepair、原草稿/历史、剩余模型轮",
+    "output": "修正 JSON/合法引用或明确失败",
+    "role": "关闭工具，只改格式和引用，不能重新调查或编造事实。",
+    "related": [
+      7,
+      6
+    ]
+  },
+  "step-19-5": {
+    "title": "事务发布证据",
+    "detail": "结果和 Evidence 同步保存",
+    "chapter": 19,
+    "functions": [
+      "ResearchLedger.commit",
+      "TaskLedger.commit"
+    ],
+    "input": "有效 Commit、EvidenceBundle",
+    "output": "正式结果与同事务保存的证据关系",
+    "role": "提交前重复检查，避免预览或内存草稿被当成正式证据。",
+    "related": [
+      20,
+      13
+    ]
+  },
+  "step-19-6": {
+    "title": "定位与人工复核",
+    "detail": "supported / unsupported / uncertain",
+    "chapter": 19,
+    "functions": [
+      "EvidenceService.locate",
+      "EvidenceService.review"
+    ],
+    "input": "result/evidence/relation ID、assessment/reason",
+    "output": "原文片段与 supported/unsupported/uncertain 审查记录",
+    "role": "允许独立复核支持关系；missing 不可标 supported。",
+    "related": [
+      13,
+      9
+    ]
+  },
+  "step-20-1": {
+    "title": "取得数据库独占",
+    "detail": "advisory lock + 本机 flock",
+    "chapter": 20,
+    "functions": [
+      "PostgresDatabase.__init__"
+    ],
+    "input": "数据库 URL、数据库 identity/OID、本机 process",
+    "output": "持有 advisory lock + flock 的 database 实例",
+    "role": "同数据库单 host 生命周期独占，连接断开不自动抢占。",
+    "related": [
+      6
+    ]
+  },
+  "step-20-2": {
+    "title": "恢复固定运行身份",
+    "detail": "原输入、deadline 和预算",
+    "chapter": 20,
+    "functions": [
+      "TaskService.run_durable",
+      "ControlledEngine.binding"
+    ],
+    "input": "原 TaskRun、TaskSpec version、ContextSnapshot",
+    "output": "同身份恢复运行或合法已保存结果复用",
+    "role": "保留原请求、权限 generation、计数和 deadline，不用新 run 掩盖重试。",
+    "related": [
+      13,
+      10
+    ]
+  },
+  "step-20-3": {
+    "title": "读取 SDK checkpoint",
+    "detail": "input / state / result",
+    "chapter": 20,
+    "functions": [
+      "Checkpoints.restore",
+      "Checkpoints.prepare"
+    ],
+    "input": "SDK/code/input checkpoint refs、固定 binding、账本游标",
+    "output": "恢复 input/RunState/result、profile、model cursor",
+    "role": "还原原 SDK 进度和已投影输入，代码账本外变化会拒绝。",
+    "related": [
+      7,
+      11,
+      21
+    ]
+  },
+  "step-20-4": {
+    "title": "复用已确认回执",
+    "detail": "不重复执行完成的外部操作",
+    "chapter": 20,
+    "functions": [
+      "Checkpoints.operation",
+      "Channel.call"
+    ],
+    "input": "稳定 operation ID、payload hash、持久 receipt",
+    "output": "已确认完整响应，跳过外部调用",
+    "role": "回执和原请求必须一致；防同 ID 不同输入重放。",
+    "related": [
+      6,
+      8
+    ]
+  },
+  "step-20-5": {
+    "title": "处理未知操作",
+    "detail": "tool 停止；model 新 reservation",
+    "chapter": 20,
+    "functions": [
+      "Checkpoints.operation"
+    ],
+    "input": "已 reservation 却没有 receipt 的操作",
+    "output": "tool/private/result 停止；model 新 retry ID",
+    "role": "未知副作用等待核查；模型可再 reservation，但旧费用未知且可能再收费。",
+    "related": [
+      6,
+      23
+    ]
+  },
+  "step-20-6": {
+    "title": "原业务事务提交",
+    "detail": "结果、证据、收据一同保存",
+    "chapter": 20,
+    "functions": [
+      "ExecutionService.retry_save",
+      "ResearchLedger.commit",
+      "TaskLedger.commit"
+    ],
+    "input": "同一 Commit 候选与持久 committed 状态",
+    "output": "正式业务结果或 save_failed/confirming/conflict",
+    "role": "只恢复保存，不重做模型生成；所有交付仍经业务发布事务。",
+    "related": [
+      5,
+      13,
+      19
+    ]
+  },
+  "step-21-1": {
+    "title": "操作员授权契约",
+    "detail": "固定仓库、路径和可信 tests",
+    "chapter": 21,
+    "functions": [
+      "CodingService.bind_contract",
+      "TaskService.grant_coding"
+    ],
+    "input": "CodingContract、固定仓库、路径、操作员 profile",
+    "output": "冻结测试环境 hash 的获准契约",
+    "role": "模型选能力和 profile，不能提供任意 shell/host checkout。",
+    "related": [
+      10,
+      13
+    ]
+  },
+  "step-21-2": {
+    "title": "准入独立 worktree",
+    "detail": "baseline + task version",
+    "chapter": 21,
+    "functions": [
+      "CodingService.admit"
+    ],
+    "input": "spec.coding、任务版本、authorization generation",
+    "output": "独立 CodeWorkspace 与固定 baseline worktree",
+    "role": "同任务版本的编辑和集成使用服务拥有的工作树。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "step-21-3": {
+    "title": "读写指定文件",
+    "detail": "编辑使旧测试失效",
+    "chapter": 21,
+    "functions": [
+      "CodeWorkspace.read",
+      "CodeWorkspace.write"
+    ],
+    "input": "获准 path、working/baseline 版本、文本",
+    "output": "文件内容或更新状态；旧 tests 失效",
+    "role": "编辑受路径约束，不能沿用另一内容的测试成功证据。",
+    "related": [
+      8,
+      10
+    ]
+  },
+  "step-21-4": {
+    "title": "可信 profile 测试",
+    "detail": "日志绑定 tree/content hash",
+    "chapter": 21,
+    "functions": [
+      "CodeWorkspace.test"
+    ],
+    "input": "profile name、当前 checkpoint、profile hash",
+    "output": "exit_code/log/tree/content_sha256 的可信测试结果",
+    "role": "只运行操作员 argv；测试和源码快照必须绑定且测试不改原文。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "step-21-5": {
+    "title": "冻结交付候选",
+    "detail": "全部获准 tests 在同内容通过",
+    "chapter": 21,
+    "functions": [
+      "CodeWorkspace.freeze"
+    ],
+    "input": "当前文件/tree/commit、全部获准 test records",
+    "output": "冻结 CodeCandidate 或拒绝",
+    "role": "每个 profile 在同一最终内容上成功才停止写入并交付。",
+    "related": [
+      13,
+      19
+    ]
+  },
+  "step-21-6": {
+    "title": "服务解析 candidate_ref",
+    "detail": "再验真实 commit 和完整差异",
+    "chapter": 21,
+    "functions": [
+      "CodeWorkspace.resolve_candidate",
+      "TaskService._execute_binding"
+    ],
+    "input": "模型 candidate_ref 与服务保存的 frozen state",
+    "output": "真实 candidate、完整 code_patch 与任务交付",
+    "role": "由服务器解析和再验 commit/hash，模型不能自造测试/提交证据。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "step-22-1": {
+    "title": "反馈核实与归因",
+    "detail": "区分事实错误与偏好",
+    "chapter": 22,
+    "functions": [
+      "EvaluationService.submit",
+      "EvaluationService.adjudicate"
+    ],
+    "input": "固定 result、feedback、finding、reviewer/attribution",
+    "output": "verified/rejected 等反馈记录",
+    "role": "先核实并归因；偏好意见不能当事实错误案例。",
+    "related": [
+      13,
+      19
+    ]
+  },
+  "step-22-2": {
+    "title": "冻结独立案例",
+    "detail": "development / holdout 不泄漏",
+    "chapter": 22,
+    "functions": [
+      "EvaluationService.freeze"
+    ],
+    "input": "verified feedback、split、dimension、固定 input/output",
+    "output": "FrozenCase 与输入输出 digest/label",
+    "role": "development/holdout 不能共享任务或原文内容，减少泄漏。",
+    "related": [
+      20
+    ]
+  },
+  "step-22-3": {
+    "title": "生成方法候选",
+    "detail": "只看基线与获准抽象 lesson",
+    "chapter": 22,
+    "functions": [
+      "EvolutionService.propose"
+    ],
+    "input": "基线 method、development/holdout、获准 reusable lesson",
+    "output": "未激活 Candidate 与新的 AssetVersion",
+    "role": "generator 只看到抽象 lesson，不看到留出答案；只改 instructions/examples。",
+    "related": [
+      17,
+      6
+    ]
+  },
+  "step-22-4": {
+    "title": "运行前后与下游预览",
+    "detail": "相同输入，不改生产 active head",
+    "chapter": 22,
+    "functions": [
+      "EvolutionService.run_preview"
+    ],
+    "input": "candidate、固定 case、before/after/downstream arm",
+    "output": "隔离 Preview、output/usage/digests",
+    "role": "相同输入比较，不自动更新普通业务回执或生产 active head。",
+    "related": [
+      7,
+      17,
+      13
+    ]
+  },
+  "step-22-5": {
+    "title": "独立质量和成本评分",
+    "detail": "完整证据、scope、measured cost",
+    "chapter": 22,
+    "functions": [
+      "EvolutionService.assess",
+      "EvolutionService.compare"
+    ],
+    "input": "独立质量/scope/cost evidence、成对 previews",
+    "output": "passed/failed/incomplete verdict 和 metrics",
+    "role": "齐全开发/留出/集成证据、质量门槛和 measured cost 才通过。",
+    "related": [
+      19,
+      23
+    ]
+  },
+  "step-22-6": {
+    "title": "用户确认准确版本",
+    "detail": "passing gates → publish / rollback",
+    "chapter": 22,
+    "functions": [
+      "EvolutionService.publish",
+      "EvolutionService.rollback"
+    ],
+    "input": "passing candidate、expected base、exact confirmation",
+    "output": "方法 head 发布或显式回滚记录",
+    "role": "通过实验也不自动发布；准确版本和人工决定是最后门槛。",
+    "related": [
+      17,
+      20
+    ]
+  },
+  "arch-1": {
+    "title": "React 工作区 / CLI",
+    "chapter": 4,
+    "functions": [
+      "ChatService.send",
+      "ChatReplies.start",
+      "research_cli.py::setup"
+    ],
+    "input": "用户消息、命令/消息 ID、期望版本；CLI 参数",
+    "output": "业务服务调用和页面状态",
+    "role": "产品操作入口；图中源码是服务端接收和 CLI 装配函数，浏览器本身不是 agent runtime。",
+    "related": [
+      5,
+      23
+    ]
+  },
+  "arch-2": {
+    "title": "Research / Chat / Project",
+    "chapter": 5,
+    "functions": [
+      "ProjectService.create_main_task",
+      "ChatService.send",
+      "ResearchService.submit"
+    ],
+    "input": "项目/研究目标、消息、NodeCommand",
+    "output": "项目成员、ChatThread、NodeRun 与结果版本",
+    "role": "维护用户可见工作结构，并把一次研究请求转换成明确运行。",
+    "related": [
+      4,
+      11,
+      20
+    ]
+  },
+  "arch-3": {
+    "title": "Task / Collaboration / Plan",
+    "chapter": 14,
+    "functions": [
+      "TaskService.prepare_spec",
+      "CollaborationService.delegate_task",
+      "PlanService.confirm"
+    ],
+    "input": "专家职责/交接材料，或准确版本的计划确认",
+    "output": "TaskSpec、ContextPacket、DispatchIntent、批准 DAG",
+    "role": "专家任务、背景委派与计划各自固定身份；接受工作与执行完成分开。",
+    "related": [
+      13,
+      16,
+      20
+    ]
+  },
+  "arch-4": {
+    "title": "Method / Routing",
+    "chapter": 17,
+    "functions": [
+      "MethodService.method",
+      "MethodService.publish",
+      "Router.route"
+    ],
+    "input": "版本化行为资产、能力需求、模型预算",
+    "output": "已发布方法与选定/阻断的路由记录",
+    "role": "复用职责与选择策略，不将一次结果保存到方法资产中。",
+    "related": [
+      18,
+      22,
+      13
+    ]
+  },
+  "arch-5": {
+    "title": "Scope / ContextBuilder",
+    "chapter": 11,
+    "functions": [
+      "ScopeService.check",
+      "ContextBuilder.build"
+    ],
+    "input": "获准 scope、goal、来源/历史/结果",
+    "output": "固定 ContextSnapshot 与 PreparedInput",
+    "role": "在模型看到任何业务内容前明确权限与输入版本。",
+    "related": [
+      10,
+      12,
+      9
+    ]
+  },
+  "arch-6": {
+    "title": "ExecutionService / CoreRunner",
+    "chapter": 7,
+    "functions": [
+      "ExecutionService.execute",
+      "CoreRunner.execute"
+    ],
+    "input": "固定 RunRequest、AgentCatalog 和工具集合",
+    "output": "RunResult、Commit 候选与正式运行状态",
+    "role": "Core 负责运行契约和调用守卫；Execution 负责正式保存边界。",
+    "related": [
+      8,
+      20,
+      6
+    ]
+  },
+  "arch-7": {
+    "title": "ControlledEngine",
+    "chapter": 6,
+    "functions": [
+      "ControlledEngine.binding",
+      "ControlledEngine.execute"
+    ],
+    "input": "服务端准入 request、spec、tools/invoke",
+    "output": "固定 writer、受控 RunResult、账本记录",
+    "role": "连接 SDK 与 Harness：冻结身份、权限交集、预算和私有工作区。",
+    "related": [
+      7,
+      10,
+      20
+    ]
+  },
+  "arch-8": {
+    "title": "OpenAIEngine / SDK Runner",
+    "chapter": 7,
+    "functions": [
+      "OpenAIEngine.execute"
+    ],
+    "input": "AgentSpec、input/history、恢复 checkpoint",
+    "output": "SDK 状态、工具轮次与最终 RunResult",
+    "role": "项目适配器驱动外部 SDK Runner；SDK 负责模型/工具循环，不越过 Broker 直调 provider。",
+    "related": [
+      8,
+      11,
+      20
+    ]
+  },
+  "arch-9": {
+    "title": "BrokerModel / Channel",
+    "chapter": 6,
+    "functions": [
+      "BrokerModel.get_response",
+      "Channel.call"
+    ],
+    "input": "SDK 模型参数或 tool/private/result payload",
+    "output": "规范 Frame、已确认响应/重放结果",
+    "role": "用本地受控通道包装 SDK 的实际模型和工具边界。",
+    "related": [
+      7,
+      8,
+      20
+    ]
+  },
+  "arch-10": {
+    "title": "Broker → Provider",
+    "chapter": 6,
+    "functions": [
+      "Broker.handle",
+      "LiveModelProvider.get_model",
+      "controlled/streaming.py::stream_model"
+    ],
+    "input": "冻结 model、校验后的输入、工具 schema、settings",
+    "output": "供应商响应、可获得 usage 与审计元数据",
+    "role": "项目侧 provider 桥接；供应商/SDK 具体实现不在本项目源码内。",
+    "related": [
+      7,
+      11,
+      23
+    ]
+  },
+  "arch-11": {
+    "title": "Broker → Core invoke → Tools",
+    "chapter": 8,
+    "functions": [
+      "Broker.handle",
+      "CoreRunner.execute",
+      "ScopedTool.read_binding"
+    ],
+    "input": "已 reservation 的 tool Frame、arguments、绑定业务身份",
+    "output": "ToolResult、失败状态或实际正文页",
+    "role": "回到 Core 和具体 handler 执行获准能力，再回 SDK；工具还会检查业务权限。",
+    "related": [
+      9,
+      10,
+      14
+    ]
+  },
+  "arch-12": {
+    "title": "ControlledLedger / Checkpoints",
+    "chapter": 20,
+    "functions": [
+      "ControlledLedger.reserve",
+      "ControlledLedger.settle",
+      "Checkpoints.restore"
+    ],
+    "input": "writer、operation ID、payload hash、响应/usage",
+    "output": "confirmed 回执、SDK checkpoint、持久预算",
+    "role": "证明哪些外部操作已确认，并在重启后安全复用完整响应。",
+    "related": [
+      6,
+      11,
+      21
+    ]
+  },
+  "arch-13": {
+    "title": "ResearchLedger / TaskLedger",
+    "chapter": 20,
+    "functions": [
+      "ResearchLedger.commit",
+      "TaskLedger.commit"
+    ],
+    "input": "已校验 Commit、report/claims 与业务绑定",
+    "output": "研究结果、Evidence、聊天消息或专家收据",
+    "role": "正式交付的业务事务边界；不同于单次 model/tool 操作确认。",
+    "related": [
+      5,
+      13,
+      19
+    ]
+  },
+  "arch-14": {
+    "title": "PostgreSQL / 私有工件 / Blob",
+    "chapter": 20,
+    "functions": [
+      "PostgresDatabase.__init__",
+      "ContextArtifacts.save_text",
+      "ResourceService.ingest"
+    ],
+    "input": "版本化业务记录、完整响应/输入/原文 bytes",
+    "output": "数据库状态与可追溯磁盘内容",
+    "role": "数据库、私有工件和原文 blob 配合恢复；图中源码为项目存取入口，不是 PostgreSQL 内部实现。",
+    "related": [
+      9,
+      11,
+      21
+    ]
+  },
+  "seq-1": {
+    "title": "chat_send(message_id, expected_revision)",
+    "detail": "全局请求时序 · 第 1 步",
+    "chapter": 4,
+    "functions": [
+      "ChatService.send"
+    ],
+    "input": "node_id、content、expected_revision、message_id",
+    "output": "新增或已存在的 ChatThread",
+    "role": "把用户输入先持久化，网络重投不会产生重复消息。",
+    "related": [
+      5,
+      20
+    ]
+  },
+  "seq-2": {
+    "title": "ChatService.send 保存用户消息",
+    "detail": "全局请求时序 · 第 2 步",
+    "chapter": 4,
+    "functions": [
+      "ChatService.send"
+    ],
+    "input": "node_id、content、expected_revision、message_id",
+    "output": "新增或已存在的 ChatThread",
+    "role": "把用户输入先持久化，网络重投不会产生重复消息。",
+    "related": [
+      5,
+      20
+    ]
+  },
+  "seq-3": {
+    "title": "chat_reply(command_id, expected_revision)",
+    "detail": "全局请求时序 · 第 3 步",
+    "chapter": 4,
+    "functions": [
+      "ChatReplies.start",
+      "ChatReplies._start"
+    ],
+    "input": "node_id、command_id、expected_revision",
+    "output": "固定 NodeCommand 与后台回复任务",
+    "role": "以服务端 revision 准入回复，重投复用同一命令。",
+    "related": [
+      5,
+      6
+    ]
+  },
+  "seq-4": {
+    "title": "submit(NodeCommand)",
+    "detail": "全局请求时序 · 第 4 步",
+    "chapter": 4,
+    "functions": [
+      "ResearchService.submit"
+    ],
+    "input": "NodeCommand(kind=chat_reply)",
+    "output": "运行绑定与已保存命令状态",
+    "role": "在节点锁内准备输入并将计算交给执行器。",
+    "related": [
+      5,
+      11
+    ]
+  },
+  "seq-5": {
+    "title": "_prepare → ContextBuilder.build",
+    "detail": "全局请求时序 · 第 5 步",
+    "chapter": 5,
+    "functions": [
+      "ResearchService._prepare",
+      "ContextBuilder.build"
+    ],
+    "input": "CommandRecord、目标、聊天历史和上游结果",
+    "output": "NodeRun、ContextSnapshot、PreparedInput",
+    "role": "冻结指令、输入和 chat revision，使恢复不能重拼不同请求。",
+    "related": [
+      10,
+      11,
+      20
+    ]
+  },
+  "seq-6": {
+    "title": "ContextSnapshot + PreparedInput",
+    "detail": "全局请求时序 · 第 6 步",
+    "chapter": 11,
+    "functions": [
+      "ContextBuilder.build"
+    ],
+    "input": "scope、run_id、goal、refs/results/history/packet",
+    "output": "持久 ContextSnapshot 与 PreparedInput",
+    "role": "显式组织来源、历史与交接，不自动装载远端 conversation。",
+    "related": [
+      5,
+      10,
+      13
+    ]
+  },
+  "seq-8": {
+    "title": "CoreRunner → engine.execute",
+    "detail": "全局请求时序 · 第 8 步",
+    "chapter": 5,
+    "functions": [
+      "CoreRunner.execute",
+      "ControlledEngine.execute"
+    ],
+    "input": "RunRequest、AgentSpec、已批准工具",
+    "output": "RunResult、usage、输出修复记录",
+    "role": "在授权和预算之内由 SDK 完成模型与工具循环。",
+    "related": [
+      6,
+      7
+    ]
+  },
+  "seq-11": {
+    "title": "校验 / reserve / input manifest",
+    "detail": "全局请求时序 · 第 11 步",
+    "chapter": 6,
+    "functions": [
+      "Broker.handle",
+      "ControlledLedger.reserve"
+    ],
+    "input": "Frame、limits、writer token 与 epoch",
+    "output": "unconfirmed 操作记录和递增预算计数",
+    "role": "副作用发生前先登记操作身份和预算；未知完成态不能偷偷抹掉。",
+    "related": [
+      8,
+      20
+    ]
+  },
+  "seq-12": {
+    "title": "get_response 或受控流式请求",
+    "chapter": 6,
+    "functions": [
+      "Broker.handle",
+      "LiveModelProvider.get_model",
+      "controlled/streaming.py::stream_model"
+    ],
+    "input": "冻结 model、校验后的输入、工具 schema、settings",
+    "output": "供应商响应、可获得 usage 与审计元数据",
+    "role": "项目侧 provider 桥接；供应商/SDK 具体实现不在本项目源码内。",
+    "related": [
+      7,
+      11,
+      23
+    ],
+    "detail": "全局请求时序 · 第 12 步"
+  },
+  "seq-14": {
+    "title": "持久化回执后返回响应",
+    "detail": "全局请求时序 · 第 14 步",
+    "chapter": 6,
+    "functions": [
+      "Checkpoints.complete",
+      "ControlledLedger.settle"
+    ],
+    "input": "Frame、完整响应、usage、代码快照",
+    "output": "response artifact 与 confirmed 回执",
+    "role": "先保存响应工件，再事务发布引用与用量，最后交给 SDK。",
+    "related": [
+      20,
+      21
+    ]
+  },
+  "seq-15": {
+    "title": "Channel.call(tool)",
+    "detail": "全局请求时序 · 第 15 步",
+    "chapter": 8,
+    "functions": [
+      "Channel.call",
+      "Checkpoints.operation",
+      "Broker.handle"
+    ],
+    "input": "tool Frame、稳定 operation ID、writer/预算",
+    "output": "已确认响应复用或新 reservation",
+    "role": "在重启后复用确认回执；未知副作用停止。",
+    "related": [
+      20,
+      6
+    ]
+  },
+  "seq-16": {
+    "title": "invoke → schema 校验 → handler",
+    "detail": "全局请求时序 · 第 16 步",
+    "chapter": 8,
+    "functions": [
+      "CoreRunner.execute",
+      "ScopedTool.require"
+    ],
+    "input": "name、JSON 参数、绑定 scope 和业务身份",
+    "output": "handler 的 ToolResult 或 invalid_input/失败",
+    "role": "验证 schema 与实际授权后才运行具体能力。",
+    "related": [
+      10,
+      9
+    ]
+  },
+  "seq-17": {
+    "title": "scope 校验 / 资料读取",
+    "detail": "全局请求时序 · 第 17 步",
+    "chapter": 10,
+    "functions": [
+      "ScopeService.valid",
+      "ScopeService.check",
+      "ScopeService._replace"
+    ],
+    "input": "读取 ref、当前 scope；撤销/变更操作",
+    "output": "获准片段或 ScopeDenied/任务取消",
+    "role": "读前读后校验；权限变更推进 generation 并取消相关活跃执行。",
+    "related": [
+      8,
+      9
+    ]
+  },
+  "seq-19": {
+    "title": "保存回执后返回结果",
+    "detail": "全局请求时序 · 第 19 步",
+    "chapter": 6,
+    "functions": [
+      "Checkpoints.complete",
+      "ControlledLedger.settle"
+    ],
+    "input": "Frame、完整响应、usage、代码快照",
+    "output": "response artifact 与 confirmed 回执",
+    "role": "先保存响应工件，再事务发布引用与用量，最后交给 SDK。",
+    "related": [
+      20,
+      21
+    ]
+  },
+  "seq-20": {
+    "title": "RunResult",
+    "detail": "全局请求时序 · 第 20 步",
+    "chapter": 7,
+    "functions": [
+      "CoreRunner.execute",
+      "OpenAIEngine.execute"
+    ],
+    "input": "已校验 output、usage、错误/取消状态",
+    "output": "标准 RunResult",
+    "role": "统一运行结果契约，业务是否已保存由外层提交决定。",
+    "related": [
+      13,
+      20
+    ]
+  },
+  "seq-22": {
+    "title": "ResearchLedger.commit",
+    "detail": "全局请求时序 · 第 22 步",
+    "chapter": 5,
+    "functions": [
+      "ResearchLedger.commit"
+    ],
+    "input": "Commit、已校验报告和证据",
+    "output": "正式结果版本、消息和通知消费记录",
+    "role": "保证运行结果和相关业务交付同事务保存。",
+    "related": [
+      19,
+      20,
+      14
+    ]
+  },
+  "seq-23": {
+    "title": "保存报告 / evidence / assistant message",
+    "detail": "全局请求时序 · 第 23 步",
+    "chapter": 5,
+    "functions": [
+      "ResearchLedger.commit"
+    ],
+    "input": "Commit、已校验报告和证据",
+    "output": "正式结果版本、消息和通知消费记录",
+    "role": "保证运行结果和相关业务交付同事务保存。",
+    "related": [
+      19,
+      20,
+      14
+    ]
+  },
+  "seq-7": {
+    "title": "executor.execute(RunRequest)",
+    "chapter": 7,
+    "functions": [
+      "ExecutionService.execute",
+      "ScopeExecutionGate.execute"
+    ],
+    "input": "固定 RunRequest 和获准 Snapshot",
+    "output": "提交后的 RunResult 或 PublicationError",
+    "role": "服务启动运行并管理候选提交；Scope gate 包住 Core 执行。",
+    "related": [
+      5,
+      6,
+      20
+    ]
+  },
+  "seq-9": {
+    "title": "binding / acquire / checkpoint",
+    "chapter": 6,
+    "functions": [
+      "ControlledEngine.binding",
+      "ControlledLedger.acquire",
+      "Checkpoints.restore"
+    ],
+    "input": "request/spec、固定 binding、原 limits",
+    "output": "writer token/epoch、Workspace 与恢复 SDK state",
+    "role": "为同一准入身份建立唯一执行写入权并恢复原进度。",
+    "related": [
+      7,
+      20,
+      10
+    ]
+  },
+  "seq-10": {
+    "title": "Channel.call(model)",
+    "chapter": 6,
+    "functions": [
+      "BrokerModel.get_response",
+      "Channel.call"
+    ],
+    "input": "SDK 本轮 model input/instructions/工具名",
+    "output": "model Frame 或持久响应重放",
+    "role": "SDK 发出模型需求后由 Channel 转给 Broker，仍未直接访问供应商。",
+    "related": [
+      7,
+      11,
+      20
+    ]
+  },
+  "seq-13": {
+    "title": "ModelResponse + usage",
+    "chapter": 6,
+    "functions": [
+      "Broker.handle",
+      "controlled/model.py::response_json"
+    ],
+    "input": "供应商 ModelResponse、usage、响应 metadata",
+    "output": "可序列化模型响应、manifest 与 usage 记录",
+    "role": "保留供应商完整响应；未知用量不能记成零或声称已完整。",
+    "related": [
+      7,
+      23,
+      20
+    ]
+  },
+  "seq-18": {
+    "title": "ToolResult",
+    "chapter": 9,
+    "functions": [
+      "ScopedTool.read_binding",
+      "ScopeService.read"
+    ],
+    "input": "获准 ResourceRef、片段位置/分页请求",
+    "output": "正文 ToolResult 或 source page/next_cursor",
+    "role": "来源读取返回带位置的真实材料；结果还需确认回执再给 SDK。",
+    "related": [
+      8,
+      10,
+      11
+    ]
+  },
+  "seq-21": {
+    "title": "输出、权限、引用再校验",
+    "chapter": 19,
+    "functions": [
+      "OpenAIEngine.execute",
+      "EvidenceService.validate_output",
+      "ScopeExecutionGate.validate_commit",
+      "ResearchService.validate_commit"
+    ],
+    "input": "候选 RunResult、schema/claims、当前 scope/node/chat versions",
+    "output": "有效 Commit 或明确修复/失败结果",
+    "role": "模型结束之后仍检查输出和发布资格；提交前不会认可过期或撤销的输入。",
+    "related": [
+      7,
+      10,
+      20,
+      5
+    ]
+  },
+  "seq-24": {
+    "title": "SSE terminal + 读取正式结果",
+    "chapter": 4,
+    "functions": [
+      "ChatReplies.stream",
+      "ChatReplies.status",
+      "ChatService.read"
+    ],
+    "input": "已保存 command/run/chat 状态",
+    "output": "SSE terminal、浏览器重读的正式 ChatThread",
+    "role": "正式终态来自服务端账本；浏览器清除 pending 并读取已保存回答。",
+    "related": [
+      5,
+      20,
+      23
+    ]
+  },
+  "state-1": {
+    "title": "冻结 TaskSpec",
+    "detail": "目标、方法、输入、验收、预算",
+    "chapter": 13,
+    "functions": [
+      "TaskService.prepare_spec"
+    ],
+    "input": "research_id、kind、要求/refs/results、方法/模型/limits",
+    "output": "不可变 TaskSpec 版本",
+    "role": "把专家职责、资料、验收条件与预算固定成工作单。",
+    "related": [
+      17,
+      18,
+      12
+    ]
+  },
+  "state-2": {
+    "title": "执行 Run",
+    "detail": "受控工具 + 输出契约",
+    "chapter": 13,
+    "functions": [
+      "TaskService._execute_binding"
+    ],
+    "input": "spec、binding、snapshot、scope",
+    "output": "受控 RunResult 与业务执行记录",
+    "role": "构建专家工具/输出契约和多次权限校验；编码使用专属能力。",
+    "related": [
+      6,
+      7,
+      21
+    ]
+  },
+  "state-3": {
+    "title": "保存 Result / Receipt",
+    "detail": "程序检查，语义仍 pending",
+    "chapter": 13,
+    "functions": [
+      "TaskLedger.commit",
+      "tasks/service.py::checks"
+    ],
+    "input": "Commit、专家输出、冻结 acceptance",
+    "output": "TaskReceipt、报告 artifact、程序/待语义检查",
+    "role": "保存完成仍先 pending_review；专家自检不是独立证据。",
+    "related": [
+      19,
+      20
+    ]
+  },
+  "state-4": {
+    "title": "pending_review 或 partial_pending_review",
+    "detail": "程序检查，语义仍 pending",
+    "chapter": 13,
+    "functions": [
+      "TaskLedger.commit",
+      "tasks/service.py::checks"
+    ],
+    "input": "Commit、专家输出、冻结 acceptance",
+    "output": "TaskReceipt、报告 artifact、程序/待语义检查",
+    "role": "保存完成仍先 pending_review；专家自检不是独立证据。",
+    "related": [
+      19,
+      20
+    ]
+  },
+  "state-5": {
+    "title": "独立审核",
+    "detail": "review → passed → adopt",
+    "chapter": 13,
+    "functions": [
+      "TaskService.review",
+      "TaskService.adopt"
+    ],
+    "input": "result_id、逐项 findings/reviewer、adoption reason",
+    "output": "passed/partial/rework；passed 可 adopted",
+    "role": "逐项复核后才能正式采用当前任务版本的完整交付。",
+    "related": [
+      19,
+      14
+    ]
+  },
+  "state-6": {
+    "title": "passed → adopted",
+    "chapter": 13,
+    "functions": [
+      "TaskService.review",
+      "TaskService.adopt"
+    ],
+    "input": "当前任务版本的收据、全部通过的独立 findings、采用 reason",
+    "output": "delivery=passed，adoption=adopted",
+    "role": "审核通过与采用是两次显式状态动作；只允许当前版本的 passed 结果采用。",
+    "related": [
+      19,
+      14
+    ]
+  },
+  "state-7": {
+    "title": "partial · 保留缺口",
+    "chapter": 13,
+    "functions": [
+      "TaskService.review"
+    ],
+    "input": "partial_pending_review 收据、逐项 findings、程序失败项",
+    "output": "delivery=partial（满足部分交付条件时）",
+    "role": "部分提取保留缺项，不能当完整 passed 或直接 adopted，也可能阻断下游。",
+    "related": [
+      14,
+      16,
+      19
+    ]
+  },
+  "state-8": {
+    "title": "rework · 返工",
+    "chapter": 13,
+    "functions": [
+      "TaskLedger.commit",
+      "TaskService.review"
+    ],
+    "input": "失败运行/不合格输出，或独立语义不通过的 findings",
+    "output": "delivery=rework 和可见失败/验收证据",
+    "role": "执行或审核未满足交付要求，需明确新修订/执行，不能把现产物当正式采用结果。",
+    "related": [
+      14,
+      19
+    ]
+  }
+}

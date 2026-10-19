@@ -1,0 +1,30 @@
+"""Explicit incident reproduction for preserved Stage 8 attempt 10; uses existing retry/adopt commands."""
+import asyncio,json,os,getpass
+from pathlib import Path
+from uuid import uuid4
+from openai import AsyncOpenAI,DefaultAsyncHttpxClient
+from agents import set_default_openai_client,set_default_openai_api
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources,build_research,build_tasks
+from agent_core.research.models import NodeCommand
+from agent_core.app.api import serial
+async def main():
+ os.environ['OPENAI_API_KEY']=os.environ.get('OPENAI_API_KEY') or getpass.getpass('DeepSeek credential: ');os.environ['OPENAI_MODEL']='deepseek-flash'
+ artifact={'purpose':'Read-only provider response observation during explicit fixed-input retry','responses':[]}
+ async def observe(response):
+  if not response.request.url.path.endswith('/responses'):return
+  await response.aread()
+  x=response.json();artifact['responses'].append({k:x.get(k) for k in ('id','status','incomplete_details','error','usage','max_output_tokens')})
+  artifact['responses'][-1]['texts']=[part.get('text','') for item in x.get('output',[]) if item.get('type')=='message' for part in item.get('content',[]) if part.get('type')=='output_text']
+ client=AsyncOpenAI(base_url='https://api.deepseek.com',max_retries=0,timeout=180,http_client=DefaultAsyncHttpxClient(event_hooks={'response':[observe]}));set_default_openai_client(client,use_for_tracing=False);set_default_openai_api('responses')
+ db=PostgresDatabase(os.environ['DATABASE_URL'])
+ try:
+  scopes=build_resources(db,'/private/tmp/stage8-pg-20261003/blobs');engine=OpenAIEngine();research=build_research(db,scopes,engine);build_tasks(db,scopes,research,engine)
+  original=json.loads(Path('docs/stage8-live-attempt-10.json').read_text());failed=next(n for n in original['manual'] if not n['output']);node=research.node(failed['node']['id'])
+  result=await research.submit(NodeCommand(command_id=str(uuid4()),research_id=node.research_id,node_id=node.id,kind='retry'))
+  artifact['command']=serial(result);artifact['execution']=serial(research.ledger.get(result.run_id))
+  Path('docs/stage8-provider-diagnostic.json').write_text(json.dumps(artifact,ensure_ascii=False,indent=2))
+  print(json.dumps([{k:v for k,v in x.items() if k!='texts'} for x in artifact['responses']],ensure_ascii=False))
+ finally:db.close();await client.close()
+asyncio.run(main())

@@ -1,0 +1,29 @@
+{
+  "model": "deepseek-flash",
+  "phase": "exploratory_draft_only",
+  "publishable": false,
+  "reason": "Seven real baseline cases were independently source-checked and had no method-attributed factual error; this is not a Stage 10 candidate.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "succeeded",
+      "error": null,
+      "output": {
+        "instructions": "仅依据指定材料提取字段，不引入外部信息，不猜测。先通读材料，确定目标 report 范围与目标期间，再定位现金流表/相关报表，锁定金额单位（如元、千元、百万元等），最后按 fields 固定键逐项提取：company、period、operating_cash_flow、capital_expenditure、unit。材料中的 capex 必须映射到 capital_expenditure。\n\n提取规则：\n1) 先确认单位，再读取数值；unit 只能来自表头、报表附注或明确单位说明，不得由数值大小、相邻期间或管理摘要推断。\n2) operating_cash_flow 与 capital_expenditure 应来自同一份报表、同一期间、同一金额单位；跨表、跨期或单位不一致时，标记 conflict 或 missing，不得混合口径。\n3) sources 必须与 fields 使用相同键，写明来源文件/报表名称、行项目、列期间或行号；若定位到小计/合计，说明组成项。\n4) 缺失单位或数字时，fields 对应键写 \"missing\"，并将该键加入 missing；不得用 0、空字符串、相邻期数值或推测值替代。\n5) 同一字段出现多个候选值时，先按目标期间、报表口径、单位一致性筛选；仍冲突则写入 conflicts，并选择最可靠来源或置为 \"missing\"。\n6) 空项：assumptions、conflicts、missing、limitations、follow_up 用空字符串数组，self_checks 用空对象。\n\n输出契约：只输出一个合法 JSON 对象，不要 Markdown、代码块或额外解释。report 为字符串；fields、sources、self_checks 为字符串字典；assumptions、conflicts、missing、limitations、follow_up 为字符串数组。self_checks 至少核对：字段键是否齐全、单位是否一致、期间是否为目标期间、sources 是否覆盖所有非 missing 字段、冲突与缺失是否已记录。",
+        "examples": [
+          "示例：fields={\"company\":\"<公司>\",\"period\":\"<期间>\",\"operating_cash_flow\":\"<数值>\",\"capital_expenditure\":\"<数值>\",\"unit\":\"<单位>\"}；sources 使用相同键，并分别填入来源报表、行项目或行号。",
+          "示例：若目标期间现金流表表头写明“单位：<单位>”，则只采用该表内同一期间、同一单位的经营活动现金流与资本开支；相邻年度或管理摘要中的数值不得替代。",
+          "示例：若材料只出现“capex”而未给出金额或单位，则 fields.capital_expenditure 写 \"missing\"，并在 missing 中加入 \"capital_expenditure\"；不得推测或使用其他期间数值。"
+        ]
+      },
+      "usage": {
+        "requests": 1,
+        "input_tokens": 387,
+        "output_tokens": 2584,
+        "complete": true
+      }
+    }
+  ],
+  "base_version": "extract-v1",
+  "generator_prompt": "{\"expert\": \"expert_extract\", \"kind\": \"extract\", \"current_instructions\": \"从指定材料提取字段，逐项给出来源位置；缺失单位或数字要明确返回 missing，不得猜测。只输出一个合法 JSON 对象，不要 Markdown 或解释。report 为字符串；fields 和 sources 为字符串字典；fields 的键固定包括 company、period、operating_cash_flow、capital_expenditure、unit。材料中的 capex 对应 capital_expenditure。sources 中用相同键写出来源文件与原文字段或行号。其余键 assumptions、conflicts、missing、limitations、follow_up 为字符串数组，self_checks 为字符串字典；空项用空数组或空对象。\", \"current_examples\": [], \"approved_reusable_lesson\": \"在同份来源中先锁定目标年度现金流表的金额单位，再核对各数值所在行；相邻年度、管理摘要和非金额单位不得替代表头口径。\", \"allowed_change\": \"Return JSON with instructions and examples only. Preserve task, tools, permissions and output contract.\"}"
+}

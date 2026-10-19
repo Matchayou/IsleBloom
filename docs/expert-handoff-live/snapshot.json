@@ -1,0 +1,470 @@
+{
+  "projection": {
+    "research": {
+      "id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+      "owner": "local",
+      "goal": "专家派遣与结果回传实测",
+      "scope_id": "6b6c44b4-64bc-45e5-bb40-cf0fb22f4c01",
+      "plans": []
+    },
+    "nodes": [
+      {
+        "node": {
+          "id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+          "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "display_parent_id": null,
+          "goal": "专家派遣与结果回传实测",
+          "allowed_tools": [
+            "read_source",
+            "search_source",
+            "search_web",
+            "fetch_web"
+          ],
+          "instructions": "",
+          "instruction_version": 1,
+          "scope_id": "b49f06d6-9cc9-4788-95a9-b555a57b4502",
+          "resource_refs": [],
+          "result_ids": [],
+          "selection": "selected",
+          "revision": 3,
+          "active_run_id": null,
+          "current_result_id": "result:02d59350-3a3d-4416-a61d-065c867387b8",
+          "position": [
+            0.0,
+            0.0
+          ]
+        },
+        "execution_status": "succeeded",
+        "stop_reason": null,
+        "versions": [
+          {
+            "id": "result:bc129b55-302a-4c45-8e40-f6d2900f6ba0",
+            "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+            "version": 1,
+            "run_id": "bc129b55-302a-4c45-8e40-f6d2900f6ba0",
+            "context_snapshot_id": "96d9b75a-3b16-49a6-851e-2eb4185fa986",
+            "instruction_version": 1,
+            "completion": "partial",
+            "missing": [
+              "专家报告尚未回传，结论与验收标准待专家完成后读取"
+            ],
+            "resource_refs": []
+          },
+          {
+            "id": "result:02d59350-3a3d-4416-a61d-065c867387b8",
+            "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+            "version": 2,
+            "run_id": "02d59350-3a3d-4416-a61d-065c867387b8",
+            "context_snapshot_id": "cb001832-1171-435b-9816-f5d4467b4a81",
+            "instruction_version": 1,
+            "completion": "partial",
+            "missing": [
+              "任务 a54ce68f 触发 read_source 的具体入参与被读正文（无法确认第183字符处内容）",
+              "任务 0b4103c6 的 token 用量明细与超限来源",
+              "两条错误发生在派遣/执行/回传哪一阶段的直接证据",
+              "空报告究竟是未产出、未落盘还是未投递的证据"
+            ],
+            "resource_refs": []
+          }
+        ],
+        "upstream_updates": []
+      }
+    ],
+    "display_edges": [],
+    "commands": [
+      {
+        "command": {
+          "command_id": "6669b645-ee59-445c-b6bd-5faf98e4067c",
+          "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "kind": "chat_reply",
+          "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+          "display_parent_id": null,
+          "expected_revision": 1,
+          "chat_revision": 1,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 900.0,
+            "max_depth": 1,
+            "max_calls": 12
+          },
+          "evidence_required": false
+        },
+        "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+        "run_id": "bc129b55-302a-4c45-8e40-f6d2900f6ba0",
+        "status": "completed",
+        "reason": null
+      },
+      {
+        "command": {
+          "command_id": "9895e689-1f39-41a6-8490-6f259c00bb67",
+          "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "kind": "chat_reply",
+          "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+          "display_parent_id": null,
+          "expected_revision": 0,
+          "chat_revision": 1,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 900.0,
+            "max_depth": 1,
+            "max_calls": 12
+          },
+          "evidence_required": false
+        },
+        "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+        "run_id": "4ef4f03f-6296-4106-957c-d0b7d6759c6c",
+        "status": "completed",
+        "reason": "tool_failed"
+      },
+      {
+        "command": {
+          "command_id": "chat-main:87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "kind": "create",
+          "node_id": null,
+          "display_parent_id": null,
+          "expected_revision": null,
+          "chat_revision": null,
+          "goal": "专家派遣与结果回传实测",
+          "allowed_tools": [
+            "read_source",
+            "search_source",
+            "search_web",
+            "fetch_web"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 8,
+            "timeout_seconds": 60.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "evidence_required": false
+        },
+        "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+        "run_id": null,
+        "status": "completed",
+        "reason": null
+      },
+      {
+        "command": {
+          "command_id": "resume:manager:8e86559db39b8b474973d65ff5b08c826d568f0b3fb6476d97c576cd1cd1f0c3:1",
+          "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+          "kind": "chat_followup",
+          "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+          "display_parent_id": null,
+          "expected_revision": 2,
+          "chat_revision": 2,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "本轮专家均已成功交付。读取两侧报告正文与引用的已保存原始来源，核对期间、分母、方法和数字后回答用户。说明各方新证据、与原结论的变化、分歧是否解决及原因、尚存未知；给出来源链接。交付待复核不妨碍据来源作明确且有边界的判断，但不得称为已独立复核或已正式采用。不要重复派发。",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 180.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "evidence_required": false
+        },
+        "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+        "run_id": "02d59350-3a3d-4416-a61d-065c867387b8",
+        "status": "completed",
+        "reason": null
+      }
+    ]
+  },
+  "activities": [
+    {
+      "spec": {
+        "id": "4c852929-f2ef-532c-b943-98103d086e34",
+        "version": 1,
+        "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+        "expert_session_id": "7bf3cf76-e27a-43d4-8142-b3553364d24d",
+        "context_packet_id": "71a88a62-d5b2-580d-b529-6b88d2f46801",
+        "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+        "node_revision": 2,
+        "chat_context": [],
+        "parent_task_id": null,
+        "user_request": "请实际调用一位子智能体专家，完成下面这个有边界的任务，并在专家完成后读取其完整报告，将结论返回到本主助手会话。不要只解释如何派遣，也不要由主助手代替专家完成分析。仅派一位适合分析/总结的专家。\n任务：依据我提供的两条失败信息，解释错误含义并给出再次运行的验收标准。\n已知信息（用户提供的故障记录，不是待联网研究的外部事实）：\n1. 任务 a54ce68f-014f-55b5-9680-1fa515b7df81，failed；Error running tool read_source: Expecting value: line 1 column 184 (char 183)。\n2. 任务 0b4103c6-869e-5c77-bcc2-3cdb808adf18，failed；Required model input, tools and output reserve exceed the token budget。\n3. 两个任务 report_preview 和 resource_refs 为空，delivery 为 null。\n交付要求：用中文不超过600字，逐项区分可从这些记录确认的事实和仍待查证的根因；解释空报告为何不能证明中途从未取得资料；列出“派遣成功、专家执行成功、主助手收到报告”三个阶段各自的验收证据。仅分析本消息，禁止联网、读取其他会话或重跑上述旧任务。不得虚构已检查代码或日志。任务没有外部资料引用，按用户输入分析并明确限制即可。\n派遣后按系统的后台续接机制等待专家完成；最终答复附本次真实 task_id、运行状态，以及专家报告要点。",
+        "goal": "请作为分析/总结专家，完成一个边界清晰、无需联网的分析任务。仅分析我提供的以下信息，不联网、不读取其他会话、不重跑任何旧任务。\n\n已知信息（用户提供的故障记录，属用户输入，非待联网研究的外部事实）：\n1. 任务 a54ce68f-014f-55b5-9680-1fa515b7df81，failed；Error running tool read_source: Expecting value: line 1 column 184 (char 183)。\n2. 任务 0b4103c6-869e-5c77-bcc2-3cdb808adf18，failed；Required model input, tools and output reserve exceed the token budget。\n3. 两个任务 report_preview 和 resource_refs 为空，delivery 为 null。\n\n请解释这两条错误信息的含义，并给出再次运行时的验收标准。\n交付要求：用中文，不超过600字。要求：\n1. 逐项区分「可从这些记录确认的事实」与「仍待查证的根因」。\n2. 解释空报告（report_preview/resource_refs 为空、delivery 为 null）为何不能证明执行中途从未取得过资料。\n3. 分别列出「派遣成功、专家执行成功、主助手收到报告」三个阶段各自的验收证据。\n4. 明确限制：任务没有外部资料引用，仅基于用户输入分析；不得虚构已检查过的代码或日志。\n回传：结论、来源引用（如无则说明）、版本、缺口。",
+        "kind": "synthesize",
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-v2",
+        "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+        "model": "deepseek-flash",
+        "routing_version": null,
+        "route_id": null,
+        "required_refs": [],
+        "optional_refs": [],
+        "required_results": [],
+        "pending_dependency_task_ids": [],
+        "memory_refs": [],
+        "allow_partial_results": false,
+        "required_fields": [],
+        "acceptance": [
+          {
+            "number": 1,
+            "requirement": "必需资料与依赖均获授权",
+            "blocking": true
+          },
+          {
+            "number": 2,
+            "requirement": "按任务目标交付报告",
+            "blocking": true
+          }
+        ],
+        "limits": {
+          "max_turns": 20,
+          "timeout_seconds": 360.0,
+          "max_depth": 1,
+          "max_calls": 24
+        },
+        "evidence_required": false,
+        "coding": null
+      },
+      "route": null,
+      "runs": [
+        {
+          "binding": {
+            "id": "01b7568c-8479-48cb-91de-eb7568f5cd2c",
+            "task_id": "4c852929-f2ef-532c-b943-98103d086e34",
+            "spec_version": 1,
+            "context_snapshot_id": "377e473c-9eb2-4bc0-997e-3a60a7e09d30",
+            "scope_id": "208d2446-7844-4989-97c5-caad8b70fa8a",
+            "scope_version": 2,
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "synthesize-v2",
+            "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+            "result_ids": [],
+            "resource_refs": [],
+            "missing_optional_refs": [],
+            "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+            "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+            "evidence_required": false
+          },
+          "execution_status": "succeeded",
+          "receipt": {
+            "code_candidate": null,
+            "artifact": {
+              "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+              "sha256": "5909c553ce992836019a4d30718fe4cfae42dc7e441a26e12ff41d1c9953f87d",
+              "bytes": 4091,
+              "chars": 1837,
+              "complete": true,
+              "brief": "结论\n\n一、事实与待查根因\n可确认事实：①任务 a54ce68f 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183）处未取得预期值，即该处内容不是合法 JSON；②任务 0b4103c6 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空，delivery 为 null，即无成品、无引用挂载、无投递。\n待查根因：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣、专家执行还是回传阶段；空报告是「未产出」还是「产出未落盘」。\n\n二、空报告≠中途从未取得资料\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n三、三阶段验收证据\n派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、专家会话与节点标识、入参原文可见。\n专家执行成功：终态 completed/succeeded；各工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（含 next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n主助手收到报告：delivery 非 null；report 正文非空且达标；result_id／工件哈希可读回；结论可定位到来源页码或文本位置。\n\n四、限制\n仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查任何代码或日志，故所有根因均属待查项，本文不据此断言结论。来源引用：无（输入为会话内故障记录，非外部资料）。版本 v1。缺口：上述根因与失败阶段的直接证据。",
+              "brief_truncated": false
+            },
+            "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+            "task_id": "4c852929-f2ef-532c-b943-98103d086e34",
+            "spec_version": 1,
+            "run_id": "01b7568c-8479-48cb-91de-eb7568f5cd2c",
+            "context_snapshot_id": "377e473c-9eb2-4bc0-997e-3a60a7e09d30",
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "synthesize-v2",
+            "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+            "result_ids": [],
+            "resource_refs": [],
+            "missing_optional_refs": [],
+            "program_checks": [
+              {
+                "number": 1,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Run output and fixed input identity checked",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Report present",
+                "reviewer": null
+              }
+            ],
+            "semantic_checks": [
+              {
+                "number": 1,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              }
+            ],
+            "assumptions": [
+              "read_source 的错误信息按其字面含义解读为 JSON 反序列化失败，位置为第1行第184字符（0基索引183）",
+              "token 预算错误按其字面含义解读为输入、工具预留与输出预留之和超过上限",
+              "report_preview/resource_refs/delivery 为最终交付层字段"
+            ],
+            "conflicts": [],
+            "missing": [
+              "任务 a54ce68f 中触发 read_source 的具体入参与被读正文（无法确认第183字符处内容）",
+              "任务 0b4103c6 的 token 用量明细与超限来源",
+              "两条错误发生在派遣/执行/回传哪一阶段的直接证据",
+              "空报告究竟是未产出、未落盘还是未投递的证据"
+            ],
+            "limitations": [
+              "严格按用户限定范围：不联网、不读取其他会话、不重跑旧任务、不查看代码或日志",
+              "因此不得断言任何根因，全部根因列为待查",
+              "报告中的阶段验收标准属依据错误语义与交付字段含义推导的推论，非来源事实"
+            ],
+            "follow_up": [
+              "如获授权，读取两条任务的工具调用日志与来源快照，定位第183字符处内容",
+              "核对超预算任务的输入长度、工具结果大小与输出预留设置",
+              "确认交付层空值的具体写入时点"
+            ],
+            "delivery": "pending_review",
+            "adoption": "for_discussion",
+            "adoption_reason": null
+          },
+          "artifact": {
+            "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+            "sha256": "5909c553ce992836019a4d30718fe4cfae42dc7e441a26e12ff41d1c9953f87d",
+            "bytes": 4091,
+            "chars": 1837,
+            "complete": true,
+            "brief": "结论\n\n一、事实与待查根因\n可确认事实：①任务 a54ce68f 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183）处未取得预期值，即该处内容不是合法 JSON；②任务 0b4103c6 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空，delivery 为 null，即无成品、无引用挂载、无投递。\n待查根因：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣、专家执行还是回传阶段；空报告是「未产出」还是「产出未落盘」。\n\n二、空报告≠中途从未取得资料\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n三、三阶段验收证据\n派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、专家会话与节点标识、入参原文可见。\n专家执行成功：终态 completed/succeeded；各工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（含 next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n主助手收到报告：delivery 非 null；report 正文非空且达标；result_id／工件哈希可读回；结论可定位到来源页码或文本位置。\n\n四、限制\n仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查任何代码或日志，故所有根因均属待查项，本文不据此断言结论。来源引用：无（输入为会话内故障记录，非外部资料）。版本 v1。缺口：上述根因与失败阶段的直接证据。",
+            "brief_truncated": false
+          },
+          "execution_phase": {
+            "phase": "delivered",
+            "reason": "validated_output",
+            "transitions": [
+              "researching",
+              "finalizing",
+              "delivered"
+            ],
+            "finalization_reason": "model_completed"
+          },
+          "usage": {
+            "requests": 1,
+            "input_tokens": 5740,
+            "output_tokens": 2964,
+            "complete": true
+          },
+          "output_repairs": [],
+          "error": null,
+          "started_at": "2026-10-10T23:06:00.491786+08:00",
+          "access": "available"
+        }
+      ],
+      "job_status": "SUCCESS",
+      "dependencies": [],
+      "messages": [],
+      "information_requests": [],
+      "dispatch_status": "completed"
+    }
+  ],
+  "chat": {
+    "chat": {
+      "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+      "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+      "revision": 3,
+      "fork_message_id": null,
+      "fork_source_revision": null,
+      "inherited": [],
+      "messages": [
+        {
+          "id": "81284a38-672c-4b3b-aa9a-547a15d98ebb",
+          "role": "user",
+          "content": "请实际调用一位子智能体专家，完成下面这个有边界的任务，并在专家完成后读取其完整报告，将结论返回到本主助手会话。不要只解释如何派遣，也不要由主助手代替专家完成分析。仅派一位适合分析/总结的专家。\n任务：依据我提供的两条失败信息，解释错误含义并给出再次运行的验收标准。\n已知信息（用户提供的故障记录，不是待联网研究的外部事实）：\n1. 任务 a54ce68f-014f-55b5-9680-1fa515b7df81，failed；Error running tool read_source: Expecting value: line 1 column 184 (char 183)。\n2. 任务 0b4103c6-869e-5c77-bcc2-3cdb808adf18，failed；Required model input, tools and output reserve exceed the token budget。\n3. 两个任务 report_preview 和 resource_refs 为空，delivery 为 null。\n交付要求：用中文不超过600字，逐项区分可从这些记录确认的事实和仍待查证的根因；解释空报告为何不能证明中途从未取得资料；列出“派遣成功、专家执行成功、主助手收到报告”三个阶段各自的验收证据。仅分析本消息，禁止联网、读取其他会话或重跑上述旧任务。不得虚构已检查代码或日志。任务没有外部资料引用，按用户输入分析并明确限制即可。\n派遣后按系统的后台续接机制等待专家完成；最终答复附本次真实 task_id、运行状态，以及专家报告要点。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": null
+        },
+        {
+          "id": "chat-reply:bc129b55-302a-4c45-8e40-f6d2900f6ba0",
+          "role": "assistant",
+          "content": "已派遣一位分析/总结专家（expert_synthesize，synthesize-v2）处理该有边界任务。\n\n- 本次真实 task_id：`4c852929-f2ef-532c-b943-98103d086e34`\n- session_id：`7bf3cf76-e27a-43d4-8142-b3553364d24d`\n- 状态：accepted（已受理，正在后台执行）\n\n任务内容：解释两条失败信息的含义并给出再次运行的验收标准，区分可确认事实与待查证根因，说明空报告不能证明中途从未取得资料，并列明「派遣成功、专家执行成功、主助手收到报告」三阶段验收证据。\n\n专家仍在后台执行中，尚未回传报告；本轮仅完成派遣，不构成研究已完成。待专家结束，系统自动续接后我再读取并返回其完整报告要点。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": "bc129b55-302a-4c45-8e40-f6d2900f6ba0"
+        },
+        {
+          "id": "chat-reply:02d59350-3a3d-4416-a61d-065c867387b8",
+          "role": "assistant",
+          "content": "## 专家回传结果（已读取完整正文，非短预览）\n\n- 本次真实 task_id：`4c852929-f2ef-532c-b943-98103d086e34`\n- 专家 session_id：`7bf3cf76-e27a-43d4-8142-b3553364d24d`\n- 执行状态：`succeeded`；交付状态：`pending_review`（待复核，尚未正式采用）\n\n## 专家结论要点\n\n**一、可确认事实 vs 待查根因**\n\n可确认事实：①任务 `a54ce68f` 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183，0基）未取得预期值，即该处不是合法 JSON；②任务 `0b4103c6` 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空、delivery 为 null，即无成品、无引用挂载、无投递。\n\n待查根因（专家明确不据此断言）：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣／执行／回传哪一阶段；空报告是「未产出」还是「产出未落盘」。\n\n**二、空报告 ≠ 中途从未取得资料**\n\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n**三、三阶段验收证据**\n\n- 派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、可见专家会话与节点标识、入参原文可见。\n- 专家执行成功：终态 completed/succeeded；工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n- 主助手收到报告：delivery 非 null；report 正文非空且达标；result_id/工件哈希可读回；结论可定位到来源页码或文本位置。\n\n**四、限制**：仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查代码或日志，故所有根因均属待查项。\n\n## 交付与来源说明\n\n本轮仅派遣一位专家、产生一份报告，不存在「两侧/多份报告」可比较，故无期间、分母、方法、数字可核对，也无分歧待裁决。该任务按交付要求明确「无外部资料引用」，专家 resource_refs 为空，故**无来源链接可提供**；输入为会话内故障记录，非外部事实。以上为对专家报告的转述与有边界判断，交付仍为 `pending_review`，不视为已独立复核或已正式采用。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": "02d59350-3a3d-4416-a61d-065c867387b8"
+        }
+      ]
+    },
+    "upstream_updated": false
+  }
+}

@@ -1,0 +1,733 @@
+{
+  "research": {
+    "id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+    "owner": "local",
+    "goal": "ReAct 与先规划后执行的研究比较",
+    "scope_id": "fd51ed89-7295-4036-aa8c-493152c48a33",
+    "plans": [
+      {
+        "id": "04b7b122-302a-4d7d-81f7-66e322c1590e",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "steps": [
+          {
+            "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+            "depends_on": [],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          },
+          {
+            "node_id": "c6028ccc-d326-44f7-a4db-f027f1e9a1c4",
+            "depends_on": [
+              "bb00dc20-20f3-4742-984d-77ccd1a8e31e"
+            ],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          },
+          {
+            "node_id": "bf4cdc2a-933d-4b23-8f5c-0a72749a53d3",
+            "depends_on": [
+              "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+              "c6028ccc-d326-44f7-a4db-f027f1e9a1c4"
+            ],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          }
+        ],
+        "policy": {
+          "max_concurrency": 1,
+          "max_runs": 3,
+          "max_total_tokens": 30000,
+          "timeout_seconds": 600.0,
+          "completion": "fail_fast"
+        }
+      },
+      {
+        "id": "102de6fe-52f4-4ebe-b97f-d9805854eb7d",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "steps": [
+          {
+            "node_id": "aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+            "depends_on": [],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          },
+          {
+            "node_id": "c50e02ff-c31b-4190-bf05-22bb9ac172e2",
+            "depends_on": [
+              "aaed4f0f-85a0-4707-b928-2c2c55eefdc0"
+            ],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          },
+          {
+            "node_id": "7b2ca14c-3414-4dfd-93c1-f7214a0978d3",
+            "depends_on": [
+              "aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+              "c50e02ff-c31b-4190-bf05-22bb9ac172e2"
+            ],
+            "limits": {
+              "max_turns": 6,
+              "timeout_seconds": 180.0,
+              "max_depth": 1,
+              "max_calls": 4
+            }
+          }
+        ],
+        "policy": {
+          "max_concurrency": 1,
+          "max_runs": 3,
+          "max_total_tokens": 30000,
+          "timeout_seconds": 600.0,
+          "completion": "fail_fast"
+        }
+      },
+      {
+        "id": "ebbb90af-50a4-4af7-b210-fb866e28a991",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "steps": [
+          {
+            "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+            "depends_on": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 600.0,
+              "max_depth": 1,
+              "max_calls": 6
+            }
+          },
+          {
+            "node_id": "c272b527-c6d5-4559-bdb4-c8491a8cab00",
+            "depends_on": [
+              "c3ec3523-fab5-4f70-841d-7169db840ba7"
+            ],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 600.0,
+              "max_depth": 1,
+              "max_calls": 6
+            }
+          },
+          {
+            "node_id": "ac53394e-38e2-4c15-aa85-177e30204b25",
+            "depends_on": [
+              "c3ec3523-fab5-4f70-841d-7169db840ba7",
+              "c272b527-c6d5-4559-bdb4-c8491a8cab00"
+            ],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 600.0,
+              "max_depth": 1,
+              "max_calls": 6
+            }
+          }
+        ],
+        "policy": {
+          "max_concurrency": 1,
+          "max_runs": 3,
+          "max_total_tokens": 120000,
+          "timeout_seconds": 1800.0,
+          "completion": "fail_fast"
+        }
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "node": {
+        "id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": null,
+        "plan_proposal_id": null,
+        "goal": "ReAct 与先规划后执行的研究比较",
+        "allowed_tools": [
+          "read_source",
+          "search_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "",
+        "instruction_version": 1,
+        "scope_id": "3bcea84b-c1eb-451b-b7e5-74599dc24f21",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "7b2ca14c-3414-4dfd-93c1-f7214a0978d3",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "7ebde8db-a948-4758-9551-c885958c927c",
+        "goal": "综合前两步，产出最终交付物：对照表、有来源的简短报告、针对本项目的使用建议与局限性。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合第一步与第二步的交付，形成：(1) 一张对照表（两种范式 × 适用场景/成本/可靠性/失败模式/确认开销）；(2) 一份有来源的简短报告，逐条引用第一步来源；(3) 针对本项目（研究型智能体中的工具调用与人工确认流程）的使用建议与局限性，仅涉及研究工具调用和人工确认流程的选择与权衡，不安排代码改动、发布或实际基准实验。成本描述仅使用模型轮次、工具调用、上下文开销、失败重试等可核对指标；无法核对的数字与资料缺口明确标记“未知”并写入局限性。以 read_source/search_source 复核引用，保证结论可溯源。\n交付要求：最终交付物：对照表 + 有来源的简短报告 + 针对本项目的使用建议与局限性（含未知项与资料缺口说明）。",
+        "instruction_version": 1,
+        "scope_id": "e9e906e8-71e5-436e-938a-2429c3c950c6",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "7ebde8db-a948-4758-9551-c885958c927c",
+        "goal": "获取并核对 ReAct 与“先规划、用户确认、再执行”两种范式的权威资料，建立可溯源的事实基础。",
+        "allowed_tools": [
+          "search_web",
+          "fetch_web",
+          "search_source",
+          "read_source"
+        ],
+        "instructions": "仅在用户确认后的执行阶段联网。使用 search_web 检索并定位：ReAct 原始论文（Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models）；OpenAI、Anthropic、LangChain 等关于 agent 规划、工具调用与人工确认（human-in-the-loop / approval / plan-then-confirm）的官方文档；以及相关公开工程资料。对每个候选来源用 fetch_web 读取，记录出处、版本或发布日期与关键论断；对已获准资料使用 search_source/read_source 核对（当前 sources 为空，若执行时获准新资料再行核对）。优先官方文档与原始论文，排除二手转述；不记录或编造任何实验结果、费用或性能数字，无法核对的数字明确标记为“未知”。\n交付要求：权威资料清单：每项含来源类型（论文/官方文档/工程资料）、标题、URL 或引用、版本或日期、关键摘录、可信度与核对状态、无法核对项标记“未知”。",
+        "instruction_version": 2,
+        "scope_id": "ce06bf0a-fa03-4e98-a97e-6240c5d59ab7",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "failed",
+      "stop_reason": "timeout",
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "ac53394e-38e2-4c15-aa85-177e30204b25",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "cda35191-f054-471f-a836-44b7ba2ce55d",
+        "goal": "依赖前两步，综合最终对照表、简短报告与局限性说明。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "仅用 read_source/search_source 读取和检索已有资料，不联网。整合最终对照表、约1500字简短报告、工作流建议与局限性。明确标注证据不足为 missing，不把未知当结论，不安排代码、发布或基准实验。\n交付要求：最终对照表、简短报告、工作流建议、局限性说明（含 missing 项与权威资料清单）。",
+        "instruction_version": 1,
+        "scope_id": "d2110d22-3657-4963-b344-a9524db21424",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "abc08601-5ea6-45c2-bd22-25ab4da4b71c",
+        "goal": "获取并核对 ReAct 与“先规划、用户确认、再执行”两种范式的权威资料，建立可溯源的事实基础。",
+        "allowed_tools": [
+          "search_web",
+          "fetch_web",
+          "search_source",
+          "read_source"
+        ],
+        "instructions": "仅在用户确认后的执行阶段联网。使用 search_web 检索并定位：ReAct 原始论文（Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models）；OpenAI、Anthropic、LangChain 等关于 agent 规划、工具调用与人工确认（human-in-the-loop / approval / plan-then-confirm）的官方文档；以及相关公开工程资料。对每个候选来源用 fetch_web 读取，记录出处、版本或发布日期与关键论断；对已获准资料使用 search_source/read_source 核对（当前 sources 为空，若执行时获准新资料再行核对）。优先官方文档与原始论文，排除二手转述；不记录或编造任何实验结果、费用或性能数字，无法核对的数字明确标记为“未知”。\n交付要求：权威资料清单：每项含来源类型（论文/官方文档/工程资料）、标题、URL 或引用、版本或日期、关键摘录、可信度与核对状态、无法核对项标记“未知”。",
+        "instruction_version": 2,
+        "scope_id": "3c8397bb-8f39-4a2a-a7f0-275c773700a5",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": "result:887ad94a-c028-4ba3-96da-46993988a306",
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "succeeded",
+      "stop_reason": null,
+      "versions": [
+        {
+          "id": "result:887ad94a-c028-4ba3-96da-46993988a306",
+          "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+          "version": 1,
+          "run_id": "887ad94a-c028-4ba3-96da-46993988a306",
+          "context_snapshot_id": "75436eaf-059c-4921-9c28-25aa42fad8e0",
+          "instruction_version": 2,
+          "completion": "partial",
+          "missing": [
+            "尚未执行任何研究步骤；权威资料清单为空，各来源的具体 URL、版本或发布日期、关键摘录在获取前均为「未知」。",
+            "ReAct 原始论文、OpenAI/Anthropic/LangChain 官方文档及公开工程资料均未检索与读取，待用户确认后执行。",
+            "成本指标（模型轮次、工具调用、上下文开销、失败重试）及可靠性结论无任何已核对数据，均标记「未知」，待步骤1、步骤2产出后补足。"
+          ],
+          "resource_refs": []
+        }
+      ],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "bf4cdc2a-933d-4b23-8f5c-0a72749a53d3",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "abc08601-5ea6-45c2-bd22-25ab4da4b71c",
+        "goal": "综合前两步，产出最终交付物：对照表、有来源的简短报告、针对本项目的使用建议与局限性。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合第一步与第二步的交付，形成：(1) 一张对照表（两种范式 × 适用场景/成本/可靠性/失败模式/确认开销）；(2) 一份有来源的简短报告，逐条引用第一步来源；(3) 针对本项目（研究型智能体中的工具调用与人工确认流程）的使用建议与局限性，仅涉及研究工具调用和人工确认流程的选择与权衡，不安排代码改动、发布或实际基准实验。成本描述仅使用模型轮次、工具调用、上下文开销、失败重试等可核对指标；无法核对的数字与资料缺口明确标记“未知”并写入局限性。以 read_source/search_source 复核引用，保证结论可溯源。\n交付要求：最终交付物：对照表 + 有来源的简短报告 + 针对本项目的使用建议与局限性（含未知项与资料缺口说明）。",
+        "instruction_version": 1,
+        "scope_id": "18efcd65-405a-46bd-a533-b7884bd3b76d",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "c272b527-c6d5-4559-bdb4-c8491a8cab00",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "cda35191-f054-471f-a836-44b7ba2ce55d",
+        "goal": "依赖第1步证据，比较两类智能体的机制、失败模式、适用场景与成本构成。",
+        "allowed_tools": [
+          "read_source",
+          "search_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "复用第1步上游证据逐项对比：机制（推理-行动交替 vs 计划-人工确认-再执行）、失败模式（推理漂移/错误传播 vs 人工确认延迟/瓶颈）、适用场景、成本构成（token/时延/人力等维度）。优先引用已有资料，缺口再定向 search_web/fetch_web。无实测数字标 missing/unknown，不将未知当结论。\n交付要求：机制、失败模式、适用场景、成本构成四维对比初稿，含来源标注与 missing 项。",
+        "instruction_version": 1,
+        "scope_id": "35cff937-5fde-49eb-b0e5-91c91188acfa",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "cda35191-f054-471f-a836-44b7ba2ce55d",
+        "goal": "核对 ReAct 原论文的机制证据并补齐一个官方\"先规划-人工确认-再执行\"来源，锁定 2-3 份可引用的关键一级资料。",
+        "allowed_tools": [
+          "read_source",
+          "search_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "先对已提供的 arXiv abs 页(2210.03629)用 search_source 定位摘要，确认其仅为摘要页而非全文。再用 search_web/fetch_web 定位 ReAct 全文或其他一级资料，核对 thought/action/observation 交替机制细节。另检索一个官方人工确认/计划执行来源（官方文档或一级工程资料）。逐份记录出处与是否获取全文，不编造性能或费用数字。\n交付要求：2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。",
+        "instruction_version": 2,
+        "scope_id": "d155442e-1630-48d9-9da8-733e5c45b57d",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          },
+          {
+            "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+            "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+            "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+          },
+          {
+            "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+            "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+            "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": "result:9e970fa7-9221-4574-9269-eea313479d9b",
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "succeeded",
+      "stop_reason": null,
+      "versions": [
+        {
+          "id": "result:9e970fa7-9221-4574-9269-eea313479d9b",
+          "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+          "version": 1,
+          "run_id": "9e970fa7-9221-4574-9269-eea313479d9b",
+          "context_snapshot_id": "76fbe91c-6d47-4c65-b0e3-52c35c62b4db",
+          "instruction_version": 2,
+          "completion": "partial",
+          "missing": [
+            "ReAct 论文 ICLR 版全文正文未获取：OpenReview PDF（https://openreview.net/pdf?id=WE_vluYUL-X）在 fetch_web 时返回“Fetched source redirected or changed URL”，因此无法从论文正文直接核对 thought/action/observation 逐轮交替的完整轨迹细节。当前机制证据来自 arXiv 摘要页与 Google Research Blog 官方博客的一级说明。",
+            "arXiv abs 页（2210.03629）仅为摘要页而非全文，无法作为逐轮机制细节的全文级证据。"
+          ],
+          "resource_refs": [
+            {
+              "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+              "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+              "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+            },
+            {
+              "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+              "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+              "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+            },
+            {
+              "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+              "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+              "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+            }
+          ]
+        }
+      ],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "c50e02ff-c31b-4190-bf05-22bb9ac172e2",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "7ebde8db-a948-4758-9551-c885958c927c",
+        "goal": "基于第一步资料，比较两种范式在控制流、失败场景、适用场景、成本构成与可靠性上的差异。",
+        "allowed_tools": [
+          "search_source",
+          "read_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "只使用第一步已核对的资料（以 search_source/read_source 读取；如个别论断缺少来源，可用 search_web/fetch_web 定向补充，但不得重复第一步的全面检索）。对比维度：(1) 控制流——ReAct 的思考-行动-观察循环与自主工具调用，对比“先规划-用户确认-再执行”的显式人工确认节点与分段执行；(2) 失败场景——ReAct 的循环不收敛、幻觉工具调用、上下文膨胀，后者的规划错误、确认瓶颈、僵化执行；(3) 成本指标——仅使用可核对指标：模型轮次、工具调用次数、上下文开销、失败重试次数，不引用任何未经来源证实的费用或性能数字，无数据处标记“未知”；(4) 可靠性——失败可恢复性、人工干预点与可控性。产出机制与失败场景对照表草稿，作为第三步综合的基础。\n交付要求：机制与失败场景对照表（草稿），含适用场景、成本指标、可靠性、失败模式、人工确认开销等列；每项结论附来源引用，无数据处标记“未知”。",
+        "instruction_version": 1,
+        "scope_id": "3c2cc265-2f3e-46d5-bbf6-003417866117",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    },
+    {
+      "node": {
+        "id": "c6028ccc-d326-44f7-a4db-f027f1e9a1c4",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "display_parent_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+        "plan_proposal_id": "abc08601-5ea6-45c2-bd22-25ab4da4b71c",
+        "goal": "基于第一步资料，比较两种范式在控制流、失败场景、适用场景、成本构成与可靠性上的差异。",
+        "allowed_tools": [
+          "search_source",
+          "read_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "只使用第一步已核对的资料（以 search_source/read_source 读取；如个别论断缺少来源，可用 search_web/fetch_web 定向补充，但不得重复第一步的全面检索）。对比维度：(1) 控制流——ReAct 的思考-行动-观察循环与自主工具调用，对比“先规划-用户确认-再执行”的显式人工确认节点与分段执行；(2) 失败场景——ReAct 的循环不收敛、幻觉工具调用、上下文膨胀，后者的规划错误、确认瓶颈、僵化执行；(3) 成本指标——仅使用可核对指标：模型轮次、工具调用次数、上下文开销、失败重试次数，不引用任何未经来源证实的费用或性能数字，无数据处标记“未知”；(4) 可靠性——失败可恢复性、人工干预点与可控性。产出机制与失败场景对照表草稿，作为第三步综合的基础。\n交付要求：机制与失败场景对照表（草稿），含适用场景、成本指标、可靠性、失败模式、人工确认开销等列；每项结论附来源引用，无数据处标记“未知”。",
+        "instruction_version": 1,
+        "scope_id": "8391ab85-20ec-4cb4-81e3-873579b52b38",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 0,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "execution_status": "idle",
+      "stop_reason": null,
+      "versions": [],
+      "upstream_updates": []
+    }
+  ],
+  "display_edges": [
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "7b2ca14c-3414-4dfd-93c1-f7214a0978d3"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "aaed4f0f-85a0-4707-b928-2c2c55eefdc0"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "ac53394e-38e2-4c15-aa85-177e30204b25"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "bb00dc20-20f3-4742-984d-77ccd1a8e31e"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "bf4cdc2a-933d-4b23-8f5c-0a72749a53d3"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "c272b527-c6d5-4559-bdb4-c8491a8cab00"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "c3ec3523-fab5-4f70-841d-7169db840ba7"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "c50e02ff-c31b-4190-bf05-22bb9ac172e2"
+    },
+    {
+      "source": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "target": "c6028ccc-d326-44f7-a4db-f027f1e9a1c4"
+    }
+  ],
+  "commands": [
+    {
+      "command": {
+        "command_id": "chat-main:0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "kind": "create",
+        "node_id": null,
+        "display_parent_id": null,
+        "expected_revision": null,
+        "chat_revision": null,
+        "goal": "ReAct 与先规划后执行的研究比较",
+        "allowed_tools": [
+          "read_source",
+          "search_source",
+          "search_web",
+          "fetch_web"
+        ],
+        "instructions": "",
+        "resource_refs": [],
+        "result_ids": [],
+        "missing": [],
+        "position": [
+          0.0,
+          0.0
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 60.0,
+          "max_depth": 1,
+          "max_calls": 8
+        },
+        "evidence_required": false
+      },
+      "node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+      "run_id": null,
+      "status": "completed",
+      "reason": null
+    },
+    {
+      "command": {
+        "command_id": "plan:04b7b122-302a-4d7d-81f7-66e322c1590e:bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "kind": "adopt",
+        "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+        "display_parent_id": null,
+        "expected_revision": null,
+        "chat_revision": null,
+        "goal": "",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "",
+        "resource_refs": [],
+        "result_ids": [],
+        "missing": [],
+        "position": [
+          0.0,
+          0.0
+        ],
+        "limits": {
+          "max_turns": 6,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 4
+        },
+        "evidence_required": false
+      },
+      "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+      "run_id": "887ad94a-c028-4ba3-96da-46993988a306",
+      "status": "completed",
+      "reason": null
+    },
+    {
+      "command": {
+        "command_id": "plan:102de6fe-52f4-4ebe-b97f-d9805854eb7d:aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "kind": "adopt",
+        "node_id": "aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+        "display_parent_id": null,
+        "expected_revision": null,
+        "chat_revision": null,
+        "goal": "",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "",
+        "resource_refs": [],
+        "result_ids": [],
+        "missing": [],
+        "position": [
+          0.0,
+          0.0
+        ],
+        "limits": {
+          "max_turns": 6,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 4
+        },
+        "evidence_required": false
+      },
+      "node_id": "aaed4f0f-85a0-4707-b928-2c2c55eefdc0",
+      "run_id": "0493e159-04c6-438f-ad26-73dd962de3d6",
+      "status": "completed",
+      "reason": "timeout"
+    },
+    {
+      "command": {
+        "command_id": "plan:ebbb90af-50a4-4af7-b210-fb866e28a991:c3ec3523-fab5-4f70-841d-7169db840ba7",
+        "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+        "kind": "adopt",
+        "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+        "display_parent_id": null,
+        "expected_revision": null,
+        "chat_revision": null,
+        "goal": "",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          }
+        ],
+        "result_ids": [],
+        "missing": [],
+        "position": [
+          0.0,
+          0.0
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        },
+        "evidence_required": false
+      },
+      "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+      "run_id": "9e970fa7-9221-4574-9269-eea313479d9b",
+      "status": "completed",
+      "reason": null
+    }
+  ]
+}

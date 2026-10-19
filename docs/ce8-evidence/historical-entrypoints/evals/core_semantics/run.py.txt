@@ -1,0 +1,33 @@
+"""Run explicitly against the real configured model; exit 2 means NOT RUN."""
+import asyncio
+import json
+import os
+import re
+
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.composition import build
+
+
+async def main():
+    if not os.environ.get("OPENAI_API_KEY"):
+        print(json.dumps({"status": "not_run", "reason": "OPENAI_API_KEY missing"}))
+        return 2
+    events = []
+    service = build(OpenAIEngine(), events.append)
+    records = []
+    for prompt in ("算出 12×8，再让表达专家把结果说成一句中文", "刚才结果是多少？"):
+        result = await service.send("semantic-eval", "assistant", prompt)
+        records.append({"input": prompt, "result": result.model_dump(mode="json")})
+    first, second = [r["result"] for r in records]
+    calls = [e.name for e in events if e.phase == "tool" and e.status == "started"]
+    passed = (all(r["status"] == "succeeded" and "96" in (r["output"] or "") for r in [first, second])
+              and calls == ["multiply", "delegate"]
+              and bool(re.search(r"[\u4e00-\u9fff]", first["output"] or "")))
+    print(json.dumps({"engine": "real_openai", "model": os.environ.get("OPENAI_MODEL", "gpt-4.1-mini"),
+                      "status": "passed" if passed else "failed", "records": records,
+                      "events": [e.model_dump(mode="json") for e in events]}, ensure_ascii=False, indent=2))
+    return 0 if passed else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(asyncio.run(main()))

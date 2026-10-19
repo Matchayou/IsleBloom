@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-11",
+  "mode": "direction_survey",
+  "status": "component_harness_implemented_live_smoke_recorded",
+  "topic": "Evidence-grounded personal research agent with expert collaboration, controlled execution, context compaction and durable recovery",
+  "selected_approach": {
+    "name": "Project-specific component evaluation following DeerFlow 2.0",
+    "selected_by": "user",
+    "status": "component_harness_implemented_semantic_review_pending",
+    "specification": "docs/agent-evaluation-recommendations-2026-10-11.md",
+    "principles": [
+      "Fixed local inputs with hidden expected answers",
+      "Fresh paired runs changing one factor",
+      "Independent checks of saved final artifacts",
+      "Separate artifact correctness and clean execution",
+      "Include failed runs and incomplete usage in reporting",
+      "Blind human semantic review before calibrated automated judging"
+    ],
+    "initial_smoke_cases": [
+      "Q01",
+      "Q02"
+    ],
+    "development_cases": [
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q06",
+      "Q07",
+      "Q08"
+    ],
+    "repetitions_per_case_per_arm": 3,
+    "baseline_component_trials": 24,
+    "paired_component_trials": 48,
+    "candidate_arm": "Not yet selected; establish baseline first and rerun both arms when a concrete candidate exists.",
+    "primary_metrics": [
+      "artifact_correct",
+      "clean_success",
+      "model_calls",
+      "tokens_with_usage_completeness",
+      "latency"
+    ],
+    "scope": "Expert component first; main-chat multi-expert end-to-end tests are a separate later suite. Eight development cases do not establish general benchmark performance.",
+    "implementation": "evals/research_quality/README.md",
+    "implemented_ab_factor": "expert_synthesize method instructions only; isolated database per arm/trial",
+    "validation": {
+      "new_evaluator_tests_passed": 41,
+      "related_tests_passed": 28,
+      "related_tests_skipped_missing_database_env": 28,
+      "live_smoke_batch": ".agent-evals/smoke-2026-10-11",
+      "cashflow_recheck_batch": ".agent-evals/cashflow-recheck-2026-10-11",
+      "semantic_review": "pending_human_review",
+      "e2e_collaboration": "not_implemented_in_this_component_suite",
+      "live_task_attempts": 3,
+      "live_tasks_with_saved_artifacts": 2,
+      "live_tasks_rejected_by_product_citation_validation": 1,
+      "first_smoke_grader_false_negatives": "Q02 equivalent entity labels; original frozen batch retained, aliases corrected for new batches"
+    }
+  },
+  "reference_implementations": [
+    {
+      "name": "DeerFlow 2.0 context snapshot benchmark",
+      "sources": [
+        "https://github.com/bytedance/deer-flow/blob/main/backend/scripts/benchmark/context_snapshot/README.md",
+        "https://github.com/bytedance/deer-flow/blob/main/backend/scripts/benchmark/context_snapshot/cases.py",
+        "https://github.com/bytedance/deer-flow/blob/main/backend/scripts/benchmark/context_snapshot/grading.py",
+        "https://github.com/bytedance/deer-flow/blob/main/backend/scripts/benchmark/context_snapshot/report.py"
+      ],
+      "observed_method": "Eight synthetic tasks, paired handoff variants, public and hidden artifact checks, artifact correctness separate from clean success, accounting for parent and worker usage.",
+      "adaptation": "Adopt evaluation boundaries and artifact-first reporting; use this project's sources, result schema, controlled ledger and semantic requirements.",
+      "limitation": "A component benchmark, not full product or general research capability evaluation; JSON/Python checks do not replace semantic review of research prose."
+    },
+    {
+      "name": "DeerFlow 2.0 memory eviction benchmark",
+      "sources": [
+        "https://github.com/bytedance/deer-flow/blob/main/backend/scripts/benchmark/deermem_eviction/README.md"
+      ],
+      "observed_method": "Fixed LongMemEval subset plus synthetic correction cases, paired eviction policies, separate support-retention and answer scoring, blind deterministic grading and paired statistics.",
+      "adaptation": "Borrow fixed inputs, blinded grading and explicit subset boundaries; memory eviction itself is outside the initial project suite.",
+      "limitation": "Neither a full official LongMemEval result nor full memory extraction and application evaluation."
+    }
+  ],
+  "search_plan_record": {
+    "note": "Retrospective record of the search scope; not an experiment preregistration.",
+    "seed_systems": [
+      "Anthropic multi-agent research system",
+      "LangChain Open Deep Research"
+    ],
+    "benchmark_queries": [
+      "DeepResearch Bench II expert rubrics",
+      "DeepSearchQA multi-step information seeking",
+      "BrowseComp-Plus fixed corpus",
+      "AgentDojo utility security",
+      "GAIA attached files"
+    ],
+    "tool_queries": [
+      "Inspect AI external agent bridge",
+      "LangSmith evaluation"
+    ],
+    "selection": "Prioritize original papers, author repositories and official docs; inspect current implementation where original paper and current evaluator differ."
+  },
+  "project_evidence": [
+    {
+      "path": "README.md",
+      "finding": "Current controlled research/expert product uses PostgreSQL and SDK Runner."
+    },
+    {
+      "path": "docs/ce8-acceptance.md",
+      "finding": "Three synthetic quality cases and historical contract/live evidence; limited generalization explicitly acknowledged."
+    },
+    {
+      "path": "docs/collaboration-c4-quality-retest-2026-10-05.md",
+      "finding": "Successful execution with unresolved semantic errors in arithmetic explanation, limitations and behavioral history."
+    },
+    {
+      "path": "evals/ce8/summarize.py",
+      "line": 70,
+      "finding": "Semantic review remains pending in programmatic summary."
+    },
+    {
+      "path": "src/agent_core/evaluation/service.py",
+      "line": 280,
+      "finding": "Only one score per case and arm within an experiment."
+    },
+    {
+      "path": "src/agent_core/evaluation/service.py",
+      "line": 32,
+      "finding": "Evaluation registration binds to committed task results."
+    },
+    {
+      "path": "src/agent_core/evaluation/service.py",
+      "line": 233,
+      "finding": "Before arm must use the historical case result."
+    }
+  ],
+  "benchmarks": [
+    {
+      "dataset": "DeepResearch Bench II",
+      "priority": "P2",
+      "paper": "https://arxiv.org/html/2601.08536v1",
+      "dataset_link": "https://github.com/imlrz/DeepResearch-Bench-II",
+      "task": "Long-form research reports evaluated against expert-derived requirements",
+      "metrics": [
+        "Information Recall",
+        "Analysis",
+        "Presentation"
+      ],
+      "direction": "higher_is_better",
+      "protocol": "132 tasks, 9430 rubrics. Original paper uses binary rubric satisfaction; pin current official evaluator separately.",
+      "evidence": "Paper sections 3.1.2 and 4.1 define per-rubric scoring; official README and aggregate_scores.py document current evaluator and blocked-reference scoring.",
+      "eval_scripts": [
+        "https://github.com/imlrz/DeepResearch-Bench-II/blob/main/run_evaluation.py",
+        "https://github.com/imlrz/DeepResearch-Bench-II/blob/main/aggregate_scores.py"
+      ],
+      "current_version_note": "Official main now uses GPT-5.5; paper used Gemini-2.5-Pro. No score comparison across judge revisions without re-evaluation.",
+      "limitations": "Does not evaluate project-specific authorization, persistence or manager/expert lifecycle. Current data license is per task."
+    },
+    {
+      "dataset": "DeepSearchQA",
+      "priority": "P2",
+      "paper": "https://arxiv.org/html/2601.20975v1",
+      "dataset_link": "https://huggingface.co/datasets/google/deepsearchqa",
+      "task": "Multi-step open-web search and exhaustive answer sets",
+      "metrics": [
+        "Precision",
+        "Recall",
+        "F1",
+        "Fully Correct"
+      ],
+      "direction": "higher_is_better",
+      "protocol": "900 prompts across 17 domains; metrics computed per question and then averaged. Keep answer and answer_type hidden from agent.",
+      "evidence": "Paper section 3 evaluation metrics; official dataset card Dataset Description and Evaluation Prompt.",
+      "current_version_note": "Data card specifies gemini-2.5-flash and linked starter grading prompt; changing either changes comparability.",
+      "limitations": "English dataset, live-web drift, final-answer grading does not establish process efficiency or citation validity."
+    },
+    {
+      "dataset": "DeepResearch Bench",
+      "priority": "P2",
+      "dataset_link": "https://github.com/Ayanami0730/deep_research_bench",
+      "task": "Open research reports including Chinese tasks",
+      "metrics": [
+        "RACE",
+        "FACT Citation Accuracy",
+        "FACT Effective Citations"
+      ],
+      "direction": "higher_is_better",
+      "protocol": "100 tasks, 50 Chinese and 50 English; report export and separate grading.",
+      "evidence": "Official README Benchmark Construction and Evaluation Framework; Open Deep Research README evaluation integration.",
+      "eval_scripts": [
+        "https://github.com/Ayanami0730/deep_research_bench/blob/main/deepresearch_bench_race.py"
+      ],
+      "limitations": "Pin cleaner and judges; report-level scores and supported-citation counts are not sufficient release criteria."
+    },
+    {
+      "dataset": "BrowseComp-Plus",
+      "priority": "P2",
+      "dataset_link": "https://github.com/texttron/BrowseComp-Plus",
+      "task": "Research over a fixed curated corpus, separating retriever and agent effects",
+      "metrics": [],
+      "protocol": "Fixed approximately 100K document corpus; use official scoring if integrated.",
+      "evidence": "Official README introduction and dataset/index setup.",
+      "limitations": "Scoring implementation not audited in this survey; corpus/index integration is more work than initial project fixtures."
+    },
+    {
+      "dataset": "AgentDojo",
+      "priority": "P2_methodology",
+      "dataset_link": "https://github.com/ethz-spylab/agentdojo",
+      "task": "Prompt-injection robustness while preserving useful task completion",
+      "metrics": [
+        "Utility",
+        "Utility under attack",
+        "Targeted ASR"
+      ],
+      "protocol": "Borrow paired clean/attacked task design for project tools; adapted suite is not the official benchmark.",
+      "evidence": "https://agentdojo.spylab.ai/results/",
+      "limitations": "Official task domains do not directly represent this research workspace."
+    },
+    {
+      "dataset": "GAIA",
+      "priority": "P3",
+      "dataset_link": "https://huggingface.co/datasets/gaia-benchmark/GAIA",
+      "task": "Unambiguous-answer general assistant tasks with varying tool needs and optional attachments",
+      "metrics": [],
+      "protocol": "Use official protocol and disclose supported-capability subset; validation and hidden-answer test sets are distinct.",
+      "evidence": "Official dataset README Data and leaderboard, gating metadata and Dataset Format update.",
+      "limitations": "Gated data; no dataset downloaded; not a direct evaluation of long-form synthesis or expert handoff."
+    }
+  ],
+  "related_work_edges": [
+    {
+      "source": "LangChain Open Deep Research",
+      "target": "DeepResearch Bench",
+      "reason": "Official README documents dataset evaluation and export to benchmark grader",
+      "evidence": "https://github.com/langchain-ai/open_deep_research#-evaluation"
+    },
+    {
+      "source": "DeepResearch Bench",
+      "target": "DeepResearch Bench II",
+      "reason": "Official repository identifies the follow-up with different evaluation focus",
+      "evidence": "https://github.com/Ayanami0730/deep_research_bench"
+    },
+    {
+      "source": "DeepSearchQA",
+      "target": "BrowseComp and GAIA",
+      "reason": "Paper discusses comparison of single-answer and exhaustive-answer evaluation design; not a same-dataset score comparison",
+      "evidence": "https://arxiv.org/html/2601.20975v1"
+    }
+  ],
+  "tool_sources": [
+    {
+      "name": "Inspect AI scorers",
+      "url": "https://inspect.aisi.org.uk/scorers.html"
+    },
+    {
+      "name": "Inspect AI Agent Bridge",
+      "url": "https://inspect.aisi.org.uk/agent-bridge.html",
+      "limitation": "Request redirection and request-setting policies require compatibility checks with controlled model audit and recovery."
+    },
+    {
+      "name": "LangSmith evaluation",
+      "url": "https://docs.langchain.com/langsmith/evaluation"
+    },
+    {
+      "name": "Anthropic agent evaluation practice",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+    },
+    {
+      "name": "Anthropic multi-agent research practice",
+      "url": "https://www.anthropic.com/engineering/multi-agent-research-system"
+    }
+  ],
+  "limitations": [
+    "External benchmarks listed here were researched only; no external benchmark scores or leaderboard submissions were produced.",
+    "Live trials use only local synthetic evaluation fixtures and the configured DeepSeek endpoint. They are smoke checks, not the proposed 24/48-trial formal batches.",
+    "Official reference URLs are mutable; executed local cases, rules, code hashes, model and dependency versions are frozen per batch.",
+    "The eight development cases and evaluation implementation do not establish full product or open-web research capability.",
+    "Semantic review remains pending; model completion and passing deterministic checks are not final quality scores."
+  ]
+}

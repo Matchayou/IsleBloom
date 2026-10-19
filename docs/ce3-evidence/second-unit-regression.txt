@@ -1,0 +1,28 @@
+.....F................................                                   [100%]
+=================================== FAILURES ===================================
+_________ test_real_sdk_runs_through_public_model_proxy_contract_only __________
+
+    async def test_real_sdk_runs_through_public_model_proxy_contract_only():
+        broker,state,ledger=make_broker()
+        class Channel:
+            sequence=0
+            async def call(self,operation,payload):
+                self.sequence+=1
+                return await broker.handle(Frame(sequence=self.sequence,operation_id=str(self.sequence),operation=operation,payload=payload))
+        engine=OpenAIEngine(BrokerModel(Channel()))
+        async def invoke(*_): raise AssertionError('No tool expected')
+        result=await engine.execute(broker.request,broker.spec,(),invoke)
+        assert result.status=='succeeded' and result.output['report']=='done'
+        assert result.usage.requests==1 and len(ledger.settled)==1
+>       assert state['model_kwargs']['system_instructions']=='frozen'
+E       AssertionError: assert 'frozen\n工具返回...时说明未完成的操作及影响。' == 'frozen'
+E         
+E         - frozen
+E         + frozen
+E         ?       +
+E         + 工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。
+
+tests/test_controlled.py:119: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled.py::test_real_sdk_runs_through_public_model_proxy_contract_only
+1 failed, 37 passed in 1.10s

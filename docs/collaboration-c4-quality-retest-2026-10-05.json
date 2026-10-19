@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-05",
+  "verdict": "execution_passed_semantic_acceptance_failed",
+  "live_evidence": "collaboration-c4-autonomous-research-4.json",
+  "synthetic_evidence": "collaboration-c4-disagreement-attempt-6.json",
+  "live_execution_checks": {
+    "original_reports_preserved": true,
+    "both_original_experts_searched_and_fetched": true,
+    "only_original_sessions": true,
+    "followup_reports_succeeded": true,
+    "manager_replied_after_followup": true,
+    "no_formal_adoption": true
+  },
+  "synthetic_execution_checks": {
+    "manager_succeeded": true,
+    "expert_versions_runs_receipts_outputs_unchanged": true,
+    "no_network_tools": true,
+    "no_formal_adoption": true
+  },
+  "live_final_manager_run_id": "e4c7a07e-ca01-4af4-875a-724a12aafc35",
+  "live_manager_runs": [
+    {
+      "run_id": "d87494a8-db18-43b3-b0aa-c2f3201ede62",
+      "status": "succeeded",
+      "error": null
+    },
+    {
+      "run_id": "4d64301d-ae95-4ade-9464-ea486c3b7de7",
+      "status": "succeeded",
+      "error": null
+    },
+    {
+      "run_id": "6430b97b-d6b5-4308-8f96-50e257af21eb",
+      "status": "succeeded",
+      "error": null
+    },
+    {
+      "run_id": "5d2339d4-7e9c-47ef-8ae0-5321709ff5c3",
+      "status": "failed",
+      "error": {
+        "code": "evidence_invalid",
+        "origin": "app",
+        "message": "Cited currency 'USD' is not present in the parsed source",
+        "retryable": false,
+        "cause_id": null
+      }
+    },
+    {
+      "run_id": "e4c7a07e-ca01-4af4-875a-724a12aafc35",
+      "status": "succeeded",
+      "error": null
+    }
+  ],
+  "new_expert_runs": [
+    {
+      "expert_id": "expert_search",
+      "runs": [
+        {
+          "id": "fa901ca0-39e3-4e64-92eb-4f0367b653a8",
+          "status": "succeeded",
+          "output_repairs": 2
+        }
+      ]
+    },
+    {
+      "expert_id": "expert_synthesize",
+      "runs": [
+        {
+          "id": "6ea51200-2cec-4e52-8b25-90c4045326c7",
+          "status": "succeeded",
+          "output_repairs": 1
+        }
+      ]
+    }
+  ],
+  "live_information_requests": 0,
+  "operator_retry": false,
+  "semantic_review": {
+    "published_numbers_and_release_version": "pass",
+    "published_share_difference_arithmetic_live": "pass",
+    "preserve_unknowns_and_avoid_exhaustive_claims": "fail: report calls omitted adjustment basis the only flaw while acknowledging unseen original notes; briefing also omits calculation table",
+    "temporal_comparability_inference": "fail: removal from the historical series does not itself establish a within-vintage cross-year break",
+    "adjustment_scope_precision": "partial: full footnote quoted but expert B says 100% seasonal adjustment and final claim narrows scope",
+    "synthetic_arithmetic": "fail: cannot subtract repeated in report and claims",
+    "synthetic_action_history": "fail: calls historical follow-up this round earlier, while later correctly says no new follow-up",
+    "expert_access_to_historical_reports_in_this_live_run": "not_exercised: no expert read_context or information request used",
+    "opposing_expert_recommendations": "not_covered: experts converged on same core conclusion"
+  },
+  "authoritative_review_sources": [
+    "https://www2.census.gov/retail/releases/historical/ecomm/25q4.pdf",
+    "https://www2.census.gov/retail/releases/historical/ecomm/26q1.pdf"
+  ],
+  "scope": "Single fresh real-model web case plus existing synthetic semantic regression; not a stability estimate, natural-language dependency test, or C5 browser matrix."
+}

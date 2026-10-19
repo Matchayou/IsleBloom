@@ -1,0 +1,22 @@
+2026-10-01 R3 final verification
+
+Python cumulative regression against dedicated PostgreSQL 17 database:
+TEST_DATABASE_URL=postgresql+psycopg://chenyouran@127.0.0.1:55442/r3_release PYTHONPATH=src .venv/bin/pytest -q
+245 passed in 31.89s, no skipped
+
+Chromium browser regression against the R3 PostgreSQL app:
+npm test --prefix frontend
+R3 message cutoff, siblings and explicit transfer adoption: passed
+R3 two experts share a branch without automatic chat insertion: passed
+Stage 4 page upload, node, fixed branch, compare, move and history: passed
+3 passed in 14.3s, no skipped
+
+Chromium failure scenario against disposable memory app:
+cd frontend && ./node_modules/.bin/playwright test --config playwright.failure.config.js
+R3 save retry, continued chat and stopped expert: passed
+1 passed in 8.5s, no skipped
+
+PYTHONPATH=src .venv/bin/python -m compileall -q src scripts/verify_r3_browser_server.py
+exit 0
+npm run build --prefix frontend
+exit 0 (Vite chunk-size advisory only)

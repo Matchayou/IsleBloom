@@ -1,0 +1,52 @@
+{
+  "real_model": true,
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "case": "specialist_candidate",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "independent_validation_required": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "ef2ec7bf-b5c7-482f-b30d-fab07877b8b4",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/specialist-retest/specialist_candidate/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 9217,
+        "output_tokens": 831,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [],
+  "passed": true
+}

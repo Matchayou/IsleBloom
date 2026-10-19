@@ -1,0 +1,1356 @@
+{
+  "project_id": "c3-market-public-verify-12",
+  "research_id": "c3-market-main-verify-12",
+  "node_id": "fd78e67c-9f29-4813-8b2e-03d0299ecd73",
+  "user_message_id": "c3-market-user-request-12",
+  "source_body_supplied_by_user": false,
+  "manager_run_id": "31d0d59b-945d-467e-b715-78e9adfdd901",
+  "manager_status": "succeeded",
+  "tool_names": [
+    "find_experts",
+    "search_web",
+    "delegate_task",
+    "fetch_web",
+    "read_context",
+    "delegate_task"
+  ],
+  "assistant_replied": true,
+  "assistant_report": "## 美国 2025 Q4 零售电商：规模与占比（基于美国人口普查局官方正文）\n\n**核心结论**（来源：U.S. Census Bureau《Quarterly Retail E-Commerce Sales — 4th Quarter 2025》，新闻稿 CB26-42，发布日期 2026-03-10 10:00 A.M. EDT）\n\n| 口径 | 电商销售额 | 占零售总额 | 环比 vs 2025 Q3 | 同比 vs 2024 Q4 |\n|---|---|---|---|---|\n| **季节调整**（adjusted，未做价格调整） | **$316.1 bn**（316,130 百万美元） | **16.6%** | **+1.7%**（±0.5%） | **+5.3%**（±1.8%） |\n| **未调整**（not adjusted） | **$365.2 bn**（365,167 百万美元） | **18.3%** | **+21.8%**（±0.5%） | **+5.6%**（±1.8%） |\n\n配套季调零售总额：Q4 2025 为 **$1,900.5 bn**（1,900,496 百万美元），环比 +0.4%（±0.2%），同比 +2.7%（±0.5%）。未调整零售总额为 1,999,520 百万美元（环比 +5.4%，同比 +2.8%）。\n\n**2025 全年**：电商销售额 **1,233.7 bn 美元**，同比 +5.4%（±1.2%）；零售总额同比 +3.5%（±0.4%）；电商占零售总额 **16.4%**（2024 年为 16.1%）。\n\n**季度、口径与统计方法**\n- Q4 2025 电商估计标记为 **(p) 初步估计**（preliminary），Q3 2025 与 Q4 2024 为 **(r) 已修订**（revised），单位百万美元、名义值、未做价格调整。\n- 季调口径对季节变异、交易日差异与移动假日做调整，但**不调整价格**；未调整口径 Q3→Q4 环比高达 +21.8% 属假日季节性放大，**不可与季调口径 +1.7% 直接比较或混用**。\n- 电商估计取自月度零售贸易调查（MRTS）样本：分层简单随机抽取约 10,800 家零售企业（不含餐饮服务），加权并基准化代表 200 多万家零售企业；线上旅游服务、金融经纪与交易商、票务代理不属零售，**不计入**零售总额或电商估计；**自 2025 年 4 月年度修订起，无雇员企业（nonemployers）已被剔除并移出时间序列**，以对齐 AIES。回复企业约占任一季电商估计的 70%、零售总额估计的 69%。\n\n**主要局限**\n1. Q4 2025 为初步估计，最近季度估计“subject to revision”，后续会修订；\n2. 存在抽样误差，第 1 页变化率均带 90% 置信区间（如 ±0.5%、±1.8%）；部分变化的 90% 置信区间包含零，官方不认为变化显著异于零；\n3. 名义值，未做价格/通胀调整；\n4. 口径变更（2025 年 4 月起剔除无雇员企业）使跨期比较需谨慎；\n5. 季节调整是近似（X-13ARIMA-SEATS，季度值由调整后月度值加总）；\n6. 发布日程受近期联邦拨款中断影响，Census 正在与其他机构及 OMB 协调更新经济指标发布日历；\n7. 本次仅依据单一官方 PDF，未与第二独立来源（如 FRED 同类序列）交叉验证。\n\n**来源链接**\n- 官方 PDF（已抓取正文）：https://www2.census.gov/retail/releases/historical/ecomm/25q4.pdf\n- 项目主页（未抓取正文，仅作索引）：https://www.census.gov/retail/ecommerce.html\n\n**专家委托与复核状态**\n- 已按要求派发具备 search_web/fetch_web 能力的市场调研专家（expert_market_research）。首次交付状态为 `rework`（无可用的报告输出），未采用；带官方 PDF 引用重跑后的交付状态为 **`pending_review`（待复核）**，属初步交付。\n- **我未获得“独立复核通过（passed）”的状态，因此未通过 adopt_result 正式采用该专家结果**，也不声称其已通过独立复核。\n- 我自己另行抓取了同一份官方 PDF 正文并逐条核对：专家简报中的关键数字与上述官方正文一致；本答复的 cited 证据均来自我本人抓取的官方正文。",
+  "tasks": [
+    {
+      "task_id": "50a7a9e7-6b72-527a-8248-97778f1c6547",
+      "expert_id": "expert_market_research",
+      "required_refs": [
+        {
+          "resource_id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+          "snapshot_id": "7d09ebe8-6539-4408-b447-b1934971ec85",
+          "parse_id": "3281da0b-e741-47c5-aab2-31de45345edc"
+        }
+      ],
+      "dispatch_status": "completed",
+      "runs": [
+        {
+          "run_id": "e4700c21-82f5-45d6-b744-9ed347e9b962",
+          "execution_status": "succeeded",
+          "receipt": {
+            "result_id": "task-result:e4700c21-82f5-45d6-b744-9ed347e9b962",
+            "task_id": "50a7a9e7-6b72-527a-8248-97778f1c6547",
+            "spec_version": 1,
+            "run_id": "e4700c21-82f5-45d6-b744-9ed347e9b962",
+            "context_snapshot_id": "0ac15c7f-0065-439e-a048-d644d7695842",
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "market-research-v3",
+            "method_digest": "8eaa2d783de2f2e4fb34469a5af2a19e11c619c53491c4a4905af44ec5bcf7fa",
+            "result_ids": [],
+            "resource_refs": [
+              {
+                "resource_id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+                "snapshot_id": "7d09ebe8-6539-4408-b447-b1934971ec85",
+                "parse_id": "3281da0b-e741-47c5-aab2-31de45345edc"
+              }
+            ],
+            "missing_optional_refs": [],
+            "program_checks": [
+              {
+                "number": 1,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Run output and fixed input identity checked",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Report present",
+                "reviewer": null
+              }
+            ],
+            "semantic_checks": [
+              {
+                "number": 1,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              }
+            ],
+            "assumptions": [
+              "Billion 与 Table 1 中“millions of dollars”为同一估计的不同单位表示（例如 $316.1 billion ≈ 316,130 百万美元），两处为同一估计值。",
+              "Table 1 列顺序按“Total / E-commerce / E-commerce as a Percent of Total / 环比 Total / 环比 E-commerce / 同比 Total / 同比 E-commerce”解读，与正文数值一致。"
+            ],
+            "conflicts": [],
+            "missing": [
+              "Q4 2024 未调整零售总额环比/同比以外的历史对照细节未在正文逐字给出（仅 Table 1 行值）。",
+              "正文未给出 2025 全年零售总额的绝对金额（仅给出同比 +3.5%）。",
+              "正文未给出调整与未调整估计的具体修订幅度或修订历史。"
+            ],
+            "limitations": [
+              "Q4 2025 为初步估计（p），会被修订。",
+              "所有销售为名义值，未做价格调整。",
+              "存在抽样误差，报告给出 90% 置信区间。",
+              "部分变化的 90% 置信区间包含零。",
+              "季节调整口径与未调整口径不可混用（未调整 Q4 环比 +21.8% 系季节性）。",
+              "自 2025 年 4 月起剔除无雇员企业，时间序列口径变化。",
+              "部分非回复数据为插补值。",
+              "季节调整为近似。",
+              "联邦拨款中断导致发布日程调整。"
+            ],
+            "follow_up": [
+              "后续发布的 Q4 2025 修订值（(r)）以更新电商规模与占比。",
+              "获取 2025 全年零售总额绝对额以计算年度占比。",
+              "查阅 Census 更新后的发布日历以确认后续修订时间。"
+            ],
+            "delivery": "pending_review",
+            "adoption": "for_discussion",
+            "adoption_reason": null
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "cc694e94-4c62-5883-b664-eb6d029dfdd1",
+      "expert_id": "expert_market_research",
+      "required_refs": [],
+      "dispatch_status": "completed",
+      "runs": [
+        {
+          "run_id": "08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+          "execution_status": "failed",
+          "receipt": {
+            "result_id": "task-result:08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+            "task_id": "cc694e94-4c62-5883-b664-eb6d029dfdd1",
+            "spec_version": 1,
+            "run_id": "08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+            "context_snapshot_id": "edad3ca1-cf01-4b79-a2d8-ccc46478fc6c",
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "market-research-v3",
+            "method_digest": "8eaa2d783de2f2e4fb34469a5af2a19e11c619c53491c4a4905af44ec5bcf7fa",
+            "result_ids": [],
+            "resource_refs": [
+              {
+                "resource_id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+                "snapshot_id": "8b8bf4e8-6b76-410e-876a-c617696e3881",
+                "parse_id": "c15f6005-50bd-4c46-a72d-679b0927ed1b"
+              },
+              {
+                "resource_id": "39009fab-fba3-4949-bff7-303d9788d70e",
+                "snapshot_id": "fb7af9fb-686b-4773-b942-6c921f07f163",
+                "parse_id": "29d0e869-2e84-4339-9e16-8cce954a642b"
+              }
+            ],
+            "missing_optional_refs": [],
+            "program_checks": [
+              {
+                "number": 1,
+                "checker": "program",
+                "status": "failed",
+                "evidence": "evidence_invalid",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "program",
+                "status": "failed",
+                "evidence": "evidence_invalid",
+                "reviewer": null
+              }
+            ],
+            "semantic_checks": [
+              {
+                "number": 1,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              }
+            ],
+            "assumptions": [],
+            "conflicts": [],
+            "missing": [],
+            "limitations": [],
+            "follow_up": [],
+            "delivery": "rework",
+            "adoption": "for_discussion",
+            "adoption_reason": null
+          }
+        }
+      ]
+    }
+  ],
+  "resources": {
+    "scope": {
+      "id": "59524a9e-4c7e-4c0f-bdfd-aad42ff4b5af",
+      "owner": "local",
+      "version": 1,
+      "allowed": [
+        {
+          "resource_id": "4beb236e-adc8-423c-a0b1-8b4da3e08517",
+          "snapshot_id": "a3174c07-3d5b-4810-ab57-78f4b8a658f5",
+          "parse_id": "4a77b2a8-8ece-4f7e-aca0-ebdc1e5a9f29"
+        },
+        {
+          "resource_id": "60578431-0104-4a82-a1cf-b0262ad29cf4",
+          "snapshot_id": "8d0f8385-0f26-4fc0-973f-6465d9fff820",
+          "parse_id": "3e05f28b-f2e2-47a2-8d56-193528922de2"
+        },
+        {
+          "resource_id": "68e1b70c-ca46-4868-aabf-5a977adb3636",
+          "snapshot_id": "9e716450-70f9-45ca-bcf5-8e972a9f74cf",
+          "parse_id": "070286bb-bd30-4c4f-a927-3d638392df03"
+        },
+        {
+          "resource_id": "0eae7639-55d3-4b00-8545-d63d02e1a39c",
+          "snapshot_id": "63226763-0f92-47f2-a4d2-491ee29a5f9f",
+          "parse_id": "96d05539-665d-46f6-beb2-3016bcbadceb"
+        },
+        {
+          "resource_id": "294473f5-92ea-4a0d-956d-89e09a4be7c2",
+          "snapshot_id": "2f9f66a6-e802-4a41-8990-eba894dc6194",
+          "parse_id": "81b9b92a-0802-4b0c-b7ac-1644a77e2ffa"
+        },
+        {
+          "resource_id": "8a206156-a93d-4a11-8472-9c6d9a2f9a12",
+          "snapshot_id": "2adb06f9-6cb2-487d-964c-1c6a8b833578",
+          "parse_id": "54159a6e-dd65-4ec8-8ff5-f16202664c90"
+        },
+        {
+          "resource_id": "4424dc4b-8acf-4077-a855-f5fc4aa42ecc",
+          "snapshot_id": "3b436c20-50db-4498-9557-79e9ac40be36",
+          "parse_id": "e2f6df52-74d6-436f-b51d-be15a33d6d05"
+        },
+        {
+          "resource_id": "3bbdcb29-2d50-4110-b80d-e8efdd69b3ff",
+          "snapshot_id": "3d304456-c5cd-4b8d-96ad-7e5f7befe50e",
+          "parse_id": "50c38683-4dfd-42b6-9259-44b636445b8f"
+        },
+        {
+          "resource_id": "58a1d73c-e8be-4c70-bade-475eddfffe94",
+          "snapshot_id": "35589d9c-e098-40a1-8434-538c7ecab368",
+          "parse_id": "0ccd4a45-f678-4600-b9b1-b6436f2c2fdb"
+        },
+        {
+          "resource_id": "5ebdd6ec-587e-4f92-a63f-5a33124190fc",
+          "snapshot_id": "fe242112-d2f6-4e5e-afb9-d8c243b4c8f7",
+          "parse_id": "c4ac58e8-e7c3-4ed4-a3e1-e954d1f60dfe"
+        },
+        {
+          "resource_id": "a954da19-8b25-448d-b2c7-bf1c24a9b531",
+          "snapshot_id": "967fda91-3a19-423f-8e84-91e0539a0f9a",
+          "parse_id": "a9a1e2e9-2eb9-4094-84c9-c0975fd95bb8"
+        },
+        {
+          "resource_id": "f3715a3a-d707-43af-b0b4-8557df7551d2",
+          "snapshot_id": "8bdd4fba-3f01-4158-8317-58815976d148",
+          "parse_id": "c58ab7ed-22ca-4440-99b9-6f3ac1a8eb84"
+        },
+        {
+          "resource_id": "ff810c6e-7dff-4510-a473-7c36bf016146",
+          "snapshot_id": "e9d0dee8-73bc-40d0-830a-3ba0823a31d1",
+          "parse_id": "872d4c07-1d70-462d-bca2-89f21825c0a9"
+        },
+        {
+          "resource_id": "59fff652-6539-45e9-9dac-9f58369c415c",
+          "snapshot_id": "024a8866-5bf5-4d88-a5cc-73a8cf39e84f",
+          "parse_id": "29b391b9-48f2-4035-bdfd-b71c327cbecc"
+        },
+        {
+          "resource_id": "e1c63351-4af7-462b-92fd-46b01a6f7875",
+          "snapshot_id": "21eff7a0-e631-4ee6-bff1-6042f5d433a5",
+          "parse_id": "4a3d0780-5767-46f5-bd3a-a3b420dff93a"
+        },
+        {
+          "resource_id": "1724bac9-f29d-43a3-999b-42e1b661209e",
+          "snapshot_id": "7b95d8d1-c5e8-4eb1-a8b0-fb1cd491549c",
+          "parse_id": "15fe02cd-cfd2-4df4-a2e1-579021f6ceb4"
+        },
+        {
+          "resource_id": "6e2224f5-d4bd-4365-b079-2403bc751b50",
+          "snapshot_id": "874f877e-c7ed-4164-8ac4-82ce641674af",
+          "parse_id": "bc1d93c2-9a9c-4a9d-9507-87b133b074d3"
+        },
+        {
+          "resource_id": "560445e8-4f79-42a9-982c-8bdcd6843f60",
+          "snapshot_id": "e6433375-e84e-4c43-afe6-7aa102407770",
+          "parse_id": "4c6acf27-26ae-465c-a324-06ceab378b84"
+        },
+        {
+          "resource_id": "a5d0583a-6764-4757-9580-1c7fcb3553ba",
+          "snapshot_id": "d8c1eaef-ebb5-413b-9657-2007df5beb53",
+          "parse_id": "06bb17b6-6c52-4425-9cdc-5f786bc37e56"
+        },
+        {
+          "resource_id": "4e8ab252-b874-41d2-8e16-c0de2b89e58e",
+          "snapshot_id": "c6c45861-5794-41fc-b760-82b5b0ed5aa3",
+          "parse_id": "d532f349-c709-461b-a461-831f2902a484"
+        },
+        {
+          "resource_id": "b1a63975-58f4-41f1-baed-4485ff586d60",
+          "snapshot_id": "610ad35b-ded7-4f01-85e9-f8dcb7fd3d93",
+          "parse_id": "0279f4d4-266a-4a2f-b5be-fc332e97d76d"
+        },
+        {
+          "resource_id": "a911201f-a3d1-495d-aab6-e5be50934f40",
+          "snapshot_id": "a31be1c8-1517-47e1-8f14-42f8d166f989",
+          "parse_id": "416c6cbb-bed0-426a-8086-97a75f5f6b3f"
+        },
+        {
+          "resource_id": "1a1f82d0-b09c-4350-922b-ef36a9481e3f",
+          "snapshot_id": "9e5257d0-a289-4304-ab71-3778ab1e40eb",
+          "parse_id": "673c09ad-3bb0-47e5-9581-25690c41d0ff"
+        },
+        {
+          "resource_id": "991055de-1c33-40e9-8c29-d986d0ef71b9",
+          "snapshot_id": "9a0773e9-ebe7-4513-93be-8a00ffa87153",
+          "parse_id": "91a4a9f4-9303-41f1-83b8-f4336fb74335"
+        },
+        {
+          "resource_id": "8673c8d2-6998-441d-840f-46d5c324af8c",
+          "snapshot_id": "dbe38591-a2ed-4ca9-9fee-cd5859adf343",
+          "parse_id": "b68d4f49-9a6c-453c-97cc-ec2ec40ee753"
+        },
+        {
+          "resource_id": "a5c7dbf3-aee3-48b1-b628-92ee3c912d62",
+          "snapshot_id": "a13247d5-7711-49be-832c-f71845a0ff7e",
+          "parse_id": "88d9f2d9-e9f0-45de-adf6-d6fa1678a84a"
+        },
+        {
+          "resource_id": "b019b4ae-2d7f-4b47-96aa-201b5337a5df",
+          "snapshot_id": "76e4d26c-c5d5-4095-ad32-350ae04cfec3",
+          "parse_id": "ea348c77-a3af-47c2-b519-e6c761c66190"
+        },
+        {
+          "resource_id": "a50df83e-30b2-4737-aafe-6334babb5963",
+          "snapshot_id": "0668d69a-3c92-4bfc-8819-de231da6a571",
+          "parse_id": "796e748b-bde4-4dc6-b7be-6c05af25c970"
+        },
+        {
+          "resource_id": "7dce3fc4-92b6-4a96-8d68-8ccbd78b8623",
+          "snapshot_id": "a8b6e02a-e833-47bb-a8e1-9ad10611ee37",
+          "parse_id": "2b4adcf4-3959-4a74-a596-dbeccf14b1ba"
+        },
+        {
+          "resource_id": "33d3a8fd-56f4-483e-a1c5-2594efa20e65",
+          "snapshot_id": "93dd2f1f-b854-467e-b969-20ea3f47060d",
+          "parse_id": "6c3a86a4-a692-439f-9afb-4bc7d1eebd91"
+        },
+        {
+          "resource_id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+          "snapshot_id": "8b8bf4e8-6b76-410e-876a-c617696e3881",
+          "parse_id": "c15f6005-50bd-4c46-a72d-679b0927ed1b"
+        },
+        {
+          "resource_id": "39009fab-fba3-4949-bff7-303d9788d70e",
+          "snapshot_id": "fb7af9fb-686b-4773-b942-6c921f07f163",
+          "parse_id": "29d0e869-2e84-4339-9e16-8cce954a642b"
+        },
+        {
+          "resource_id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+          "snapshot_id": "7d09ebe8-6539-4408-b447-b1934971ec85",
+          "parse_id": "3281da0b-e741-47c5-aab2-31de45345edc"
+        }
+      ],
+      "grants": [
+        {
+          "resource_id": "4beb236e-adc8-423c-a0b1-8b4da3e08517",
+          "snapshot_id": "a3174c07-3d5b-4810-ab57-78f4b8a658f5",
+          "parse_id": "4a77b2a8-8ece-4f7e-aca0-ebdc1e5a9f29"
+        },
+        {
+          "resource_id": "60578431-0104-4a82-a1cf-b0262ad29cf4",
+          "snapshot_id": "8d0f8385-0f26-4fc0-973f-6465d9fff820",
+          "parse_id": "3e05f28b-f2e2-47a2-8d56-193528922de2"
+        },
+        {
+          "resource_id": "68e1b70c-ca46-4868-aabf-5a977adb3636",
+          "snapshot_id": "9e716450-70f9-45ca-bcf5-8e972a9f74cf",
+          "parse_id": "070286bb-bd30-4c4f-a927-3d638392df03"
+        },
+        {
+          "resource_id": "0eae7639-55d3-4b00-8545-d63d02e1a39c",
+          "snapshot_id": "63226763-0f92-47f2-a4d2-491ee29a5f9f",
+          "parse_id": "96d05539-665d-46f6-beb2-3016bcbadceb"
+        },
+        {
+          "resource_id": "294473f5-92ea-4a0d-956d-89e09a4be7c2",
+          "snapshot_id": "2f9f66a6-e802-4a41-8990-eba894dc6194",
+          "parse_id": "81b9b92a-0802-4b0c-b7ac-1644a77e2ffa"
+        },
+        {
+          "resource_id": "8a206156-a93d-4a11-8472-9c6d9a2f9a12",
+          "snapshot_id": "2adb06f9-6cb2-487d-964c-1c6a8b833578",
+          "parse_id": "54159a6e-dd65-4ec8-8ff5-f16202664c90"
+        },
+        {
+          "resource_id": "4424dc4b-8acf-4077-a855-f5fc4aa42ecc",
+          "snapshot_id": "3b436c20-50db-4498-9557-79e9ac40be36",
+          "parse_id": "e2f6df52-74d6-436f-b51d-be15a33d6d05"
+        },
+        {
+          "resource_id": "3bbdcb29-2d50-4110-b80d-e8efdd69b3ff",
+          "snapshot_id": "3d304456-c5cd-4b8d-96ad-7e5f7befe50e",
+          "parse_id": "50c38683-4dfd-42b6-9259-44b636445b8f"
+        },
+        {
+          "resource_id": "58a1d73c-e8be-4c70-bade-475eddfffe94",
+          "snapshot_id": "35589d9c-e098-40a1-8434-538c7ecab368",
+          "parse_id": "0ccd4a45-f678-4600-b9b1-b6436f2c2fdb"
+        },
+        {
+          "resource_id": "5ebdd6ec-587e-4f92-a63f-5a33124190fc",
+          "snapshot_id": "fe242112-d2f6-4e5e-afb9-d8c243b4c8f7",
+          "parse_id": "c4ac58e8-e7c3-4ed4-a3e1-e954d1f60dfe"
+        },
+        {
+          "resource_id": "a954da19-8b25-448d-b2c7-bf1c24a9b531",
+          "snapshot_id": "967fda91-3a19-423f-8e84-91e0539a0f9a",
+          "parse_id": "a9a1e2e9-2eb9-4094-84c9-c0975fd95bb8"
+        },
+        {
+          "resource_id": "f3715a3a-d707-43af-b0b4-8557df7551d2",
+          "snapshot_id": "8bdd4fba-3f01-4158-8317-58815976d148",
+          "parse_id": "c58ab7ed-22ca-4440-99b9-6f3ac1a8eb84"
+        },
+        {
+          "resource_id": "ff810c6e-7dff-4510-a473-7c36bf016146",
+          "snapshot_id": "e9d0dee8-73bc-40d0-830a-3ba0823a31d1",
+          "parse_id": "872d4c07-1d70-462d-bca2-89f21825c0a9"
+        },
+        {
+          "resource_id": "59fff652-6539-45e9-9dac-9f58369c415c",
+          "snapshot_id": "024a8866-5bf5-4d88-a5cc-73a8cf39e84f",
+          "parse_id": "29b391b9-48f2-4035-bdfd-b71c327cbecc"
+        },
+        {
+          "resource_id": "e1c63351-4af7-462b-92fd-46b01a6f7875",
+          "snapshot_id": "21eff7a0-e631-4ee6-bff1-6042f5d433a5",
+          "parse_id": "4a3d0780-5767-46f5-bd3a-a3b420dff93a"
+        },
+        {
+          "resource_id": "1724bac9-f29d-43a3-999b-42e1b661209e",
+          "snapshot_id": "7b95d8d1-c5e8-4eb1-a8b0-fb1cd491549c",
+          "parse_id": "15fe02cd-cfd2-4df4-a2e1-579021f6ceb4"
+        },
+        {
+          "resource_id": "6e2224f5-d4bd-4365-b079-2403bc751b50",
+          "snapshot_id": "874f877e-c7ed-4164-8ac4-82ce641674af",
+          "parse_id": "bc1d93c2-9a9c-4a9d-9507-87b133b074d3"
+        },
+        {
+          "resource_id": "560445e8-4f79-42a9-982c-8bdcd6843f60",
+          "snapshot_id": "e6433375-e84e-4c43-afe6-7aa102407770",
+          "parse_id": "4c6acf27-26ae-465c-a324-06ceab378b84"
+        },
+        {
+          "resource_id": "a5d0583a-6764-4757-9580-1c7fcb3553ba",
+          "snapshot_id": "d8c1eaef-ebb5-413b-9657-2007df5beb53",
+          "parse_id": "06bb17b6-6c52-4425-9cdc-5f786bc37e56"
+        },
+        {
+          "resource_id": "4e8ab252-b874-41d2-8e16-c0de2b89e58e",
+          "snapshot_id": "c6c45861-5794-41fc-b760-82b5b0ed5aa3",
+          "parse_id": "d532f349-c709-461b-a461-831f2902a484"
+        },
+        {
+          "resource_id": "b1a63975-58f4-41f1-baed-4485ff586d60",
+          "snapshot_id": "610ad35b-ded7-4f01-85e9-f8dcb7fd3d93",
+          "parse_id": "0279f4d4-266a-4a2f-b5be-fc332e97d76d"
+        },
+        {
+          "resource_id": "a911201f-a3d1-495d-aab6-e5be50934f40",
+          "snapshot_id": "a31be1c8-1517-47e1-8f14-42f8d166f989",
+          "parse_id": "416c6cbb-bed0-426a-8086-97a75f5f6b3f"
+        },
+        {
+          "resource_id": "1a1f82d0-b09c-4350-922b-ef36a9481e3f",
+          "snapshot_id": "9e5257d0-a289-4304-ab71-3778ab1e40eb",
+          "parse_id": "673c09ad-3bb0-47e5-9581-25690c41d0ff"
+        },
+        {
+          "resource_id": "991055de-1c33-40e9-8c29-d986d0ef71b9",
+          "snapshot_id": "9a0773e9-ebe7-4513-93be-8a00ffa87153",
+          "parse_id": "91a4a9f4-9303-41f1-83b8-f4336fb74335"
+        },
+        {
+          "resource_id": "8673c8d2-6998-441d-840f-46d5c324af8c",
+          "snapshot_id": "dbe38591-a2ed-4ca9-9fee-cd5859adf343",
+          "parse_id": "b68d4f49-9a6c-453c-97cc-ec2ec40ee753"
+        },
+        {
+          "resource_id": "a5c7dbf3-aee3-48b1-b628-92ee3c912d62",
+          "snapshot_id": "a13247d5-7711-49be-832c-f71845a0ff7e",
+          "parse_id": "88d9f2d9-e9f0-45de-adf6-d6fa1678a84a"
+        },
+        {
+          "resource_id": "b019b4ae-2d7f-4b47-96aa-201b5337a5df",
+          "snapshot_id": "76e4d26c-c5d5-4095-ad32-350ae04cfec3",
+          "parse_id": "ea348c77-a3af-47c2-b519-e6c761c66190"
+        },
+        {
+          "resource_id": "a50df83e-30b2-4737-aafe-6334babb5963",
+          "snapshot_id": "0668d69a-3c92-4bfc-8819-de231da6a571",
+          "parse_id": "796e748b-bde4-4dc6-b7be-6c05af25c970"
+        },
+        {
+          "resource_id": "7dce3fc4-92b6-4a96-8d68-8ccbd78b8623",
+          "snapshot_id": "a8b6e02a-e833-47bb-a8e1-9ad10611ee37",
+          "parse_id": "2b4adcf4-3959-4a74-a596-dbeccf14b1ba"
+        },
+        {
+          "resource_id": "33d3a8fd-56f4-483e-a1c5-2594efa20e65",
+          "snapshot_id": "93dd2f1f-b854-467e-b969-20ea3f47060d",
+          "parse_id": "6c3a86a4-a692-439f-9afb-4bc7d1eebd91"
+        },
+        {
+          "resource_id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+          "snapshot_id": "8b8bf4e8-6b76-410e-876a-c617696e3881",
+          "parse_id": "c15f6005-50bd-4c46-a72d-679b0927ed1b"
+        },
+        {
+          "resource_id": "39009fab-fba3-4949-bff7-303d9788d70e",
+          "snapshot_id": "fb7af9fb-686b-4773-b942-6c921f07f163",
+          "parse_id": "29d0e869-2e84-4339-9e16-8cce954a642b"
+        },
+        {
+          "resource_id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+          "snapshot_id": "7d09ebe8-6539-4408-b447-b1934971ec85",
+          "parse_id": "3281da0b-e741-47c5-aab2-31de45345edc"
+        }
+      ],
+      "inherited": [],
+      "tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "max_input_chars": 30000,
+      "max_tool_chars": 20000,
+      "web_urls": [],
+      "enabled": true
+    },
+    "resources": [
+      {
+        "ref": {
+          "resource_id": "4beb236e-adc8-423c-a0b1-8b4da3e08517",
+          "snapshot_id": "a3174c07-3d5b-4810-ab57-78f4b8a658f5",
+          "parse_id": "4a77b2a8-8ece-4f7e-aca0-ebdc1e5a9f29"
+        },
+        "resource": {
+          "id": "4beb236e-adc8-423c-a0b1-8b4da3e08517",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales Report",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "4a77b2a8-8ece-4f7e-aca0-ebdc1e5a9f29",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "87a7cae2-21a2-454e-aac6-dfb76a9e01ab"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "60578431-0104-4a82-a1cf-b0262ad29cf4",
+          "snapshot_id": "8d0f8385-0f26-4fc0-973f-6465d9fff820",
+          "parse_id": "3e05f28b-f2e2-47a2-8d56-193528922de2"
+        },
+        "resource": {
+          "id": "60578431-0104-4a82-a1cf-b0262ad29cf4",
+          "owner": "local",
+          "name": "E-Commerce Retail Sales as a Percent of Total Sales",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "3e05f28b-f2e2-47a2-8d56-193528922de2",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "f774a7b0-3c34-446b-8e86-579d58c5a28a"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "68e1b70c-ca46-4868-aabf-5a977adb3636",
+          "snapshot_id": "9e716450-70f9-45ca-bcf5-8e972a9f74cf",
+          "parse_id": "070286bb-bd30-4c4f-a927-3d638392df03"
+        },
+        "resource": {
+          "id": "68e1b70c-ca46-4868-aabf-5a977adb3636",
+          "owner": "local",
+          "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "070286bb-bd30-4c4f-a927-3d638392df03",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "2000b272-8188-48f7-a30a-489e7f129193"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "0eae7639-55d3-4b00-8545-d63d02e1a39c",
+          "snapshot_id": "63226763-0f92-47f2-a4d2-491ee29a5f9f",
+          "parse_id": "96d05539-665d-46f6-beb2-3016bcbadceb"
+        },
+        "resource": {
+          "id": "0eae7639-55d3-4b00-8545-d63d02e1a39c",
+          "owner": "local",
+          "name": "E-commerce Grows 12.2% Year Over Year, Claims 17.1% ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "96d05539-665d-46f6-beb2-3016bcbadceb",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "58108bd1-1c75-4689-a8b8-7cf8a6bcd44f"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "294473f5-92ea-4a0d-956d-89e09a4be7c2",
+          "snapshot_id": "2f9f66a6-e802-4a41-8990-eba894dc6194",
+          "parse_id": "81b9b92a-0802-4b0c-b7ac-1644a77e2ffa"
+        },
+        "resource": {
+          "id": "294473f5-92ea-4a0d-956d-89e09a4be7c2",
+          "owner": "local",
+          "name": "Quarterly Retail E-commerce Sales Report (1st Quarter 2025)",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "81b9b92a-0802-4b0c-b7ac-1644a77e2ffa",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "fd446e29-17db-4ec7-9a5c-555d3585ed05"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "8a206156-a93d-4a11-8472-9c6d9a2f9a12",
+          "snapshot_id": "2adb06f9-6cb2-487d-964c-1c6a8b833578",
+          "parse_id": "54159a6e-dd65-4ec8-8ff5-f16202664c90"
+        },
+        "resource": {
+          "id": "8a206156-a93d-4a11-8472-9c6d9a2f9a12",
+          "owner": "local",
+          "name": "Ecommerce accounts for 25% of total retail sales in Q4 2025",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "54159a6e-dd65-4ec8-8ff5-f16202664c90",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "1ec1afcd-6f6a-456c-be8d-e01dd75eb113"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "4424dc4b-8acf-4077-a855-f5fc4aa42ecc",
+          "snapshot_id": "3b436c20-50db-4498-9557-79e9ac40be36",
+          "parse_id": "e2f6df52-74d6-436f-b51d-be15a33d6d05"
+        },
+        "resource": {
+          "id": "4424dc4b-8acf-4077-a855-f5fc4aa42ecc",
+          "owner": "local",
+          "name": "Christina Dube's Post",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "e2f6df52-74d6-436f-b51d-be15a33d6d05",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "814e3844-433f-47b4-afcd-aa80cd670441"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "3bbdcb29-2d50-4110-b80d-e8efdd69b3ff",
+          "snapshot_id": "3d304456-c5cd-4b8d-96ad-7e5f7befe50e",
+          "parse_id": "50c38683-4dfd-42b6-9259-44b636445b8f"
+        },
+        "resource": {
+          "id": "3bbdcb29-2d50-4110-b80d-e8efdd69b3ff",
+          "owner": "local",
+          "name": "A Recap of 2024 - 2025 (Q1) YOY Retail Sales for E ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "50c38683-4dfd-42b6-9259-44b636445b8f",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "39eeb37b-286d-4f48-b89f-d20530a3c81b"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "58a1d73c-e8be-4c70-bade-475eddfffe94",
+          "snapshot_id": "35589d9c-e098-40a1-8434-538c7ecab368",
+          "parse_id": "0ccd4a45-f678-4600-b9b1-b6436f2c2fdb"
+        },
+        "resource": {
+          "id": "58a1d73c-e8be-4c70-bade-475eddfffe94",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales | FRED | St. Louis Fed",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "0ccd4a45-f678-4600-b9b1-b6436f2c2fdb",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "1372545e-6df9-476d-8ec0-9bb2674a46bc"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "5ebdd6ec-587e-4f92-a63f-5a33124190fc",
+          "snapshot_id": "fe242112-d2f6-4e5e-afb9-d8c243b4c8f7",
+          "parse_id": "c4ac58e8-e7c3-4ed4-a3e1-e954d1f60dfe"
+        },
+        "resource": {
+          "id": "5ebdd6ec-587e-4f92-a63f-5a33124190fc",
+          "owner": "local",
+          "name": "Quarterly E-Commerce Report Methodology",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "c4ac58e8-e7c3-4ed4-a3e1-e954d1f60dfe",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "ba82f929-cfa2-4518-8a61-423842f98ef8"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "a954da19-8b25-448d-b2c7-bf1c24a9b531",
+          "snapshot_id": "967fda91-3a19-423f-8e84-91e0539a0f9a",
+          "parse_id": "a9a1e2e9-2eb9-4094-84c9-c0975fd95bb8"
+        },
+        "resource": {
+          "id": "a954da19-8b25-448d-b2c7-bf1c24a9b531",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales Report",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "a9a1e2e9-2eb9-4094-84c9-c0975fd95bb8",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "87a7cae2-21a2-454e-aac6-dfb76a9e01ab"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "f3715a3a-d707-43af-b0b4-8557df7551d2",
+          "snapshot_id": "8bdd4fba-3f01-4158-8317-58815976d148",
+          "parse_id": "c58ab7ed-22ca-4440-99b9-6f3ac1a8eb84"
+        },
+        "resource": {
+          "id": "f3715a3a-d707-43af-b0b4-8557df7551d2",
+          "owner": "local",
+          "name": "E-Commerce Retail Sales as a Percent of Total Sales",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "c58ab7ed-22ca-4440-99b9-6f3ac1a8eb84",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "a77ca104-42da-42a9-b913-307347a29beb"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "ff810c6e-7dff-4510-a473-7c36bf016146",
+          "snapshot_id": "e9d0dee8-73bc-40d0-830a-3ba0823a31d1",
+          "parse_id": "872d4c07-1d70-462d-bca2-89f21825c0a9"
+        },
+        "resource": {
+          "id": "ff810c6e-7dff-4510-a473-7c36bf016146",
+          "owner": "local",
+          "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "872d4c07-1d70-462d-bca2-89f21825c0a9",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "2000b272-8188-48f7-a30a-489e7f129193"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "59fff652-6539-45e9-9dac-9f58369c415c",
+          "snapshot_id": "024a8866-5bf5-4d88-a5cc-73a8cf39e84f",
+          "parse_id": "29b391b9-48f2-4035-bdfd-b71c327cbecc"
+        },
+        "resource": {
+          "id": "59fff652-6539-45e9-9dac-9f58369c415c",
+          "owner": "local",
+          "name": "E-commerce Grows 12.2% Year Over Year, Claims 17.1% ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "29b391b9-48f2-4035-bdfd-b71c327cbecc",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "58108bd1-1c75-4689-a8b8-7cf8a6bcd44f"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "e1c63351-4af7-462b-92fd-46b01a6f7875",
+          "snapshot_id": "21eff7a0-e631-4ee6-bff1-6042f5d433a5",
+          "parse_id": "4a3d0780-5767-46f5-bd3a-a3b420dff93a"
+        },
+        "resource": {
+          "id": "e1c63351-4af7-462b-92fd-46b01a6f7875",
+          "owner": "local",
+          "name": "Quarterly E-Commerce Report Historical Data",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "4a3d0780-5767-46f5-bd3a-a3b420dff93a",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "b5d5b6f9-86ba-4e91-8239-79885b12be8f"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "1724bac9-f29d-43a3-999b-42e1b661209e",
+          "snapshot_id": "7b95d8d1-c5e8-4eb1-a8b0-fb1cd491549c",
+          "parse_id": "15fe02cd-cfd2-4df4-a2e1-579021f6ceb4"
+        },
+        "resource": {
+          "id": "1724bac9-f29d-43a3-999b-42e1b661209e",
+          "owner": "local",
+          "name": "Christina Dube's Post",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "15fe02cd-cfd2-4df4-a2e1-579021f6ceb4",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "dd4bbfba-a49b-4e66-b485-110d5e849b16"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "6e2224f5-d4bd-4365-b079-2403bc751b50",
+          "snapshot_id": "874f877e-c7ed-4164-8ac4-82ce641674af",
+          "parse_id": "bc1d93c2-9a9c-4a9d-9507-87b133b074d3"
+        },
+        "resource": {
+          "id": "6e2224f5-d4bd-4365-b079-2403bc751b50",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales | FRED | St. Louis Fed",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "bc1d93c2-9a9c-4a9d-9507-87b133b074d3",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "fd568e51-1c5f-457d-b4e1-34a677c9716e"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "560445e8-4f79-42a9-982c-8bdcd6843f60",
+          "snapshot_id": "e6433375-e84e-4c43-afe6-7aa102407770",
+          "parse_id": "4c6acf27-26ae-465c-a324-06ceab378b84"
+        },
+        "resource": {
+          "id": "560445e8-4f79-42a9-982c-8bdcd6843f60",
+          "owner": "local",
+          "name": "US Quarterly Retail E-Commerce Sales: Q4 2025",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "4c6acf27-26ae-465c-a324-06ceab378b84",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "a640936b-c1bb-47fa-8338-4b1b565659b2"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "a5d0583a-6764-4757-9580-1c7fcb3553ba",
+          "snapshot_id": "d8c1eaef-ebb5-413b-9657-2007df5beb53",
+          "parse_id": "06bb17b6-6c52-4425-9cdc-5f786bc37e56"
+        },
+        "resource": {
+          "id": "a5d0583a-6764-4757-9580-1c7fcb3553ba",
+          "owner": "local",
+          "name": "Census Bureau: E-commerce made up 8.1% of all ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "06bb17b6-6c52-4425-9cdc-5f786bc37e56",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "880a4a8e-4f25-45d4-8ec1-5a2b818f6aa2"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "4e8ab252-b874-41d2-8e16-c0de2b89e58e",
+          "snapshot_id": "c6c45861-5794-41fc-b760-82b5b0ed5aa3",
+          "parse_id": "d532f349-c709-461b-a461-831f2902a484"
+        },
+        "resource": {
+          "id": "4e8ab252-b874-41d2-8e16-c0de2b89e58e",
+          "owner": "local",
+          "name": "US ecommerce penetration nearly a quarter of all Q4 retail ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "d532f349-c709-461b-a461-831f2902a484",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "13c501bc-8ab3-4f5f-8f73-fe4fb10d99a4"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "b1a63975-58f4-41f1-baed-4485ff586d60",
+          "snapshot_id": "610ad35b-ded7-4f01-85e9-f8dcb7fd3d93",
+          "parse_id": "0279f4d4-266a-4a2f-b5be-fc332e97d76d"
+        },
+        "resource": {
+          "id": "b1a63975-58f4-41f1-baed-4485ff586d60",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales Report",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "0279f4d4-266a-4a2f-b5be-fc332e97d76d",
+          "status": "ready",
+          "phase": "finished",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": null
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "a911201f-a3d1-495d-aab6-e5be50934f40",
+          "snapshot_id": "a31be1c8-1517-47e1-8f14-42f8d166f989",
+          "parse_id": "416c6cbb-bed0-426a-8086-97a75f5f6b3f"
+        },
+        "resource": {
+          "id": "a911201f-a3d1-495d-aab6-e5be50934f40",
+          "owner": "local",
+          "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "416c6cbb-bed0-426a-8086-97a75f5f6b3f",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "2000b272-8188-48f7-a30a-489e7f129193"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "1a1f82d0-b09c-4350-922b-ef36a9481e3f",
+          "snapshot_id": "9e5257d0-a289-4304-ab71-3778ab1e40eb",
+          "parse_id": "673c09ad-3bb0-47e5-9581-25690c41d0ff"
+        },
+        "resource": {
+          "id": "1a1f82d0-b09c-4350-922b-ef36a9481e3f",
+          "owner": "local",
+          "name": "E-Commerce Retail Sales as a Percent of Total Sales",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "673c09ad-3bb0-47e5-9581-25690c41d0ff",
+          "status": "ready",
+          "phase": "finished",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": null
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "991055de-1c33-40e9-8c29-d986d0ef71b9",
+          "snapshot_id": "9a0773e9-ebe7-4513-93be-8a00ffa87153",
+          "parse_id": "91a4a9f4-9303-41f1-83b8-f4336fb74335"
+        },
+        "resource": {
+          "id": "991055de-1c33-40e9-8c29-d986d0ef71b9",
+          "owner": "local",
+          "name": "Monthly Retail Trade - Main Page",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "91a4a9f4-9303-41f1-83b8-f4336fb74335",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "395f9862-798b-41aa-9694-ba4d850b9a2a"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "8673c8d2-6998-441d-840f-46d5c324af8c",
+          "snapshot_id": "dbe38591-a2ed-4ca9-9fee-cd5859adf343",
+          "parse_id": "b68d4f49-9a6c-453c-97cc-ec2ec40ee753"
+        },
+        "resource": {
+          "id": "8673c8d2-6998-441d-840f-46d5c324af8c",
+          "owner": "local",
+          "name": "Quarterly E-Commerce Report Historical Data",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "b68d4f49-9a6c-453c-97cc-ec2ec40ee753",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "e9c1816e-a00f-4379-8c1a-4c4fbc4bf9be"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "a5c7dbf3-aee3-48b1-b628-92ee3c912d62",
+          "snapshot_id": "a13247d5-7711-49be-832c-f71845a0ff7e",
+          "parse_id": "88d9f2d9-e9f0-45de-adf6-d6fa1678a84a"
+        },
+        "resource": {
+          "id": "a5c7dbf3-aee3-48b1-b628-92ee3c912d62",
+          "owner": "local",
+          "name": "Monthly Retail Trade - Sales Report",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "88d9f2d9-e9f0-45de-adf6-d6fa1678a84a",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "c975924b-5778-4f5c-af7a-084e6000c9f2"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "b019b4ae-2d7f-4b47-96aa-201b5337a5df",
+          "snapshot_id": "76e4d26c-c5d5-4095-ad32-350ae04cfec3",
+          "parse_id": "ea348c77-a3af-47c2-b519-e6c761c66190"
+        },
+        "resource": {
+          "id": "b019b4ae-2d7f-4b47-96aa-201b5337a5df",
+          "owner": "local",
+          "name": "US Census Bureau",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "ea348c77-a3af-47c2-b519-e6c761c66190",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "a11799b0-eceb-470d-94a7-17e40c2aad7b"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "a50df83e-30b2-4737-aafe-6334babb5963",
+          "snapshot_id": "0668d69a-3c92-4bfc-8819-de231da6a571",
+          "parse_id": "796e748b-bde4-4dc6-b7be-6c05af25c970"
+        },
+        "resource": {
+          "id": "a50df83e-30b2-4737-aafe-6334babb5963",
+          "owner": "local",
+          "name": "Share of Online Retail Sales Soaring - GovDelivery - Granicus",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "796e748b-bde4-4dc6-b7be-6c05af25c970",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "4eead886-bba6-40ea-b942-d99dc07b4b44"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "7dce3fc4-92b6-4a96-8d68-8ccbd78b8623",
+          "snapshot_id": "a8b6e02a-e833-47bb-a8e1-9ad10611ee37",
+          "parse_id": "2b4adcf4-3959-4a74-a596-dbeccf14b1ba"
+        },
+        "resource": {
+          "id": "7dce3fc4-92b6-4a96-8d68-8ccbd78b8623",
+          "owner": "local",
+          "name": "Monthly Retail Trade - Release Schedule",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "2b4adcf4-3959-4a74-a596-dbeccf14b1ba",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "882e057f-4484-43d5-8157-4768590e1bb6"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "33d3a8fd-56f4-483e-a1c5-2594efa20e65",
+          "snapshot_id": "93dd2f1f-b854-467e-b969-20ea3f47060d",
+          "parse_id": "6c3a86a4-a692-439f-9afb-4bc7d1eebd91"
+        },
+        "resource": {
+          "id": "33d3a8fd-56f4-483e-a1c5-2594efa20e65",
+          "owner": "local",
+          "name": "E-Commerce Share Of US Retail Sales 2026",
+          "kind": "discovery"
+        },
+        "parse": {
+          "id": "6c3a86a4-a692-439f-9afb-4bc7d1eebd91",
+          "status": "ready",
+          "phase": "finished",
+          "fragment_count": 1,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": null
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+          "snapshot_id": "8b8bf4e8-6b76-410e-876a-c617696e3881",
+          "parse_id": "c15f6005-50bd-4c46-a72d-679b0927ed1b"
+        },
+        "resource": {
+          "id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+          "owner": "local",
+          "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+          "kind": "web"
+        },
+        "parse": {
+          "id": "c15f6005-50bd-4c46-a72d-679b0927ed1b",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 30,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "a7a080c2-41ee-4ee4-989d-02ce255a5aae"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "39009fab-fba3-4949-bff7-303d9788d70e",
+          "snapshot_id": "fb7af9fb-686b-4773-b942-6c921f07f163",
+          "parse_id": "29d0e869-2e84-4339-9e16-8cce954a642b"
+        },
+        "resource": {
+          "id": "39009fab-fba3-4949-bff7-303d9788d70e",
+          "owner": "local",
+          "name": "Quarterly Retail E-Commerce Sales Report",
+          "kind": "web"
+        },
+        "parse": {
+          "id": "29d0e869-2e84-4339-9e16-8cce954a642b",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 58,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "e03bdc58-73fe-453f-8abc-9f6a609c0b0b"
+        }
+      },
+      {
+        "ref": {
+          "resource_id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+          "snapshot_id": "7d09ebe8-6539-4408-b447-b1934971ec85",
+          "parse_id": "3281da0b-e741-47c5-aab2-31de45345edc"
+        },
+        "resource": {
+          "id": "ea4214f3-159c-4251-af4a-80b2aaefb32e",
+          "owner": "local",
+          "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+          "kind": "web"
+        },
+        "parse": {
+          "id": "3281da0b-e741-47c5-aab2-31de45345edc",
+          "status": "ready",
+          "phase": "cache",
+          "fragment_count": 30,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": "a7a080c2-41ee-4ee4-989d-02ce255a5aae"
+        }
+      }
+    ]
+  },
+  "fetched_sources": [
+    {
+      "at": "2026-10-03T16:41:35.349808Z",
+      "id": "12707f62-c5e9-4a5c-9020-e0d25361527d",
+      "url": "https://www2.census.gov/retail/releases/historical/ecomm/25q4.pdf",
+      "kind": "web",
+      "name": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+      "owner": "local",
+      "query": "census.gov retail ecommerce quarterly sales Q4 2025",
+      "title": "QUARTERLY RETAIL E-COMMERCE SALES 4th QUARTER ...",
+      "run_id": "08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+      "summary": null,
+      "scope_id": "59524a9e-4c7e-4c0f-bdfd-aad42ff4b5af",
+      "actual_url": "https://www2.census.gov/retail/releases/historical/ecomm/25q4.pdf",
+      "resource_id": "084f67e9-e4a2-4523-a6cf-06d943d58469",
+      "snapshot_id": "8b8bf4e8-6b76-410e-876a-c617696e3881"
+    },
+    {
+      "at": "2026-10-03T16:41:36.588498Z",
+      "id": "c0264e46-0d61-4f86-aa43-a3e8e9d2139f",
+      "url": "https://www.census.gov/retail/ecommerce.html",
+      "kind": "web",
+      "name": "Quarterly Retail E-Commerce Sales Report",
+      "owner": "local",
+      "query": "census.gov retail ecommerce quarterly sales Q4 2025",
+      "title": "Quarterly Retail E-Commerce Sales Report",
+      "run_id": "08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+      "summary": null,
+      "scope_id": "59524a9e-4c7e-4c0f-bdfd-aad42ff4b5af",
+      "actual_url": "https://www.census.gov/retail/ecommerce.html",
+      "resource_id": "39009fab-fba3-4949-bff7-303d9788d70e",
+      "snapshot_id": "fb7af9fb-686b-4773-b942-6c921f07f163"
+    }
+  ],
+  "expert_runs": [
+    {
+      "run_id": "08bedd4d-db77-4ea7-baff-d7e4fd04540c",
+      "status": "failed",
+      "usage": {
+        "complete": true,
+        "requests": 3,
+        "input_tokens": 23143,
+        "output_tokens": 15496
+      },
+      "error": {
+        "code": "evidence_invalid",
+        "origin": "app",
+        "message": "Citation quote 'Table 1. Estimated Quarterly U.S. Retail Sales: Total and E-commerce1 (Estimates are based on data from the Monthly Retail Trade Survey and administrative recor' does not occur in the saved source",
+        "cause_id": null,
+        "retryable": false
+      }
+    },
+    {
+      "run_id": "e4700c21-82f5-45d6-b744-9ed347e9b962",
+      "status": "succeeded",
+      "usage": {
+        "complete": true,
+        "requests": 3,
+        "input_tokens": 22879,
+        "output_tokens": 12051
+      },
+      "error": null
+    }
+  ],
+  "intents": [
+    {
+      "command_id": "manager:288bac7af018f061777b6996eb933f7d8e250a463874417e7ab8110213b93664",
+      "status": "completed",
+      "resume_status": "complete",
+      "resume_attempt": "0"
+    },
+    {
+      "command_id": "manager:f341f2e06d6ee811e6e253640c78ad5912b793a7b637a2efafe40a0166e5d7cc",
+      "status": "completed",
+      "resume_status": "complete",
+      "resume_attempt": "0"
+    }
+  ],
+  "acceptance_passed": true
+}

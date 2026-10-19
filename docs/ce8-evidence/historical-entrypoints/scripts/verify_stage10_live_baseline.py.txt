@@ -1,0 +1,97 @@
+"""Stage 10 DeepSeek baseline discovery; key arrives only through non-echoing stdin."""
+import asyncio
+import json
+import os
+import sys
+import termios
+from pathlib import Path
+from uuid import uuid4
+
+from agents import set_default_openai_api, set_default_openai_client
+from openai import AsyncOpenAI
+
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks, build_evaluation, build_evolution
+from agent_core.contracts import RunLimits
+
+ROOT=Path(__file__).resolve().parents[1]
+OUTPUT=ROOT/'docs/stage10-live-baseline.json'
+SOURCES=(
+    ('development','fictional-hexing.txt','虚构恒星公司。2025 年度现金流量表，金额单位：万元人民币。经营活动产生的现金流量净额为 1,240；购建固定资产、无形资产和其他长期资产支付的现金为 310。文末员工人数 4,000 人，人数不属于金额单位。'),
+    ('development','fictional-muguang.txt','虚构沐光公司。表格列标题：2025 年，单位：千元人民币。经营活动产生的现金流量净额为 8,500；购建固定资产支付的现金为 1,250。上一年 2024 年表格单位为元，非本年口径。'),
+    ('holdout','fictional-yunqiao.txt','虚构云桥公司。2025 年现金流量表附注：本表金额以百万元人民币呈列。经营活动现金流量净额 76.5；资本开支 21.8。股价另以元每股表示，非本表现金流单位。'),
+    ('holdout','fictional-yuanchuan.txt','虚构远川公司。2025 年主要现金流数据表，单位：亿元人民币。经营活动产生的现金流量净额 2.4；购建固定资产支付的现金 0.7。子公司合同另以万元记账，不影响本表。'),
+)
+
+
+async def main():
+    if sys.stdin.isatty():
+        settings=termios.tcgetattr(sys.stdin.fileno())
+        settings[3] &= ~termios.ECHO
+        termios.tcsetattr(sys.stdin.fileno(),termios.TCSANOW,settings)
+    print('READY_FOR_KEY',flush=True)
+    key=sys.stdin.readline().strip()
+    if not key: raise RuntimeError('No key supplied to the test process')
+    os.environ['OPENAI_API_KEY']=key
+    os.environ['OPENAI_MODEL']='deepseek-flash'
+    client=AsyncOpenAI(api_key=key,base_url='https://api.deepseek.com',max_retries=0,timeout=180)
+    report={'model':'deepseek-flash','protocol':'responses','base_url':'https://api.deepseek.com',
+        'source':'four synthetic financial tables; independent review pending','runs':[]}
+    def save():
+        OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str).replace(key,'[REDACTED]'))
+    db=None
+    try:
+        set_default_openai_client(client,use_for_tracing=False)
+        set_default_openai_api('responses')
+        available=[item.id for item in (await client.models.list()).data]
+        if 'deepseek-flash' not in available: raise RuntimeError('deepseek-flash is unavailable')
+        print('AUTHENTICATED',flush=True)
+        db=PostgresDatabase(os.environ['DATABASE_URL'])
+        scopes=build_resources(db,'/private/tmp/stage10-live-blobs')
+        engine=OpenAIEngine()
+        research=build_research(db,scopes,engine)
+        root=research.create('Stage 10 DeepSeek synthetic unit review '+str(uuid4()))
+        tasks=build_tasks(db,scopes,research,engine)
+        evaluation=build_evaluation(db,tasks)
+        build_evolution(db,tasks,evaluation)
+        report['research_id']=root.id
+        save()
+        for split,name,body in SOURCES:
+            scope=scopes.current(root.scope_id,'local')
+            _,ref=scopes.ingest(scope,content=body.encode(),name=name,media_type='text/plain')
+            spec=tasks.create(research_id=root.id,kind='extract',
+                user_request='只提取本资料 2025 年经营现金流、资本开支、表格原有金额单位与各字段来源。保持原文数值，不换算。',
+                required_refs=(ref,),model='deepseek-flash',
+                limits=RunLimits(max_turns=4,max_calls=4,timeout_seconds=180))
+            row={'split':split,'source_name':name,'source_text':body,
+                'task_id':spec.id,'method_version':spec.method_version,'runs':[]}
+            report['runs'].append(row);save()
+            for attempt in (1,2):
+                outcome=await tasks.run(spec.id)
+                run=tasks.ledger.get(outcome['run_id'])
+                result=run.result
+                record={'attempt':attempt,'result_id':outcome['receipt'].result_id if outcome['receipt'] else None,
+                    'run_id':outcome['run_id'],'status':result.status if result else run.status,
+                    'error':result.error.model_dump(mode='json') if result and result.error else None,
+                    'output':result.output if result else None,
+                    'usage':result.usage.model_dump(mode='json') if result else None,
+                    'delivery':outcome['receipt'].delivery if outcome['receipt'] else None}
+                row['runs'].append(record);save()
+                print(f'{name} attempt {attempt}: {record["status"]}',flush=True)
+                if record['status']=='succeeded' or not record['error'] or record['error']['code']!='model_behavior': break
+        report['phase']='baseline_complete_needs_independent_source_review'
+        save()
+        print('BASELINE_COMPLETE',flush=True)
+    except Exception as exc:
+        report['failure']={'type':type(exc).__name__,'message':str(exc).replace(key,'[REDACTED]')}
+        save()
+        print('FAILED '+report['failure']['type'],flush=True)
+        raise SystemExit(1) from None
+    finally:
+        if db: db.close()
+        await client.close()
+        os.environ.pop('OPENAI_API_KEY',None)
+
+
+if __name__=='__main__': asyncio.run(main())

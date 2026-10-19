@@ -1,0 +1,444 @@
+{
+  "base_url": "http://127.0.0.1:8770",
+  "passed": false,
+  "research_id": "50a2daca-20f7-4e55-8285-89e7d0914c8c",
+  "node_id": "36b57547-b4ca-4a4c-b974-f811795fed89",
+  "run": {
+    "binding": {
+      "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+      "node_id": "36b57547-b4ca-4a4c-b974-f811795fed89",
+      "command_id": "dde1e650-be27-4b3c-b612-9597de13faab",
+      "node_revision": 1,
+      "context_snapshot_id": "547bad22-3ba4-486f-810b-81bca166fffa",
+      "goal": "自主联网搜索与引用验收",
+      "instructions": "",
+      "instruction_version": 1,
+      "resource_refs": [],
+      "result_ids": [],
+      "missing": [],
+      "limits": {
+        "max_turns": 12,
+        "timeout_seconds": 180.0,
+        "max_depth": 1,
+        "max_calls": 12
+      },
+      "chat_revision": 1,
+      "evidence_required": false
+    },
+    "run": {
+      "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+      "conversation_id": null,
+      "process_id": "2c6f4056-662e-488d-a36a-d1037b535b8d",
+      "request": {
+        "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "parent_run_id": null,
+        "agent_id": "36b57547-b4ca-4a4c-b974-f811795fed89",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"0b65b213-80cc-4938-abdb-1079b5032b24\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+            }
+          ]
+        },
+        "limits": {
+          "max_turns": 12,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 12
+        },
+        "depth": 0
+      },
+      "expected_revision": 0,
+      "status": "failed",
+      "result": {
+        "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "status": "failed",
+        "output": null,
+        "usage": {
+          "requests": 6,
+          "input_tokens": 66884,
+          "output_tokens": 4551,
+          "complete": true
+        },
+        "error": {
+          "code": "evidence_invalid",
+          "origin": "app",
+          "message": "Cited period is not present in the parsed source",
+          "retryable": false,
+          "cause_id": null
+        }
+      },
+      "commit_id": "run:d3418866-a11b-4f1d-89cf-36ec06c23c20",
+      "created_at": "2026-10-03T12:39:26.612863Z"
+    },
+    "events": [
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 1,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "started",
+          "name": null,
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:26.614994Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 2,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_NG7oA6TIc2ptb9UyayaE3658",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:29.179994Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 3,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_NG7oA6TIc2ptb9UyayaE3658",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:33.750410Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 4,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_M3sHpb0bRYf6lgqnKhr82701",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:33.750820Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 5,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_M3sHpb0bRYf6lgqnKhr82701",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:36.891973Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 6,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_x2hjAwWJerhV49h65HDR3082",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:41.158737Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 7,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_x2hjAwWJerhV49h65HDR3082",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:49.301154Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 8,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_oe4sIIZfig7xLbTo9RI96958",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:39:49.301817Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 9,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_oe4sIIZfig7xLbTo9RI96958",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:01.610578Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 10,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_4ZjP26nkise5UogWdOYu3717",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:05.416992Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 11,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_4ZjP26nkise5UogWdOYu3717",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:08.850845Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 12,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_3XJw9OsAyqkFdW5NrySd1910",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:08.852111Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 13,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_3XJw9OsAyqkFdW5NrySd1910",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:11.724024Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 14,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_iAhlAHjYPhvkCqBkTzuY2235",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:15.658681Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 15,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_iAhlAHjYPhvkCqBkTzuY2235",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:18.127086Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 16,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_19TLIUGAkM6pBJH8gPPU8489",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:18.128083Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 17,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_19TLIUGAkM6pBJH8gPPU8489",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:23.230343Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 18,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_mMvcqg4TgxnWaNoJIIOx6745",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:27.408471Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 19,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_mMvcqg4TgxnWaNoJIIOx6745",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:27.431969Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 20,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_668373ZYKDQlykHdYgsB3083",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:27.433545Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 21,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_668373ZYKDQlykHdYgsB3083",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:27.450423Z"
+      },
+      {
+        "root_run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+        "sequence": 22,
+        "event": {
+          "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "completed",
+          "name": null,
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:40:39.307914Z"
+      }
+    ],
+    "context": {
+      "id": "547bad22-3ba4-486f-810b-81bca166fffa",
+      "run_id": "d3418866-a11b-4f1d-89cf-36ec06c23c20",
+      "conversation_id": null,
+      "scope_id": "a0b93e58-27d7-4514-83e1-4bf4fcf276a4",
+      "scope_version": 1,
+      "scope": {
+        "id": "a0b93e58-27d7-4514-83e1-4bf4fcf276a4",
+        "owner": "local",
+        "version": 1,
+        "allowed": [],
+        "grants": [],
+        "inherited": [],
+        "tools": [
+          "fetch_web",
+          "read_source",
+          "search_source",
+          "search_web"
+        ],
+        "max_input_chars": 30000,
+        "max_tool_chars": 20000,
+        "web_urls": [],
+        "enabled": true
+      },
+      "mounts": [],
+      "result_mounts": [],
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"0b65b213-80cc-4938-abdb-1079b5032b24\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+          }
+        ]
+      }
+    }
+  },
+  "error": "{'run_id': 'd3418866-a11b-4f1d-89cf-36ec06c23c20', 'status': 'failed', 'output': None, 'usage': {'requests': 6, 'input_tokens': 66884, 'output_tokens': 4551, 'complete': True}, 'error': {'code': 'evidence_invalid', 'origin': 'app', 'message': 'Cited period is not present in the parsed source', 'retryable': False, 'cause_id': None}}"
+}

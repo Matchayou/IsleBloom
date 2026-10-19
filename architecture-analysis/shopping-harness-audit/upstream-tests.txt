@@ -1,0 +1,315 @@
+...........................F.F.FF..........FFFF.F........ [ 72%]
+......................                                                   [100%]
+=================================== FAILURES ===================================
+_ ObservationProjectionTest.test_capacity_mismatch_fails_instead_of_silently_dropping_products _
+
+self = <test_observation_projection.ObservationProjectionTest testMethod=test_capacity_mismatch_fails_instead_of_silently_dropping_products>
+
+    def test_capacity_mismatch_fails_instead_of_silently_dropping_products(self):
+        raw = search_page(product_count=20)
+>       with self.assertRaisesRegex(ObservationProjectionError, "page capacity"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: ObservationProjectionError not raised
+
+tests/test_observation_projection.py:97: AssertionError
+_ ObservationProjectionTest.test_guard_accepts_last_product_instead_of_creating_blind_spot _
+
+self = <test_observation_projection.ObservationProjectionTest testMethod=test_guard_accepts_last_product_instead_of_creating_blind_spot>
+
+    def test_guard_accepts_last_product_instead_of_creating_blind_spot(self):
+        raw = search_page(product_count=20)
+        visible, _ = project_observation(
+            "search_products",
+            raw,
+            parameters={"query": "useful product"},
+            count_tokens=len,
+            token_budget=1200,
+            search_top_k=20,
+        )
+>       last_asin = product_ids(raw)[-1]
+                    ^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_observation_projection.py:76: IndexError
+_ ObservationProjectionTest.test_search_projection_preserves_every_current_page_product _
+
+self = <test_observation_projection.ObservationProjectionTest testMethod=test_search_projection_preserves_every_current_page_product>
+
+    def test_search_projection_preserves_every_current_page_product(self):
+        raw = search_page(product_count=20)
+        visible, meta = project_observation(
+            "search_products",
+            raw,
+            parameters={"query": "useful product"},
+            count_tokens=len,
+            token_budget=1200,
+            search_top_k=20,
+        )
+    
+        self.assertLessEqual(len(visible), 1200)
+        self.assertTrue(meta.truncated)
+        self.assertTrue(meta.critical_footer_preserved)
+        self.assertIn(TRUNCATION_MARKER, visible)
+        self.assertEqual(
+            {button.casefold() for button in clickable_buttons(visible) if not button.isdigit()},
+            {"back to search", "next >"},
+        )
+>       self.assertEqual(
+            set(product_ids(visible)),
+            {button for button in clickable_buttons(visible) if button.isdigit()},
+        )
+E       AssertionError: Items in the second set but not the first:
+E       '100000000008'
+E       '100000000003'
+E       '100000000005'
+E       '100000000014'
+E       '100000000017'
+E       '100000000001'
+E       '100000000006'
+E       '100000000018'
+E       '100000000007'
+E       '100000000000'
+E       '100000000013'
+E       '100000000011'
+E       '100000000019'
+E       '100000000002'
+E       '100000000010'
+E       '100000000016'
+E       '100000000012'
+E       '100000000015'
+E       '100000000009'
+E       '100000000004'
+
+tests/test_observation_projection.py:60: AssertionError
+_ ObservationProjectionTest.test_second_environment_page_preserves_products_21_through_40 _
+
+self = <test_observation_projection.ObservationProjectionTest testMethod=test_second_environment_page_preserves_products_21_through_40>
+
+    def test_second_environment_page_preserves_products_21_through_40(self):
+        raw = search_page(product_count=20, page=2)
+        visible, _ = project_observation(
+            "next_page",
+            raw,
+            count_tokens=len,
+            token_budget=1200,
+            search_top_k=20,
+        )
+    
+>       self.assertIn("page: Page 2", visible)
+E       AssertionError: 'page: Page 2' not found in 'Instruction: [SEP] find a useful product [SEP] Back to Search [SEP] Page 2 (Total results: 40) [SEP] Next > [SEP] 100000000000 [SEP] product title 0 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx [SEP] 1.0 [SEP] 100000000001 [SEP] product title 1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx [SEP]\n[TRUNCATED_BY_SHOPPING_PROJECTOR]\nEP] product title 19 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx [SEP] 20.0\n搜索功能是否可用: False\n可点击的按钮: ["back to search", "next >", "100000000000", "100000000001", "100000000002", "100000000003", "100000000004", "100000000005", "100000000006", "100000000007", "100000000008", "100000000009", "100000000010", "100000000011", "100000000012", "100000000013", "100000000014", "100000000015", "100000000016", "100000000017", "100000000018", "100000000019"]'
+
+tests/test_observation_projection.py:92: AssertionError
+_ RolloutTest.test_collect_for_task_allows_current_page_navigation_after_option_selection _
+
+self = <test_rollout.RolloutTest testMethod=test_collect_for_task_allows_current_page_navigation_after_option_selection>
+
+    def test_collect_for_task_allows_current_page_navigation_after_option_selection(self):
+        """选择规格后仍由环境当前页面决定能否浏览，采集器不另造状态机。"""
+        class OptionEnv(FakeEnv):
+            def step(self, action):
+                self.actions.append(action)
+                if action == "search[乳胶枕]":
+                    return {"instruction": "results [SEP] 100000000001", "reward": 0.0, "done": False}
+                if action == "click[100000000001]":
+                    return {
+                        "instruction": 'detail\n\n可点击的按钮: ["满天星", "Description", "Buy Now"]',
+                        "reward": 0.0,
+                        "done": False,
+                    }
+                if action == "click[满天星]":
+                    return {
+                        "instruction": 'selected\n\n可点击的按钮: ["Description", "Buy Now"]',
+                        "reward": 0.0,
+                        "done": False,
+                    }
+                if action == "click[Description]":
+                    return {
+                        "instruction": 'details\n\n可点击的按钮: ["Buy Now"]',
+                        "reward": 0.0,
+                        "done": False,
+                    }
+                if action == "click[Buy Now]":
+                    return {
+                        "instruction": "done",
+                        "reward": 1.0,
+                        "done": True,
+                        "over": True,
+                        "purchase": {"asin": "A1"},
+                        "reward_detail": {"r_type": 1, "r_att": 1, "r_option": 1, "r_price": 1},
+                    }
+                raise AssertionError(action)
+    
+        client = MockClient(
+            [
+                assistant_tool("search_products", {"query": "乳胶枕"}, "call_search"),
+                assistant_tool("open_product", {"asin": "100000000001"}, "call_open"),
+                assistant_tool("select_option", {"value": "满天星"}, "call_option"),
+                assistant_tool("view_description", {}, "call_wrong_navigation"),
+                assistant_tool("buy_now", {}, "call_buy"),
+            ]
+        )
+        env = OptionEnv()
+    
+        traj = collect_for_task({"task_id": 12}, client=client, env_factory=lambda **kwargs: env)
+    
+>       self.assertEqual(traj["status"], "done")
+E       AssertionError: 'invalid_action_limit' != 'done'
+E       - invalid_action_limit
+E       + done
+
+tests/test_rollout.py:321: AssertionError
+_ RolloutTest.test_collect_for_task_allows_recovery_after_separated_guard_rejections _
+
+self = <test_rollout.RolloutTest testMethod=test_collect_for_task_allows_recovery_after_separated_guard_rejections>
+
+    def test_collect_for_task_allows_recovery_after_separated_guard_rejections(self):
+        """合法动作应重置守卫计数，避免累计三次历史点击提前中止。"""
+        client = MockClient(
+            [
+                assistant_tool("search_products", {"query": "乳胶枕"}, "call_search"),
+                assistant_tool("open_product", {"asin": "999999999999"}, "call_old_asin"),
+                assistant_tool("open_product", {"asin": "100000000001"}, "call_open"),
+                assistant_tool("view_attributes", {}, "call_missing_attributes"),
+                assistant_tool("view_features", {}, "call_features"),
+                assistant_tool("buy_now", {}, "call_buy_on_subpage"),
+                assistant_tool("prev_page", {}, "call_return"),
+                assistant_tool("buy_now", {}, "call_buy"),
+            ]
+        )
+        env = GuardRecoveryEnv()
+    
+        traj = collect_for_task(
+            {"task_id": 11},
+            client=client,
+            env_factory=lambda **kwargs: env,
+            base_url="http://shop.test",
+            max_steps=8,
+        )
+    
+>       self.assertEqual(traj["status"], "done")
+E       AssertionError: 'invalid_action_limit' != 'done'
+E       - invalid_action_limit
+E       + done
+
+tests/test_rollout.py:405: AssertionError
+_ RolloutTest.test_collect_for_task_blocks_invalid_click_then_keeps_clean_recovery _
+
+self = <test_rollout.RolloutTest testMethod=test_collect_for_task_blocks_invalid_click_then_keeps_clean_recovery>
+
+    def test_collect_for_task_blocks_invalid_click_then_keeps_clean_recovery(self):
+        client = MockClient(
+            [
+                assistant_tool("search_products", {"query": "乳胶枕"}, "call_search"),
+                assistant_tool("open_product", {"asin": "100000000001"}, "call_open"),
+                assistant_tool("view_features", {}, "call_invalid"),
+                assistant_tool("buy_now", {}, "call_buy"),
+            ]
+        )
+        env = FakeEnv()
+    
+        traj = collect_for_task(
+            {"task_id": 10},
+            client=client,
+            env_factory=lambda **kwargs: env,
+            base_url="http://shop.test",
+            max_steps=5,
+        )
+    
+>       self.assertEqual(traj["status"], "done")
+E       AssertionError: 'invalid_action_limit' != 'done'
+E       - invalid_action_limit
+E       + done
+
+tests/test_rollout.py:255: AssertionError
+___ RolloutTest.test_collect_for_task_executes_openai_tool_calls_until_done ____
+
+self = <test_rollout.RolloutTest testMethod=test_collect_for_task_executes_openai_tool_calls_until_done>
+
+    def test_collect_for_task_executes_openai_tool_calls_until_done(self):
+        client = MockClient(
+            [
+                assistant_tool("search_products", {"query": "乳胶枕"}, "call_search"),
+                assistant_tool("open_product", {"asin": "100000000001"}, "call_open"),
+                assistant_tool("buy_now", {}, "call_buy"),
+            ]
+        )
+        env = FakeEnv()
+    
+        traj = collect_for_task(
+            {"task_id": 7},
+            client=client,
+            env_factory=lambda **kwargs: env,
+            base_url="http://shop.test",
+            max_steps=4,
+        )
+    
+>       self.assertEqual(traj["status"], "done")
+E       AssertionError: 'error' != 'done'
+E       - error
+E       + done
+
+tests/test_rollout.py:201: AssertionError
+_ RolloutTest.test_collect_for_task_keeps_one_tool_schema_after_option_selection _
+
+self = <test_rollout.RolloutTest testMethod=test_collect_for_task_keeps_one_tool_schema_after_option_selection>
+
+    def test_collect_for_task_keeps_one_tool_schema_after_option_selection(self):
+        """所有阶段使用同一工具 schema，环境 observation 是唯一动作边界。"""
+        class OptionEnv(FakeEnv):
+            def step(self, action):
+                self.actions.append(action)
+                if action == "search[乳胶枕]":
+                    return {"instruction": "results [SEP] 100000000001", "reward": 0.0, "done": False}
+                if action == "click[100000000001]":
+                    return {
+                        "instruction": 'detail\n\n可点击的按钮: ["满天星", "Buy Now"]',
+                        "reward": 0.0,
+                        "done": False,
+                    }
+                if action == "click[满天星]":
+                    return {
+                        "instruction": 'selected\n\n可点击的按钮: ["Buy Now"]',
+                        "reward": 0.0,
+                        "done": False,
+                    }
+                if action == "click[Buy Now]":
+                    return {
+                        "instruction": "done",
+                        "reward": 1.0,
+                        "done": True,
+                        "over": True,
+                        "purchase": {"asin": "A1"},
+                        "reward_detail": {"r_type": 1, "r_att": 1, "r_option": 1, "r_price": 1},
+                    }
+                raise AssertionError(action)
+    
+        client = MockClient(
+            [
+                assistant_tool("search_products", {"query": "乳胶枕"}, "call_search"),
+                assistant_tool("open_product", {"asin": "100000000001"}, "call_open"),
+                assistant_tool("select_option", {"value": "满天星"}, "call_option"),
+                assistant_tool("buy_now", {}, "call_buy"),
+            ]
+        )
+    
+        trajectory = collect_for_task(
+            {"task_id": 13}, client=client, env_factory=OptionEnv, base_url="http://shop.test"
+        )
+    
+>       self.assertEqual(trajectory["status"], "done")
+E       AssertionError: 'invalid_action_limit' != 'done'
+E       - invalid_action_limit
+E       + done
+
+tests/test_rollout.py:374: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_observation_projection.py::ObservationProjectionTest::test_capacity_mismatch_fails_instead_of_silently_dropping_products
+FAILED tests/test_observation_projection.py::ObservationProjectionTest::test_guard_accepts_last_product_instead_of_creating_blind_spot
+FAILED tests/test_observation_projection.py::ObservationProjectionTest::test_search_projection_preserves_every_current_page_product
+FAILED tests/test_observation_projection.py::ObservationProjectionTest::test_second_environment_page_preserves_products_21_through_40
+FAILED tests/test_rollout.py::RolloutTest::test_collect_for_task_allows_current_page_navigation_after_option_selection
+FAILED tests/test_rollout.py::RolloutTest::test_collect_for_task_allows_recovery_after_separated_guard_rejections
+FAILED tests/test_rollout.py::RolloutTest::test_collect_for_task_blocks_invalid_click_then_keeps_clean_recovery
+FAILED tests/test_rollout.py::RolloutTest::test_collect_for_task_executes_openai_tool_calls_until_done
+FAILED tests/test_rollout.py::RolloutTest::test_collect_for_task_keeps_one_tool_schema_after_option_selection
+9 failed, 70 passed, 15 subtests passed in 0.19s

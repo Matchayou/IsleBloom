@@ -1,0 +1,110 @@
+"""Crash the isolated DBOS worker before its model call, then verify recovery."""
+import asyncio
+import json
+import os
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+import psycopg
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_projects, build_research, build_resources, build_tasks
+from agent_core.research.chat import ChatService
+
+
+URL = 'postgresql+psycopg://chenyouran@127.0.0.1:55449/collaboration_recovery_verify'
+MARKER = Path('/private/tmp/collaboration-c1-before-call.marker')
+LOG = Path('/private/tmp/collaboration-c1-crash-worker.log')
+
+
+async def seed():
+    PostgresDatabase.LOCK_PATH = Path('/private/tmp/collaboration-recovery-seed.lock')
+    db = PostgresDatabase(URL)
+    try:
+        scopes = build_resources(db, Path('/private/tmp/collaboration-recovery-verify-blobs'))
+        research = build_research(db, scopes)
+        tasks = build_tasks(db, scopes, research)
+        projects = build_projects(db, research, tasks)
+        project = projects.create('C1 crash recovery sample')
+        main = await projects.create_main_task(project.id, 'Crash recovery')
+        node = research.query('list_nodes', main.research_id)[0]
+        root = research.research(main.research_id)
+        scope = scopes.current(root.scope_id, research.owner)
+        _, ref = scopes.ingest(scope, content=b'Synthetic recovery sample.',
+            name='recovery.txt', media_type='text/plain')
+        ChatService(research, tasks).send(node.id, 'Ask an expert to read recovery.txt.', 0)
+        intent = research.collaboration.delegate_task(command_id='crash:' + node.id,
+            node_id=node.id, expert_id='expert_synthesize',
+            task_instruction='Summarize the synthetic sample',
+            delivery_requirements='State source limits', resource_refs=(ref,))
+        return intent
+    finally:
+        db.close()
+
+
+def status(task_id):
+    with psycopg.connect('postgresql://chenyouran@127.0.0.1:55449/collaboration_recovery_verify') as db:
+        intent = db.execute('SELECT payload FROM collaboration_intents WHERE task_id=%s', (task_id,)).fetchone()[0]
+        runs = db.execute('SELECT payload FROM task_runs WHERE task_id=%s', (task_id,)).fetchall()
+        receipts = db.execute('SELECT payload FROM task_receipts WHERE task_id=%s', (task_id,)).fetchall()
+    return intent, runs, receipts
+
+
+def launch(log, paused, task_id):
+    env = {**os.environ, 'PYTHONPATH': 'src'}
+    if paused:
+        env.update(STAGE6_PAUSE_AT='before_call', STAGE6_PAUSE_TASK_ID=task_id,
+            STAGE6_PAUSE_MARKER=str(MARKER))
+    return subprocess.Popen([sys.executable, 'scripts/serve_collaboration_recovery.py'],
+        env=env, stdout=log, stderr=subprocess.STDOUT)
+
+
+def stop(process):
+    if process and process.poll() is None:
+        process.terminate()
+        try: process.wait(timeout=8)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=8)
+
+
+def main():
+    MARKER.unlink(missing_ok=True)
+    intent = asyncio.run(seed())
+    first = second = None
+    with LOG.open('w') as log:
+        try:
+            first = launch(log, True, intent.task_id)
+            deadline = time.monotonic() + 35
+            while time.monotonic() < deadline and not MARKER.exists() and first.poll() is None:
+                time.sleep(0.2)
+            if not MARKER.exists(): raise RuntimeError('First worker never reached before_call')
+            before = status(intent.task_id)
+            first.kill()
+            first.wait(timeout=8)
+            second = launch(log, False, intent.task_id)
+            deadline = time.monotonic() + 60
+            after = None
+            while time.monotonic() < deadline and second.poll() is None:
+                after = status(intent.task_id)
+                if after[0]['status'] == 'completed' and after[2]: break
+                time.sleep(0.5)
+            if after is None or after[0]['status'] != 'completed' or len(after[2]) != 1:
+                raise RuntimeError('Recovered worker did not complete exactly one receipt')
+            evidence = {'command_id': intent.command_id, 'task_id': intent.task_id,
+                'marker_observed': True, 'first_worker_exit': first.returncode,
+                'before_run_count': len(before[1]), 'before_receipt_count': len(before[2]),
+                'after_status': after[0]['status'], 'after_run_count': len(after[1]),
+                'after_receipt_count': len(after[2]),
+                'result_id': after[2][0][0]['result_id']}
+            output = Path('docs/collaboration-c1-crash-recovery.json')
+            output.write_text(json.dumps(evidence, ensure_ascii=False, indent=2))
+            print(json.dumps(evidence, ensure_ascii=False))
+        finally:
+            stop(first)
+            stop(second)
+
+
+if __name__ == '__main__': main()

@@ -1,0 +1,53 @@
+.s.s.s.s..ss.s.s.s.s.s.s.s.s.s.s.s.s..s.s.s.s.s.s.s.s.s.s..s.s.s.s.s.s.s [ 60%]
+.s.s.s.s.s.s.s..s.s.s..s.sFs.s.s.s.s.sss.s.s.s.                          [100%]
+=================================== FAILURES ===================================
+_________ test_http_real_socket_url_update_and_redirect_guard[memory] __________
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x17488ce60>, <agent_core.context.scopes.ScopeService object at 0x17488cf50>)
+
+    async def test_http_real_socket_url_update_and_redirect_guard(app):
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        from threading import Thread
+        from agent_core.adapters.web_sources import HttpSources
+        class Handler(BaseHTTPRequestHandler):
+            value=b'<html><title>Company A</title><p>A_WEB_V1</p></html>'
+            def do_GET(self):
+                if self.path=='/redirect':
+                    self.send_response(302);self.send_header('Location','/b');self.end_headers();return
+                self.send_response(200);self.send_header('Content-Type','text/html');self.end_headers();self.wfile.write(self.value)
+            def log_message(self,*args): pass
+>       server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resources.py:396: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x17488d280>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # Since Linux 6.12.9, SO_REUSEPORT is not allowed
+        # on other address families than AF_INET/AF_INET6.
+        if (
+            self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT")
+            and self.address_family in (socket.AF_INET, socket.AF_INET6)
+        ):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:478: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_resources.py::test_http_real_socket_url_update_and_redirect_guard[memory]
+1 failed, 60 passed, 58 skipped in 15.96s

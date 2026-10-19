@@ -1,0 +1,431 @@
+.E.E.E.EFE.E.E.E                                                         [100%]
+==================================== ERRORS ====================================
+__ ERROR at setup of test_publish_rollback_and_fixed_task_execution[postgres] __
+
+self = <Coroutine test_publish_rollback_and_fixed_task_execution[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:43: in app
+    tasks = build_tasks(db, scopes, research, engine)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:167: in build_tasks
+    methods = build_methods(database, research)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:213: in build_methods
+    service.publish('method',key,version,None,'product-baseline','Initialize the validated execution baseline')
+src/agent_core/methods/service.py:37: in publish
+    tx.methods.activate(category,asset_id,version,expected,actor,reason)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.methods.PostgresMethods object at 0x11ed20710>
+category = 'method', asset_id = 'expert_search', version = 'search-v1'
+expected = None, actor = 'product-baseline'
+reason = 'Initialize the validated execution baseline'
+
+    def activate(self, category, asset_id, version, expected, actor, reason):
+        t=self.t['heads']
+        if expected is None:
+            result=self.c.execute(pg_insert(t).values(category=category,asset_id=asset_id,version=version).on_conflict_do_nothing())
+        else:
+            result=self.c.execute(update(t).where(t.c.category==category,t.c.asset_id==asset_id,t.c.version==expected).values(version=version))
+>       if result.rowcount != 1: raise Conflict('Active version changed; refresh before publishing')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       agent_core.execution.ports.Conflict: Active version changed; refresh before publishing
+
+src/agent_core/adapters/postgres/methods.py:33: Conflict
+_ ERROR at setup of test_publish_while_inflight_and_restart_binding[postgres] __
+
+self = <Coroutine test_publish_while_inflight_and_restart_binding[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x11ed2e960>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+_____ ERROR at setup of test_immutable_versions_and_compare_swap[postgres] _____
+
+fixturedef = <FixtureDef argname='app' scope='function' baseid='tests/test_methods.py'>
+request = <SubRequest 'app' for <Function test_immutable_versions_and_compare_swap[postgres]>>
+
+    @pytest.hookimpl(wrapper=True)
+    def pytest_fixture_setup(fixturedef: FixtureDef, request) -> object | None:
+        asyncio_mode = _get_asyncio_mode(request.config)
+        if not _is_asyncio_fixture_function(fixturedef.func):
+            if asyncio_mode == Mode.STRICT:
+                # Ignore async fixtures without explicit asyncio mark in strict mode
+                # This applies to pytest_trio fixtures, for example
+                return (yield)
+            if not _is_coroutine_or_asyncgen(fixturedef.func):
+>               return (yield)
+                        ^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_tasks.py:43: in app
+    tasks = build_tasks(db, scopes, research, engine)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:167: in build_tasks
+    methods = build_methods(database, research)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:213: in build_methods
+    service.publish('method',key,version,None,'product-baseline','Initialize the validated execution baseline')
+src/agent_core/methods/service.py:37: in publish
+    tx.methods.activate(category,asset_id,version,expected,actor,reason)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.methods.PostgresMethods object at 0x11ef26f30>
+category = 'method', asset_id = 'expert_extract', version = 'extract-v1'
+expected = None, actor = 'product-baseline'
+reason = 'Initialize the validated execution baseline'
+
+    def activate(self, category, asset_id, version, expected, actor, reason):
+        t=self.t['heads']
+        if expected is None:
+            result=self.c.execute(pg_insert(t).values(category=category,asset_id=asset_id,version=version).on_conflict_do_nothing())
+        else:
+            result=self.c.execute(update(t).where(t.c.category==category,t.c.asset_id==asset_id,t.c.version==expected).values(version=version))
+>       if result.rowcount != 1: raise Conflict('Active version changed; refresh before publishing')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       agent_core.execution.ports.Conflict: Active version changed; refresh before publishing
+
+src/agent_core/adapters/postgres/methods.py:33: Conflict
+_ ERROR at setup of test_missing_parameters_cycles_and_no_partial_compile[postgres] _
+
+self = <Coroutine test_missing_parameters_cycles_and_no_partial_compile[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x119f60680>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+_ ERROR at setup of test_compile_idempotent_new_inputs_and_manual_equivalence[postgres] _
+
+self = <Coroutine test_compile_idempotent_new_inputs_and_manual_equivalence[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x11efd9070>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+_ ERROR at setup of test_workflow_and_method_permission_intersection[postgres] _
+
+self = <Coroutine test_workflow_and_method_permission_intersection[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x11efeb770>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+____ ERROR at setup of test_workflow_versions_and_node_tampering[postgres] _____
+
+self = <Coroutine test_workflow_versions_and_node_tampering[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x11ef461e0>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+______ ERROR at setup of test_asset_http_entry_and_cross_origin[postgres] ______
+
+self = <Coroutine test_asset_http_entry_and_cross_origin[postgres]>
+
+    def setup(self) -> None:
+        runner_fixture_id = f"_{self._loop_scope}_scoped_runner"
+        if runner_fixture_id not in self.fixturenames:
+            self.fixturenames.append(runner_fixture_id)
+>       return super().setup()
+               ^^^^^^^^^^^^^^^
+
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:458: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:730: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+tests/test_tasks.py:33: in app
+    db = PostgresDatabase(url)
+         ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.PostgresDatabase object at 0x11ef7c7d0>
+url = 'postgresql+psycopg://chenyouran@127.0.0.1:55446/stage8_release'
+
+    def __init__(self, url):
+        self.process_id = str(uuid4())
+        self.connection = None
+        self.engine = None
+        self.lock_file = None
+        self.closed = False
+        self.repositories = {}
+        self.metadata = MetaData()
+        self.conversation_tables = conversation_tables(self.metadata)
+        self.run_tables = run_tables(self.metadata)
+        self.instances = Table('execution_instances', self.metadata,
+            Column('process_id', String, primary_key=True), Column('hostname', String, nullable=False),
+            Column('started_at', DateTime(timezone=True), nullable=False))
+        try:
+            self.lock_file = self.LOCK_PATH.open('a')
+            try:
+                fcntl.flock(self.lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+>               raise Conflict('Another execution process is still alive on this host') from None
+E               agent_core.execution.ports.Conflict: Another execution process is still alive on this host
+
+src/agent_core/adapters/postgres/__init__.py:45: Conflict
+=================================== FAILURES ===================================
+______ test_compile_idempotent_new_inputs_and_manual_equivalence[memory] _______
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x11efda270>, <agent_core.context.scopes.ScopeService obj...a3206ae91e', snapshot_id='bd7a1354-9e4e-45fb-b315-0addcdc5fdef', parse_id='5de36bdd-4656-4091-92ce-7297fd827ced'), ...)
+
+    async def test_compile_idempotent_new_inputs_and_manual_equivalence(app):
+        _,_,research,root,_,_,engine,tasks=app
+        methods=tasks.methods;value=workflow(app);args=compile_args(app,value)
+        # deterministic semantic fixture depends only on the business input, not random run identities.
+        engine.script=lambda request:([],{'report':'Equivalent business result','missing':[]})
+        research.execution_factory=__import__('functools').partial(__import__('agent_core.app.research_execution',fromlist=['build_execution']).build_execution,app[0],app[1],engine=engine)
+        compiled=await methods.instantiate(**args)
+        assert await methods.instantiate(**args)==compiled
+        with pytest.raises(Conflict): await methods.instantiate(**{**args,'parameters':dict(args['parameters'],company='OTHER')})
+        assert 'NEW_COMPANY' not in json.dumps(value.body)
+        assert app[5].resource_id not in json.dumps(value.body)
+        manual_nodes=[]
+        for planned in compiled['plan']['steps']:
+            node=research.node(planned['node_id'])
+            manual=await research.submit(NodeCommand(command_id=str(uuid4()),research_id=root.id,kind='create',
+                goal=node.goal,instructions=node.instructions,resource_refs=node.resource_refs,allowed_tools=node.allowed_tools))
+            manual_nodes.append(manual.node_id)
+        manual_plan=ResearchPlan(research_id=root.id,steps=(PlanStep(node_id=manual_nodes[0]),PlanStep(node_id=manual_nodes[1],depends_on=(manual_nodes[0],))))
+        await methods.run(compiled['id'])
+        await research.run_plan(manual_plan)
+        for planned,manual in zip(compiled['plan']['steps'],manual_nodes):
+            assert research.read_result(research.node(planned['node_id']).current_result_id)[1]==research.read_result(research.node(manual).current_result_id)[1]
+        prior_calls=len(engine.requests)
+>       await methods.run(compiled['id'])
+
+tests/test_methods.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.methods.service.MethodService object at 0x11efdadb0>
+key = '5e22ee31-8267-44c5-8276-282c87bcf62f'
+
+    async def run(self,key):
+        value = self.instance(key)
+        # Detect manual node edits; a compiled instance always executes the previewed inputs.
+        template = WorkflowBody.model_validate(self.resolve('workflow',value['asset_id'],value['version']).body)
+        for step,planned in zip(template.steps,value['plan']['steps']):
+            node=self.research.node(planned['node_id'])
+            _,body=self.method(step.expert_id,step.method_version)
+            if node.instructions != body.prompt or node.goal != step.goal.format_map(value['parameters']):
+                raise Conflict('Compiled node was edited; instantiate a new workflow')
+            expected=tuple(ResourceRef.model_validate(value['parameters'][p]) for p in step.source_parameters)
+>           if node.resource_refs != expected: raise Conflict('Compiled source bindings changed')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           agent_core.execution.ports.Conflict: Compiled source bindings changed
+
+src/agent_core/methods/service.py:134: Conflict
+=========================== short test summary info ============================
+FAILED tests/test_methods.py::test_compile_idempotent_new_inputs_and_manual_equivalence[memory]
+ERROR tests/test_methods.py::test_publish_rollback_and_fixed_task_execution[postgres]
+ERROR tests/test_methods.py::test_publish_while_inflight_and_restart_binding[postgres]
+ERROR tests/test_methods.py::test_immutable_versions_and_compare_swap[postgres]
+ERROR tests/test_methods.py::test_missing_parameters_cycles_and_no_partial_compile[postgres]
+ERROR tests/test_methods.py::test_compile_idempotent_new_inputs_and_manual_equivalence[postgres]
+ERROR tests/test_methods.py::test_workflow_and_method_permission_intersection[postgres]
+ERROR tests/test_methods.py::test_workflow_versions_and_node_tampering[postgres]
+ERROR tests/test_methods.py::test_asset_http_entry_and_cross_origin[postgres]
+1 failed, 7 passed, 8 errors in 2.29s

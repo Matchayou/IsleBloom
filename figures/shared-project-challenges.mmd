@@ -1,0 +1,32 @@
+%%{init: {"theme":"base","look":"classic","layout":"dagre","themeVariables":{"fontFamily":"Arial, PingFang SC, sans-serif","fontSize":"17px","primaryTextColor":"#17324d","lineColor":"#52677a","edgeLabelBackground":"#ffffff"},"flowchart":{"htmlLabels":true,"wrappingWidth":420,"curve":"linear","nodeSpacing":25,"rankSpacing":45}}}%%
+flowchart LR
+    accessProblem["① 多人共享，权限不同<br/>谁能读、执行、审核、发布？"]
+    accessDesign["项目成员角色 + 服务端 actor<br/>个人记忆隔离 + 运行授权持续验证"]
+    accessBase["扩展现有 owner / scope<br/>新增真实成员身份与授权"]
+    conflictProblem["② 同时修改与发指令<br/>谁的修改生效，会否重复收费？"]
+    conflictDesign["版本比较更新 + 命令幂等<br/>一对话一运行，独立分支并行"]
+    conflictBase["复用 revision / command_id<br/>补齐触发消息和冲突交互"]
+    executionProblem["③ 人离线，任务仍运行<br/>谁能接手、取消，如何恢复？"]
+    executionDesign["平台持久化任务 + 负责人<br/>唯一协调器 + 项目与成员额度"]
+    executionBase["扩展 DBOS 与受控账本<br/>移除回复依赖 Web 内存的路径"]
+    reviewProblem["④ 结果需要多人交接<br/>审核的是哪版，旧批准还有效吗？"]
+    reviewDesign["固定产物哈希 + 独立审核人<br/>发布前验证目标与资料版本"]
+    reviewBase["复用固定结果、review / adopt<br/>补齐真实身份与发布冲突规则"]
+    syncProblem["⑤ 每个人看到不同进度<br/>刷新、断线后是否遗漏更新？"]
+    syncDesign["事务事件 + 授权查询 + SSE 游标<br/>断线补读，不广播私有正文"]
+    syncBase["扩展 projection 与现有 SSE<br/>新增项目级事件及未读记录"]
+    contextProblem["⑥ 共享资料与成果不断变化<br/>谁改了输入，旧任务怎么处理？"]
+    contextDesign["项目资料版本 + 冻结输入引用<br/>变更标过期，撤权停止新调用与发布"]
+    contextBase["复用 ResourceRef / ContextSnapshot<br/>把项目共享与个人上下文分开"]
+    accessProblem --> accessDesign --> accessBase
+    conflictProblem --> conflictDesign --> conflictBase
+    executionProblem --> executionDesign --> executionBase
+    reviewProblem --> reviewDesign --> reviewBase
+    syncProblem --> syncDesign --> syncBase
+    contextProblem --> contextDesign --> contextBase
+    classDef problem fill:#f2f5f8,stroke:#647b91,stroke-width:2px;
+    classDef design fill:#e9f2ff,stroke:#3a6ba5,stroke-width:2px;
+    classDef base fill:#e9f5ef,stroke:#438265,stroke-width:2px;
+    class accessProblem,conflictProblem,executionProblem,reviewProblem,syncProblem,contextProblem problem;
+    class accessDesign,conflictDesign,executionDesign,reviewDesign,syncDesign,contextDesign design;
+    class accessBase,conflictBase,executionBase,reviewBase,syncBase,contextBase base;

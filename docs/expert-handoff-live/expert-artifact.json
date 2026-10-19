@@ -1,0 +1,132 @@
+{
+  "artifact": {
+    "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+    "sha256": "5909c553ce992836019a4d30718fe4cfae42dc7e441a26e12ff41d1c9953f87d",
+    "bytes": 4091,
+    "chars": 1837,
+    "complete": true,
+    "brief": "结论\n\n一、事实与待查根因\n可确认事实：①任务 a54ce68f 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183）处未取得预期值，即该处内容不是合法 JSON；②任务 0b4103c6 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空，delivery 为 null，即无成品、无引用挂载、无投递。\n待查根因：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣、专家执行还是回传阶段；空报告是「未产出」还是「产出未落盘」。\n\n二、空报告≠中途从未取得资料\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n三、三阶段验收证据\n派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、专家会话与节点标识、入参原文可见。\n专家执行成功：终态 completed/succeeded；各工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（含 next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n主助手收到报告：delivery 非 null；report 正文非空且达标；result_id／工件哈希可读回；结论可定位到来源页码或文本位置。\n\n四、限制\n仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查任何代码或日志，故所有根因均属待查项，本文不据此断言结论。来源引用：无（输入为会话内故障记录，非外部资料）。版本 v1。缺口：上述根因与失败阶段的直接证据。",
+    "brief_truncated": false
+  },
+  "output": {
+    "claims": [],
+    "fields": {
+      "scope": "仅用户输入的两条失败记录",
+      "version": "v1",
+      "language": "zh"
+    },
+    "report": "结论\n\n一、事实与待查根因\n可确认事实：①任务 a54ce68f 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183）处未取得预期值，即该处内容不是合法 JSON；②任务 0b4103c6 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空，delivery 为 null，即无成品、无引用挂载、无投递。\n待查根因：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣、专家执行还是回传阶段；空报告是「未产出」还是「产出未落盘」。\n\n二、空报告≠中途从未取得资料\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n三、三阶段验收证据\n派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、专家会话与节点标识、入参原文可见。\n专家执行成功：终态 completed/succeeded；各工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（含 next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n主助手收到报告：delivery 非 null；report 正文非空且达标；result_id／工件哈希可读回；结论可定位到来源页码或文本位置。\n\n四、限制\n仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查任何代码或日志，故所有根因均属待查项，本文不据此断言结论。来源引用：无（输入为会话内故障记录，非外部资料）。版本 v1。缺口：上述根因与失败阶段的直接证据。",
+    "missing": [
+      "任务 a54ce68f 中触发 read_source 的具体入参与被读正文（无法确认第183字符处内容）",
+      "任务 0b4103c6 的 token 用量明细与超限来源",
+      "两条错误发生在派遣/执行/回传哪一阶段的直接证据",
+      "空报告究竟是未产出、未落盘还是未投递的证据"
+    ],
+    "sources": {
+      "说明": "无外部来源可引用；本任务依据的仅是用户消息中提供的故障记录与空字段状态，属用户输入而非外部事实。未联网、未读取其他会话。"
+    },
+    "conflicts": [],
+    "follow_up": [
+      "如获授权，读取两条任务的工具调用日志与来源快照，定位第183字符处内容",
+      "核对超预算任务的输入长度、工具结果大小与输出预留设置",
+      "确认交付层空值的具体写入时点"
+    ],
+    "assumptions": [
+      "read_source 的错误信息按其字面含义解读为 JSON 反序列化失败，位置为第1行第184字符（0基索引183）",
+      "token 预算错误按其字面含义解读为输入、工具预留与输出预留之和超过上限",
+      "report_preview/resource_refs/delivery 为最终交付层字段"
+    ],
+    "limitations": [
+      "严格按用户限定范围：不联网、不读取其他会话、不重跑旧任务、不查看代码或日志",
+      "因此不得断言任何根因，全部根因列为待查",
+      "报告中的阶段验收标准属依据错误语义与交付字段含义推导的推论，非来源事实"
+    ],
+    "self_checks": {
+      "字数为约590汉字": "符合不超过600字要求",
+      "claims 按要求留空": "是",
+      "事实与根因已分开陈述": "是",
+      "未虚构代码或日志检查": "是"
+    }
+  },
+  "receipt": {
+    "code_candidate": null,
+    "artifact": {
+      "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+      "sha256": "5909c553ce992836019a4d30718fe4cfae42dc7e441a26e12ff41d1c9953f87d",
+      "bytes": 4091,
+      "chars": 1837,
+      "complete": true,
+      "brief": "结论\n\n一、事实与待查根因\n可确认事实：①任务 a54ce68f 状态 failed，失败于 read_source 工具运行期，错误为 JSON 解析失败——解析器在第1行第184字符（char 183）处未取得预期值，即该处内容不是合法 JSON；②任务 0b4103c6 状态 failed，因「模型输入＋工具预留＋输出预留」之和超 token 上限，属调用前资源校验失败，非内容错误；③两任务的 report_preview、resource_refs 为空，delivery 为 null，即无成品、无引用挂载、无投递。\n待查根因：a 处第183字符为何非法（分页截断／location、offset 参数不当／上游返回非 JSON 或错误页）；b 超预算源于上下文过长、单次工具结果过大还是输出预留过高；错误实际发生在派遣、专家执行还是回传阶段；空报告是「未产出」还是「产出未落盘」。\n\n二、空报告≠中途从未取得资料\nreport_preview／resource_refs／delivery 属最终交付层字段，只描述任务终结时的成品与投递状态，不描述执行轨迹。中途可能已成功读到部分资料（存于会话上下文），但失败后未写入结果对象、未生成预览、未挂载引用、未投递，故字段为空。空值仅说明「无留存并交付的成品」，不能反推「从未取得资料」；确认须靠工具调用日志与来源快照，本任务无权读取。\n\n三、三阶段验收证据\n派遣成功：出现区别于上述两任务的新 task_id、状态为已受理/运行中、专家会话与节点标识、入参原文可见。\n专家执行成功：终态 completed/succeeded；各工具调用返回成功而非 invalid_input 或解析异常；read_source 返回合法可续读结构（含 next_cursor、parse_id、checksum）；预算校验显示输入＋工具预留＋输出预留未超上限。\n主助手收到报告：delivery 非 null；report 正文非空且达标；result_id／工件哈希可读回；结论可定位到来源页码或文本位置。\n\n四、限制\n仅依据用户提供的两条失败记录及空字段状态分析；未联网、未读取其他会话、未重跑旧任务、未检查任何代码或日志，故所有根因均属待查项，本文不据此断言结论。来源引用：无（输入为会话内故障记录，非外部资料）。版本 v1。缺口：上述根因与失败阶段的直接证据。",
+      "brief_truncated": false
+    },
+    "result_id": "task-result:01b7568c-8479-48cb-91de-eb7568f5cd2c",
+    "task_id": "4c852929-f2ef-532c-b943-98103d086e34",
+    "spec_version": 1,
+    "run_id": "01b7568c-8479-48cb-91de-eb7568f5cd2c",
+    "context_snapshot_id": "377e473c-9eb2-4bc0-997e-3a60a7e09d30",
+    "model": "deepseek-flash",
+    "route_id": null,
+    "method_version": "synthesize-v2",
+    "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+    "result_ids": [],
+    "resource_refs": [],
+    "missing_optional_refs": [],
+    "program_checks": [
+      {
+        "number": 1,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Run output and fixed input identity checked",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Report present",
+        "reviewer": null
+      }
+    ],
+    "semantic_checks": [
+      {
+        "number": 1,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      }
+    ],
+    "assumptions": [
+      "read_source 的错误信息按其字面含义解读为 JSON 反序列化失败，位置为第1行第184字符（0基索引183）",
+      "token 预算错误按其字面含义解读为输入、工具预留与输出预留之和超过上限",
+      "report_preview/resource_refs/delivery 为最终交付层字段"
+    ],
+    "conflicts": [],
+    "missing": [
+      "任务 a54ce68f 中触发 read_source 的具体入参与被读正文（无法确认第183字符处内容）",
+      "任务 0b4103c6 的 token 用量明细与超限来源",
+      "两条错误发生在派遣/执行/回传哪一阶段的直接证据",
+      "空报告究竟是未产出、未落盘还是未投递的证据"
+    ],
+    "limitations": [
+      "严格按用户限定范围：不联网、不读取其他会话、不重跑旧任务、不查看代码或日志",
+      "因此不得断言任何根因，全部根因列为待查",
+      "报告中的阶段验收标准属依据错误语义与交付字段含义推导的推论，非来源事实"
+    ],
+    "follow_up": [
+      "如获授权，读取两条任务的工具调用日志与来源快照，定位第183字符处内容",
+      "核对超预算任务的输入长度、工具结果大小与输出预留设置",
+      "确认交付层空值的具体写入时点"
+    ],
+    "delivery": "pending_review",
+    "adoption": "for_discussion",
+    "adoption_reason": null
+  }
+}

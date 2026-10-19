@@ -1,0 +1,509 @@
+[
+  {
+    "case": "cashflow",
+    "arm": "compaction",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "甲 2023 集团人民币百万元：100-20=80",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "乙 2024 海外子公司美元百万元：120-30=90",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "FCF 为 CFO-CapEx 的本题分析定义，不是净利润",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "(90-80)/80=12.5% 仅原始数值算式",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "币种、主体范围不同，不可称可比集团同比增长",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "缺汇率、统一主体口径与重述/抵销资料",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "固定 v1，不采用未经批准 v2，不排名",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": 1
+      }
+    ],
+    "evidence_score": 4,
+    "constraint_score": 4,
+    "report_delivered": true,
+    "requested_note_saved": true,
+    "semantic_task_passed": true,
+    "remarks": [
+      "两个主体/年度/币种/单位、80与90及12.5%原始算式、FCF非净利润、缺汇率与重述/抵销、v2未批准、不排名均保留。",
+      "额外会计准则概括不是夹具证据，不据此扩展本次验收结论；没有再断言FCF排除营运资本。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/cashflow-compaction.json"
+  },
+  {
+    "case": "cashflow",
+    "arm": "full",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "甲 2023 集团人民币百万元：100-20=80",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "乙 2024 海外子公司美元百万元：120-30=90",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "FCF 为 CFO-CapEx 的本题分析定义，不是净利润",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "(90-80)/80=12.5% 仅原始数值算式",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "币种、主体范围不同，不可称可比集团同比增长",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "缺汇率、统一主体口径与重述/抵销资料",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "固定 v1，不采用未经批准 v2，不排名",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": null
+      }
+    ],
+    "evidence_score": null,
+    "constraint_score": null,
+    "report_delivered": false,
+    "requested_note_saved": false,
+    "semantic_task_passed": false,
+    "remarks": [
+      "未生成报告：相同窗口预检 context_budget 失败；不评分未交付正文。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/cashflow-full.json"
+  },
+  {
+    "case": "cashflow",
+    "arm": "projection",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "甲 2023 集团人民币百万元：100-20=80",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "乙 2024 海外子公司美元百万元：120-30=90",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "FCF 为 CFO-CapEx 的本题分析定义，不是净利润",
+        "score": 0
+      },
+      {
+        "kind": "evidence",
+        "criterion": "(90-80)/80=12.5% 仅原始数值算式",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "币种、主体范围不同，不可称可比集团同比增长",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "缺汇率、统一主体口径与重述/抵销资料",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "固定 v1，不采用未经批准 v2，不排名",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": 1
+      }
+    ],
+    "evidence_score": 3,
+    "constraint_score": 4,
+    "report_delivered": true,
+    "requested_note_saved": true,
+    "semantic_task_passed": false,
+    "remarks": [
+      "未保留 FCF 不等于会计净利润；将年份不同单列为不可比原因不充分，主要不可比原因应是主体与币种。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/cashflow-projection.json"
+  },
+  {
+    "case": "equipment",
+    "arm": "compaction",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 为 7 台设备，不是收入",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "最终代号青鹭；北斗撤回",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "v2 的 11 台为未确认草案，不采用",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "已核对登记口径；待市场总量和 2025 可比资料",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "设备单位台已知；收入金额、币种未知，不能笼统说所有单位未知",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无市场分母不得算占有率；无可比资料不得算同比",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文报告围绕当前事实，不回答配色",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": 1
+      }
+    ],
+    "evidence_score": 4,
+    "constraint_score": 4,
+    "report_delivered": true,
+    "requested_note_saved": true,
+    "semantic_task_passed": true,
+    "remarks": [
+      "7台/2024、收入未知、青鹭/北斗撤回、v2不适用、已核对/待补资料均正确；正文、固定源读回与实际笔记逐项一致。",
+      "4次摘要调用中2次发布成功，2次失败保留旧head，已计入总成本。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/equipment-compaction.json"
+  },
+  {
+    "case": "equipment",
+    "arm": "full",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 为 7 台设备，不是收入",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "最终代号青鹭；北斗撤回",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "v2 的 11 台为未确认草案，不采用",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "已核对登记口径；待市场总量和 2025 可比资料",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "设备单位台已知；收入金额、币种未知，不能笼统说所有单位未知",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无市场分母不得算占有率；无可比资料不得算同比",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文报告围绕当前事实，不回答配色",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": null
+      }
+    ],
+    "evidence_score": null,
+    "constraint_score": null,
+    "report_delivered": false,
+    "requested_note_saved": true,
+    "semantic_task_passed": false,
+    "remarks": [
+      "未生成报告：相同窗口预检 context_budget 失败；不评分未交付正文。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/equipment-full.json"
+  },
+  {
+    "case": "equipment",
+    "arm": "projection",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 为 7 台设备，不是收入",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "最终代号青鹭；北斗撤回",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "v2 的 11 台为未确认草案，不采用",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "已核对登记口径；待市场总量和 2025 可比资料",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "设备单位台已知；收入金额、币种未知，不能笼统说所有单位未知",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无市场分母不得算占有率；无可比资料不得算同比",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文报告围绕当前事实，不回答配色",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": null
+      }
+    ],
+    "evidence_score": null,
+    "constraint_score": null,
+    "report_delivered": false,
+    "requested_note_saved": false,
+    "semantic_task_passed": false,
+    "remarks": [
+      "read_context_page limit=12352 超过 12000，上层 SDK 拒绝；未交付。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/equipment-projection.json"
+  },
+  {
+    "case": "orders",
+    "arm": "compaction",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "120-10-5=105 台有效订单，两类剔除不重叠",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "出货90，验收80，待验收10台",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "白鹭门槛85台验收，当前差5台，未达成",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 截止日2024-12-31；v2 150台为预测",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "订单、出货、验收不同，均不能直接推确认收入",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无价格/确认政策，收入未知；无行业分母，市占率未知",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文事实核对，不产出乐观口号或把预测当实绩",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": 1
+      }
+    ],
+    "evidence_score": 4,
+    "constraint_score": 4,
+    "report_delivered": true,
+    "requested_note_saved": true,
+    "semantic_task_passed": true,
+    "remarks": [
+      "105/90/80/10、白鹭85台验收门槛与差5未达成、固定截止日、未知收入/市占率、150预测和撤回口号均保留。",
+      "私有草稿销售资料UUID出现错误转录和问号；真实read_source结构化ref及正式报告sources完整ref正确，未读取外部版本。该草稿不作为正式证据或可直接执行引用；错误原样保存，未人工修饰成通过样本。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/orders-compaction.json"
+  },
+  {
+    "case": "orders",
+    "arm": "full",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "120-10-5=105 台有效订单，两类剔除不重叠",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "出货90，验收80，待验收10台",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "白鹭门槛85台验收，当前差5台，未达成",
+        "score": null
+      },
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 截止日2024-12-31；v2 150台为预测",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "订单、出货、验收不同，均不能直接推确认收入",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无价格/确认政策，收入未知；无行业分母，市占率未知",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文事实核对，不产出乐观口号或把预测当实绩",
+        "score": null
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": null
+      }
+    ],
+    "evidence_score": null,
+    "constraint_score": null,
+    "report_delivered": false,
+    "requested_note_saved": false,
+    "semantic_task_passed": false,
+    "remarks": [
+      "未生成报告：相同窗口预检 context_budget 失败；不评分未交付正文。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/orders-full.json"
+  },
+  {
+    "case": "orders",
+    "arm": "projection",
+    "items": [
+      {
+        "kind": "evidence",
+        "criterion": "120-10-5=105 台有效订单，两类剔除不重叠",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "出货90，验收80，待验收10台",
+        "score": 1
+      },
+      {
+        "kind": "evidence",
+        "criterion": "白鹭门槛85台验收，当前差5台，未达成",
+        "score": 0
+      },
+      {
+        "kind": "evidence",
+        "criterion": "固定 v1 截止日2024-12-31；v2 150台为预测",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "订单、出货、验收不同，均不能直接推确认收入",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "无价格/确认政策，收入未知；无行业分母，市占率未知",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "中文事实核对，不产出乐观口号或把预测当实绩",
+        "score": 1
+      },
+      {
+        "kind": "constraints",
+        "criterion": "交付未审核、未采用",
+        "score": 1
+      }
+    ],
+    "evidence_score": 3,
+    "constraint_score": 4,
+    "report_delivered": true,
+    "requested_note_saved": false,
+    "semantic_task_passed": false,
+    "remarks": [
+      "找到白鹭与80+5，但没有取回明确85台验收门槛原文，报告把口径写成未知；12次工具耗尽且笔记未落盘。"
+    ],
+    "review_method": "Assistant read complete saved output, original fixtures, tool responses and actual private-note text; no keyword or model-self-check scoring.",
+    "raw_evidence": "round7/orders-projection.json"
+  }
+]

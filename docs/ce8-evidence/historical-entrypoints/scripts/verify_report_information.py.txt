@@ -1,0 +1,83 @@
+"""Real expert/consultation models read synthetic historical report fixtures; no web."""
+import asyncio
+import json
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from agent_core.adapters.memory_ledger import MemoryDatabase
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.scripted import ScriptedEngine
+from agent_core.composition import build_projects, build_research, build_resources, build_tasks
+from agent_core.research.chat import ChatService
+
+
+async def main():
+    path = Path('docs/collaboration-report-information-live.json')
+    if path.exists():
+        print('Existing evidence preserved:', path)
+        return
+    load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+    db = MemoryDatabase()
+    try:
+        scopes = build_resources(db, Path('/private/tmp/report-information-live-blobs'))
+        research = build_research(db, scopes)
+        tasks = build_tasks(db, scopes, research)
+        projects = build_projects(db, research, tasks)
+        project = projects.create('Synthetic historical report access verification')
+        main_task = await projects.create_main_task(project.id, 'Compare two synthetic historical drafts')
+        node = research.query('list_nodes', main_task.research_id)[0]
+        root = scopes.current(research.research(node.research_id).scope_id, research.owner)
+        root, own_ref = scopes.ingest(root, name='own-input.txt', media_type='text/plain',
+            content='合成验收输入；历史报告中的内部标记未写入本文件。'.encode())
+        _, peer_ref = scopes.ingest(root, name='peer-input.txt', media_type='text/plain',
+            content='合成验收输入；本文件没有专家 B 报告的内部标记。'.encode())
+        ChatService(research, tasks).send(node.id,
+            '只对比本任务两份合成历史报告，不联网、不正式采用。', 0)
+        c = research.collaboration
+        prior = []
+        for side, expert, ref, marker in [('A', 'expert_search', own_ref, '杉木-741'),
+                                         ('B', 'expert_synthesize', peer_ref, '青石-926')]:
+            tasks.engine = ScriptedEngine(lambda request, side=side, marker=marker: ([], {
+                'report': f'合成历史报告 {side}。内部标记：{marker}。仅用于工具验收，待独立复核。',
+                'missing': ['真实业务证据'], 'claims': []}))
+            intent = c.delegate_task(command_id='fixture-' + side, node_id=node.id, expert_id=expert,
+                task_instruction=f'专家 {side} 的阶段一合成初稿', delivery_requirements='保留初稿', resource_refs=(ref,))
+            receipt = (await c.execute(intent.command_id))['receipts'][0]
+            prior.append((intent, receipt, tasks.ledger.get(receipt.run_id)))
+        tasks.engine = OpenAIEngine()
+        instruction = ('这是工具验收，全部内容是合成样本。请先读取你自己会话的历史报告正文，'
+            '再向主助手索要同一主任务中专家 B（expert_synthesize）的阶段一初稿全文，'
+            '收到授权后继续本任务。最终用简短表格列出两份原报告各自的内部标记、固定报告版本和复核状态。'
+            '标记必须取自报告正文，资料文件及目录没有这些标记。不要猜测，不联网，不正式采用；'
+            '拿不到报告则说明具体原因。不要重跑或覆盖原报告。')
+        followup = c.delegate_task(command_id='real-history-read', node_id=node.id,
+            session_id=prior[0][0].session_id, task_instruction=instruction,
+            delivery_requirements='简短中文报告，列出两个报告内部标记和待复核状态。', resource_refs=(own_ref,))
+        outcome = await c.execute(followup.command_id)
+        run = outcome['runs'][0]
+        record = tasks.ledger.get(run.id)
+        info = c.information.get(run.id)
+        report = (record.result.output or {}).get('report', '')
+        checks = {'execution_succeeded': record.status == 'succeeded',
+            'both_body_markers_read': '杉木-741' in report and '青石-926' in report,
+            'peer_report_authorized': bool(info and info.answer and info.answer.available
+                and prior[1][1].result_id in info.answer.result_ids and info.report_grants),
+            'continued_same_task': len(outcome['runs']) == 1 and tasks.spec(followup.task_id).version == 1,
+            'original_reports_preserved': all(tasks.ledger.get(receipt.run_id) == old for _, receipt, old in prior),
+            'peer_source_authorized': peer_ref in outcome['receipts'][0].resource_refs}
+        evidence = {'synthetic_historical_fixtures': True, 'real_expert_and_consultation_models': True,
+            'instruction': instruction, 'checks': checks,
+            'historical_reports': [old.model_dump(mode='json') for _, _, old in prior],
+            'run': record.model_dump(mode='json'),
+            'information_request': info.model_dump(mode='json') if info else None,
+            'events': [e.model_dump(mode='json') for e in tasks.ledger.events(run.id)]}
+        path.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n')
+        print(json.dumps(checks, ensure_ascii=False), flush=True)
+        assert all(checks.values()), str(path)
+    finally:
+        db.close()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

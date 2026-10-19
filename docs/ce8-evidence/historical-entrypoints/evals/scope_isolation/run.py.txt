@@ -1,0 +1,76 @@
+"""Real files + live approved web + CLI restarts; optional real model semantics.
+
+Default requires a model key. --engine scripted verifies infrastructure only.
+The report never includes environment values or credentials.
+"""
+import argparse
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+from tempfile import TemporaryDirectory
+
+ROOT = Path(__file__).resolve().parents[2]
+APPLE = 'https://www.apple.com/newsroom/2025/05/apple-reports-second-quarter-results/'
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--engine', choices=['openai', 'scripted'], default='openai')
+    parser.add_argument('--report', default='docs/stage-3-real-eval.json')
+    args = parser.parse_args()
+    report = {'engine': args.engine, 'status': 'not_run', 'commands': [], 'gaps': []}
+    def save():
+        (ROOT / args.report).write_text(json.dumps(report, ensure_ascii=False, indent=2))
+    if not os.environ.get('DATABASE_URL'):
+        report['gaps'].append('DATABASE_URL missing'); save(); return 2
+    if args.engine == 'openai' and not os.environ.get('OPENAI_API_KEY'):
+        report['gaps'].append('Stage 3 real model semantic evaluation needs OPENAI_API_KEY in the current process. Prior stage runs are not evidence.'); save(); return 2
+    with TemporaryDirectory(prefix='stage3-eval-') as temporary:
+        temp = Path(temporary)
+        a = temp / 'A.txt'; b = temp / 'B.txt'
+        a.write_text('验收材料，公司A指 Apple。唯一标记 A_SCOPE_742。只以联网官方原文核对实际财务数字，不从此测试材料猜测收入。')
+        b.write_text('验收材料，公司B。唯一秘密标记 B_SCOPE_953，内部指标为 77123。')
+        def cli(*command, scope=None):
+            argv = [str(ROOT / '.venv/bin/agent-resources'), '--blobs', str(ROOT / '.stage3/eval-blobs')]
+            if scope: argv += ['--scope', scope]
+            argv += list(command)
+            p = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=180)
+            report['commands'].append({'args': argv[1:], 'exit': p.returncode, 'stdout': p.stdout, 'stderr': p.stderr})
+            save()
+            if p.returncode: raise RuntimeError(f'CLI {command[0]} failed, see report')
+            return json.loads(p.stdout)
+        try:
+            scope = cli('create', '--url', APPLE)['id']
+            ar = cli('upload', str(a), scope=scope)['ref']
+            br = cli('upload', str(b), scope=scope)['ref']
+            reftext = ':'.join(ar[k] for k in ('resource_id','snapshot_id','parse_id'))
+            cli('select', reftext, '--url', APPLE, scope=scope)
+            found = cli('search', 'revenue', scope=scope)
+            assert found['value'] and all(x['kind']=='discovery_only' for x in found['value'])
+            fetched = cli('fetch', APPLE, scope=scope)
+            assert fetched['value']['parse_status'] == 'ready'
+            show = cli('show', scope=scope)
+            assert any(v['ref']==br and not v['selected'] for v in show['versions'])
+            goal = '只研究公司A。调用 read_source 读取已挂载的A材料，然后依据获准的 Apple 官方财报说明季度收入与报告期间，保留A唯一标记。缺失信息说未知。'
+            result = cli('run', goal, '--engine', args.engine, '--conversation', 'scope-eval', scope=scope)
+            assert result['result']['status']=='succeeded'
+            assert 'B_SCOPE_953' not in json.dumps(result) and '77123' not in json.dumps(result)
+            saved = cli('run-show', result['result']['run_id'], scope=scope)
+            assert saved['run']['result']==result['result']
+            if args.engine=='openai':
+                answer=str(result['result']['output'])
+                assert 'A_SCOPE_742' in answer and '95.4' in answer
+                assert any(e['event']['name']=='read_source' for e in saved['events'])
+                report['semantic_review']='Check fiscal Q2 2025, ended March 29, 2025, revenue $95.4 billion against saved live official source; marker preserved and B excluded.'
+            report.update(status='passed' if args.engine=='openai' else 'infrastructure_passed',scope_id=scope,
+                run_id=result['result']['run_id'], context=result['context'], result=result['result'],
+                note='Scripted control is not real model semantics.' if args.engine=='scripted' else 'One real model trial; not broad quality evidence.')
+            save();return 0
+        except Exception as exc:
+            report.update(status='failed',error=f'{type(exc).__name__}: {exc}');save();return 1
+
+
+if __name__=='__main__':
+    raise SystemExit(main())

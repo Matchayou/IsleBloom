@@ -1,0 +1,45 @@
+{
+  "goal": "专家派遣与结果回传实测",
+  "prompt": "请实际调用一位子智能体专家，完成下面这个有边界的任务，并在专家完成后读取其完整报告，将结论返回到本主助手会话。不要只解释如何派遣，也不要由主助手代替专家完成分析。仅派一位适合分析/总结的专家。\n任务：依据我提供的两条失败信息，解释错误含义并给出再次运行的验收标准。\n已知信息（用户提供的故障记录，不是待联网研究的外部事实）：\n1. 任务 a54ce68f-014f-55b5-9680-1fa515b7df81，failed；Error running tool read_source: Expecting value: line 1 column 184 (char 183)。\n2. 任务 0b4103c6-869e-5c77-bcc2-3cdb808adf18，failed；Required model input, tools and output reserve exceed the token budget。\n3. 两个任务 report_preview 和 resource_refs 为空，delivery 为 null。\n交付要求：用中文不超过600字，逐项区分可从这些记录确认的事实和仍待查证的根因；解释空报告为何不能证明中途从未取得资料；列出“派遣成功、专家执行成功、主助手收到报告”三个阶段各自的验收证据。仅分析本消息，禁止联网、读取其他会话或重跑上述旧任务。不得虚构已检查代码或日志。任务没有外部资料引用，按用户输入分析并明确限制即可。\n派遣后按系统的后台续接机制等待专家完成；最终答复附本次真实 task_id、运行状态，以及专家报告要点。",
+  "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+  "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+  "command_id": "9895e689-1f39-41a6-8490-6f259c00bb67",
+  "chat_revision": 1,
+  "admission": {
+    "command": {
+      "command_id": "9895e689-1f39-41a6-8490-6f259c00bb67",
+      "research_id": "87fc658a-e331-4581-8f07-11db2bc90ca3",
+      "kind": "chat_reply",
+      "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+      "display_parent_id": null,
+      "expected_revision": 0,
+      "chat_revision": 1,
+      "goal": "",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "instructions": "",
+      "resource_refs": [],
+      "result_ids": [],
+      "missing": [],
+      "position": [
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "max_turns": 12,
+        "timeout_seconds": 900.0,
+        "max_depth": 1,
+        "max_calls": 12
+      },
+      "evidence_required": false
+    },
+    "node_id": "9526471d-25e6-4313-84bb-21a26fbaf6d5",
+    "run_id": "4ef4f03f-6296-4106-957c-d0b7d6759c6c",
+    "status": "accepted",
+    "reason": null
+  },
+  "project_id": "b456fc67-e02f-4794-8e41-fbe019fdb235",
+  "retry_command_id": "6669b645-ee59-445c-b6bd-5faf98e4067c"
+}

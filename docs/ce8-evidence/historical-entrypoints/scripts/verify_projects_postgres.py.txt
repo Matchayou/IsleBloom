@@ -1,0 +1,49 @@
+"""Isolated project persistence exercise; requires a fresh TEST_DATABASE_URL."""
+import asyncio
+import os
+from pathlib import Path
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks, build_projects
+from agent_core.execution.ports import Conflict
+
+URL=os.environ['TEST_DATABASE_URL']
+BLOBS=Path(os.environ['TEST_BLOBS'])
+# The application-wide lock belongs to existing preview services. This script
+# owns a fresh database and blob directory and uses its own local lock.
+PostgresDatabase.LOCK_PATH=Path('/private/tmp/project3-verify-execution.lock')
+
+def open_services():
+    db=PostgresDatabase(URL)
+    scopes=build_resources(db,BLOBS)
+    research=build_research(db,scopes)
+    tasks=build_tasks(db,scopes,research)
+    return db,research,tasks,build_projects(db,research,tasks)
+
+async def main():
+    db,research,tasks,projects=open_services()
+    try:
+        p=projects.create('Persistence A','persistence-a')
+        q=projects.create('Persistence B','persistence-b')
+        first=await projects.create_main_task(p.id,'First','persistence-main-1')
+        await projects.create_main_task(p.id,'Second','persistence-main-2')
+        await projects.create_main_task(q.id,'Third','persistence-main-3')
+        folder=projects.create_folder(p.id,'Collected',key='persistence-folder')
+        placement=projects.arrange(p.id,'research',first.research_id,0,folder_id=folder.id,title='Renamed first')
+        assert placement.revision==1
+    finally: db.close()
+    db,research,tasks,projects=open_services()
+    try:
+        assert len(projects.contents('persistence-a')['tasks'])==2
+        assert len(projects.contents('persistence-b')['tasks'])==1
+        assert projects.query('placement','research','persistence-main-1').title=='Renamed first'
+        assert research.query('chat',research.query('list_nodes','persistence-main-1')[0].id)
+        try: projects.arrange('persistence-a','research','persistence-main-1',0)
+        except Conflict: pass
+        else: raise AssertionError('CAS did not reject stale revision')
+        try: projects.arrange('persistence-b','research','persistence-main-1',0)
+        except Conflict: pass
+        else: raise AssertionError('Cross-project move was accepted')
+        print('project-postgres: reopen, two main tasks, separate project, chat, folder, CAS and isolation passed')
+    finally: db.close()
+
+asyncio.run(main())

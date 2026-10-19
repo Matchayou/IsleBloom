@@ -1,0 +1,114 @@
+...................................................FF...........F..      [100%]
+=================================== FAILURES ===================================
+________ test_four_entrances_consultation_and_followup_use_same_broker _________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x11158b140>, <agent_core.context.scopes.ScopeService object...jectService object at 0x11107e510>, <agent_core.collaboration.service.CollaborationService object at 0x10cf73830>, ...)
+
+    async def test_four_entrances_consultation_and_followup_use_same_broker(controlled):
+        _, scopes, research, tasks, projects, c, provider = controlled
+        node, ref, chat = await seed(controlled)
+        provider.plans.append([answer({'report': 'I will review the synthetic source.', 'claims': []})])
+        command = await research.submit(NodeCommand(command_id=uuid4().hex, research_id=node.research_id,
+            node_id=node.id, kind='chat_reply', chat_revision=chat.revision))
+        assert research.ledger.get(command.run_id).result.status == 'succeeded'
+        intent = c.delegate_task(command_id=uuid4().hex, node_id=node.id, expert_id='expert_synthesize',
+            task_instruction='Read the source then ask for missing year.', delivery_requirements='State unknowns',
+            resource_refs=(ref,))
+        provider.plans.extend([
+            [call('read_source', ref=ref.model_dump(mode='json')),
+             call('write_private_note', name='draft', text='expert-only marker'),
+             call('read_private_note', name='draft'),
+             call('request_manager_information', question='Which year?', progress='Read synthetic count 7.'),
+             answer({'report': 'Count 7; year unknown.', 'missing': ['year']})],
+            [answer({'available': False, 'answer': 'Year was not provided.', 'missing': ['year']})],
+        ])
+        status = await c.execute(intent.command_id)
+        assert status['intent'].status == 'completed', status
+        assert status['receipts'][0].delivery == 'pending_review'
+        assert c.query('information_for', intent.task_id)[0].status == 'resolved'
+        provider.plans.append([answer('This is a draft discussion, not an adopted conclusion.')])
+        thread = projects.expert_thread(intent.task_id)
+        discussion = await projects.discuss(intent.task_id, 'Explain the uncertainty.', thread.revision)
+        assert discussion.messages[-1].content.startswith('This is a draft')
+        assert {t.name for t in provider.requests[-1]['tools']} == {'read_context_page'} and provider.requests[-1]['output_schema'] is None
+        provider.plans.append([answer({'report': 'Expert draft is saved and pending review; year unknown.'})])
+        chat = ChatService(research, tasks).read(node.id)
+        followup = await research.submit(NodeCommand(command_id='resume:' + uuid4().hex,
+            research_id=node.research_id, node_id=node.id, kind='chat_followup', chat_revision=chat.revision))
+        assert research.ledger.get(followup.run_id).result.status == 'succeeded'
+>       bindings = [r['binding'] for r in rows(controlled) if r['binding']['research_id'] == node.research_id]
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'research_id'
+
+tests/test_controlled_collaboration.py:120: KeyError
+________ test_two_experts_overlap_and_have_distinct_private_workspaces _________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x1114b9850>, <agent_core.context.scopes.ScopeService object...jectService object at 0x1118fd310>, <agent_core.collaboration.service.CollaborationService object at 0x1116a1df0>, ...)
+
+    async def test_two_experts_overlap_and_have_distinct_private_workspaces(controlled):
+        _, _, _, tasks, _, c, provider = controlled
+        node, ref, _ = await seed(controlled)
+        intents = [c.delegate_task(command_id=uuid4().hex, node_id=node.id, expert_id=expert,
+            task_instruction='Review independently', delivery_requirements='State uncertainty', resource_refs=(ref,))
+            for expert in ('expert_search', 'expert_synthesize')]
+        entered, release = asyncio.Event(), asyncio.Event()
+        active = 0
+        async def pause(_):
+            nonlocal active
+            active += 1
+            if active == 2: entered.set()
+            await release.wait()
+            return answer({'report': 'Independent synthetic draft.'})
+        for index in range(2):
+            provider.plans.append([call('write_private_note', name='only_' + str(index), text='secret ' + str(index)), pause])
+        running = [asyncio.create_task(c.execute(i.command_id)) for i in intents]
+        try:
+            await asyncio.wait_for(entered.wait(), 10)
+            assert len(tasks.engine.active) == 2
+            release.set()
+            outcomes = await asyncio.gather(*running)
+            assert all(o['intent'].status == 'completed' for o in outcomes), outcomes
+        finally:
+            release.set()
+            await asyncio.gather(*running, return_exceptions=True)
+>       bindings = [r['binding'] for r in rows(controlled) if r['binding']['research_id'] == node.research_id]
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'research_id'
+
+tests/test_controlled_collaboration.py:152: KeyError
+____________ test_existing_method_generation_and_preview_use_broker ____________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x111dd1130>, <agent_core.context.scopes.ScopeService object...jectService object at 0x11196fc80>, <agent_core.collaboration.service.CollaborationService object at 0x1119d8320>, ...)
+
+    async def test_existing_method_generation_and_preview_use_broker(controlled):
+        from agent_core.composition import build_evaluation, build_evolution
+        from agent_core.methods.defaults import METHODS
+        from test_evolution import frozen_error
+        db, scopes, research, tasks, projects, c, provider = controlled
+        node, ref, chat = await seed(controlled)
+        evaluation = build_evaluation(db, tasks)
+        evolution = build_evolution(db, tasks, evaluation)
+        fixture = (db, scopes, research, research.research(node.research_id), provider, tasks, evaluation, evolution)
+        output = {'report': 'CFO 100 million USD', 'fields': {'company': 'A', 'period': '2025',
+            'operating_cash_flow': '100', 'capital_expenditure': '20', 'unit': 'million USD'},
+            'sources': {'operating_cash_flow': 'line 1', 'capital_expenditure': 'line 1', 'unit': 'line 1'}}
+        provider.plans.extend([[answer(output)], [answer(output)]])
+        dev, _ = await frozen_error(fixture, 'Development', 'development')
+        holdout, _ = await frozen_error(fixture, 'Holdout', 'holdout')
+        provider.plans.append([answer({'instructions': METHODS['extract'][1] + ' Verify source units.', 'examples': []})])
+        candidate = await evolution.propose(candidate_id=uuid4().hex, expert_id='expert_extract',
+            development_case_ids=(dev.id,), holdout_case_ids=(holdout.id,), approved_lesson='Check source unit.',
+            lesson_reviewer='synthetic fixture', generator_model='fixture', quality_floor=1,
+            min_quality_gain=1, max_total_cost_usd=.1)
+        provider.plans.append([answer(output)])
+        await evolution.run_preview(preview_id=uuid4().hex, candidate_id=candidate.id, case_id=dev.id, arm='after')
+>       assert {'consultation', 'preview'} <= {r['binding']['entrance'] for r in rows(controlled)}
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'entrance'
+
+tests/test_controlled_collaboration.py:519: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_collaboration.py::test_four_entrances_consultation_and_followup_use_same_broker
+FAILED tests/test_controlled_collaboration.py::test_two_experts_overlap_and_have_distinct_private_workspaces
+FAILED tests/test_controlled_collaboration.py::test_existing_method_generation_and_preview_use_broker
+3 failed, 64 passed in 76.08s (0:01:16)

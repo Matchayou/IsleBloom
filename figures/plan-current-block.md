@@ -1,0 +1,40 @@
+# 当前三步计划的阻断位置
+
+实线表示本次已走过的路径，虚线表示尚未运行的下游及根因说明。第一步模型调用成功，但研究结果被分类为部分交付，后续依赖被阻止。
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"PingFang SC, Microsoft YaHei, Arial","fontSize":"18px","primaryTextColor":"#17324d","lineColor":"#64748b"},"flowchart":{"htmlLabels":true,"curve":"linear","nodeSpacing":28,"rankSpacing":28,"wrappingWidth":420}}}%%
+flowchart TD
+    approval["你已确认版本 1"]
+    research["步骤 1 已运行<br/>约 57 秒；45495 tokens；计量完整"]
+    saved["已保存报告和证据<br/>3 份来源；4 条声明"]
+    sourceGap["论文 PDF 未通过 URL 校验<br/>仅有摘要页及其他官方来源"]
+    missing["报告明确说明资料缺口<br/>missing 非空"]
+    classify["结果提交判定<br/>missing 非空 → partial"]
+    gate{"下游依赖检查<br/>上游是否 complete？"}
+    blocked["现在卡在这里：blocked<br/>步骤 2、3 尚未执行"]
+    compare["第 2 步：机制与成本比较<br/>当前等待执行"]
+    synthesize["第 3 步：综合报告<br/>当前等待执行"]
+    conflict["根因：两类缺口未分开<br/>允许的局限也被当作阻断缺项"]
+    approval --> research
+    research --> saved
+    research --> sourceGap
+    sourceGap --> missing
+    saved --> classify
+    missing --> classify
+    classify --> gate
+    gate -->|"本次实际：否"| blocked
+    gate -.->|"只有 complete 才可继续"| compare
+    compare -.-> synthesize
+    conflict -.-> classify
+    classDef done fill:#e7f5ee,stroke:#2c7b57,color:#173c2b,stroke-width:1.5px
+    classDef warning fill:#fff4df,stroke:#c78a1d,color:#66420f,stroke-width:1.5px
+    classDef error fill:#fff0f0,stroke:#c64545,color:#7b2323,stroke-width:2px
+    classDef waiting fill:#f1f5f9,stroke:#94a3b8,color:#475569,stroke-dasharray:5 4
+    class approval,research,saved done
+    class sourceGap,missing warning
+    class classify,gate,blocked,conflict error
+    class compare,synthesize waiting
+```
+
+依据：[本轮运行验证](../docs/plan-mode-evidence/live-fixed-execution-validation.md)。

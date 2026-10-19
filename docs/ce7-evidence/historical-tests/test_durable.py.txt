@@ -1,0 +1,223 @@
+import asyncio
+import os
+import threading
+from copy import deepcopy
+from uuid import uuid4
+
+import pytest
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_research, build_resources, build_tasks, build_methods
+from agent_core.durable import DurableResearch
+from agent_core.execution.ports import Conflict
+from agent_core.adapters.memory_tasks import MemoryTasks
+from agent_core.adapters.memory_ledger import MemoryDatabase
+from agent_core.adapters.scripted import ScriptedEngine
+from agent_core.context.scopes import ScopeService
+from agent_core.tasks.service import TaskService
+from agent_core.contracts import RunLimits, RunResult
+
+
+@pytest.mark.asyncio
+async def test_durable_three_experts(tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url:
+        pytest.skip('Dedicated PostgreSQL database required')
+    db = PostgresDatabase(url)
+    durable = None
+    try:
+        scopes = build_resources(db, tmp_path / 'blobs')
+        research = build_research(db, scopes)
+        root = research.create('Stage 6 ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        scope, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research)
+        specs = [tasks.create(research_id=root.id, kind='search', user_request=f'Find {i}',
+            required_refs=(ref,)) for i in range(3)]
+        durable = DurableResearch(tasks, url)
+        await durable.start()
+        job = str(uuid4())
+        await durable.submit(job, [s.id for s in specs])
+        for _ in range(100):
+            state = await durable.status(job)
+            if state['status'] in ('SUCCESS', 'ERROR'):
+                break
+            await asyncio.sleep(.1)
+        assert state['status'] == 'SUCCESS', state
+        assert len(state['tasks']) == 3
+        assert all(len(item['receipts']) == 1 for item in state['tasks'])
+        assert all(len(item['attempts'][item['run_ids'][0]]) == 1 for item in state['tasks'])
+        same = await durable.submit(job, [s.id for s in specs])
+        assert same['status'] == 'SUCCESS'
+        assert same['tasks'] == state['tasks']
+        with pytest.raises(Conflict):
+            await durable.submit(job, [specs[1].id, specs[0].id])
+        race_job = str(uuid4())
+        competing = await asyncio.gather(
+            durable.submit(race_job, [specs[0].id]),
+            durable.submit(race_job, [specs[1].id]),
+            return_exceptions=True)
+        assert sum(isinstance(value, Conflict) for value in competing) == 1
+        direct = tasks.create(research_id=root.id, kind='search', user_request='Find 0',
+            required_refs=(ref,))
+        direct_run = await tasks.run(direct.id)
+        durable_run_id = state['tasks'][0]['run_ids'][0]
+        assert tasks.ledger.get(direct_run['run_id']).result.output == tasks.ledger.get(durable_run_id).result.output
+        assert direct_run['receipt'].delivery == tasks.receipt(f'task-result:{durable_run_id}').delivery
+        assert [c.status for c in direct_run['receipt'].program_checks] == [
+            c.status for c in tasks.receipt(f'task-result:{durable_run_id}').program_checks]
+        from sqlalchemy import text
+        with db.engine.begin() as connection:
+            connection.execute(text('UPDATE dbos.workflow_status SET application_version = :old '
+                'WHERE workflow_uuid = :id'), {'old':'stage5-checkpoint', 'id':f'research:{job}'})
+        try:
+            with pytest.raises(Conflict, match='checkpoint application version'):
+                await durable.status(job)
+        finally:
+            with db.engine.begin() as connection:
+                connection.execute(text('UPDATE dbos.workflow_status SET application_version = :current '
+                    'WHERE workflow_uuid = :id'), {'current':'stage6-v1', 'id':f'research:{job}'})
+    finally:
+        if durable: durable.close()
+        db.close()
+
+
+@pytest.mark.asyncio
+async def test_durable_independent_jobs_run_in_parallel(tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    entered, release = threading.Event(), threading.Event()
+    lock = threading.Lock()
+    count = 0
+
+    class Engine:
+        async def execute(self, request, agent, tools, invoke):
+            nonlocal count
+            with lock:
+                count += 1
+                if count == 2: entered.set()
+            await asyncio.to_thread(release.wait, 10)
+            return RunResult(run_id=request.run_id, status='succeeded', output={
+                'report': 'Parallel expert answer', 'fields': {}, 'sources': {},
+                'assumptions': [], 'conflicts': [], 'missing': [], 'limitations': [],
+                'follow_up': [], 'self_checks': {}, 'claims': []})
+
+    db = PostgresDatabase(url)
+    durable = None
+    try:
+        scopes = build_resources(db, tmp_path / 'blobs')
+        research = build_research(db, scopes)
+        root = research.create('Parallel durable ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'Synthetic source',
+            name='source.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research, Engine())
+        specs = [tasks.create(research_id=root.id, kind='synthesize',
+            user_request=f'Independent task {i}', required_refs=(ref,)) for i in range(2)]
+        durable = DurableResearch(tasks, url)
+        await durable.start()
+        jobs = [str(uuid4()) for _ in specs]
+        await asyncio.gather(*(durable.submit(job, (spec.id,)) for job, spec in zip(jobs, specs)))
+        try:
+            assert await asyncio.to_thread(entered.wait, 8), 'Second expert did not start concurrently'
+        finally:
+            release.set()
+        for _ in range(120):
+            states = await asyncio.gather(*(durable.status(job) for job in jobs))
+            if all(state['status'] in ('SUCCESS', 'ERROR') for state in states): break
+            await asyncio.sleep(.1)
+        assert [state['status'] for state in states] == ['SUCCESS', 'SUCCESS']
+        assert count == 2
+    finally:
+        release.set()
+        if durable: durable.close()
+        db.close()
+
+
+def test_durable_attempts_share_one_turn_and_route_budget():
+    attempts = MemoryTasks()
+    assert attempts.begin_durable_attempt('run', 4, 4, .45, 1.0) == 1
+    assert attempts.begin_durable_attempt('run', 4, 4, .45, 1.0) == 2
+    assert sum(item['reserved_turns'] for item in attempts.durable_attempts('run')) == 8
+    assert sum(item['reserved_calls'] for item in attempts.durable_attempts('run')) == 8
+    assert sum(item['reserved_usd'] for item in attempts.durable_attempts('run')) == .9
+    with pytest.raises(Conflict): attempts.begin_durable_attempt('run', 4, 4, .45, 1.0)
+    assert attempts.begin_durable_attempt('limited', 4, 4, .6, 1.0) == 1
+    with pytest.raises(Conflict): attempts.begin_durable_attempt('limited', 4, 4, .6, 1.0)
+
+
+@pytest.mark.asyncio
+async def test_same_frozen_task_input_direct_and_durable_business_state(tmp_path):
+    script = lambda request: ([], {'report':'same verified output'})
+    db = MemoryDatabase()
+    scopes = build_resources(db, tmp_path / 'blobs')
+    research = build_research(db, scopes)
+    root = research.create('Same fixed input')
+    scope = scopes.current(root.scope_id, 'local')
+    _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+        name='report.txt', media_type='text/plain')
+    tasks = build_tasks(db, scopes, research, ScriptedEngine(script))
+    spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+        required_refs=(ref,))
+    binding, snapshot, run_scope = tasks._prepare(spec)
+    clone = deepcopy(db)
+    clone_scopes = ScopeService(deepcopy(scopes.repository), deepcopy(scopes.resources))
+    clone_research = build_research(clone, clone_scopes)
+    from agent_core.memories.service import MemoryService
+    clone_tasks = TaskService(clone, clone_scopes, clone_research, ScriptedEngine(script),
+        methods=build_methods(clone, clone_research),
+        memories=MemoryService(clone, clone_research.owner, clone_research))
+    await tasks._execute_binding(spec, binding, snapshot, run_scope)
+    await clone_tasks.run_durable(spec.id, spec.version, binding.id)
+    assert tasks.ledger.get(binding.id).result == clone_tasks.ledger.get(binding.id).result
+    assert tasks.receipt(f'task-result:{binding.id}') == clone_tasks.receipt(f'task-result:{binding.id}')
+    assert snapshot.input == clone_scopes.repository.snapshot(binding.id).input
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('recover', [True, False])
+async def test_timeout_retries_once_without_duplicate_commit(tmp_path, recover):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    class SlowEngine:
+        def __init__(self): self.calls = 0
+        async def execute(self, request, spec, tools, invoke):
+            self.calls += 1
+            if not recover or self.calls == 1:
+                await asyncio.sleep(.05)
+            return RunResult(run_id=request.run_id, status='succeeded',
+                output={'report':'one committed answer'})
+    db = PostgresDatabase(url)
+    durable = None
+    try:
+        scopes = build_resources(db, tmp_path / 'blobs')
+        research = build_research(db, scopes)
+        root = research.create('Timeout ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        engine = SlowEngine()
+        tasks = build_tasks(db, scopes, research, engine)
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+        narrowed = spec.model_copy(update={'version':2,
+            'limits':RunLimits(timeout_seconds=.01)})
+        with db.transaction() as tx: tx.tasks.add_spec(narrowed)
+        durable = DurableResearch(tasks, url)
+        await durable.start()
+        job = str(uuid4())
+        await durable.submit(job, [spec.id])
+        expected = 'SUCCESS' if recover else 'ERROR'
+        for _ in range(100):
+            state = await durable.status(job)
+            if state['status'] in ('SUCCESS','ERROR'): break
+            await asyncio.sleep(.1)
+        assert state['status'] == expected, state
+        run_id = state['tasks'][0]['run_ids'][0]
+        assert engine.calls == 2
+        assert len(state['tasks'][0]['attempts'][run_id]) == 2
+        assert len(state['tasks'][0]['receipts']) == (1 if recover else 0)
+    finally:
+        if durable: durable.close()
+        db.close()

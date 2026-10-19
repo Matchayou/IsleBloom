@@ -1,0 +1,339 @@
+{
+  "status": "real_model_passed_pending_human_signoff",
+  "research_id": "a77db05a-5dac-4704-a9a0-e835d365de76",
+  "task_id": "6f395bec-419d-4740-8e5f-d21c657b86de",
+  "run_id": "d3440e68-b82c-4c4b-a073-314393c7f6d1",
+  "model": "deepseek-flash",
+  "base_url": "https://api.deepseek.com",
+  "method_version": "extract-v1",
+  "source_ref": {
+    "resource_id": "54127e6e-e1e5-47d6-821d-f6b6d913dcdb",
+    "snapshot_id": "a9eccb23-706d-4b8b-98d3-e654c2081d59",
+    "parse_id": "d570ef33-9acc-4ec2-adc2-79f1a8d001ed"
+  },
+  "run_status": "succeeded",
+  "usage": {
+    "requests": 2,
+    "input_tokens": 3797,
+    "output_tokens": 871,
+    "complete": true
+  },
+  "output": {
+    "fields": {
+      "unit": "百万元",
+      "period": "2025年度",
+      "company": "青松公司",
+      "capital_expenditure": "40",
+      "operating_cash_flow": "120"
+    },
+    "report": "已从授权来源 company-1.txt（resource_id 54127e6e-e1e5-47d6-821d-f6b6d913dcdb，snapshot a9eccb23-706d-4b8b-98d3-e654c2081d59，parse d570ef33-9acc-4ec2-adc2-79f1a8d001ed）提取青松公司 2025 年度经营现金流与资本开支。原文为结构化 JSON（record_type=company_financials）：operating_cash_flow=120，capex=40，货币单位 unit=百万元（currency=CNY，basis=合并）。公司名称、报告期、两个数值字段与单位均在原文中有明确对应行，可直接解析，无缺失项，未做任何推测。",
+    "missing": [],
+    "sources": {
+      "unit": "company-1.txt，line:6：\"unit\": \"百万元\"（line:5 \"currency\": \"CNY\"，line:7 \"basis\": \"合并\"）",
+      "period": "company-1.txt，line:4：\"period\": \"2025年度\"（配合 line:2 \"record_type\": \"company_financials\"）",
+      "company": "company-1.txt，line:3：\"company\": \"青松公司\"",
+      "capital_expenditure": "company-1.txt，line:9：\"capex\": 40（材料中 capex 对应 capital_expenditure）",
+      "operating_cash_flow": "company-1.txt，line:8：\"operating_cash_flow\": 120"
+    },
+    "conflicts": [],
+    "follow_up": [],
+    "assumptions": [],
+    "limitations": [
+      "来源为单一结构化摘要记录，无正式财报页眉、盖章或期次截止日等佐证，也未提供上年同期数，无法交叉验证。"
+    ],
+    "self_checks": {
+      "unit": "line:6 单位为 百万元（货币 CNY）",
+      "period": "line:4 明确为 2025年度",
+      "company": "line:3 明确为 青松公司",
+      "missing": "无缺失字段，无猜测值",
+      "sources": "全部 5 个字段均有对应原文行位置",
+      "capital_expenditure": "line:9 capex 数值 40 为可解析数字，已映射到 capital_expenditure",
+      "operating_cash_flow": "line:8 数值 120 为可解析数字"
+    }
+  },
+  "receipt": {
+    "result_id": "task-result:d3440e68-b82c-4c4b-a073-314393c7f6d1",
+    "task_id": "6f395bec-419d-4740-8e5f-d21c657b86de",
+    "spec_version": 1,
+    "run_id": "d3440e68-b82c-4c4b-a073-314393c7f6d1",
+    "context_snapshot_id": "ae834fed-f9d4-4967-9b32-f80e830ced76",
+    "model": "deepseek-flash",
+    "method_version": "extract-v1",
+    "method_digest": "d77013c257182b6d36ba78ded23ed8b3f828d2c6c88962eafd7aaf381c87f519",
+    "result_ids": [],
+    "resource_refs": [
+      {
+        "resource_id": "54127e6e-e1e5-47d6-821d-f6b6d913dcdb",
+        "snapshot_id": "a9eccb23-706d-4b8b-98d3-e654c2081d59",
+        "parse_id": "d570ef33-9acc-4ec2-adc2-79f1a8d001ed"
+      }
+    ],
+    "missing_optional_refs": [],
+    "program_checks": [
+      {
+        "number": 1,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Run output and fixed input identity checked",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Company and period present",
+        "reviewer": null
+      },
+      {
+        "number": 3,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Required numbers parse as decimals",
+        "reviewer": null
+      },
+      {
+        "number": 4,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Unit present",
+        "reviewer": null
+      },
+      {
+        "number": 5,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Source locations supplied, meaning unverified",
+        "reviewer": null
+      }
+    ],
+    "semantic_checks": [
+      {
+        "number": 1,
+        "checker": "semantic",
+        "status": "passed",
+        "evidence": "任务回执仅列出本研究在验收运行中上传的 company-1.txt 快照；与任务单 required_refs 一致，无外部依赖。",
+        "reviewer": "codex-source-review"
+      },
+      {
+        "number": 2,
+        "checker": "semantic",
+        "status": "passed",
+        "evidence": "逐行核对 tests/fixtures/stage4/company-1.txt：第 3 行 company 为青松公司，第 4 行 period 为 2025年度；模型 fields 与原文一致。",
+        "reviewer": "codex-source-review"
+      },
+      {
+        "number": 3,
+        "checker": "semantic",
+        "status": "passed",
+        "evidence": "原文第 8 行 operating_cash_flow 为 120，第 9 行 capex 为 40；模型分别填入 operating_cash_flow=120 和 capital_expenditure=40，字段映射与数值一致。",
+        "reviewer": "codex-source-review"
+      },
+      {
+        "number": 4,
+        "checker": "semantic",
+        "status": "passed",
+        "evidence": "原文第 6 行 unit 为百万元；模型 fields.unit 为百万元，并在报告中将其用于两个数值。",
+        "reviewer": "codex-source-review"
+      },
+      {
+        "number": 5,
+        "checker": "semantic",
+        "status": "passed",
+        "evidence": "模型 sources 分别指向 company-1.txt 第 8、9、6 行，所引 JSON 字段和值与原文逐一相符；第 3、4 行的公司与期间引用也相符。",
+        "reviewer": "codex-source-review"
+      }
+    ],
+    "assumptions": [],
+    "conflicts": [],
+    "missing": [],
+    "limitations": [
+      "来源为单一结构化摘要记录，无正式财报页眉、盖章或期次截止日等佐证，也未提供上年同期数，无法交叉验证。"
+    ],
+    "follow_up": [],
+    "delivery": "passed",
+    "adoption": "for_discussion"
+  },
+  "human_semantic_review": "pending",
+  "review_instruction": "Compare company, period, 120 operating cash flow, 40 capital expenditure, 百万元 unit and cited JSON keys with the source; record all numbered findings via agent-tasks review.",
+  "codex_semantic_review": {
+    "reviewer": "codex-source-review",
+    "findings_file": "docs/r1-real-extraction-review.json",
+    "status": "passed",
+    "scope": "source lines, field mapping, amounts, unit and permission-bound input"
+  },
+  "analysis": {
+    "task_id": "abafaab5-7bd7-4624-bbd5-104f15df444b",
+    "run_id": "3055de0a-c008-4d1e-a692-69e6d7669a72",
+    "model": "deepseek-flash",
+    "method_version": "analyze-v1",
+    "required_results": [
+      "task-result:d3440e68-b82c-4c4b-a073-314393c7f6d1"
+    ],
+    "run_status": "succeeded",
+    "usage": {
+      "requests": 2,
+      "input_tokens": 5000,
+      "output_tokens": 2611,
+      "complete": true
+    },
+    "output": {
+      "fields": {
+        "unit": "百万元",
+        "basis": "合并",
+        "period": "2025年度",
+        "company": "青松公司",
+        "formula": "经营现金流 − 资本开支 = 120 − 40 = 80（百万元，CNY，合并）",
+        "currency": "CNY",
+        "capital_expenditure": "40",
+        "operating_cash_flow": "120",
+        "operating_cash_flow_minus_capex": "80"
+      },
+      "report": "结论：青松公司 2025 年度「经营现金流 − 资本开支」= 80 百万元（人民币，合并口径）。\n\n一、口径与单位\n- 公司：青松公司；期间：2025 年度；货币：CNY（人民币）；单位：百万元；口径：合并（basis=合并）。\n- 金额单位统一为「百万元」，两个输入项与结果同单位，无需换算；币种单一（CNY），不涉及汇率折算。\n\n二、数据核对（交接结果 vs 授权来源）\n- 交接结果中的 operating_cash_flow=120、capital_expenditure=40、unit=百万元、period=2025年度、company=青松公司，与授权来源 company-1.txt（resource_id 54127e6e-e1e5-47d6-821d-f6b6d913dcdb，snapshot a9eccb23-706d-4b8b-98d3-e654c2081d59，parse d570ef33-9acc-4ec2-adc2-79f1a8d001ed）逐项一致，未发现不一致项。\n- 来源为结构化 JSON 记录（record_type=company_financials），字段可直接解析，无缺失、无 OCR 或单位歧义。\n- 字段映射：来源 \"capex\"（line:9）对应交接结果 capital_expenditure，属命名映射，语义一致。\n\n三、计算过程\n- 公式：经营现金流 − 资本开支（即自由现金流近似值，未扣除利息、税项及其他调整）。\n- 代入：120 − 40 = 80。\n- 结果：80 百万元（CNY，2025 年度，合并口径）。\n\n四、资料局限\n- 来源为单一结构化摘要记录，非正式财务报表，无页眉、盖章、期次截止日（如 2025-12-31）等佐证。\n- 未提供上年同期数，无法做同比校验；未提供现金流量表明细，无法交叉验证经营现金流的构成。\n- \"capex\" 未在来源中给出定义口径（是否为购建固定资产、无形资产和其他长期资产支付的现金，是否按总额或净额，是否含处置收回），本计算按单一数值 40 直接采用。\n- 该差额不等同于经审计的自由现金流：未考虑利息收支、所得税、其他投资/筹资活动及营运资本变动等。\n- 除上述两项金额外，来源中的 competition_risk=「客户集中」等定性信息不参与计算，也未纳入任何调整。\n\n五、未知项处理\n- 未提供的项目（上年同期、期次截止日、capex 明细口径等）一律未按零计入，仅作为核验局限列示；计算仅使用来源中明确给出的两个数值。",
+      "missing": [
+        "来源未提供 2024 年度（上年同期）经营现金流与资本开支，无法做同比或趋势核验（非本次计算必需项）。",
+        "来源未提供报告期截止日/会计期间起止日期，期间仅以文字「2025年度」表述。",
+        "来源未提供 capex 的定义口径与构成明细（是否含处置长期资产收回现金等）。",
+        "来源未提供经营现金流构成明细（利润调整项、营运资本变动等），无法交叉复核。"
+      ],
+      "sources": {
+        "unit": "company-1.txt，line:6：\"unit\": \"百万元\"",
+        "basis": "company-1.txt，line:7：\"basis\": \"合并\"",
+        "period": "company-1.txt，line:4：\"period\": \"2025年度\"（配合 line:2 \"record_type\": \"company_financials\"）",
+        "company": "company-1.txt，line:3：\"company\": \"青松公司\"",
+        "currency": "company-1.txt，line:5：\"currency\": \"CNY\"",
+        "source_ref": "resource_id 54127e6e-e1e5-47d6-821d-f6b6d913dcdb / snapshot a9eccb23-706d-4b8b-98d3-e654c2081d59 / parse d570ef33-9acc-4ec2-adc2-79f1a8d001ed",
+        "capital_expenditure": "company-1.txt，line:9：\"capex\": 40（映射为 capital_expenditure）",
+        "operating_cash_flow": "company-1.txt，line:8：\"operating_cash_flow\": 120"
+      },
+      "conflicts": [],
+      "follow_up": [
+        "索取正式 2025 年度现金流量表（含期次截止日与审计意见），核对 operating_cash_flow=120 与 capex=40 的原始科目。",
+        "确认 capex 的定义口径（总额/净额、是否含处置长期资产收回现金），必要时重算差额。",
+        "补充上年同期数，以进行同比与趋势分析。",
+        "如需自由现金流口径，请补充利息、税项及其他投资/筹资活动现金流的处理规则。"
+      ],
+      "assumptions": [
+        "来源字段 \"capex\" 与交接结果字段 capital_expenditure 为同一含义，按同一数值 40 使用。",
+        "「经营现金流减资本开支」按字面简单相减理解为自由现金流的近似值，未做任何额外调整（如利息、税项、处置长期资产收回现金等）。",
+        "两个输入项与结果采用来源声明的同一单位「百万元」与同一币种 CNY（合并口径），期间均为 2025 年度。"
+      ],
+      "limitations": [
+        "来源为单一结构化摘要记录，无正式财报页眉、盖章或审计意见佐证，无法与原始报表核对。",
+        "仅一个来源、无第二来源可交叉验证，若该记录本身有误则无法检出。",
+        "capex 口径未定义，若实际采用净额口径（含处置收回），则结果 80 百万元的含义会随之变化。",
+        "本结果为简单差额（80 百万元），不等同于经审计的自由现金流或可用于估值的自由现金流。"
+      ],
+      "self_checks": {
+        "unit": "来源 line:6 单位为 百万元，货币 CNY（line:5），合并口径（line:7）；输入与结果同单位，无需换算",
+        "scope": "仅使用本任务输入来源，未引用任何任务历史或其他来源",
+        "period": "来源 line:4 明确为 2025年度，与交接结果一致",
+        "values": "来源 line:8 operating_cash_flow=120、line:9 capex=40，与交接结果字段值逐一相符",
+        "company": "来源 line:3 明确为 青松公司，与交接结果一致",
+        "sources": "每个数值字段均可定位到来源具体行号，来源引用完整（resource_id/snapshot_id/parse_id）",
+        "unknowns": "未提供的项目（上年同期、期次截止日、capex 明细等）均未按零处理，仅列入 missing/limitations",
+        "conflicts": "交接结果与授权来源之间未发现数值、单位、期间或口径冲突",
+        "calculation": "120 − 40 = 80，单位 百万元；为单一两位有效数字整数运算，无进位/取整问题"
+      }
+    },
+    "receipt": {
+      "result_id": "task-result:3055de0a-c008-4d1e-a692-69e6d7669a72",
+      "task_id": "abafaab5-7bd7-4624-bbd5-104f15df444b",
+      "spec_version": 1,
+      "run_id": "3055de0a-c008-4d1e-a692-69e6d7669a72",
+      "context_snapshot_id": "db8c5b4b-1fc1-423f-ae65-6acd2a3f1d72",
+      "model": "deepseek-flash",
+      "method_version": "analyze-v1",
+      "method_digest": "46aaab3facd0de31b8f7103603eb2a32d73d536a0e3500ea0e5f1824bebbd1b1",
+      "result_ids": [
+        "task-result:d3440e68-b82c-4c4b-a073-314393c7f6d1"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "54127e6e-e1e5-47d6-821d-f6b6d913dcdb",
+          "snapshot_id": "a9eccb23-706d-4b8b-98d3-e654c2081d59",
+          "parse_id": "d570ef33-9acc-4ec2-adc2-79f1a8d001ed"
+        }
+      ],
+      "missing_optional_refs": [],
+      "program_checks": [
+        {
+          "number": 1,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Run output and fixed input identity checked",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Report present",
+          "reviewer": null
+        }
+      ],
+      "semantic_checks": [
+        {
+          "number": 1,
+          "checker": "semantic",
+          "status": "passed",
+          "evidence": "分析任务 required_results 仅含已逐项复核并交付 passed 的提取回执 task-result:d3440e68-b82c-4c4b-a073-314393c7f6d1；结果挂载和 company-1.txt 快照均属于同一研究的获准输入。",
+          "reviewer": "codex-source-review"
+        },
+        {
+          "number": 2,
+          "checker": "semantic",
+          "status": "passed",
+          "evidence": "逐项对照 company-1.txt 第 3–9 行及已核验提取结果：青松公司、2025年度、CNY、合并、百万元、经营现金流 120、资本开支 40 一致；120−40=80 百万元正确。报告把上年数据、正式财报和 capex 明细列为局限，未把未知值按零代入。",
+          "reviewer": "codex-source-review"
+        }
+      ],
+      "assumptions": [
+        "来源字段 \"capex\" 与交接结果字段 capital_expenditure 为同一含义，按同一数值 40 使用。",
+        "「经营现金流减资本开支」按字面简单相减理解为自由现金流的近似值，未做任何额外调整（如利息、税项、处置长期资产收回现金等）。",
+        "两个输入项与结果采用来源声明的同一单位「百万元」与同一币种 CNY（合并口径），期间均为 2025 年度。"
+      ],
+      "conflicts": [],
+      "missing": [
+        "来源未提供 2024 年度（上年同期）经营现金流与资本开支，无法做同比或趋势核验（非本次计算必需项）。",
+        "来源未提供报告期截止日/会计期间起止日期，期间仅以文字「2025年度」表述。",
+        "来源未提供 capex 的定义口径与构成明细（是否含处置长期资产收回现金等）。",
+        "来源未提供经营现金流构成明细（利润调整项、营运资本变动等），无法交叉复核。"
+      ],
+      "limitations": [
+        "来源为单一结构化摘要记录，无正式财报页眉、盖章或审计意见佐证，无法与原始报表核对。",
+        "仅一个来源、无第二来源可交叉验证，若该记录本身有误则无法检出。",
+        "capex 口径未定义，若实际采用净额口径（含处置收回），则结果 80 百万元的含义会随之变化。",
+        "本结果为简单差额（80 百万元），不等同于经审计的自由现金流或可用于估值的自由现金流。"
+      ],
+      "follow_up": [
+        "索取正式 2025 年度现金流量表（含期次截止日与审计意见），核对 operating_cash_flow=120 与 capex=40 的原始科目。",
+        "确认 capex 的定义口径（总额/净额、是否含处置长期资产收回现金），必要时重算差额。",
+        "补充上年同期数，以进行同比与趋势分析。",
+        "如需自由现金流口径，请补充利息、税项及其他投资/筹资活动现金流的处理规则。"
+      ],
+      "delivery": "passed",
+      "adoption": "for_discussion"
+    },
+    "codex_semantic_review": {
+      "reviewer": "codex-source-review",
+      "findings_file": "docs/r1-real-analysis-review.json",
+      "status": "passed",
+      "scope": "source facts, unit, arithmetic and handling of unknown data"
+    },
+    "human_semantic_review": "pending"
+  },
+  "diagnostic_history": [
+    {
+      "stage": "extraction",
+      "reason": "SDK initially rejected non-strict ExpertAnswer JSON schema before model call; adapter now wraps it with AgentOutputSchema(strict_json_schema=False)."
+    },
+    {
+      "stage": "extraction",
+      "reason": "A later response was invalid JSON; clarified required field names and JSON shape in frozen extract method. Failed task attempts remain recorded in PostgreSQL."
+    },
+    {
+      "stage": "analysis",
+      "reason": "First successful model result was incorrectly marked rework because contextual missing information was treated as a missing required field; receipt rule corrected and second run passed."
+    }
+  ]
+}

@@ -1,0 +1,305 @@
+{
+  "case": "user",
+  "capture": {
+    "id": "memory-capture:f2d3754e3b29cb8e292a8f7b808049859b44aa3cc576ae6e12744bab57376b5c",
+    "owner": "capture-live:55b23dc7c28c81e624fafdda40d99aeeeb5034803a793a3bd854c92e5b91d86a",
+    "research_id": "2bc590f3-40f4-41a1-ab68-31a8c9f54c59",
+    "node_id": "77d84215-c00a-4b01-a2cb-5cf61b600194",
+    "source_run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+    "message_id": "f28f967f-adbf-4cbd-93fe-2dcb77bebec4",
+    "content": "以后所有回答请先给结论，再解释原因。此轮只确认收到，不调用工具。",
+    "project_id": "b25b78b5-2efc-4f45-8123-137326e188f2",
+    "state": "completed",
+    "request": {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "parent_run_id": null,
+      "agent_id": "memory_capture:memory-capture:f2d3754e3b29cb8e292a8f7b808049859b44aa3cc576ae6e12744bab57376b5c",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"agent\":{\"id\":\"memory_capture:memory-capture:f2d3754e3b29cb8e292a8f7b808049859b44aa3cc576ae6e12744bab57376b5c\",\"instructions\":\"\",\"mode\":\"assistant\"},\"content\":[],\"context_mode\":\"memory_capture\",\"context_selection\":{\"agent\":{\"id\":\"memory_capture:memory-capture:f2d3754e3b29cb8e292a8f7b808049859b44aa3cc576ae6e12744bab57376b5c\",\"instructions\":\"\",\"mode\":\"assistant\"},\"algorithm\":\"sqlite-fts5-bm25\",\"history_ids\":[],\"history_reason\":\"all_user_statements+recent_3+ranked_6\",\"memory_algorithm\":\"llm-side-query\",\"memory_namespaces\":[{\"scope\":\"project\",\"scope_id\":\"b25b78b5-2efc-4f45-8123-137326e188f2\"},{\"scope\":\"user\",\"scope_id\":null}],\"memory_refs\":[],\"mode\":\"memory_capture\",\"omitted_history_ids\":[],\"query_sha256\":\"3cab51cdbe83662bf2610a43c36c951158e5dcad10429cfde793e2744fb2289c\",\"result_matches\":[],\"result_total\":0,\"skills\":[],\"source_matches\":[],\"source_total\":0},\"dynamic_context\":true,\"goal\":\"Propose durable memory from one new human message\",\"new_user\":{\"content\":\"以后所有回答请先给结论，再解释原因。此轮只确认收到，不调用工具。\",\"id\":\"f28f967f-adbf-4cbd-93fe-2dcb77bebec4\"},\"prior_context\":[],\"project\":{\"goal\":\"Capture acceptance a48e13d2da9747bc93f5b7b879888d73\",\"project_id\":\"b25b78b5-2efc-4f45-8123-137326e188f2\",\"research_id\":\"2bc590f3-40f4-41a1-ab68-31a8c9f54c59\"},\"related_results\":[],\"skills\":[],\"sources\":[]}"
+          },
+          {
+            "role": "user",
+            "content": "以后所有回答请先给结论，再解释原因。此轮只确认收到，不调用工具。"
+          }
+        ],
+        "external_context": {},
+        "projection_exclusions": [],
+        "tool_query": null
+      },
+      "limits": {
+        "max_turns": 12,
+        "timeout_seconds": 90.0,
+        "max_depth": 0,
+        "max_calls": 2
+      },
+      "depth": 0
+    },
+    "model": "deepseek-flash",
+    "result": {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "status": "succeeded",
+      "output": {
+        "reason": "已从 new_user 中提取一条稳定用户偏好（结论先行）并创建 user 级记忆草稿；本轮临时要求“只确认收到、不调用工具”不予保存。"
+      },
+      "usage": {
+        "requests": 3,
+        "input_tokens": 5255,
+        "output_tokens": 1166,
+        "complete": true
+      },
+      "error": null,
+      "output_repairs": []
+    },
+    "reason": null
+  },
+  "writes": [
+    {
+      "id": "memory-write:aefeb5e1e59e73a995934ffd7f92042b59e73987068a7e3db694a35d106e5e79",
+      "owner": "capture-live:55b23dc7c28c81e624fafdda40d99aeeeb5034803a793a3bd854c92e5b91d86a",
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "research_id": "2bc590f3-40f4-41a1-ab68-31a8c9f54c59",
+      "snapshot_id": "1a78820f-bc9f-4081-bffc-4f70b2144966",
+      "agent_id": "memory_capture:memory-capture:f2d3754e3b29cb8e292a8f7b808049859b44aa3cc576ae6e12744bab57376b5c",
+      "operation_hash": "b8e7182f571b89776942bbbbd7be2c12b77b4a28efe45c2755664ad1f75b2dc4",
+      "request": {
+        "action": "create",
+        "scope": "user",
+        "kind": "preference",
+        "content": "用户偏好：所有回答先给出结论，再解释原因（结论先行）。",
+        "applicability": "适用于与该用户的所有回答与输出；不含本轮临时要求。",
+        "basis": "user_statement",
+        "quote": "以后所有回答请先给结论，再解释原因。",
+        "target_id": null,
+        "expected_version": null,
+        "reason": "用户在 new_user 中明确提出长期沟通偏好（结论先行），属稳定可复用偏好，故创建 user 级记忆草稿。",
+        "expires_at": null
+      },
+      "scope_id": null,
+      "memory_id": "agent-memory:a6b3d717c6143fd6388c2f44d0810003ab9a3f27ed5ae32638cfa6eb9cce6a91",
+      "target_version": null,
+      "old_memory": null,
+      "original_user_hash": "0486b8a781c2a90be286e9285ad3116657b6207bc1b88fc5ed4edd5972e68841",
+      "review": {
+        "supported": true,
+        "persistent": true,
+        "safe": true,
+        "explicit_user": true,
+        "duplicate_id": null,
+        "reason": "The proposal accurately captures the user's explicit durable preference to lead with conclusions before explanations, scoped to all future answers and excluding the one-off request in the same message. No credentials, private details, or conflicting existing entries are involved."
+      },
+      "confirmed": false,
+      "receipt": {
+        "status": "queued",
+        "write_id": "memory-write:aefeb5e1e59e73a995934ffd7f92042b59e73987068a7e3db694a35d106e5e79",
+        "memory_id": "agent-memory:a6b3d717c6143fd6388c2f44d0810003ab9a3f27ed5ae32638cfa6eb9cce6a91",
+        "created_at": "2026-10-14T09:33:04.963193+00:00",
+        "instruction": "Durably queued. Current run keeps its frozen memory; publication follows business result validation. Not yet active.",
+        "intended_status": "draft"
+      },
+      "state": "published",
+      "resolution": {
+        "status": "draft",
+        "version": 1,
+        "memory_id": "agent-memory:a6b3d717c6143fd6388c2f44d0810003ab9a3f27ed5ae32638cfa6eb9cce6a91",
+        "resolved_at": "2026-10-14T09:33:09.058103+00:00"
+      }
+    }
+  ],
+  "memories": [
+    {
+      "id": "2c65ef0b-1afe-4d3f-b0c9-73a72f470676",
+      "version": 1,
+      "owner": "capture-live:55b23dc7c28c81e624fafdda40d99aeeeb5034803a793a3bd854c92e5b91d86a",
+      "publication_id": null,
+      "scope": "project",
+      "scope_id": "0ef9d5b4-5dca-4657-80dc-26ab3e833bb0",
+      "kind": "preference",
+      "content": "FOREIGN_PROJECT_SECRET",
+      "source": "Synthetic",
+      "status": "confirmed",
+      "expires_at": null
+    },
+    {
+      "id": "agent-memory:a6b3d717c6143fd6388c2f44d0810003ab9a3f27ed5ae32638cfa6eb9cce6a91",
+      "version": 1,
+      "owner": "capture-live:55b23dc7c28c81e624fafdda40d99aeeeb5034803a793a3bd854c92e5b91d86a",
+      "publication_id": null,
+      "scope": "user",
+      "scope_id": null,
+      "kind": "preference",
+      "content": "用户偏好：所有回答先给出结论，再解释原因（结论先行）。\n适用条件：适用于与该用户的所有回答与输出；不含本轮临时要求。",
+      "source": "Agent write memory-write:aefeb5e1e59e73a995934ffd7f92042b59e73987068a7e3db694a35d106e5e79; user source 0486b8a781c2a90be286e9285ad3116657b6207bc1b88fc5ed4edd5972e68841",
+      "status": "draft",
+      "expires_at": null
+    }
+  ],
+  "foreign_after": {
+    "id": "2c65ef0b-1afe-4d3f-b0c9-73a72f470676",
+    "version": 1,
+    "owner": "capture-live:55b23dc7c28c81e624fafdda40d99aeeeb5034803a793a3bd854c92e5b91d86a",
+    "publication_id": null,
+    "scope": "project",
+    "scope_id": "0ef9d5b4-5dca-4657-80dc-26ab3e833bb0",
+    "kind": "preference",
+    "content": "FOREIGN_PROJECT_SECRET",
+    "source": "Synthetic",
+    "status": "confirmed",
+    "expires_at": null
+  },
+  "foreign_denied": true,
+  "repeat_http_unchanged": true,
+  "operations": [
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "id": "model:1",
+      "kind": "model",
+      "request_hash": "6f2f09b74ee9efa9773e3932b157b1a33143a4535a160403ef0e37c11e15c009",
+      "usage": {
+        "complete": true,
+        "requests": 1,
+        "input_tokens": 1679,
+        "output_tokens": 1046
+      },
+      "status": "confirmed"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "id": "memory_write_review:e18963c8f34d0b46552458bd8937a5388de53baf6a597736ece9cd1b154ba070",
+      "kind": "model",
+      "request_hash": "e18963c8f34d0b46552458bd8937a5388de53baf6a597736ece9cd1b154ba070",
+      "usage": {
+        "complete": true,
+        "requests": 1,
+        "input_tokens": 681,
+        "output_tokens": 76
+      },
+      "status": "confirmed"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "id": "tool:call_00_A6yeN0z79MC51xRyaZ7m0392",
+      "kind": "tool",
+      "request_hash": "b8e7182f571b89776942bbbbd7be2c12b77b4a28efe45c2755664ad1f75b2dc4",
+      "usage": null,
+      "status": "confirmed"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "id": "model:2",
+      "kind": "model",
+      "request_hash": "80e61dacee3f623bb1f647ceb632d83832a8fc7e9fc5f317b18024f8a55bee18",
+      "usage": {
+        "complete": true,
+        "requests": 1,
+        "input_tokens": 2895,
+        "output_tokens": 44
+      },
+      "status": "confirmed"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "id": "result:2faf5155-41da-4bc8-8f22-d329a154d737",
+      "kind": "result",
+      "request_hash": "40d8c73ef014bd47666bb90d0863822748ffcc3863e0a7e8d77919ea42fdec65",
+      "usage": null,
+      "status": "confirmed"
+    }
+  ],
+  "checkpoints": [
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "receipt:memory_write_review:e18963c8f34d0b46552458bd8937a5388de53baf6a597736ece9cd1b154ba070",
+      "artifact": "e3c29d8cbcd81673cbed7f3468daf284722468808e03dfaed09275039d168d38"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "receipt:tool:call_00_A6yeN0z79MC51xRyaZ7m0392",
+      "artifact": "4f0d432d72a07a3cb97e0af24a550f70ed1fe81689f5b78d1dbdc9d6808f29ec"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "input:2",
+      "artifact": "7788c840137efcbd1775c3d479d3b658adbbd9abdf6b711526990e6f74e68a88"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "receipt:model:2",
+      "artifact": "d2b76d60d1aa7e7795d89da1a9424a11483dfe00d621b9e8bda3f0fa637c09c4"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "sdk",
+      "artifact": "188366a97f1a37d4892af8a5677d769b1f3719256eee852758752f668fd0f945"
+    },
+    {
+      "run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "key": "input:1",
+      "artifact": "e619599a5de0e541e186f33666dfccc9033970ef03fd3f2694c4f8fa507ffdb8"
+    },
+    {
+      "run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "key": "receipt:model:1",
+      "artifact": "20bf623d828c736cd4a6b2e60e878d6b32eaea0eaa9e3b820f179ade20776caf"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "receipt:result:2faf5155-41da-4bc8-8f22-d329a154d737",
+      "artifact": "1287a492ad390b8a6d7a04b0fc5865bc4f7a0efdaef076c14c273954411fc96f"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "code",
+      "artifact": "99401487e02d36b61533188b42bf0e7bf831d51df1cbb4d9513f008a5bec3c28"
+    },
+    {
+      "run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "key": "sdk",
+      "artifact": "c234510f1494bf110186d022d03473ae805a7215492316b3bfdfd719a331a079"
+    },
+    {
+      "run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "key": "receipt:result:c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "artifact": "3c1ed6db15de41fbb0be75a2bca4b8cf958c13893b70752895de3a55c9b8aa3b"
+    },
+    {
+      "run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96",
+      "key": "code",
+      "artifact": "069d23cd19b1d210c5627f2104666c47fbd0ed61198a020bec88a05f41c8a1df"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "input:1",
+      "artifact": "23903e30cb469b08e6fe5ca370d0744b726a66b503fab4c8dd4a560ce8a19eb5"
+    },
+    {
+      "run_id": "2faf5155-41da-4bc8-8f22-d329a154d737",
+      "key": "receipt:model:1",
+      "artifact": "dc1c615c8603f0f1643e323ebf767b4eded88f3b11ddfe68c2ed5e36088eeb84"
+    }
+  ],
+  "http": [
+    {
+      "purpose": "source",
+      "model": "deepseek-flash"
+    },
+    {
+      "purpose": "capture",
+      "model": "deepseek-flash"
+    },
+    {
+      "purpose": "review",
+      "model": "deepseek-flash"
+    },
+    {
+      "purpose": "capture",
+      "model": "deepseek-flash"
+    }
+  ],
+  "intents": [
+    "{\"write_id\": \"memory-write:aefeb5e1e59e73a995934ffd7f92042b59e73987068a7e3db694a35d106e5e79\"}"
+  ],
+  "source_run_id": "c5be5220-8e5d-40e8-818f-056625fbbf96"
+}

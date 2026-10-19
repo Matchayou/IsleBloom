@@ -1,0 +1,33 @@
+........................................................................ [ 27%]
+.....................F.................................................. [ 55%]
+........................................................................ [ 83%]
+............................................                             [100%]
+=================================== FAILURES ===================================
+_______ test_long_main_chat_runs_and_manifest_matches_actual_sdk_request _______
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x1164b18e0>, <agent_core.context.scopes.ScopeService object...jectService object at 0x1166fc2c0>, <agent_core.collaboration.service.CollaborationService object at 0x1160cb410>, ...)
+
+    async def test_long_main_chat_runs_and_manifest_matches_actual_sdk_request(controlled):
+        db,scopes,research,tasks,projects,c,provider=controlled
+        node,ref,chat=await seed(controlled)
+        middle=ChatMessage(role='user',content='MID-CONSTRAINT: market size stays unknown.')
+        messages=[]
+        for n in range(20):
+            messages.append(ChatMessage(role='assistant',content='Old report '+str(n)+' '+('x'*4000)))
+            if n==10:messages.append(middle)
+        messages.append(ChatMessage(role='user',content='CURRENT: report count 7 only.'))
+        with db.transaction() as tx:
+            tx.research.save_chat(chat.model_copy(update={'revision':chat.revision+1,'messages':tuple(messages)}),chat.revision)
+        provider.plans.append([answer({'report':'7; market size unknown','claims':[]})])
+        outcome=await research.submit(NodeCommand(command_id=uuid4().hex,research_id=node.research_id,
+            node_id=node.id,kind='chat_reply',chat_revision=chat.revision+1))
+>       assert research.ledger.get(outcome.run_id).result.status=='succeeded'
+E       AssertionError: assert 'failed' == 'succeeded'
+E         
+E         - succeeded
+E         + failed
+
+tests/test_context_projection.py:134: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_context_projection.py::test_long_main_chat_runs_and_manifest_matches_actual_sdk_request
+1 failed, 259 passed in 74.28s (0:01:14)

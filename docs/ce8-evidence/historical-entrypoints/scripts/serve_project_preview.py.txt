@@ -1,0 +1,15 @@
+"""Run the isolated Stage 3 preview without touching older services."""
+import os
+import sys
+from pathlib import Path
+from dotenv import load_dotenv
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.research_cli import main
+
+load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+os.environ['DATABASE_URL']='postgresql+psycopg://chenyouran@127.0.0.1:55449/project3_verify'
+PostgresDatabase.LOCK_PATH=Path('/private/tmp/project3-verify-execution.lock')
+sys.argv=['agent-research','--storage','postgres','--engine','openai',
+          '--blobs','/private/tmp/project3-blobs','serve','--port','8782',
+          '--frontend','/private/tmp/project3-preview-dist']
+main()

@@ -1,0 +1,196 @@
+{
+  "id": "cda35191-f054-471f-a836-44b7ba2ce55d",
+  "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+  "origin_node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+  "request_id": "770c3d23e4884041b95ee96aca457593",
+  "request": "生成中文研究计划：比较 ReAct 与先规划、人工确认、再执行在研究型智能体中的机制、适用场景、成本结构与可靠性。仅原始论文、官方文档和公开一级工程资料；不编造实验、性能或费用数字，无实测就标未知。交付权威资料清单、对照表、有来源的简短报告与工作流建议，不安排代码、发布或基准实验。\n恰好三步串行：1 核对ReAct原论文全文或明确的摘要页证据，并补齐一个官方人工确认/计划执行来源，最多2至3份关键资料；2 依赖第1步，比较机制、失败模式、场景及成本构成，优先复用上游证据，必要缺口再定向联网；3 依赖前两步，综合最终对照表、简短报告与局限性，仅读取和检索已有资料。\n已有arXiv abs页面只表示摘要页，不能声称已获取论文全文，机制细节需核对全文或其他一级资料。避免重复整页读取，定位摘录即可。每步报告约1500中文字符，证据不足明确写入missing，不把未知当结论。\n执行要求：只有用户确认本提案后才执行步骤；批准后直接研究当前步骤，不再次生成整份计划或请求重复确认；按系统输出schema交付严格JSON，不使用代码围栏，不输出文本工具调用标签。\n冻结预算policy：max_runs=3,max_concurrency=1,timeout_seconds=1800,max_total_tokens=120000,completion=fail_fast。每步limits：max_turns=8,max_calls=6,timeout_seconds=600,max_depth=1。模型保持deepseek-v4-pro。工具只read_source/search_source/search_web/fetch_web，第3步不联网。本次仅生成待确认计划，不执行研究、不联网。分析不超过300字，每步指令不超过400字，无必需澄清则questions=[]。",
+  "revision": 2,
+  "status": "queued",
+  "created_at": "2026-10-12T03:47:22.577764Z",
+  "updated_at": "2026-10-12T03:52:42.204920Z",
+  "origin_revision": 0,
+  "chat_revision": 0,
+  "root_scope_version": 1,
+  "node_scope_version": 1,
+  "resource_refs": [
+    {
+      "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+      "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+      "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+    }
+  ],
+  "result_ids": [],
+  "planning_result": {
+    "run_id": "51fc8267-a043-47da-b951-ce28a9321845",
+    "status": "succeeded",
+    "usage": {
+      "requests": 1,
+      "input_tokens": 2610,
+      "output_tokens": 2598,
+      "complete": true
+    },
+    "error": null
+  },
+  "model": "deepseek-v4-pro",
+  "analysis": "目标为比较 ReAct 与\"先规划-人工确认-再执行\"两类研究型智能体的机制、适用场景、成本结构与可靠性。采用三步骤串行：先核对 ReAct 原论文机制证据并补齐一个官方人工确认/计划执行来源；再比较机制、失败模式、场景与成本构成；最后综合对照表、简短报告与局限性。仅用原始论文、官方文档与一级工程资料，无实测数字一律标 missing，不编造、不将未知当结论。",
+  "assumptions": [
+    "已提供的 arXiv abs 页(2210.03629)仅为摘要页，ReAct 全文机制细节需另定位一级资料核对，不能据此声称已获取全文。",
+    "第二步的\"成本结构\"仅作构成维度对比（token/时延/人力等），不编造具体费用或性能数字。",
+    "三步骤严格串行，每步报告约1500中文字符，证据不足处写入 missing。"
+  ],
+  "questions": [],
+  "plan": {
+    "id": "ebbb90af-50a4-4af7-b210-fb866e28a991",
+    "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+    "steps": [
+      {
+        "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+        "depends_on": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "c272b527-c6d5-4559-bdb4-c8491a8cab00",
+        "depends_on": [
+          "c3ec3523-fab5-4f70-841d-7169db840ba7"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "ac53394e-38e2-4c15-aa85-177e30204b25",
+        "depends_on": [
+          "c3ec3523-fab5-4f70-841d-7169db840ba7",
+          "c272b527-c6d5-4559-bdb4-c8491a8cab00"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      }
+    ],
+    "policy": {
+      "max_concurrency": 1,
+      "max_runs": 3,
+      "max_total_tokens": 120000,
+      "timeout_seconds": 1800.0,
+      "completion": "fail_fast"
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+      "goal": "核对 ReAct 原论文的机制证据并补齐一个官方\"先规划-人工确认-再执行\"来源，锁定 2-3 份可引用的关键一级资料。",
+      "instructions": "先对已提供的 arXiv abs 页(2210.03629)用 search_source 定位摘要，确认其仅为摘要页而非全文。再用 search_web/fetch_web 定位 ReAct 全文或其他一级资料，核对 thought/action/observation 交替机制细节。另检索一个官方人工确认/计划执行来源（官方文档或一级工程资料）。逐份记录出处与是否获取全文，不编造性能或费用数字。\n交付要求：2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。",
+      "deliverable": "2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    },
+    {
+      "node_id": "c272b527-c6d5-4559-bdb4-c8491a8cab00",
+      "goal": "依赖第1步证据，比较两类智能体的机制、失败模式、适用场景与成本构成。",
+      "instructions": "复用第1步上游证据逐项对比：机制（推理-行动交替 vs 计划-人工确认-再执行）、失败模式（推理漂移/错误传播 vs 人工确认延迟/瓶颈）、适用场景、成本构成（token/时延/人力等维度）。优先引用已有资料，缺口再定向 search_web/fetch_web。无实测数字标 missing/unknown，不将未知当结论。\n交付要求：机制、失败模式、适用场景、成本构成四维对比初稿，含来源标注与 missing 项。",
+      "deliverable": "机制、失败模式、适用场景、成本构成四维对比初稿，含来源标注与 missing 项。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    },
+    {
+      "node_id": "ac53394e-38e2-4c15-aa85-177e30204b25",
+      "goal": "依赖前两步，综合最终对照表、简短报告与局限性说明。",
+      "instructions": "仅用 read_source/search_source 读取和检索已有资料，不联网。整合最终对照表、约1500字简短报告、工作流建议与局限性。明确标注证据不足为 missing，不把未知当结论，不安排代码、发布或基准实验。\n交付要求：最终对照表、简短报告、工作流建议、局限性说明（含 missing 项与权威资料清单）。",
+      "deliverable": "最终对照表、简短报告、工作流建议、局限性说明（含 missing 项与权威资料清单）。",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    }
+  ],
+  "approved_revision": 1,
+  "approved_by": "local",
+  "approved_at": "2026-10-12T03:52:42.204923Z",
+  "workflow_id": "plan:cda35191-f054-471f-a836-44b7ba2ce55d:1",
+  "execution_started_at": null,
+  "reason": null,
+  "recovery_of": null,
+  "sources": [
+    {
+      "ref": {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      },
+      "name": "Synergizing Reasoning and Acting in Language Models"
+    }
+  ],
+  "execution_steps": [
+    {
+      "node_id": "c3ec3523-fab5-4f70-841d-7169db840ba7",
+      "status": "waiting",
+      "result_id": null,
+      "report": null,
+      "completion": null,
+      "error": null,
+      "usage": null
+    },
+    {
+      "node_id": "c272b527-c6d5-4559-bdb4-c8491a8cab00",
+      "status": "waiting",
+      "result_id": null,
+      "report": null,
+      "completion": null,
+      "error": null,
+      "usage": null
+    },
+    {
+      "node_id": "ac53394e-38e2-4c15-aa85-177e30204b25",
+      "status": "waiting",
+      "result_id": null,
+      "report": null,
+      "completion": null,
+      "error": null,
+      "usage": null
+    }
+  ]
+}

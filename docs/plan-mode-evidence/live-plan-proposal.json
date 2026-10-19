@@ -1,0 +1,136 @@
+{
+  "id": "abc08601-5ea6-45c2-bd22-25ab4da4b71c",
+  "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+  "origin_node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+  "request_id": "a8de7b41-5762-4c7f-976f-f9a4e9685c10",
+  "request": "生成一份中文研究计划，研究主题：比较 ReAct 与“先规划、用户确认、再执行”在研究型智能体中的适用场景、成本和可靠性。\n研究仅基于官方文档、原始论文及公开工程资料；不编造实验结果、费用或性能数字。成本比较使用模型轮次、工具调用、上下文开销及失败重试等可核对指标；无数据时明确标记未知。\n目标交付：一张对照表、一份有来源的简短报告、针对本项目的使用建议与局限性。这里的建议只涉及研究工具调用和人工确认流程，不安排代码改动、发布或实际基准实验。\n恰好三个步骤：1 获取并核对权威资料，2 比较机制和失败场景，3 综合报告与建议。第2步依赖第1步，第3步依赖前两步。联网搜索和读取网页只安排在用户确认后的执行阶段。当前只分析并生成计划，等待确认；不得执行研究步骤。\n总体 policy：max_runs=3，max_concurrency=1，timeout_seconds=600，max_total_tokens=30000，completion=\"fail_fast\"。\n每步 limits：max_turns=6，max_calls=4，timeout_seconds=180，max_depth=1。工具只从 read_source、search_source、search_web、fetch_web 中选择。研究范围已明确，没有必需澄清问题时 questions 返回空数组。",
+  "revision": 1,
+  "status": "awaiting_confirmation",
+  "created_at": "2026-10-12T01:55:01.745064Z",
+  "updated_at": "2026-10-12T01:56:07.621412Z",
+  "origin_revision": 0,
+  "chat_revision": 0,
+  "root_scope_version": 1,
+  "node_scope_version": 1,
+  "resource_refs": [],
+  "result_ids": [],
+  "planning_result": {
+    "run_id": "c6592716-d9e4-4bb6-98ac-d787729f8df5",
+    "status": "succeeded",
+    "usage": {
+      "requests": 1,
+      "input_tokens": 2350,
+      "output_tokens": 5889,
+      "complete": true
+    },
+    "error": null
+  },
+  "model": "deepseek-v4-pro",
+  "analysis": "本任务要求生成一份中文研究计划，比较 ReAct 与“先规划、用户确认、再执行”在研究型智能体中的适用场景、成本和可靠性。研究仅基于官方文档、原始论文及公开工程资料；成本比较只使用模型轮次、工具调用、上下文开销、失败重试等可核对指标，无数据时明确标记“未知”。当前 sources 为空，本次仅生成计划、不执行研究步骤；联网搜索与网页读取按用户要求只安排在用户确认后的执行阶段，故第一步（获取并核对权威资料）在计划中以 search_web/fetch_web 作为执行阶段工具，当前不实际读取任何来源。共三个步骤：第1步获取并核对权威资料，第2步比较机制与失败场景（依赖第1步），第3步综合报告与建议（依赖前两步）。步骤间按依赖顺序串行执行，policy.max_runs=3 等于步骤数，completion=fail_fast，每步 max_depth=1。交付物为对照表、有来源的简短报告、针对本项目的使用建议与局限性（仅涉及研究工具调用与人工确认流程，不涉及代码改动、发布或基准实验）。研究范围已明确，无必需澄清问题，questions 返回空数组。",
+  "assumptions": [
+    "用户确认后的执行阶段具备 search_web 与 fetch_web 工具权限，用于获取官方文档、原始论文与公开工程资料。",
+    "ReAct 原始论文（Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models）及 OpenAI/Anthropic/LangChain 等官方文档在公开网络可获取；不可获取或无法核对的项将标记为“未知”。",
+    "“先规划、用户确认、再执行”指带显式人工确认节点的工作流范式，以可获得的官方文档与公开工程资料为准。",
+    "本次仅产出研究计划，不执行研究步骤、不联网、不读取任何来源（当前 sources 为空）。",
+    "不编造任何实验结果、费用或性能数字；成本比较仅采用模型轮次、工具调用、上下文开销、失败重试等可核对指标。"
+  ],
+  "questions": [],
+  "plan": {
+    "id": "04b7b122-302a-4d7d-81f7-66e322c1590e",
+    "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+    "steps": [
+      {
+        "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+        "depends_on": [],
+        "limits": {
+          "max_turns": 6,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 4
+        }
+      },
+      {
+        "node_id": "c6028ccc-d326-44f7-a4db-f027f1e9a1c4",
+        "depends_on": [
+          "bb00dc20-20f3-4742-984d-77ccd1a8e31e"
+        ],
+        "limits": {
+          "max_turns": 6,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 4
+        }
+      },
+      {
+        "node_id": "bf4cdc2a-933d-4b23-8f5c-0a72749a53d3",
+        "depends_on": [
+          "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+          "c6028ccc-d326-44f7-a4db-f027f1e9a1c4"
+        ],
+        "limits": {
+          "max_turns": 6,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 4
+        }
+      }
+    ],
+    "policy": {
+      "max_concurrency": 1,
+      "max_runs": 3,
+      "max_total_tokens": 30000,
+      "timeout_seconds": 600.0,
+      "completion": "fail_fast"
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "bb00dc20-20f3-4742-984d-77ccd1a8e31e",
+      "goal": "获取并核对 ReAct 与“先规划、用户确认、再执行”两种范式的权威资料，建立可溯源的事实基础。",
+      "instructions": "仅在用户确认后的执行阶段联网。使用 search_web 检索并定位：ReAct 原始论文（Yao et al., ReAct: Synergizing Reasoning and Acting in Language Models）；OpenAI、Anthropic、LangChain 等关于 agent 规划、工具调用与人工确认（human-in-the-loop / approval / plan-then-confirm）的官方文档；以及相关公开工程资料。对每个候选来源用 fetch_web 读取，记录出处、版本或发布日期与关键论断；对已获准资料使用 search_source/read_source 核对（当前 sources 为空，若执行时获准新资料再行核对）。优先官方文档与原始论文，排除二手转述；不记录或编造任何实验结果、费用或性能数字，无法核对的数字明确标记为“未知”。\n交付要求：权威资料清单：每项含来源类型（论文/官方文档/工程资料）、标题、URL 或引用、版本或日期、关键摘录、可信度与核对状态、无法核对项标记“未知”。",
+      "deliverable": "权威资料清单：每项含来源类型（论文/官方文档/工程资料）、标题、URL 或引用、版本或日期、关键摘录、可信度与核对状态、无法核对项标记“未知”。",
+      "allowed_tools": [
+        "search_web",
+        "fetch_web",
+        "search_source",
+        "read_source"
+      ],
+      "resource_refs": [],
+      "result_ids": []
+    },
+    {
+      "node_id": "c6028ccc-d326-44f7-a4db-f027f1e9a1c4",
+      "goal": "基于第一步资料，比较两种范式在控制流、失败场景、适用场景、成本构成与可靠性上的差异。",
+      "instructions": "只使用第一步已核对的资料（以 search_source/read_source 读取；如个别论断缺少来源，可用 search_web/fetch_web 定向补充，但不得重复第一步的全面检索）。对比维度：(1) 控制流——ReAct 的思考-行动-观察循环与自主工具调用，对比“先规划-用户确认-再执行”的显式人工确认节点与分段执行；(2) 失败场景——ReAct 的循环不收敛、幻觉工具调用、上下文膨胀，后者的规划错误、确认瓶颈、僵化执行；(3) 成本指标——仅使用可核对指标：模型轮次、工具调用次数、上下文开销、失败重试次数，不引用任何未经来源证实的费用或性能数字，无数据处标记“未知”；(4) 可靠性——失败可恢复性、人工干预点与可控性。产出机制与失败场景对照表草稿，作为第三步综合的基础。\n交付要求：机制与失败场景对照表（草稿），含适用场景、成本指标、可靠性、失败模式、人工确认开销等列；每项结论附来源引用，无数据处标记“未知”。",
+      "deliverable": "机制与失败场景对照表（草稿），含适用场景、成本指标、可靠性、失败模式、人工确认开销等列；每项结论附来源引用，无数据处标记“未知”。",
+      "allowed_tools": [
+        "search_source",
+        "read_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [],
+      "result_ids": []
+    },
+    {
+      "node_id": "bf4cdc2a-933d-4b23-8f5c-0a72749a53d3",
+      "goal": "综合前两步，产出最终交付物：对照表、有来源的简短报告、针对本项目的使用建议与局限性。",
+      "instructions": "综合第一步与第二步的交付，形成：(1) 一张对照表（两种范式 × 适用场景/成本/可靠性/失败模式/确认开销）；(2) 一份有来源的简短报告，逐条引用第一步来源；(3) 针对本项目（研究型智能体中的工具调用与人工确认流程）的使用建议与局限性，仅涉及研究工具调用和人工确认流程的选择与权衡，不安排代码改动、发布或实际基准实验。成本描述仅使用模型轮次、工具调用、上下文开销、失败重试等可核对指标；无法核对的数字与资料缺口明确标记“未知”并写入局限性。以 read_source/search_source 复核引用，保证结论可溯源。\n交付要求：最终交付物：对照表 + 有来源的简短报告 + 针对本项目的使用建议与局限性（含未知项与资料缺口说明）。",
+      "deliverable": "最终交付物：对照表 + 有来源的简短报告 + 针对本项目的使用建议与局限性（含未知项与资料缺口说明）。",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "resource_refs": [],
+      "result_ids": []
+    }
+  ],
+  "approved_revision": null,
+  "approved_by": null,
+  "approved_at": null,
+  "workflow_id": null,
+  "execution_started_at": null,
+  "reason": null,
+  "sources": [],
+  "execution_steps": []
+}

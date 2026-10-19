@@ -1,0 +1,22 @@
+{
+  "1": {
+    "status": "passed",
+    "evidence": "任务回执仅列出本研究在验收运行中上传的 company-1.txt 快照；与任务单 required_refs 一致，无外部依赖。"
+  },
+  "2": {
+    "status": "passed",
+    "evidence": "逐行核对 tests/fixtures/stage4/company-1.txt：第 3 行 company 为青松公司，第 4 行 period 为 2025年度；模型 fields 与原文一致。"
+  },
+  "3": {
+    "status": "passed",
+    "evidence": "原文第 8 行 operating_cash_flow 为 120，第 9 行 capex 为 40；模型分别填入 operating_cash_flow=120 和 capital_expenditure=40，字段映射与数值一致。"
+  },
+  "4": {
+    "status": "passed",
+    "evidence": "原文第 6 行 unit 为百万元；模型 fields.unit 为百万元，并在报告中将其用于两个数值。"
+  },
+  "5": {
+    "status": "passed",
+    "evidence": "模型 sources 分别指向 company-1.txt 第 8、9、6 行，所引 JSON 字段和值与原文逐一相符；第 3、4 行的公司与期间引用也相符。"
+  }
+}

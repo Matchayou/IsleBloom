@@ -1,0 +1,336 @@
+{
+  "base_url": "http://127.0.0.1:8770",
+  "passed": false,
+  "research_id": "c3a2aa78-a27b-40ad-9fbb-bda410eee3b4",
+  "node_id": "3f176a32-a7f6-4ddc-a4b3-cf7ea041790c",
+  "run": {
+    "binding": {
+      "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+      "node_id": "3f176a32-a7f6-4ddc-a4b3-cf7ea041790c",
+      "command_id": "cf774ed2-a99e-4037-9769-787eeb4e5c0c",
+      "node_revision": 1,
+      "context_snapshot_id": "5cd1f652-9ab8-4193-83c7-5ecd6a17da5b",
+      "goal": "自主联网搜索与引用验收",
+      "instructions": "",
+      "instruction_version": 1,
+      "resource_refs": [],
+      "result_ids": [],
+      "missing": [],
+      "limits": {
+        "max_turns": 12,
+        "timeout_seconds": 180.0,
+        "max_depth": 1,
+        "max_calls": 12
+      },
+      "chat_revision": 1,
+      "evidence_required": false
+    },
+    "run": {
+      "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+      "conversation_id": null,
+      "process_id": "9045b1ec-812d-42de-9747-32da63296ec7",
+      "request": {
+        "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "parent_run_id": null,
+        "agent_id": "3f176a32-a7f6-4ddc-a4b3-cf7ea041790c",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"0028aa11-3737-42c8-8329-0e2ea66e08f0\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+            }
+          ]
+        },
+        "limits": {
+          "max_turns": 12,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 12
+        },
+        "depth": 0
+      },
+      "expected_revision": 0,
+      "status": "failed",
+      "result": {
+        "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "status": "failed",
+        "output": null,
+        "usage": {
+          "requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": false
+        },
+        "error": {
+          "code": "scope_denied",
+          "origin": "tool",
+          "message": "Source search unavailable in this scope",
+          "retryable": false,
+          "cause_id": null
+        }
+      },
+      "commit_id": "run:0e0f9636-fadb-4748-a7f7-450674334bee",
+      "created_at": "2026-10-03T12:41:35.377366Z"
+    },
+    "events": [
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 1,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "started",
+          "name": null,
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:35.379519Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 2,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_RICc8ud7YD3mM62J9Izk1253",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:37.956473Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 3,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_RICc8ud7YD3mM62J9Izk1253",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:41.062594Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 4,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_QmqJBkPEuPoBICjjfkHT2127",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:41.063013Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 5,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_QmqJBkPEuPoBICjjfkHT2127",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:44.528728Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 6,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_7RLejPpF4b3ptF76NJjK5846",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:48.774327Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 7,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_7RLejPpF4b3ptF76NJjK5846",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:59.339952Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 8,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_4TFckOE00Qa6kE5D5kja1318",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:41:59.340628Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 9,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_4TFckOE00Qa6kE5D5kja1318",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:42:02.380057Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 10,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_saxGFXdtCIFbRW2oyq5w6316",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:42:08.566357Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 11,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_saxGFXdtCIFbRW2oyq5w6316",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:42:11.390614Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 12,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_UI4mrTm0CxAEZrgfkyk87874",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:42:11.391862Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 13,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_UI4mrTm0CxAEZrgfkyk87874",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "failed",
+          "name": "search_source",
+          "error": {
+            "code": "scope_denied",
+            "origin": "tool",
+            "message": "Source search unavailable in this scope",
+            "retryable": false,
+            "cause_id": null
+          }
+        },
+        "occurred_at": "2026-10-03T12:42:11.399034Z"
+      },
+      {
+        "root_run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+        "sequence": 14,
+        "event": {
+          "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "failed",
+          "name": null,
+          "error": {
+            "code": "scope_denied",
+            "origin": "tool",
+            "message": "Source search unavailable in this scope",
+            "retryable": false,
+            "cause_id": null
+          }
+        },
+        "occurred_at": "2026-10-03T12:42:11.400633Z"
+      }
+    ],
+    "context": {
+      "id": "5cd1f652-9ab8-4193-83c7-5ecd6a17da5b",
+      "run_id": "0e0f9636-fadb-4748-a7f7-450674334bee",
+      "conversation_id": null,
+      "scope_id": "92568717-5243-40a0-89ab-5abeba50ef47",
+      "scope_version": 1,
+      "scope": {
+        "id": "92568717-5243-40a0-89ab-5abeba50ef47",
+        "owner": "local",
+        "version": 1,
+        "allowed": [],
+        "grants": [],
+        "inherited": [],
+        "tools": [
+          "fetch_web",
+          "read_source",
+          "search_source",
+          "search_web"
+        ],
+        "max_input_chars": 30000,
+        "max_tool_chars": 20000,
+        "web_urls": [],
+        "enabled": true
+      },
+      "mounts": [],
+      "result_mounts": [],
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"0028aa11-3737-42c8-8329-0e2ea66e08f0\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+          }
+        ]
+      }
+    }
+  },
+  "error": "{'run_id': '0e0f9636-fadb-4748-a7f7-450674334bee', 'status': 'failed', 'output': None, 'usage': {'requests': 0, 'input_tokens': 0, 'output_tokens': 0, 'complete': False}, 'error': {'code': 'scope_denied', 'origin': 'tool', 'message': 'Source search unavailable in this scope', 'retryable': False, 'cause_id': None}}"
+}

@@ -1,0 +1,88 @@
+..................................FF.......................              [100%]
+=================================== FAILURES ===================================
+___________________ test_retry_fixed_input_and_queue[memory] ___________________
+
+app = (<agent_core.research.service.ResearchService object at 0x10e257500>, Research(id='44628950-968f-4789-a547-8936e350b25...'db8a52e6-0c27-4161-90c7-8af2f58aaf27', plans=()), <agent_core.adapters.scripted.ScriptedEngine object at 0x109e67710>)
+
+    async def test_retry_fixed_input_and_queue(app):
+        s,r,e=app
+        from agent_core.contracts import RunResult, RunError
+        inputs=[]
+        async def fail(request,*args):
+            inputs.append(request.input)
+            return RunResult(run_id=request.run_id,status='failed',error=RunError(code='test',origin='engine',message='test'))
+        e.execute=fail
+        n=await command(s,r,'create',goal='FIXED')
+        await command(s,r,'run',n.node_id)
+>       await command(s,r,'retry',n.node_id)
+
+tests/test_research.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_research.py:38: in command
+    return await s.submit(NodeCommand(command_id=str(uuid4()), research_id=r.id, kind=kind, node_id=node, **kw))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:154: in submit
+    binding, snapshot = self._prepare(record)
+                        ^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:288: in _prepare
+    self.validate_binding(retry_binding)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.research.service.ResearchService object at 0x10e257500>
+binding = NodeRun(run_id='458879f7-4f26-4d0e-970a-57803e2efcef', node_id='45d61d15-0b37-43d9-be0a-51264d909e62', command_id='19d...rns=8, timeout_seconds=60, max_depth=1, max_calls=8), chat_revision=None, notification_ids=(), evidence_required=False)
+
+    def validate_binding(self, binding):
+        from ..controlled.engine import ControlledEngine
+        if isinstance(self.engine, ControlledEngine):
+            self.engine.validate_run(binding.run_id)
+        node = self.node(binding.node_id)
+        if node.selection == 'excluded' or node.active_run_id != binding.run_id or node.revision != binding.node_revision:
+>           raise ScopeDenied('Node changed; result cannot become current')
+E           agent_core.context.scopes.ScopeDenied: Node changed; result cannot become current
+
+src/agent_core/research/service.py:336: ScopeDenied
+__________________ test_retry_fixed_input_and_queue[postgres] __________________
+
+app = (<agent_core.research.service.ResearchService object at 0x118aff740>, Research(id='8cccf39e-0ca4-4e43-be35-da46760334e...'dd7f45ac-9a36-4b87-8785-6168fb993e19', plans=()), <agent_core.adapters.scripted.ScriptedEngine object at 0x118affbf0>)
+
+    async def test_retry_fixed_input_and_queue(app):
+        s,r,e=app
+        from agent_core.contracts import RunResult, RunError
+        inputs=[]
+        async def fail(request,*args):
+            inputs.append(request.input)
+            return RunResult(run_id=request.run_id,status='failed',error=RunError(code='test',origin='engine',message='test'))
+        e.execute=fail
+        n=await command(s,r,'create',goal='FIXED')
+        await command(s,r,'run',n.node_id)
+>       await command(s,r,'retry',n.node_id)
+
+tests/test_research.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_research.py:38: in command
+    return await s.submit(NodeCommand(command_id=str(uuid4()), research_id=r.id, kind=kind, node_id=node, **kw))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:154: in submit
+    binding, snapshot = self._prepare(record)
+                        ^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:288: in _prepare
+    self.validate_binding(retry_binding)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.research.service.ResearchService object at 0x118aff740>
+binding = NodeRun(run_id='5786d743-cd51-4f0b-a2c2-fedbb188b3fc', node_id='363f7745-af61-4427-ade1-04bb225e6bc0', command_id='43f...s=8, timeout_seconds=60.0, max_depth=1, max_calls=8), chat_revision=None, notification_ids=(), evidence_required=False)
+
+    def validate_binding(self, binding):
+        from ..controlled.engine import ControlledEngine
+        if isinstance(self.engine, ControlledEngine):
+            self.engine.validate_run(binding.run_id)
+        node = self.node(binding.node_id)
+        if node.selection == 'excluded' or node.active_run_id != binding.run_id or node.revision != binding.node_revision:
+>           raise ScopeDenied('Node changed; result cannot become current')
+E           agent_core.context.scopes.ScopeDenied: Node changed; result cannot become current
+
+src/agent_core/research/service.py:336: ScopeDenied
+=========================== short test summary info ============================
+FAILED tests/test_research.py::test_retry_fixed_input_and_queue[memory] - age...
+FAILED tests/test_research.py::test_retry_fixed_input_and_queue[postgres] - a...
+2 failed, 57 passed in 12.51s

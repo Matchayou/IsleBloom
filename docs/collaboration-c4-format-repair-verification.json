@@ -1,0 +1,230 @@
+{
+  "synthetic_data": true,
+  "task_id": "ce946e23-2a27-5728-a533-a4400219133c",
+  "spec_version": 3,
+  "run": {
+    "binding": {
+      "id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "task_id": "ce946e23-2a27-5728-a533-a4400219133c",
+      "spec_version": 3,
+      "context_snapshot_id": "47c246f0-3457-44a6-b887-8c74298a1f15",
+      "scope_id": "12ab2425-cc48-4258-98b7-907782c32f2a",
+      "scope_version": 3,
+      "model": "deepseek-flash",
+      "route_id": null,
+      "method_version": "search-v1",
+      "method_digest": "ca4fe77fb4734568dcc8bc6dec8c078905637d1160203cda7f7fdc153be18add",
+      "result_ids": [],
+      "resource_refs": [
+        {
+          "resource_id": "8b245d18-08c0-4efa-891d-6b3d598e7f7b",
+          "snapshot_id": "774b2e6d-2250-4737-b6b8-58ce302f68af",
+          "parse_id": "cadc220c-1421-4d48-9af3-f7d582ba9ea8"
+        }
+      ],
+      "missing_optional_refs": [],
+      "research_id": "c4-live-conflict-main",
+      "node_id": "ee4ba59e-88e4-49df-8bcf-231fae81a800",
+      "evidence_required": false
+    },
+    "execution_status": "succeeded",
+    "receipt": {
+      "result_id": "task-result:245e7758-dd8e-4f83-9f53-d606a1878245",
+      "task_id": "ce946e23-2a27-5728-a533-a4400219133c",
+      "spec_version": 3,
+      "run_id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "context_snapshot_id": "47c246f0-3457-44a6-b887-8c74298a1f15",
+      "model": "deepseek-flash",
+      "route_id": null,
+      "method_version": "search-v1",
+      "method_digest": "ca4fe77fb4734568dcc8bc6dec8c078905637d1160203cda7f7fdc153be18add",
+      "result_ids": [],
+      "resource_refs": [
+        {
+          "resource_id": "8b245d18-08c0-4efa-891d-6b3d598e7f7b",
+          "snapshot_id": "774b2e6d-2250-4737-b6b8-58ce302f68af",
+          "parse_id": "cadc220c-1421-4d48-9af3-f7d582ba9ea8"
+        }
+      ],
+      "missing_optional_refs": [],
+      "program_checks": [
+        {
+          "number": 1,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Run output and fixed input identity checked",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Report present",
+          "reviewer": null
+        }
+      ],
+      "semantic_checks": [
+        {
+          "number": 1,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        }
+      ],
+      "assumptions": [
+        "资料共 4 行，读取到的 line:1-line:4 即全文；无未返回的隐藏行。",
+        "任务中的“调整后口径”对应第 2 行 “adjusted quarterly sample”，“未调整”对应第 3 行 “unadjusted quarterly sample”。",
+        "两份 brief 中 “small stores / 小店” 指同一概念范围（原文均未定义，仅为便于行文的等同假设）。"
+      ],
+      "conflicts": [
+        "Brief A（12%，调整后，排除小店）与 Brief B（21%，未调整，包含小店）在分母、季节性调整与门店覆盖范围上口径不同，二者不可直接比较；资料本身即为“冲突样本”设计，未见第三方来源可裁定孰对孰错。"
+      ],
+      "missing": [
+        "12% 与 21% 的分子、分母原始数值及计算步骤",
+        "“份额”的定义（金额份额/销量份额/门店数份额）与统计单位",
+        "“small stores / 小店”的量化定义与阈值，以及排除/包含后的门店数与样本量",
+        "季节性调整的具体方法、因子与基期，以及调整前后的数值差异",
+        "抽样框、样本期间（具体季度与年度）、地域范围与加权方式",
+        "任何外部引用或独立复核材料（第 4 行明确两份 brief 均无）",
+        "口径归一后可供比较的换算规则或桥接表",
+        "conflict:Brief A（12%，调整后，排除小店）与 Brief B（21%，未调整，包含小店）在分母、季节性调整与门店覆盖范围上口径不同，二者不可直接比较；资料本身即为“冲突样本”设计，未见第三方来源可裁定孰对孰错。"
+      ],
+      "limitations": [
+        "本报告仅基于单一合成来源的 4 行文本，未联网、未使用其他档案，无法交叉验证。",
+        "除“资料如此声称”外，无法对 12%/21% 做任何独立验算或数值换算。",
+        "不判断哪一个口径“更正确”或更优，资料未提供裁判依据。",
+        "所有数字为虚构验收数据，任何情况下不得作为真实市场结论引用。"
+      ],
+      "follow_up": [
+        "向资料提供方索取两份 brief 的分母定义、样本量、季节性调整方法与原始计算表，以便在统一口径下复算。",
+        "取得“小店”的量化定义（如按面积、营业额或连锁规模阈值），确认排除/包含小店的分界一致后再谈可比性。",
+        "在口径归一前，报告中应以“Brief A 12%（调整后、排除小店）”“Brief B 21%（未调整、包含小店）”的完整标注形式并列呈现，禁止单独引用某一数字。",
+        "如后续获得独立复核或外部引用，再回到本任务更新结论。"
+      ],
+      "delivery": "pending_review",
+      "adoption": "for_discussion",
+      "adoption_reason": null
+    },
+    "output": {
+      "claims": [],
+      "fields": {
+        "task_id": "ce946e23-2a27-5728-a533-a4400219133c",
+        "read_mode": "location=null 全文读取（另一次 location=line:1-4 调用返回空片段，未采用）",
+        "data_nature": "虚构合成验收数据（line:1）",
+        "deliverable": "简短中文复核报告",
+        "source_kind": "upload",
+        "source_name": "c4-live-conflict.txt",
+        "network_used": "否",
+        "parse_status": "ready",
+        "source_lines": "4"
+      },
+      "report": "【任务性质】本次为对合成验收资料 c4-live-conflict.txt 中 Brief A 的口径复核。所有数字均为虚构验收数据，不得当作真实市场结论。\n\n【一、实际读取的来源】\n仅 1 个来源被实际返回：c4-live-conflict.txt（resource_id 8b245d18-08c0-4efa-891d-6b3d598e7f7b / snapshot_id 774b2e6d-2250-4737-b6b8-58ce302f68af / parse_id cadc220c-1421-4d48-9af3-f7d582ba9ea8），parse_status=ready，全文 4 行，已用 location=null 全量读取。未联网、未引用任何其他来源或历史任务内容。\n\n【二、逐项核对（含文本位置）】\n1) 12% 与“调整后”口径：第 2 行原文 “Brief A claims a 12% share for an adjusted quarterly sample.” 可核对到的仅是“Brief A 声称 12%”＋“调整后（adjusted）季度样本”这一组合表述。数字本身在资料内成立，但资料未给出任何分母、分子或计算过程，无法在现有来源内复算 12%。\n2) 排除小店：第 2 行 “Its method excludes small stores.” 确认 Brief A 的方法把小型门店排除在外。但资料没有给出“small stores”的定义、阈值或排除后的门店数/样本量，因此无法判断排除对 12% 的影响幅度与方向。\n3) Brief B 的 21%：第 3 行 “Brief B claims a 21% share for an unadjusted quarterly sample. Its method includes small stores.” 即 21% 对应未调整（unadjusted）季度样本，且方法包含小型门店。\n4) 为何 12% 与 21% 不能直接比较：\n   - 第 4 行 “The two denominators and seasonal adjustments differ.” 明确两份 brief 的分母不同、季节性调整不同；\n   - 结合第 2、3 行，二者的门店覆盖范围相反（排除小店 vs 包含小店），分子与分母的构成口径同时不同；\n   - 因此 12% 与 21% 之间的差额同时混杂了「店面覆盖范围」「分母构成」「是否做季节性调整」三处口径差异，不能归因于其中任何单一因素，也不能进行换算、相减或大小排名。任务中“不能直接比较”的判断与第 4 行的表述一致，属成立。\n5) 证据质量：第 4 行 “Neither brief has an external citation or independent review.” 两份 brief 均无外部引用、无独立复核；第 1 行 “These figures are invented and must never be reported as real market data.” 全部数字为虚构合成数据，仅用于验收，不得外传为市场结论。\n\n【三、缺少的计算依据（已在 missing 中列明）】12%/21% 的分子与分母数值、分母的定义（如“份额”是金额份额还是门店数/销量份额）、季度归属与年度、地域范围、“小店”的量化定义与阈值、排除小店后的门店与样本数量、季节性调整的具体方法（模型、因子、基期）与调整前后数值、抽样与加权方式、是否去重或做店群合并等。缺少上述依据的直接后果：只能核对“资料这样声称”，不能独立验算、不能判断 12% 与 21% 谁更接近同一口径，也不能给出任何口径统一后的可比数字。\n\n【四、结论】在现有唯一来源范围内可核对：Brief A 的 12% 依附于“调整后季度样本 + 排除小店”的口径，Brief B 的 21% 依附于“未调整季度样本 + 包含小店”的口径；两者在分母、季节性调整和门店覆盖范围上均不同，且均无外部引用与独立复核，故 12% 与 21% 不可直接比较。其余（复算、口径归一、哪个更可靠）因缺少计算依据无法完成。",
+      "missing": [
+        "12% 与 21% 的分子、分母原始数值及计算步骤",
+        "“份额”的定义（金额份额/销量份额/门店数份额）与统计单位",
+        "“small stores / 小店”的量化定义与阈值，以及排除/包含后的门店数与样本量",
+        "季节性调整的具体方法、因子与基期，以及调整前后的数值差异",
+        "抽样框、样本期间（具体季度与年度）、地域范围与加权方式",
+        "任何外部引用或独立复核材料（第 4 行明确两份 brief 均无）",
+        "口径归一后可供比较的换算规则或桥接表"
+      ],
+      "sources": {
+        "8b245d18-08c0-4efa-891d-6b3d598e7f7b|774b2e6d-2250-4737-b6b8-58ce302f68af|cadc220c-1421-4d48-9af3-f7d582ba9ea8": "c4-live-conflict.txt（upload，kind=upload，parse_status=ready，共 4 行文本片段：line:1-line:4）"
+      },
+      "conflicts": [
+        "Brief A（12%，调整后，排除小店）与 Brief B（21%，未调整，包含小店）在分母、季节性调整与门店覆盖范围上口径不同，二者不可直接比较；资料本身即为“冲突样本”设计，未见第三方来源可裁定孰对孰错。"
+      ],
+      "follow_up": [
+        "向资料提供方索取两份 brief 的分母定义、样本量、季节性调整方法与原始计算表，以便在统一口径下复算。",
+        "取得“小店”的量化定义（如按面积、营业额或连锁规模阈值），确认排除/包含小店的分界一致后再谈可比性。",
+        "在口径归一前，报告中应以“Brief A 12%（调整后、排除小店）”“Brief B 21%（未调整、包含小店）”的完整标注形式并列呈现，禁止单独引用某一数字。",
+        "如后续获得独立复核或外部引用，再回到本任务更新结论。"
+      ],
+      "assumptions": [
+        "资料共 4 行，读取到的 line:1-line:4 即全文；无未返回的隐藏行。",
+        "任务中的“调整后口径”对应第 2 行 “adjusted quarterly sample”，“未调整”对应第 3 行 “unadjusted quarterly sample”。",
+        "两份 brief 中 “small stores / 小店” 指同一概念范围（原文均未定义，仅为便于行文的等同假设）。"
+      ],
+      "limitations": [
+        "本报告仅基于单一合成来源的 4 行文本，未联网、未使用其他档案，无法交叉验证。",
+        "除“资料如此声称”外，无法对 12%/21% 做任何独立验算或数值换算。",
+        "不判断哪一个口径“更正确”或更优，资料未提供裁判依据。",
+        "所有数字为虚构验收数据，任何情况下不得作为真实市场结论引用。"
+      ],
+      "self_checks": {
+        "位置标注": "报告中每个被核对的表述均标注了行号（line:1-line:4）。",
+        "数字处理": "未对 12%、21% 做任何换算、四舍五入或单位改写，均按原文照录。",
+        "来源限定": "全部结论仅来自实际返回的 c4-live-conflict.txt（line:1-line:4），未联网、未引用其他任务历史或记忆作为事实。",
+        "缺失处理": "缺少的计算依据已在 missing 中逐项写明，并说明了其对结论的影响，未编造填补。",
+        "错误重试": "一次 location=line:1-4 的读取返回空片段，未据此下结论；改用 location=null 全量读取取得 4 行片段作为依据。",
+        "claims 约定": "按本任务要求，claims 留为空数组，证据定位写在报告正文。"
+      }
+    },
+    "usage": {
+      "requests": 2,
+      "input_tokens": 7412,
+      "output_tokens": 4007,
+      "complete": true
+    },
+    "error": null,
+    "started_at": "2026-10-04T22:10:50.733017+08:00",
+    "access": "available"
+  },
+  "tool_events": [
+    {
+      "name": "read_source",
+      "error": null,
+      "phase": "tool",
+      "run_id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "status": "started",
+      "child_run_id": null,
+      "tool_call_id": "call_00_Cmnn0yoKKfhg8xEBqCvl4880",
+      "parent_run_id": null
+    },
+    {
+      "name": "read_source",
+      "error": null,
+      "phase": "tool",
+      "run_id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "status": "completed",
+      "child_run_id": null,
+      "tool_call_id": "call_00_Cmnn0yoKKfhg8xEBqCvl4880",
+      "parent_run_id": null
+    },
+    {
+      "name": "read_source",
+      "error": null,
+      "phase": "tool",
+      "run_id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "status": "started",
+      "child_run_id": null,
+      "tool_call_id": "call_01_N1z6BFNoBGJXICGqV0O76447",
+      "parent_run_id": null
+    },
+    {
+      "name": "read_source",
+      "error": null,
+      "phase": "tool",
+      "run_id": "245e7758-dd8e-4f83-9f53-d606a1878245",
+      "status": "completed",
+      "child_run_id": null,
+      "tool_call_id": "call_01_N1z6BFNoBGJXICGqV0O76447",
+      "parent_run_id": null
+    }
+  ],
+  "expert_b_runs": [
+    {
+      "run_id": "75fc7846-c062-4b0a-88a4-cded7d0242af",
+      "status": "succeeded"
+    }
+  ],
+  "note": "Real expert A retry after tool input repair change. SDK controlled tests additionally force malformed JSON, missing fields and wrong types and verify same-conversation correction."
+}

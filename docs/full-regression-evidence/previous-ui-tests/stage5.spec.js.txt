@@ -1,0 +1,47 @@
+import {test,expect} from '@playwright/test';
+import {readFileSync} from 'node:fs';
+
+const caseData=JSON.parse(readFileSync('../docs/stage5-control-case.json','utf8'));
+
+test('Stage 5 fixed financial reports, evidence location, review, continuation and transfer',async({page})=>{
+ await page.goto('/');
+ await page.locator('#research-select').selectOption(caseData.research_id);
+ await expect(page.getByRole('heading',{name:'当前分支：主线'})).toBeVisible();
+ await expect(page.getByText('来自分支',{exact:false})).toBeVisible();
+ await page.locator('.detail .version').first().click();
+ await expect(page.getByRole('heading',{name:'结论与原文证据'})).toBeVisible();
+ await expect(page.getByText('Tesla 2025 年合并经营活动现金流为 14,747 百万美元。')).toBeVisible();
+ await page.getByRole('button',{name:'查看原文位置'}).first().click();
+ await expect(page.getByRole('heading',{name:'固定来源原文'})).toBeVisible();
+ await expect(page.locator('.located')).toContainText('page:56:');
+ const original=page.getByRole('link',{name:'打开固定原始文件'});
+ const originalPath=await original.getAttribute('href');
+ expect(originalPath).toContain('/api/original?');
+ const [popup]=await Promise.all([page.waitForEvent('popup'),original.click()]);
+ const pdf=await page.request.get(originalPath);
+ expect(pdf.status()).toBe(200);
+ expect(pdf.headers()['content-type']).toContain('application/pdf');
+ await popup.close();
+ await page.getByRole('textbox',{name:'独立复核依据'}).first().fill('Codex 对照固定 2025 合并现金流表的首列、金额和单位；仍待用户人工签收。');
+ await page.getByRole('button',{name:'确实支持'}).first().click();
+ await expect(page.locator('.evidence-panel')).toContainText('复核支持');
+ await page.locator('.task').first().locator('summary').first().click();
+ await page.getByRole('button',{name:'查看结论证据'}).first().click();
+ await expect(page.getByRole('heading',{name:'专家结论证据'})).toBeVisible();
+ await page.locator('.branch-tabs').getByRole('button',{name:'Tesla 资本开支续研'}).click();
+ await expect(page.getByRole('heading',{name:'当前分支：Tesla 资本开支续研'})).toBeVisible();
+ await page.locator('.detail .version').first().click();
+ await expect(page.getByText('Tesla 披露 2025 年资本开支约 8.53 十亿美元。')).toBeVisible();
+ await page.locator('.branch-tabs').getByRole('button',{name:'主线'}).click();
+ await expect(page.getByText(/来自分支.*已采用/)).toBeVisible();
+ await page.screenshot({path:'../docs/stage5-browser-evidence.png',fullPage:true});
+});
+
+test('Stage 5 search reports missing live credential instead of fake results',async({page})=>{
+ await page.goto('/');
+ await page.locator('#research-select').selectOption(caseData.research_id);
+ await page.getByRole('textbox',{name:'搜索公开资料'}).fill('2025 Tesla 财报');
+ await page.getByRole('button',{name:'搜索',exact:true}).click();
+ await expect(page.locator('.discovery-panel [role=alert]')).toContainText('TINYFISH_API_KEY');
+ await expect(page.locator('.discovery-panel article')).toHaveCount(0);
+});

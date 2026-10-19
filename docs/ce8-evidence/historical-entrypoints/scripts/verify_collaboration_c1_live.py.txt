@@ -1,0 +1,73 @@
+"""One real-model C1 handoff in the isolated collaboration test database."""
+import asyncio
+import json
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_projects, build_research, build_resources, build_tasks
+from agent_core.contracts import RunLimits
+from agent_core.research.chat import ChatService
+from agent_core.research.models import NodeCommand
+
+
+async def main():
+    load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+    url = os.environ['COLLABORATION_TEST_DATABASE_URL']
+    PostgresDatabase.LOCK_PATH = Path('/private/tmp/collaboration-verify.lock')
+    db = PostgresDatabase(url)
+    try:
+        engine = OpenAIEngine()
+        scopes = build_resources(db, Path('/private/tmp/collaboration-verify-blobs'))
+        research = build_research(db, scopes, engine)
+        tasks = build_tasks(db, scopes, research, engine)
+        projects = build_projects(db, research, tasks)
+        project = projects.create('C1 real model sample')
+        main = await projects.create_main_task(project.id, 'Synthetic market sample')
+        node = research.query('list_nodes', main.research_id)[0]
+        root = research.research(main.research_id)
+        scope = scopes.current(root.scope_id, research.owner)
+        _, ref = scopes.ingest(scope, content=(
+            'This is a synthetic test sample, not a real market report. '
+            'It says only that fictional market A grew during an unspecified sample period. '
+            'It provides no market size, methodology, dates, competitors, or independent sources.').encode(),
+            name='synthetic-market-c1.txt', media_type='text/plain')
+        chat = ChatService(research, tasks).send(node.id,
+            '请让综合整理专家阅读当前主任务中的 synthetic-market-c1.txt 合成资料，判断它能否支持真实市场规模结论，说明缺失信息与局限；把你认为必要的原始要求和资料交给专家，收到结果后告诉我。',
+            0)
+        command = await research.submit(NodeCommand(command_id='live-c1:' + node.id,
+            research_id=main.research_id, node_id=node.id, kind='chat_reply',
+            expected_revision=node.revision, chat_revision=chat.revision,
+            limits=RunLimits(max_turns=20, timeout_seconds=240, max_calls=12)))
+        run = research.ledger.get(command.run_id) if command.run_id else None
+        messages = ChatService(research, tasks).read(node.id).messages
+        dispatches = []
+        for intent in research.collaboration.query('intents_for', main.research_id):
+            state = research.collaboration.status(intent.command_id)
+            dispatches.append({'command_id': intent.command_id, 'status': intent.status,
+                'task_id': intent.task_id, 'session_id': intent.session_id,
+                'packet_id': intent.packet_id,
+                'packet_has_original': bool(research.collaboration.packet(intent.packet_id).user_instruction),
+                'receipts': [{'result_id': r.result_id, 'delivery': r.delivery} for r in state['receipts']]})
+        evidence = {'project_id': project.id, 'research_id': main.research_id,
+            'source_ref': ref.model_dump(mode='json'), 'manager_run_id': command.run_id,
+            'manager_status': run.status if run else None,
+            'manager_error': run.result.error.model_dump(mode='json') if run and run.result and run.result.error else None,
+            'tool_names': [event.event.name for event in research.ledger.events(command.run_id)
+                if event.event.phase == 'tool' and event.event.status == 'completed'] if command.run_id else [],
+            'dispatches': dispatches,
+            'assistant_report': messages[-1].content if messages and messages[-1].role == 'assistant' else None}
+        output = Path('docs/collaboration-c1-live-verification.json')
+        output.write_text(json.dumps(evidence, ensure_ascii=False, indent=2))
+        print(json.dumps({'manager_status': evidence['manager_status'],
+            'tool_names': evidence['tool_names'],
+            'dispatch_count': len(dispatches), 'receipt_count': sum(len(d['receipts']) for d in dispatches),
+            'evidence': str(output)}, ensure_ascii=False))
+    finally:
+        db.close()
+
+
+asyncio.run(main())

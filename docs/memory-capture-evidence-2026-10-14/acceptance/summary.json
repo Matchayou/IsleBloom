@@ -1,0 +1,113 @@
+{
+  "cases": [
+    {
+      "case": "user",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "one_write": true,
+        "draft_only": true,
+        "scope": true
+      }
+    },
+    {
+      "case": "project",
+      "passed": false,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "one_write": false,
+        "draft_only": false,
+        "scope": false
+      }
+    },
+    {
+      "case": "temporary",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "no_new_memory": true
+      }
+    },
+    {
+      "case": "budget",
+      "passed": false,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "no_new_memory": true,
+        "memory_budget_recorded": false,
+        "large_optional_omitted": false,
+        "complete_small_body": false
+      }
+    }
+  ],
+  "recovery": [
+    {
+      "case": "user",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "one_write": true,
+        "draft_only": true,
+        "scope": true,
+        "sigkill": true,
+        "review_once": true,
+        "tool_once": true
+      }
+    },
+    {
+      "case": "user",
+      "passed": true,
+      "checks": {
+        "completed": true,
+        "usage_confirmed": true,
+        "repeat_no_model": true,
+        "owner_denied": true,
+        "foreign_project_unchanged": true,
+        "all_operations_confirmed": true,
+        "no_retry_operations": true,
+        "no_foreign_content": true,
+        "one_write": true,
+        "draft_only": true,
+        "scope": true,
+        "sigkill": true,
+        "review_once": true,
+        "tool_once": true
+      }
+    }
+  ]
+}

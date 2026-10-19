@@ -1,0 +1,36 @@
+"""Explicit incident reproduction for preserved Stage 8 attempt 10; uses existing retry/adopt commands."""
+import asyncio,json,os,getpass
+from pathlib import Path
+from uuid import uuid4
+from openai import AsyncOpenAI
+from agents import set_default_openai_client,set_default_openai_api
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources,build_research,build_tasks
+from agent_core.research.models import NodeCommand
+from agent_core.app.api import serial
+async def main():
+ os.environ['OPENAI_API_KEY']=os.environ.get('OPENAI_API_KEY') or getpass.getpass('DeepSeek credential: ');os.environ['OPENAI_MODEL']='deepseek-flash'
+ client=AsyncOpenAI(base_url='https://api.deepseek.com',max_retries=0,timeout=180);set_default_openai_client(client,use_for_tracing=False);set_default_openai_api('responses')
+ db=PostgresDatabase(os.environ['DATABASE_URL'])
+ try:
+  scopes=build_resources(db,'/private/tmp/stage8-pg-20261003/blobs');engine=OpenAIEngine();research=build_research(db,scopes,engine);build_tasks(db,scopes,research,engine)
+  report=json.loads(Path('docs/stage8-live-attempt-10.json').read_text());parents=[research.node(n['node']['id']) for n in report['manual'][:3]];assert all(n.current_result_id for n in parents)
+  target=research.node(report['manual'][-1]['node']['id']);previous=research.query('list_runs',target.id)[0]
+  command=NodeCommand(command_id=str(uuid4()),research_id=target.research_id,node_id=target.id,kind='adopt',resource_refs=target.resource_refs,result_ids=tuple(n.current_result_id for n in parents),limits=previous.limits)
+  record=await research.submit(command)
+  report['recovery']={'mode':'explicit existing fixed-input retry then downstream adopt command; no automatic fallback','initial_attempt':'docs/stage8-live-attempt-10.json','retry_evidence':'docs/stage8-provider-diagnostic.json','compare_command':serial(command),'compare_record':serial(record),'initial_runs':8,'additional_runs':2}
+  records=[]
+  for old in report['manual']:
+   node=research.node(old['node']['id']);runs=research.query('list_runs',node.id)
+   records.append(dict(node=serial(node),runs=[dict(binding=serial(b),execution=serial(research.ledger.get(b.run_id))) for b in runs],output=research.read_result(node.current_result_id)[1] if node.current_result_id else None))
+  report['manual']=records
+  report['recovery']['additional_runs']=sum(len(n['runs']) for mode in ('template','manual') for n in report[mode])-8
+  current_comparison=research.ledger.get(record.run_id)
+  report['all_steps_published']=all(n['output'] for mode in ('template','manual') for n in report[mode]) and current_comparison.status=='succeeded'
+  report['semantic_signoff']='pending independent review; original provider failure and explicit recovery preserved'
+  Path('docs/stage8-live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+  Path('docs/stage8-live-reports.md').write_text('\n\n'.join(f"## {mode}: {n['node']['goal']}\n\nResult: {n['node']['current_result_id']}\n\n{n['output'] or 'NO RESULT'}" for mode in ('template','manual') for n in report[mode])+'\n')
+  print(json.dumps({'all_current_steps_published':report['all_steps_published'],'comparison_status':current_comparison.status,'error':serial(current_comparison.result.error)}))
+ finally:db.close();await client.close()
+asyncio.run(main())

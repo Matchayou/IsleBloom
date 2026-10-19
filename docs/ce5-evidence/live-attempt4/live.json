@@ -1,0 +1,635 @@
+{
+  "stage": "CE5",
+  "fixture": "synthetic code; REAL model/Git/PostgreSQL",
+  "http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "status": "control_passed_semantic_review_required",
+  "receipts": [
+    {
+      "code_candidate": {
+        "workspace_id": "d5481405ad97fb1db9758e5805651fa6bac903a423f317e5f8f040179bce425d",
+        "repository_id": "fixture",
+        "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+        "commit": "4b6401f453ea3083405eb26bbaa5faa2ac4aa5c5",
+        "tree": "7040831446c659e581a45d382978fbd238affc17",
+        "content_sha256": "9d60feeb2f950867b88a135cad6b03af304f647df64c481d68a0acfb499cea29",
+        "files": {
+          "a.py": "aae363d9b932ab4c43ee0f49d42c1f42546164bfef742c31b216688510aa131b",
+          "b.py": "a0c4cc5175026b4f49010721055f9d12f42e0a94ed0d2de08ed7407709dc1fe6",
+          "a-note.txt": "5b361094f9cd2557ee0da9c697dba0ffe72663ca5e025f22d277913c62af08e3"
+        },
+        "tests": [
+          {
+            "log": "Approved AST checks passed for a; no repository code executed\n",
+            "argv": [
+              "/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python",
+              "-I",
+              "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/ce5-evidence/live-attempt4/trusted_validator.py",
+              "a"
+            ],
+            "tree": "7040831446c659e581a45d382978fbd238affc17",
+            "profile": "a",
+            "exit_code": 0,
+            "content_sha256": "9d60feeb2f950867b88a135cad6b03af304f647df64c481d68a0acfb499cea29",
+            "environment_id": "python-ast-fixture-v1",
+            "profile_sha256": "31e7c35c559e81b187e08a3418dda5a0ebeac75a7dbac90cf764097c7b885553"
+          }
+        ],
+        "complete": true
+      },
+      "artifact": {
+        "result_id": "task-result:a0ca280b-3601-479d-a266-f609aa0335b7",
+        "sha256": "2c022b9848adc909b7c224020f41d62e371af9e33e2ba15e5eeca251bac7ecdb",
+        "bytes": 3931,
+        "chars": 3077,
+        "complete": true,
+        "brief": "已按要求完成固定合成编码验收。\n\n实际改动（code_diff 确认）：\n- a.py：唯一一行由 `ANSWER = 0` 改为 `ANSWER = 7`（-1/+1 行，内容为 `ANSWER = 7`）。\n- a-note.txt：新增，内容为对上述修改的说明（记录原值 ANSWER = 0、现为单行 ANSWER = 7、修改理由，以及“仅做 AST 静态验证、未执行代码”的实际验证性质）。\n\n测试：调用受控测试 profile `a`，工具返回 exit_code 0，log 为“Approved AST checks passed for a; no repository code executed”。该 profile 的环境为 python-ast-fixture-v1，即仅做授权的 AST 静态检查，未执行仓库代码——与报告口径一致。\n\n冻结：freeze_code 成功，返回固定引用 candidate_ref（见字段），其 candidate 信息显示 complete=true，树/内容哈希与本轮快照一致。\n\n未验证项：未运行 a.py 或任何仓库代码，只做了 AST 静态验证；无运行时行为证据。本交付待独立复核，未采用。\n\n范围遵守：仅读写获授权文件；未读写另一专家文件（b.py 保持未改动，其哈希与基线一致，由工具返回的 files 列表体现）；未联网；未执行仓库脚本或使用 Shell。工具提示与日志不作为源文件正文，源文件内容仅来自 read_code 返回。",
+        "brief_truncated": false
+      },
+      "result_id": "task-result:a0ca280b-3601-479d-a266-f609aa0335b7",
+      "task_id": "5c7cf193-02bc-4d50-88c7-2a4ee6ae86b5",
+      "spec_version": 1,
+      "run_id": "a0ca280b-3601-479d-a266-f609aa0335b7",
+      "context_snapshot_id": "75ad4a9d-89b8-46fa-9360-712e95d25d58",
+      "model": "deepseek-flash",
+      "route_id": null,
+      "method_version": "coding-v3",
+      "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+      "result_ids": [],
+      "resource_refs": [],
+      "missing_optional_refs": [],
+      "program_checks": [
+        {
+          "number": 1,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Run output and fixed input identity checked",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Report present",
+          "reviewer": null
+        },
+        {
+          "number": 3,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Trusted tests bound to frozen candidate",
+          "reviewer": null
+        }
+      ],
+      "semantic_checks": [
+        {
+          "number": 1,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        },
+        {
+          "number": 3,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        }
+      ],
+      "assumptions": [
+        "“仅一行 ANSWER = 7”按单行加尾随换行实现，未添加其他语句或注释。"
+      ],
+      "conflicts": [],
+      "missing": [],
+      "limitations": [
+        "唯一的验证手段是 profile `a` 的 AST 静态检查；没有执行代码，因此没有运行时证据。",
+        "a-note.txt 为自由文本说明，没有对应的自动检查。"
+      ],
+      "follow_up": [
+        "由独立方对冻结快照进行复核；本结果未采用为最终证据。"
+      ],
+      "delivery": "pending_review",
+      "adoption": "for_discussion",
+      "adoption_reason": null
+    },
+    {
+      "code_candidate": {
+        "workspace_id": "9df7593891086ca1b1d67eb9405c28dad7fc5ae0aebd1994226b6a10796e52c8",
+        "repository_id": "fixture",
+        "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+        "commit": "e968a24638c440877d8b08d44fffe9c1ef5dc00d",
+        "tree": "c63c0a18f006b27d02140314e104f2f3b48414f9",
+        "content_sha256": "1f0de4ae3b35e26b560b32fd626442785e7a9a0da3bd9089fb1f8a69cda26911",
+        "files": {
+          "a.py": "a0c4cc5175026b4f49010721055f9d12f42e0a94ed0d2de08ed7407709dc1fe6",
+          "b.py": "ee39e906810634dd93a5a3e99eb5fb9bedb5855c79aece0a451724576e000cf1",
+          "b-note.txt": "15cc727344a0ba9886ae8eb2966d13b7559de181725425a61bcfb8e91a628f35"
+        },
+        "tests": [
+          {
+            "log": "Approved AST checks passed for b; no repository code executed\n",
+            "argv": [
+              "/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python",
+              "-I",
+              "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/ce5-evidence/live-attempt4/trusted_validator.py",
+              "b"
+            ],
+            "tree": "c63c0a18f006b27d02140314e104f2f3b48414f9",
+            "profile": "b",
+            "exit_code": 0,
+            "content_sha256": "1f0de4ae3b35e26b560b32fd626442785e7a9a0da3bd9089fb1f8a69cda26911",
+            "environment_id": "python-ast-fixture-v1",
+            "profile_sha256": "ee37dabad32e4f24e36f9f567993331b27fea9b089de9fd15a5f5a54264af7eb"
+          }
+        ],
+        "complete": true
+      },
+      "artifact": {
+        "result_id": "task-result:4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+        "sha256": "4db5d030ee85a809cc6240f92343b920569c2456702acfccd6551fe5188a6db3",
+        "bytes": 4001,
+        "chars": 2939,
+        "complete": true,
+        "brief": "已按受控流程完成固定合成编码任务。\n\n实际改动（均经工具确认写入）:\n1. b.py：从原内容改为仅一行 `ANSWER = 11`（写入后工具返回新内容 sha256，已随冻结条目记录）。\n2. b-note.txt：新增说明文件，内容说明本次修改（改为单行 ANSWER = 11、原因、原内容为 ANSWER = 0、未引入其他语句/副作用、验证性质为仅 AST 静态校验、未执行代码、待独立复核未采用）。\n\n工具确认的测试性质:\n- 授权测试 profile 仅为 `b`，已运行；工具返回 exit_code=0，日志为 “Approved AST checks passed for b; no repository code executed”。因此该测试为对交付快照的 AST 静态校验，未运行仓库代码，映射的实体是静态校验而非运行时行为。\n- freeze_code 已成功冻结，返回 candidate_ref（见下），workspace 内 files 为 a.py、b.py、b-note.txt，与授权读取/写入范围一致；完整测试条目附于冻结结果中（元数据由服务附上）。\n\n未验证项与边界:\n- 未运行任何仓库代码，仅此一处静态校验通过；ANSWER 的运行时取值、导入副作用、与其他文件的一致性均未经执行验证。\n- 依任务要求未读取也未修改另一个专家文件 a.py（其仅在授权读取列表中，内容未查看，未改动）。\n- 未联网，未执行仓库脚本或任意 Shell，未请求任意路径。\n- 报告结论仅限工具返回的观察；本次改动标记为待独立复核、尚未采用。",
+        "brief_truncated": false
+      },
+      "result_id": "task-result:4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+      "task_id": "de30a756-f9b8-49f1-be58-e56dfc8eb0a6",
+      "spec_version": 1,
+      "run_id": "4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+      "context_snapshot_id": "5d319c3c-691d-46ca-b56a-c9f587f63288",
+      "model": "deepseek-flash",
+      "route_id": null,
+      "method_version": "coding-v3",
+      "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+      "result_ids": [],
+      "resource_refs": [],
+      "missing_optional_refs": [],
+      "program_checks": [
+        {
+          "number": 1,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Run output and fixed input identity checked",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Report present",
+          "reviewer": null
+        },
+        {
+          "number": 3,
+          "checker": "program",
+          "status": "passed",
+          "evidence": "Trusted tests bound to frozen candidate",
+          "reviewer": null
+        }
+      ],
+      "semantic_checks": [
+        {
+          "number": 1,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        },
+        {
+          "number": 2,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        },
+        {
+          "number": 3,
+          "checker": "semantic",
+          "status": "pending",
+          "evidence": "Independent review required",
+          "reviewer": null
+        }
+      ],
+      "assumptions": [
+        "写入 b.py 的“仅一行”解释为文件只含单条赋值语句 `ANSWER = 11` 并带结尾换行。",
+        "b-note.txt 为新增说明文件，不含可执行代码。"
+      ],
+      "conflicts": [],
+      "missing": [],
+      "limitations": [
+        "仅有 AST 静态校验证据，未执行代码，运行时行为未验证。",
+        "未读取 a.py（按任务要求避免读写另一专家文件），故无法就其内容作任何陈述。"
+      ],
+      "follow_up": [
+        "由独立方复核 b.py 与 b-note.txt 内容及候选引用。"
+      ],
+      "delivery": "pending_review",
+      "adoption": "for_discussion",
+      "adoption_reason": null
+    }
+  ],
+  "outputs": [
+    {
+      "run_id": "a0ca280b-3601-479d-a266-f609aa0335b7",
+      "status": "succeeded",
+      "output": {
+        "report": "已按要求完成固定合成编码验收。\n\n实际改动（code_diff 确认）：\n- a.py：唯一一行由 `ANSWER = 0` 改为 `ANSWER = 7`（-1/+1 行，内容为 `ANSWER = 7`）。\n- a-note.txt：新增，内容为对上述修改的说明（记录原值 ANSWER = 0、现为单行 ANSWER = 7、修改理由，以及“仅做 AST 静态验证、未执行代码”的实际验证性质）。\n\n测试：调用受控测试 profile `a`，工具返回 exit_code 0，log 为“Approved AST checks passed for a; no repository code executed”。该 profile 的环境为 python-ast-fixture-v1，即仅做授权的 AST 静态检查，未执行仓库代码——与报告口径一致。\n\n冻结：freeze_code 成功，返回固定引用 candidate_ref（见字段），其 candidate 信息显示 complete=true，树/内容哈希与本轮快照一致。\n\n未验证项：未运行 a.py 或任何仓库代码，只做了 AST 静态验证；无运行时行为证据。本交付待独立复核，未采用。\n\n范围遵守：仅读写获授权文件；未读写另一专家文件（b.py 保持未改动，其哈希与基线一致，由工具返回的 files 列表体现）；未联网；未执行仓库脚本或使用 Shell。工具提示与日志不作为源文件正文，源文件内容仅来自 read_code 返回。",
+        "missing": [],
+        "candidate": {
+          "tree": "7040831446c659e581a45d382978fbd238affc17",
+          "files": {
+            "a.py": "aae363d9b932ab4c43ee0f49d42c1f42546164bfef742c31b216688510aa131b",
+            "b.py": "a0c4cc5175026b4f49010721055f9d12f42e0a94ed0d2de08ed7407709dc1fe6",
+            "a-note.txt": "5b361094f9cd2557ee0da9c697dba0ffe72663ca5e025f22d277913c62af08e3"
+          },
+          "tests": [
+            {
+              "log": "Approved AST checks passed for a; no repository code executed\n",
+              "argv": [
+                "/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python",
+                "-I",
+                "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/ce5-evidence/live-attempt4/trusted_validator.py",
+                "a"
+              ],
+              "tree": "7040831446c659e581a45d382978fbd238affc17",
+              "profile": "a",
+              "exit_code": 0,
+              "content_sha256": "9d60feeb2f950867b88a135cad6b03af304f647df64c481d68a0acfb499cea29",
+              "environment_id": "python-ast-fixture-v1",
+              "profile_sha256": "31e7c35c559e81b187e08a3418dda5a0ebeac75a7dbac90cf764097c7b885553"
+            }
+          ],
+          "commit": "4b6401f453ea3083405eb26bbaa5faa2ac4aa5c5",
+          "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+          "complete": true,
+          "workspace_id": "d5481405ad97fb1db9758e5805651fa6bac903a423f317e5f8f040179bce425d",
+          "repository_id": "fixture",
+          "content_sha256": "9d60feeb2f950867b88a135cad6b03af304f647df64c481d68a0acfb499cea29"
+        },
+        "conflicts": [],
+        "follow_up": [
+          "由独立方对冻结快照进行复核；本结果未采用为最终证据。"
+        ],
+        "code_patch": "diff --git a/a-note.txt b/a-note.txt\nnew file mode 100644\nindex 0000000..8a2d1bd\n--- /dev/null\n+++ b/a-note.txt\n@@ -0,0 +1,16 @@\n+Modification note for a.py\n+=========================\n+\n+Change: the module-level constant in a.py was updated to a single line:\n+\n+    ANSWER = 7\n+\n+Previously a.py held ANSWER = 0. The file now contains exactly one line\n+(\"ANSWER = 7\" plus a trailing newline), with no additional statements,\n+imports, or definitions.\n+\n+Rationale: this is the fixed synthetic acceptance task, which requires\n+a.py to consist of only the line ANSWER = 7.\n+\n+Verification actually performed: AST static validation only. The file was\n+parsed/checked as source text; the code was NOT executed.\ndiff --git a/a.py b/a.py\nindex 3326384..c7b1722 100644\n--- a/a.py\n+++ b/a.py\n@@ -1 +1 @@\n-ANSWER = 0\n+ANSWER = 7\n",
+        "assumptions": [
+          "“仅一行 ANSWER = 7”按单行加尾随换行实现，未添加其他语句或注释。"
+        ],
+        "limitations": [
+          "唯一的验证手段是 profile `a` 的 AST 静态检查；没有执行代码，因此没有运行时证据。",
+          "a-note.txt 为自由文本说明，没有对应的自动检查。"
+        ],
+        "candidate_ref": "d5481405ad97fb1db9758e5805651fa6bac903a423f317e5f8f040179bce425d:4b6401f453ea3083405eb26bbaa5faa2ac4aa5c5"
+      },
+      "usage": {
+        "requests": 6,
+        "input_tokens": 16025,
+        "output_tokens": 1150,
+        "complete": true
+      },
+      "error": null,
+      "output_repairs": []
+    },
+    {
+      "run_id": "4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+      "status": "succeeded",
+      "output": {
+        "report": "已按受控流程完成固定合成编码任务。\n\n实际改动（均经工具确认写入）:\n1. b.py：从原内容改为仅一行 `ANSWER = 11`（写入后工具返回新内容 sha256，已随冻结条目记录）。\n2. b-note.txt：新增说明文件，内容说明本次修改（改为单行 ANSWER = 11、原因、原内容为 ANSWER = 0、未引入其他语句/副作用、验证性质为仅 AST 静态校验、未执行代码、待独立复核未采用）。\n\n工具确认的测试性质:\n- 授权测试 profile 仅为 `b`，已运行；工具返回 exit_code=0，日志为 “Approved AST checks passed for b; no repository code executed”。因此该测试为对交付快照的 AST 静态校验，未运行仓库代码，映射的实体是静态校验而非运行时行为。\n- freeze_code 已成功冻结，返回 candidate_ref（见下），workspace 内 files 为 a.py、b.py、b-note.txt，与授权读取/写入范围一致；完整测试条目附于冻结结果中（元数据由服务附上）。\n\n未验证项与边界:\n- 未运行任何仓库代码，仅此一处静态校验通过；ANSWER 的运行时取值、导入副作用、与其他文件的一致性均未经执行验证。\n- 依任务要求未读取也未修改另一个专家文件 a.py（其仅在授权读取列表中，内容未查看，未改动）。\n- 未联网，未执行仓库脚本或任意 Shell，未请求任意路径。\n- 报告结论仅限工具返回的观察；本次改动标记为待独立复核、尚未采用。",
+        "missing": [],
+        "candidate": {
+          "tree": "c63c0a18f006b27d02140314e104f2f3b48414f9",
+          "files": {
+            "a.py": "a0c4cc5175026b4f49010721055f9d12f42e0a94ed0d2de08ed7407709dc1fe6",
+            "b.py": "ee39e906810634dd93a5a3e99eb5fb9bedb5855c79aece0a451724576e000cf1",
+            "b-note.txt": "15cc727344a0ba9886ae8eb2966d13b7559de181725425a61bcfb8e91a628f35"
+          },
+          "tests": [
+            {
+              "log": "Approved AST checks passed for b; no repository code executed\n",
+              "argv": [
+                "/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python",
+                "-I",
+                "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/ce5-evidence/live-attempt4/trusted_validator.py",
+                "b"
+              ],
+              "tree": "c63c0a18f006b27d02140314e104f2f3b48414f9",
+              "profile": "b",
+              "exit_code": 0,
+              "content_sha256": "1f0de4ae3b35e26b560b32fd626442785e7a9a0da3bd9089fb1f8a69cda26911",
+              "environment_id": "python-ast-fixture-v1",
+              "profile_sha256": "ee37dabad32e4f24e36f9f567993331b27fea9b089de9fd15a5f5a54264af7eb"
+            }
+          ],
+          "commit": "e968a24638c440877d8b08d44fffe9c1ef5dc00d",
+          "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+          "complete": true,
+          "workspace_id": "9df7593891086ca1b1d67eb9405c28dad7fc5ae0aebd1994226b6a10796e52c8",
+          "repository_id": "fixture",
+          "content_sha256": "1f0de4ae3b35e26b560b32fd626442785e7a9a0da3bd9089fb1f8a69cda26911"
+        },
+        "conflicts": [],
+        "follow_up": [
+          "由独立方复核 b.py 与 b-note.txt 内容及候选引用。"
+        ],
+        "code_patch": "diff --git a/b-note.txt b/b-note.txt\nnew file mode 100644\nindex 0000000..c08dd0c\n--- /dev/null\n+++ b/b-note.txt\n@@ -0,0 +1,7 @@\n+b-note.txt\n+Change: b.py was modified to contain exactly one line: ANSWER = 11\n+Reason: satisfy the fixed synthetic acceptance requirement that the answer be 11.\n+Previous content: ANSWER = 0\n+No other statements, imports, or side effects were added.\n+Verification nature: AST static validation only; the code was not executed.\n+Status: pending independent review; not adopted.\ndiff --git a/b.py b/b.py\nindex 3326384..adc7f07 100644\n--- a/b.py\n+++ b/b.py\n@@ -1 +1 @@\n-ANSWER = 0\n+ANSWER = 11\n",
+        "assumptions": [
+          "写入 b.py 的“仅一行”解释为文件只含单条赋值语句 `ANSWER = 11` 并带结尾换行。",
+          "b-note.txt 为新增说明文件，不含可执行代码。"
+        ],
+        "limitations": [
+          "仅有 AST 静态校验证据，未执行代码，运行时行为未验证。",
+          "未读取 a.py（按任务要求避免读写另一专家文件），故无法就其内容作任何陈述。"
+        ],
+        "candidate_ref": "9df7593891086ca1b1d67eb9405c28dad7fc5ae0aebd1994226b6a10796e52c8:e968a24638c440877d8b08d44fffe9c1ef5dc00d"
+      },
+      "usage": {
+        "requests": 6,
+        "input_tokens": 15719,
+        "output_tokens": 1269,
+        "complete": true
+      },
+      "error": null,
+      "output_repairs": []
+    }
+  ],
+  "integration": {
+    "workspace_id": "d5b5b83ebf225a37dbae72825a60338fe4c4648eff3c9ac53c65b25cf4f1e27a",
+    "repository_id": "fixture",
+    "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+    "commit": "8d2938dec9f7584c8033177bd110b7e569ed5dfc",
+    "tree": "7f2047b1067ad60761c056c61ec1db70776dbc35",
+    "content_sha256": "2a037121e3f21432f4310183e74bd502f61aa8823e119dd681859d93ed06562f",
+    "files": {
+      "a-note.txt": "5b361094f9cd2557ee0da9c697dba0ffe72663ca5e025f22d277913c62af08e3",
+      "a.py": "aae363d9b932ab4c43ee0f49d42c1f42546164bfef742c31b216688510aa131b",
+      "b-note.txt": "15cc727344a0ba9886ae8eb2966d13b7559de181725425a61bcfb8e91a628f35",
+      "b.py": "ee39e906810634dd93a5a3e99eb5fb9bedb5855c79aece0a451724576e000cf1"
+    },
+    "tests": [
+      {
+        "argv": [
+          "/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python",
+          "-I",
+          "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/ce5-evidence/live-attempt4/trusted_validator.py",
+          "a",
+          "b"
+        ],
+        "content_sha256": "2a037121e3f21432f4310183e74bd502f61aa8823e119dd681859d93ed06562f",
+        "environment_id": "python-ast-fixture-v1",
+        "exit_code": 0,
+        "log": "Approved AST checks passed for a,b; no repository code executed\n",
+        "profile": "combined",
+        "profile_sha256": "ea30b96d0645dcc962458d38212fbd0a3d2abf493fef15423dae77313ee50b19",
+        "tree": "7f2047b1067ad60761c056c61ec1db70776dbc35"
+      }
+    ],
+    "complete": true
+  },
+  "integration_task": "5e91fa3a-f9e3-4b0f-ab88-3793a2d32ebc",
+  "root_scope": {
+    "id": "bcc867a2-cf48-491b-b7d6-e7feebb00f3d",
+    "owner": "local",
+    "version": 2,
+    "allowed": [],
+    "grants": [],
+    "inherited": [],
+    "tools": [
+      "checkpoint_code",
+      "code_diff",
+      "code_status",
+      "fetch_web",
+      "freeze_code",
+      "read_code",
+      "read_source",
+      "search_source",
+      "search_web",
+      "test_code",
+      "write_code"
+    ],
+    "max_input_chars": 30000,
+    "max_tool_chars": 20000,
+    "web_urls": [],
+    "enabled": true
+  },
+  "contracts": [
+    {
+      "id": "5c7cf193-02bc-4d50-88c7-2a4ee6ae86b5",
+      "version": 1,
+      "research_id": "f3176b17-4a93-430b-8f20-e5167868cd28",
+      "expert_session_id": "46ccb067-d174-4e22-97b9-766ef9ce9bfa",
+      "context_packet_id": null,
+      "node_id": null,
+      "node_revision": null,
+      "chat_context": [],
+      "parent_task_id": null,
+      "user_request": "固定合成编码验收。把 a.py 改为仅一行 ANSWER = 7，新增 a-note.txt 说明修改。先读文件；使用受控测试 a，通过后 freeze_code。最终 candidate_ref 使用冻结工具返回的固定引用，机器元数据由服务附上。报告说明只做了 AST 静态验证，未运行代码；待独立复核，未采用。不要读写另一个专家文件，不要联网。",
+      "goal": "固定合成编码验收。把 a.py 改为仅一行 ANSWER = 7，新增 a-note.txt 说明修改。先读文件；使用受控测试 a，通过后 freeze_code。最终 candidate_ref 使用冻结工具返回的固定引用，机器元数据由服务附上。报告说明只做了 AST 静态验证，未运行代码；待独立复核，未采用。不要读写另一个专家文件，不要联网。",
+      "kind": "coding",
+      "expert_id": "expert_coding",
+      "method_version": "coding-v3",
+      "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+      "model": "deepseek-flash",
+      "routing_version": null,
+      "route_id": null,
+      "required_refs": [],
+      "optional_refs": [],
+      "required_results": [],
+      "pending_dependency_task_ids": [],
+      "memory_refs": [],
+      "allow_partial_results": false,
+      "required_fields": [],
+      "acceptance": [
+        {
+          "number": 1,
+          "requirement": "必需资料与依赖均获授权",
+          "blocking": true
+        },
+        {
+          "number": 2,
+          "requirement": "代码快照与授权范围一致",
+          "blocking": true
+        },
+        {
+          "number": 3,
+          "requirement": "全部可信测试对交付快照通过",
+          "blocking": true
+        }
+      ],
+      "limits": {
+        "max_turns": 18,
+        "timeout_seconds": 240.0,
+        "max_depth": 1,
+        "max_calls": 20
+      },
+      "evidence_required": false,
+      "coding": {
+        "repository_id": "fixture",
+        "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+        "read_paths": [
+          "a.py",
+          "b.py"
+        ],
+        "write_paths": [
+          "a.py",
+          "a-note.txt"
+        ],
+        "test_profiles": [
+          "a"
+        ],
+        "candidate_workspaces": [],
+        "test_profile_hashes": {
+          "a": "31e7c35c559e81b187e08a3418dda5a0ebeac75a7dbac90cf764097c7b885553"
+        }
+      }
+    },
+    {
+      "id": "de30a756-f9b8-49f1-be58-e56dfc8eb0a6",
+      "version": 1,
+      "research_id": "f3176b17-4a93-430b-8f20-e5167868cd28",
+      "expert_session_id": "46ccb067-d174-4e22-97b9-766ef9ce9bfa",
+      "context_packet_id": null,
+      "node_id": null,
+      "node_revision": null,
+      "chat_context": [],
+      "parent_task_id": null,
+      "user_request": "固定合成编码验收。把 b.py 改为仅一行 ANSWER = 11，新增 b-note.txt 说明修改。先读文件；使用受控测试 b，通过后 freeze_code。最终 candidate_ref 使用冻结工具返回的固定引用，机器元数据由服务附上。报告说明只做了 AST 静态验证，未运行代码；待独立复核，未采用。不要读写另一个专家文件，不要联网。",
+      "goal": "固定合成编码验收。把 b.py 改为仅一行 ANSWER = 11，新增 b-note.txt 说明修改。先读文件；使用受控测试 b，通过后 freeze_code。最终 candidate_ref 使用冻结工具返回的固定引用，机器元数据由服务附上。报告说明只做了 AST 静态验证，未运行代码；待独立复核，未采用。不要读写另一个专家文件，不要联网。",
+      "kind": "coding",
+      "expert_id": "expert_coding",
+      "method_version": "coding-v3",
+      "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+      "model": "deepseek-flash",
+      "routing_version": null,
+      "route_id": null,
+      "required_refs": [],
+      "optional_refs": [],
+      "required_results": [],
+      "pending_dependency_task_ids": [],
+      "memory_refs": [],
+      "allow_partial_results": false,
+      "required_fields": [],
+      "acceptance": [
+        {
+          "number": 1,
+          "requirement": "必需资料与依赖均获授权",
+          "blocking": true
+        },
+        {
+          "number": 2,
+          "requirement": "代码快照与授权范围一致",
+          "blocking": true
+        },
+        {
+          "number": 3,
+          "requirement": "全部可信测试对交付快照通过",
+          "blocking": true
+        }
+      ],
+      "limits": {
+        "max_turns": 18,
+        "timeout_seconds": 240.0,
+        "max_depth": 1,
+        "max_calls": 20
+      },
+      "evidence_required": false,
+      "coding": {
+        "repository_id": "fixture",
+        "baseline": "252bd4f557b02356b8cce4276196be742f993042",
+        "read_paths": [
+          "a.py",
+          "b.py"
+        ],
+        "write_paths": [
+          "b.py",
+          "b-note.txt"
+        ],
+        "test_profiles": [
+          "b"
+        ],
+        "candidate_workspaces": [],
+        "test_profile_hashes": {
+          "b": "ee37dabad32e4f24e36f9f567993331b27fea9b089de9fd15a5f5a54264af7eb"
+        }
+      }
+    }
+  ],
+  "checks": {
+    "real_http": true,
+    "both_saved_pending": true,
+    "original_untouched": true,
+    "combination_retested": true,
+    "distinct_workspaces": true,
+    "new_files_included": true,
+    "save_retry_zero_model": true
+  },
+  "budgets": {
+    "a0ca280b-3601-479d-a266-f609aa0335b7": {
+      "id": "a0ca280b-3601-479d-a266-f609aa0335b7",
+      "binding": {
+        "model": "deepseek-flash",
+        "run_id": "a0ca280b-3601-479d-a266-f609aa0335b7",
+        "task_id": "5c7cf193-02bc-4d50-88c7-2a4ee6ae86b5",
+        "entrance": "expert",
+        "scope_id": "8d0cc7fe-b698-433a-801b-8a79eaa3bb09",
+        "execution": "controlled_tools",
+        "agent_hash": "5f36987fe2c2be741abf60bfb87fda84490fb2b7d07ecad22573eb3d6aa383c0",
+        "session_id": "46ccb067-d174-4e22-97b9-766ef9ce9bfa",
+        "research_id": "f3176b17-4a93-430b-8f20-e5167868cd28",
+        "request_hash": "92cc4f4f3a90aa8143fac331a51711b862594c517e16ce428a8376c2f2dc8bfb",
+        "spec_version": 1,
+        "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+        "root_scope_id": "bcc867a2-cf48-491b-b7d6-e7feebb00f3d",
+        "scope_version": 2,
+        "root_scope_version": 2,
+        "authorization_generation": "3d995f645ee3f882d59c55e759a0f1bd3334d45557d19258eb3630df32eafe97"
+      },
+      "models": 6,
+      "tools": 7,
+      "deadline": "2026-10-07 23:24:05.427740+08:00"
+    },
+    "4d3a4d8e-c302-49aa-9278-5f722c12ee10": {
+      "id": "4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+      "binding": {
+        "model": "deepseek-flash",
+        "run_id": "4d3a4d8e-c302-49aa-9278-5f722c12ee10",
+        "task_id": "de30a756-f9b8-49f1-be58-e56dfc8eb0a6",
+        "entrance": "expert",
+        "scope_id": "115dbbd1-c91e-41ff-aad3-57e82b02e567",
+        "execution": "controlled_tools",
+        "agent_hash": "5f36987fe2c2be741abf60bfb87fda84490fb2b7d07ecad22573eb3d6aa383c0",
+        "session_id": "46ccb067-d174-4e22-97b9-766ef9ce9bfa",
+        "research_id": "f3176b17-4a93-430b-8f20-e5167868cd28",
+        "request_hash": "36f112cfa48f3b7fdaaf3d11c163694c197efb554201c3006f2c7882ed2526a5",
+        "spec_version": 1,
+        "method_digest": "e918450d67ef06360787a803ac241423ec44bc39555941e297a0163b605b47be",
+        "root_scope_id": "bcc867a2-cf48-491b-b7d6-e7feebb00f3d",
+        "scope_version": 2,
+        "root_scope_version": 2,
+        "authorization_generation": "8e48e23d494a50b6f824d2745b27fbb1ee04442fb0bb127795aa98d459d21545"
+      },
+      "models": 6,
+      "tools": 6,
+      "deadline": "2026-10-07 23:24:05.440406+08:00"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+"""One real-model R1 extraction sample. Exit 2 until independent human review."""
+import asyncio
+import json
+import os
+from pathlib import Path
+
+from agent_core.composition import build_resources, build_research, build_tasks
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.adapters.openai import OpenAIEngine
+
+
+REPORT = Path('docs/r1-real-eval.json')
+SOURCE = Path('tests/fixtures/stage4/company-1.txt')
+
+
+def write(data):
+    REPORT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+
+
+async def main():
+    required = ('DATABASE_URL', 'OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_MODEL')
+    missing = [name for name in required if not os.environ.get(name)]
+    if missing:
+        write({'status':'not_run', 'reason':'Current authorized configuration missing',
+               'missing_environment_names':missing, 'human_semantic_review':'pending'})
+        return 2
+    db = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        scopes = build_resources(db, '.r1/real-blobs')
+        research = build_research(db, scopes)
+        root = research.create('R1 real model: 青松公司现金流提取')
+        scope = scopes.current(root.scope_id, research.owner)
+        scope, ref = scopes.ingest(scope, content=SOURCE.read_bytes(), name=SOURCE.name, media_type='text/plain')
+        tasks = build_tasks(db, scopes, research, OpenAIEngine())
+        spec = tasks.create(research_id=root.id, kind='extract',
+            user_request='从指定报告提取青松公司 2025 年经营现金流、资本开支、单位，并注明原文位置。',
+            required_refs=(ref,), model=os.environ['OPENAI_MODEL'])
+        execution = await tasks.run(spec.id)
+        run = tasks.ledger.get(execution['run_id'])
+        receipt = execution['receipt']
+        data = {'status':'pending_human_review' if receipt and receipt.delivery in ('pending_review','partial_pending_review') else 'failed',
+            'research_id':root.id, 'task_id':spec.id, 'run_id':execution['run_id'],
+            'model':spec.model, 'base_url':os.environ['OPENAI_BASE_URL'],
+            'method_version':spec.method_version, 'source_ref':ref.model_dump(mode='json'),
+            'run_status':run.status if run else None,
+            'usage':run.result.usage.model_dump(mode='json') if run and run.result else None,
+            'output':run.result.output if run and run.result else None,
+            'receipt':receipt.model_dump(mode='json') if receipt else None,
+            'human_semantic_review':'pending',
+            'review_instruction':'Compare company, period, 120 operating cash flow, 40 capital expenditure, 百万元 unit and cited JSON keys with the source; record all numbered findings via agent-tasks review.'}
+        write(data)
+        return 2 if data['status'] == 'pending_human_review' else 1
+    finally:
+        db.close()
+
+
+if __name__ == '__main__': raise SystemExit(asyncio.run(main()))

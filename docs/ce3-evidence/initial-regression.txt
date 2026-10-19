@@ -1,0 +1,381 @@
+....FF.FF.FF.F.....................s.s.s.s.s.sFs.s.s.s.s.s..s.s.s..s.sFs [ 70%]
+.s.s.s........................                                           [100%]
+=================================== FAILURES ===================================
+___________ test_revoke_during_model_retains_unconfirmed_reservation ___________
+
+    async def test_revoke_during_model_retains_unconfirmed_reservation():
+        broker,state,ledger=make_broker()
+        state['revoke_during_call']=True
+>       with pytest.raises(PermissionError): await broker.handle(Frame(sequence=1,operation_id='a',operation='model',payload={'input':'hi','tools':[]}))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controlled.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.controlled.broker.Broker object at 0x109f72990>
+frame = Frame(sequence=1, operation_id='a', operation='model', payload={'input': 'hi', 'tools': []})
+
+    async def handle(self, frame):
+        self.validate()
+        if self.result is not None or frame.sequence != self.sequence + 1:
+            raise ValueError('Controlled sequence mismatch or operation after completion')
+        self.sequence = frame.sequence
+        # Validate the narrow operation before reserving budget. Identity is bound to this object.
+        if frame.operation == 'model':
+>           payload = ModelInput.model_validate(frame.payload)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelInput
+E           instructions
+E             Field required [type=missing, input_value={'input': 'hi', 'tools': []}, input_type=dict]
+E               For further information visit https://errors.pydantic.dev/2.13/v/missing
+
+src/agent_core/controlled/broker.py:41: ValidationError
+_________ test_real_sdk_runs_through_public_model_proxy_contract_only __________
+
+    async def test_real_sdk_runs_through_public_model_proxy_contract_only():
+        broker,state,ledger=make_broker()
+        class Channel:
+            sequence=0
+            async def call(self,operation,payload):
+                self.sequence+=1
+                return await broker.handle(Frame(sequence=self.sequence,operation_id=str(self.sequence),operation=operation,payload=payload))
+        engine=OpenAIEngine(BrokerModel(Channel()))
+        async def invoke(*_): raise AssertionError('No tool expected')
+        result=await engine.execute(broker.request,broker.spec,(),invoke)
+>       assert result.status=='succeeded' and result.output['report']=='done'
+E       AssertionError: assert ('failed' == 'succeeded'
+E         
+E         - succeeded
+E         + failed)
+
+tests/test_controlled.py:115: AssertionError
+___________ test_sdk_private_write_read_and_structure_are_preserved ____________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-15/test_sdk_private_write_read_an0')
+
+    async def test_sdk_private_write_read_and_structure_are_preserved(tmp_path):
+        from openai.types.responses import ResponseFunctionToolCall
+        broker,state,ledger=make_broker()
+        workspace=Workspace(tmp_path)
+        bindings=workspace.bindings()
+        broker.private_tools={t.name:t for t in bindings}
+        queue=[
+            [ResponseFunctionToolCall(type='function_call',name='write_private_note',call_id='write',arguments='{"name":"draft","text":"marker CE1"}')],
+            [ResponseFunctionToolCall(type='function_call',name='read_private_note',call_id='read',arguments='{"name":"draft"}')],
+            [ResponseOutputMessage(id='final',type='message',role='assistant',status='completed',content=[
+                ResponseOutputText(type='output_text',text='{"report":"marker CE1"}',annotations=[])])],
+        ]
+        class Model:
+            async def get_response(self,**kwargs):
+                return ModelResponse(output=queue.pop(0),usage=SDKUsage(requests=1),response_id=None)
+        broker.model=Model()
+        class Channel:
+            sequence=0
+            async def call(self,operation,payload,operation_id=None):
+                self.sequence+=1
+                return await broker.handle(Frame(sequence=self.sequence,operation_id=operation_id or str(self.sequence),operation=operation,payload=payload))
+        channel=Channel()
+        async def invoke(name,call_id,arguments):
+            return ToolResult.model_validate(await channel.call('private',{'name':name,'call_id':call_id,'arguments':arguments},'tool:'+call_id))
+        try:
+            result=await OpenAIEngine(BrokerModel(channel)).execute(broker.request,broker.spec,bindings,invoke)
+>           assert result.status=='succeeded' and result.output['report']=='marker CE1'
+E           AssertionError: assert ('failed' == 'succeeded'
+E             
+E             - succeeded
+E             + failed)
+
+tests/test_controlled.py:155: AssertionError
+______________ test_sdk_reasoning_replay_keeps_public_input_items ______________
+
+    async def test_sdk_reasoning_replay_keeps_public_input_items():
+        broker,state,_=make_broker()
+        items=[{'type':'reasoning','id':'reasoning1','summary':[{'type':'summary_text','text':'Checking source'}],
+                'content':[{'type':'reasoning_text','text':'Previously returned reasoning'}]},
+               {'role':'user','content':'Continue'}]
+>       await broker.handle(Frame(sequence=1,operation_id='reasoning',operation='model',payload={'input':items,'tools':[]}))
+
+tests/test_controlled.py:167: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.controlled.broker.Broker object at 0x10a0ed4c0>
+frame = Frame(sequence=1, operation_id='reasoning', operation='model', payload={'input': [{'type': 'reasoning', 'id': 'reasoni...: 'reasoning_text', 'text': 'Previously returned reasoning'}]}, {'role': 'user', 'content': 'Continue'}], 'tools': []})
+
+    async def handle(self, frame):
+        self.validate()
+        if self.result is not None or frame.sequence != self.sequence + 1:
+            raise ValueError('Controlled sequence mismatch or operation after completion')
+        self.sequence = frame.sequence
+        # Validate the narrow operation before reserving budget. Identity is bound to this object.
+        if frame.operation == 'model':
+>           payload = ModelInput.model_validate(frame.payload)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelInput
+E           instructions
+E             Field required [type=missing, input_value={'input': [{'type': 'reas...ontinue'}], 'tools': []}, input_type=dict]
+E               For further information visit https://errors.pydantic.dev/2.13/v/missing
+
+src/agent_core/controlled/broker.py:41: ValidationError
+________ test_controlled_engine_runs_sdk_private_tools_and_denies_shell ________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-15/test_controlled_engine_runs_sd0')
+
+    async def test_controlled_engine_runs_sdk_private_tools_and_denies_shell(tmp_path):
+        from openai.types.responses import ResponseFunctionToolCall
+        from agent_core.contracts import ToolBinding
+        queue = [
+            [ResponseFunctionToolCall(type='function_call', name='write_private_note', call_id='w',
+                                     arguments='{"name":"draft","text":"persisted marker"}')],
+            [ResponseFunctionToolCall(type='function_call', name='read_private_note', call_id='r', arguments='{"name":"draft"}')],
+            [ResponseOutputMessage(id='final', type='message', role='assistant', status='completed', content=[
+                ResponseOutputText(type='output_text', text='{"report":"persisted marker"}', annotations=[])])],
+        ]
+        class Model:
+            async def get_response(self, **kwargs):
+                assert {t.name for t in kwargs['tools']} == {'write_private_note', 'read_private_note'}
+                return ModelResponse(output=queue.pop(0), usage=SDKUsage(requests=1), response_id=None)
+        engine, ledger, request = controlled_engine(tmp_path, Model())
+        async def forbidden(*_): raise AssertionError('Shell must not run')
+        shell = ToolBinding('host_shell', 'Forbidden', SimpleNamespace(), forbidden)
+        result = await engine.execute(request, AgentSpec('expert', '', output_type=ExpertAnswer), (shell,), forbidden)
+>       assert result.status == 'succeeded' and ledger.released and not engine.active
+E       AssertionError: assert ('failed' == 'succeeded'
+E         
+E         - succeeded
+E         + failed)
+
+tests/test_controlled.py:221: AssertionError
+______ test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request _______
+
+fut = <coroutine object Event.wait at 0x10ab30ba0>, timeout = 2
+
+    async def wait_for(fut, timeout):
+        """Wait for the single Future or coroutine to complete, with timeout.
+    
+        Coroutine will be wrapped in Task.
+    
+        Returns result of the Future or coroutine.  When a timeout occurs,
+        it cancels the task and raises TimeoutError.  To avoid the task
+        cancellation, wrap it in shield().
+    
+        If the wait is cancelled, the task is also cancelled.
+    
+        If the task suppresses the cancellation and returns a value instead,
+        that value is returned.
+    
+        This function is a coroutine.
+        """
+        # The special case for timeout <= 0 is for the following case:
+        #
+        # async def test_waitfor():
+        #     func_started = False
+        #
+        #     async def func():
+        #         nonlocal func_started
+        #         func_started = True
+        #
+        #     try:
+        #         await asyncio.wait_for(func(), 0)
+        #     except asyncio.TimeoutError:
+        #         assert not func_started
+        #     else:
+        #         assert False
+        #
+        # asyncio.run(test_waitfor())
+    
+    
+        if timeout is not None and timeout <= 0:
+            fut = ensure_future(fut)
+    
+            if fut.done():
+                return fut.result()
+    
+            await _cancel_and_wait(fut)
+            try:
+                return fut.result()
+            except exceptions.CancelledError as exc:
+                raise TimeoutError from exc
+    
+        async with timeouts.timeout(timeout):
+>           return await fut
+                   ^^^^^^^^^
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py:520: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <asyncio.locks.Event object at 0x10ab3dca0 [unset]>
+
+    async def wait(self):
+        """Block until the internal flag is true.
+    
+        If the internal flag is true on entry, return True
+        immediately.  Otherwise, block until another coroutine calls
+        set() to set the flag to true, then return True.
+        """
+        if self._value:
+            return True
+    
+        fut = self._get_loop().create_future()
+        self._waiters.append(fut)
+        try:
+>           await fut
+E           asyncio.exceptions.CancelledError
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/locks.py:212: CancelledError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-15/test_controlled_cancellation_a0')
+
+    async def test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request(tmp_path):
+        started, stopped = asyncio.Event(), asyncio.Event()
+        class Model:
+            async def get_response(self, **kwargs):
+                started.set()
+                try: await asyncio.Event().wait()
+                finally: stopped.set()
+        engine, ledger, request = controlled_engine(tmp_path, Model())
+        execution = asyncio.create_task(engine.execute(request, AgentSpec('expert', '', output_type=ExpertAnswer), (), None))
+>       await asyncio.wait_for(started.wait(), 2)
+
+tests/test_controlled.py:238: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py:519: in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Timeout [expired]>
+exc_type = <class 'asyncio.exceptions.CancelledError'>
+exc_val = CancelledError(), exc_tb = <traceback object at 0x10aa6c500>
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> Optional[bool]:
+        assert self._state in (_State.ENTERED, _State.EXPIRING)
+    
+        if self._timeout_handler is not None:
+            self._timeout_handler.cancel()
+            self._timeout_handler = None
+    
+        if self._state is _State.EXPIRING:
+            self._state = _State.EXPIRED
+    
+            if self._task.uncancel() <= self._cancelling and exc_type is exceptions.CancelledError:
+                # Since there are no new cancel requests, we're
+                # handling this.
+>               raise TimeoutError from exc_val
+E               TimeoutError
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/timeouts.py:115: TimeoutError
+____ test_provider_error_keeps_reservation_without_exposing_exception_body _____
+
+    async def test_provider_error_keeps_reservation_without_exposing_exception_body():
+        from agent_core.contracts import CoreFailure
+        broker, _, ledger = make_broker()
+        class Model:
+            async def get_response(self, **kwargs):
+                error = RuntimeError('sensitive body must never reach the result')
+                error.status_code = 400
+                raise error
+        broker.model = Model()
+        with pytest.raises(CoreFailure) as caught:
+>           await broker.handle(Frame(sequence=1, operation_id='model:error', operation='model',
+                                      payload={'input':'hello','tools':[]}))
+
+tests/test_controlled.py:268: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.controlled.broker.Broker object at 0x10ab45160>
+frame = Frame(sequence=1, operation_id='model:error', operation='model', payload={'input': 'hello', 'tools': []})
+
+    async def handle(self, frame):
+        self.validate()
+        if self.result is not None or frame.sequence != self.sequence + 1:
+            raise ValueError('Controlled sequence mismatch or operation after completion')
+        self.sequence = frame.sequence
+        # Validate the narrow operation before reserving budget. Identity is bound to this object.
+        if frame.operation == 'model':
+>           payload = ModelInput.model_validate(frame.payload)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelInput
+E           instructions
+E             Field required [type=missing, input_value={'input': 'hello', 'tools': []}, input_type=dict]
+E               For further information visit https://errors.pydantic.dev/2.13/v/missing
+
+src/agent_core/controlled/broker.py:41: ValidationError
+__________ test_large_source_read_guides_to_bounded_location[memory] ___________
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x10b57db80>, <agent_core.context.scopes.ScopeService object at 0x10b57dc70>)
+
+    async def test_large_source_read_guides_to_bounded_location(app):
+        _, svc = app
+        scope = svc.create('owner', max_tool_chars=700)
+        scope, ref = upload(svc, scope, text='short target line\n' + 'long context line\n' * 80)
+        tool = ScopedTool(svc, scope).read_binding()
+        whole = await tool.handler(ReadSource(ref=ref))
+>       assert not whole.value['fragments']
+E       AssertionError: assert not [{'kind': 'text', 'location': 'line:1', 'text': 'short target line'}, {'kind': 'text', 'location': 'line:2', 'text': '...ion': 'line:5', 'text': 'long context line'}, {'kind': 'text', 'location': 'line:6', 'text': 'long context line'}, ...]
+
+tests/test_resources.py:168: AssertionError
+_________ test_http_real_socket_url_update_and_redirect_guard[memory] __________
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x156a03590>, <agent_core.context.scopes.ScopeService object at 0x156a03710>)
+
+    async def test_http_real_socket_url_update_and_redirect_guard(app):
+        from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+        from threading import Thread
+        from agent_core.adapters.web_sources import HttpSources
+        class Handler(BaseHTTPRequestHandler):
+            value=b'<html><title>Company A</title><p>A_WEB_V1</p></html>'
+            def do_GET(self):
+                if self.path=='/redirect':
+                    self.send_response(302);self.send_header('Location','/b');self.end_headers();return
+                self.send_response(200);self.send_header('Content-Type','text/html');self.end_headers();self.wfile.write(self.value)
+            def log_message(self,*args): pass
+>       server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_resources.py:395: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:457: in __init__
+    self.server_bind()
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/server.py:136: in server_bind
+    socketserver.TCPServer.server_bind(self)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <http.server.ThreadingHTTPServer object at 0x109d41880>
+
+    def server_bind(self):
+        """Called by constructor to bind the socket.
+    
+        May be overridden.
+    
+        """
+        if self.allow_reuse_address and hasattr(socket, "SO_REUSEADDR"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        # Since Linux 6.12.9, SO_REUSEPORT is not allowed
+        # on other address families than AF_INET/AF_INET6.
+        if (
+            self.allow_reuse_port and hasattr(socket, "SO_REUSEPORT")
+            and self.address_family in (socket.AF_INET, socket.AF_INET6)
+        ):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+>       self.socket.bind(self.server_address)
+E       PermissionError: [Errno 1] Operation not permitted
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socketserver.py:478: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled.py::test_revoke_during_model_retains_unconfirmed_reservation
+FAILED tests/test_controlled.py::test_real_sdk_runs_through_public_model_proxy_contract_only
+FAILED tests/test_controlled.py::test_sdk_private_write_read_and_structure_are_preserved
+FAILED tests/test_controlled.py::test_sdk_reasoning_replay_keeps_public_input_items
+FAILED tests/test_controlled.py::test_controlled_engine_runs_sdk_private_tools_and_denies_shell
+FAILED tests/test_controlled.py::test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request
+FAILED tests/test_controlled.py::test_provider_error_keeps_reservation_without_exposing_exception_body
+FAILED tests/test_resources.py::test_large_source_read_guides_to_bounded_location[memory]
+FAILED tests/test_resources.py::test_http_real_socket_url_update_and_redirect_guard[memory]
+9 failed, 72 passed, 21 skipped in 7.00s

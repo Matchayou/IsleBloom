@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/scripts/verify_memory_capture_live.py", line 179, in <module>
+    if a.worker:asyncio.run(worker(a))
+                ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/scripts/verify_memory_capture_live.py", line 77, in worker
+    if source_run.result.status!='succeeded':raise RuntimeError('Source failed: '+str(source_run.result.error))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Source failed: code='output_contract' origin='engine' message='Final report is invalid after bounded output correction; no report was published.' retryable=False cause_id=None

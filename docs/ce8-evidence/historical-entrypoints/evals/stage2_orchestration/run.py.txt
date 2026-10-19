@@ -1,0 +1,65 @@
+"""Real model + real CLI + PostgreSQL. Exit 2 means NOT RUN, never a pass."""
+import json
+import os
+import subprocess
+import sys
+from uuid import uuid4
+
+PROMPT = ('请三个专家分别比较方案的成本、速度与限制。仅依据以下假设：'
+          '方案A每月100元，每项处理10秒，可离线；方案B每月200元，每项处理5秒，必须联网。')
+
+
+def invoke(*args):
+    process = subprocess.run([sys.executable, '-m', 'agent_core.dispatch_cli',
+        '--storage', 'postgres', '--engine', 'openai', *args], capture_output=True, text=True, timeout=240)
+    if process.returncode not in (0, 1):
+        raise RuntimeError('CLI did not run')
+    payload = next((json.loads(line) for line in process.stdout.splitlines()
+                    if line.startswith('{"group_id":')), None)
+    if payload is None:
+        raise RuntimeError('CLI returned no persisted ResultSet')
+    return process.returncode, payload, process.stdout
+
+
+def main():
+    missing = [name for name in ('OPENAI_API_KEY', 'DATABASE_URL') if not os.environ.get(name)]
+    if missing:
+        print(json.dumps({'status': 'not_run', 'missing': missing,
+                          'reason': '需要当前进程的真实模型凭据和隔离 PostgreSQL；不读取历史密钥。'}, ensure_ascii=False))
+        return 2
+    report = {'status': 'failed', 'model': os.environ.get('OPENAI_MODEL', 'gpt-4.1-mini'),
+              'base_url': os.environ.get('OPENAI_BASE_URL', 'https://api.openai.com/v1'), 'cases': []}
+    try:
+        for fail in (False, True):
+            group = str(uuid4())
+            args = ['compare', PROMPT, '--group-id', group]
+            if fail:
+                args += ['--fail-expert', 'speed']
+            code, data, transcript = invoke(*args)
+            query_code, saved, query_transcript = invoke('show', group)
+            assert code == query_code == (1 if fail else 0)
+            assert data == saved and saved['status'] == 'settled'
+            assert [i['key'] for i in saved['items']] == ['cost', 'speed', 'limits']
+            assert len({i['run_id'] for i in saved['items']}) == 3
+            assert [i['status'] for i in saved['items']] == ['completed', 'failed' if fail else 'completed', 'completed']
+            assert all(i['result']['output'] for i in saved['items'] if i['status'] == 'completed')
+            cost = str(saved['items'][0]['result']['output'])
+            assert '100' in cost and '200' in cost
+            if not fail:
+                speed = str(saved['items'][1]['result']['output'])
+                assert '10' in speed and '5' in speed
+            limits = str(saved['items'][2]['result']['output'])
+            assert '离线' in limits and '联网' in limits
+            if fail:
+                assert '速度' in query_transcript and '缺失' in query_transcript
+            report['cases'].append({'failure_injected': fail, 'result': saved,
+                                    'cli': transcript, 'new_process_query': query_transcript})
+        report['status'] = 'passed'
+    except Exception as exc:
+        report['error_type'] = type(exc).__name__
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 0 if report['status'] == 'passed' else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

@@ -1,0 +1,486 @@
+{
+  "purpose": "Read-only provider response observation during explicit fixed-input retry",
+  "responses": [
+    {
+      "id": "85cd0a78-d4ca-4a1c-a846-6feefecec6fd",
+      "status": "completed",
+      "incomplete_details": null,
+      "error": null,
+      "usage": {
+        "input_tokens": 3026,
+        "input_tokens_details": {
+          "cached_tokens": 2816
+        },
+        "output_tokens": 9359,
+        "output_tokens_details": {
+          "reasoning_tokens": 5388
+        },
+        "total_tokens": 12385
+      },
+      "max_output_tokens": null,
+      "texts": [
+        "{\"report\": \"# 2025 汽车制造业：GM 现金流与竞争风险核对\\n\\n**口径**：GENERAL MOTORS COMPANY AND SUBSIDIARIES 的 CONSOLIDATED STATEMENTS OF CASH FLOWS，单位 (In millions)，币种 $，期间 Years Ended December 31, 2025/2024/2023，合并口径（片段未给分部拆分）。\\n\\n## 一、经营活动现金流（合并，百万美元）\\n\\n| 年度 | 经营活动净现金流 | 期内排序 |\\n| --- | --- | --- |\\n| 2025 | 26,867 | 最高 |\\n| 2024 | 20,129 | 最低 |\\n| 2023 | 20,930 | 居中 |\\n\\n三年均为净流入；在明确同币种、同单位前提下，2025 比 2024 多 6,738、比 2023 多 5,937（差额为算术结果）。现金流规模不用于推断经营质量或风险高低。\\n\\n## 二、净利润（亏损）\\n\\n仅见 Net income (loss) 行一个数值 $ 2,780（单位同表）；按 2025/2024/2023 的列序位置推断其属 2025 年（属位置推断）。2024、2023 对应数值缺失，缺失记为未知，不视为零。\\n\\n## 三、竞争与战略风险\\n\\nRisks related to our competition and strategy：若未能针对加剧的竞争以及变化的消费者需求与偏好，交付新产品、服务、技术和客户体验，业务可能受损。该披露为定性表述，未含量化竞争指标。\\n\\n## 四、缺失\\n\\n资本开支；投资活动与筹资活动现金流；自由现金流（缺资本开支，无法计算，不推算）；2024/2023 净利润数值；分部口径；市场份额、竞争对手经营数据等量化竞争信息。上述结论均基于所给片段，未作独立验证。\", \"missing\": [\"资本开支（capital expenditures）数据\", \"投资活动现金流与筹资活动现金流\", \"自由现金流（缺资本开支，无法计算）\", \"Net income (loss) 行 2024 年与 2023 年数值\", \"分部（automotive / GM Financial）拆分口径\", \"市场份额、竞争对手经营数据、销量或价格等量化竞争指标\"], \"claims\": [{\"statement\": \"来源为 GENERAL MOTORS COMPANY AND SUBSIDIARIES 的合并现金流量表（CONSOLIDATED STATEMENTS OF CASH FLOWS），金额单位 (In millions)，币种符号 $，列示期间为 Years Ended December 31, 的多期列，属合并口径且片段未提供分部拆分。\", \"citations\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:1\", \"quote\": \"GENERAL MOTORS COMPANY AND SUBSIDIARIES\", \"relation\": \"supports\", \"reasoning\": \"该片段给出报告主体名称，是确定公司字段的依据。\", \"fields\": {\"company\": \"GENERAL MOTORS COMPANY AND SUBSIDIARIES\", \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:2\", \"quote\": \"CONSOLIDATED STATEMENTS OF CASH FLOWS\", \"relation\": \"supports\", \"reasoning\": \"标明报表为合并现金流量表，支持合并口径判断。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": \"CONSOLIDATED STATEMENTS OF CASH FLOWS\"}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:3\", \"quote\": \"(In millions)\", \"relation\": \"supports\", \"reasoning\": \"该连续字串给出金额单位，支持单位字段为百万。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": \"(In millions)\", \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:4\", \"quote\": \"Years Ended December 31,\", \"relation\": \"supports\", \"reasoning\": \"该连续字串说明列标题为截至12月31日的年度期间，支持期间字段。\", \"fields\": {\"company\": null, \"period\": \"Years Ended December 31,\", \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:10\", \"quote\": \"$\", \"relation\": \"supports\", \"reasoning\": \"币种符号片段支持币种字段填 $。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": \"$\", \"unit\": null, \"basis\": null}}]}, {\"statement\": \"列标题年度依次为 2025、2024、2023；合并经营活动净现金流对应为 26,867、20,129、20,930（百万美元），三年均为净流入，其中 2025 最高、2024 最低、2023 居中；在同币种同单位下 2025 比 2024 多 6,738、比 2023 多 5,937。金额规模不用于判断经营质量或风险高低。\", \"citations\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:5\", \"quote\": \"2025\", \"relation\": \"supports\", \"reasoning\": \"该片段是列标题第一年，用于确定第一个数值列的年度。\", \"fields\": {\"company\": null, \"period\": \"2025\", \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:6\", \"quote\": \"2024\", \"relation\": \"supports\", \"reasoning\": \"该片段是列标题第二年，用于确定第二个数值列的年度。\", \"fields\": {\"company\": null, \"period\": \"2024\", \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:7\", \"quote\": \"2023\", \"relation\": \"supports\", \"reasoning\": \"该片段是列标题第三年，用于确定第三个数值列的年度。\", \"fields\": {\"company\": null, \"period\": \"2023\", \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:12\", \"quote\": \"Net cash provided by (used in) operating activities\", \"relation\": \"supports\", \"reasoning\": \"该行标签界定后续三个数值为经营活动净现金流。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:13\", \"quote\": \"26,867\", \"relation\": \"supports\", \"reasoning\": \"该数值为经营活动净现金流首列，按列序对应 2025，用于最高值判断。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:14\", \"quote\": \"20,129\", \"relation\": \"supports\", \"reasoning\": \"该数值为第二列，对应 2024，用于最低值判断。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:15\", \"quote\": \"20,930\", \"relation\": \"supports\", \"reasoning\": \"该数值为第三列，对应 2023，用于居中排序判断。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}]}, {\"statement\": \"Net income (loss) 行仅出现一个数值 $ 2,780（单位同表 In millions）；按 2025/2024/2023 列序位置推断其属 2025 年，此属位置推断；2024、2023 对应数值在片段中缺失（未知，不视为零），不得据此推算自由现金流。\", \"citations\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:9\", \"quote\": \"Net income (loss)\", \"relation\": \"supports\", \"reasoning\": \"该行标签界定后续数值为净利润（亏损）行。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:10\", \"quote\": \"$\", \"relation\": \"supports\", \"reasoning\": \"币种符号片段与紧随其后的数值共同构成金额表述。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": \"$\", \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:11\", \"quote\": \"2,780\", \"relation\": \"supports\", \"reasoning\": \"该片段为净利润行唯一可见数值，按列序位置推断对应 2025。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}], \"missing\": [\"Net income (loss) 行 2024 年对应数值\", \"Net income (loss) 行 2023 年对应数值\", \"与净利润行相关的完整行项（片段跳过 text 11 至 text 77）\"]}, {\"statement\": \"在 Risks related to our competition and strategy 项下，来源披露：若未能针对加剧的竞争以及变化的消费者需求与偏好，交付新产品、服务、技术和客户体验，业务可能受损。该表述为定性风险披露，未附量化竞争指标。\", \"citations\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:16\", \"quote\": \"Risks related to our competition and strategy\", \"relation\": \"supports\", \"reasoning\": \"该片段是风险类别标题，界定下述风险因素的归属。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:17\", \"quote\": \"If we do not deliver new products, services, technologies, and customer experiences in response to increased competition\", \"relation\": \"supports\", \"reasoning\": \"该片段给出风险触发条件与竞争含义，支撑定性风险描述。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}, {\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"location\": \"line:18\", \"quote\": \"and changing consumer needs and preferences, our business could suffer.\", \"relation\": \"supports\", \"reasoning\": \"该片段给出消费者需求变化条件与业务受损后果，与前一片段共同构成完整风险语句。\", \"fields\": {\"company\": null, \"period\": null, \"currency\": null, \"unit\": null, \"basis\": null}}]}, {\"statement\": \"所给片段未包含资本开支、投资活动与筹资活动现金流以及自由现金流数据，因此无法给出资本开支或自由现金流数值（不以未知为零、不据经营现金流反推自由现金流）。\", \"citations\": [], \"missing\": [\"资本开支（capital expenditures）\", \"投资活动净现金流\", \"筹资活动净现金流\", \"自由现金流\"]}, {\"statement\": \"片段未提供市场份额、竞争对手经营数据、销量或价格等量化竞争指标，也未提供分部口径，竞争风险分析只能停留在上述定性披露层面。\", \"citations\": [], \"missing\": [\"市场份额数据\", \"竞争对手经营数据\", \"销量或价格等竞争量化指标\", \"分部（automotive / GM Financial）口径拆分\"]}]}"
+      ]
+    }
+  ],
+  "command": {
+    "command": {
+      "command_id": "69d80a88-8470-42e0-8fa0-ad0aa71f0223",
+      "research_id": "3f2c1e4a-95c8-4140-b1f1-0ae85648e817",
+      "kind": "retry",
+      "node_id": "5b78d518-7f7f-4239-bbec-4ed720091e89",
+      "display_parent_id": null,
+      "expected_revision": null,
+      "chat_revision": null,
+      "goal": "",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "instructions": "",
+      "resource_refs": [],
+      "result_ids": [],
+      "missing": [],
+      "position": [
+        0.0,
+        0.0
+      ],
+      "limits": {
+        "max_turns": 8,
+        "timeout_seconds": 60.0,
+        "max_depth": 1,
+        "max_calls": 8
+      },
+      "evidence_required": false
+    },
+    "node_id": "5b78d518-7f7f-4239-bbec-4ed720091e89",
+    "run_id": "892f806c-cc7f-407e-bf3c-51e88fa10c04",
+    "status": "completed",
+    "reason": null
+  },
+  "execution": {
+    "run_id": "892f806c-cc7f-407e-bf3c-51e88fa10c04",
+    "conversation_id": null,
+    "process_id": "d4281ac1-e8f2-448e-acbe-a7e7d8430620",
+    "request": {
+      "run_id": "892f806c-cc7f-407e-bf3c-51e88fa10c04",
+      "parent_run_id": null,
+      "agent_id": "5b78d518-7f7f-4239-bbec-4ed720091e89",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"goal\": \"2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：只完成目标指定期间的现金流、资本开支与竞争风险，不扩展其他年份趋势或额外指标。report 控制在约800个汉字以内；比较任务用表格。claims 最多8条，合并同一事实的口径和数值说明，但保留每条事实必需的引用。输入 content[].fragments 是完整获准原文，直接阅读引用，不重复调用工具；仅缺少原文时才按需读取。每条 citation 的 ref 和 location 直接复制输入；quote 取单个 fragment.text 中的连续短子串，保留词间空格，不重建制表符、不加入相邻行词语、不用省略号。跨行语句分别引用所有承载事实、对象、条件、后果的必要片段，或缩小结论范围。公司、期间、币种、单位、口径字段只填原文连续字串，保留大小写；不能用文件名、用户别名、翻译或标准化标签，不能定位则填 null。来源事实和推论分开；核对年份、单位、合并列和金额，未知不是零。缺资本开支不得编造自由现金流。仅在明确同币种假设下比较金额；现金流规模不能推断经营质量或风险高低。比较时回看挂载原文、补全上游引用、保留前提和缺口；不得声称已经独立验证。只输出有效JSON，JSON字符串内换行和引号必须正确转义。\\n通用示例：\\n通用引用边界示例（不是本次资料）：若 fragment.location=\\\"line:1\\\" 的 text=\\\"alpha beta\\\"，line:2 的 text=\\\"gamma delta\\\"，跨行结论应分别引用 {location:\\\"line:1\\\",quote:\\\"alpha beta\\\"} 与 {location:\\\"line:2\\\",quote:\\\"gamma delta\\\"}。绝不能在 line:2 引用 \\\"beta gamma delta\\\"；相邻行的词也不能拼入一个 quote。实际引用须替换为当前获准 ref、真实 location 与原文。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"name\": \"gm-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"5b614ecc-8451-4627-903a-c046d387b97a\", \"snapshot_id\": \"07576481-dc15-484f-b230-dd410ead39f7\", \"parse_id\": \"3eb2ad6d-bca2-423e-a562-6abeeffd62c6\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 61, text 0: GENERAL MOTORS COMPANY AND SUBSIDIARIES\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 61, text 1: CONSOLIDATED STATEMENTS OF CASH FLOWS\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 61, text 2: (In millions)\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 61, text 3: Years Ended December 31,\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 61, text 4: 2025\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 61, text 5: 2024\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 61, text 6: 2023\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 61, text 7: Cash flows from operating activities\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 61, text 8: Net income (loss)\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 61, text 9: $\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 61, text 10: 2,780\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 61, text 78: Net cash provided by (used in) operating activities\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 61, text 80: 26,867\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 61, text 82: 20,129\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 61, text 84: 20,930\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 17, text 3: Risks related to our competition and strategy\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 17, text 4: If we do not deliver new products, services, technologies, and customer experiences in response to increased competition\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 17, text 5: and changing consumer needs and preferences, our business could suffer.\", \"kind\": \"text\"}]}]}"
+          }
+        ]
+      },
+      "limits": {
+        "max_turns": 8,
+        "timeout_seconds": 180.0,
+        "max_depth": 1,
+        "max_calls": 8
+      },
+      "depth": 0
+    },
+    "expected_revision": 0,
+    "status": "succeeded",
+    "result": {
+      "run_id": "892f806c-cc7f-407e-bf3c-51e88fa10c04",
+      "status": "succeeded",
+      "output": {
+        "claims": [
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "GENERAL MOTORS COMPANY AND SUBSIDIARIES",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": "GENERAL MOTORS COMPANY AND SUBSIDIARIES",
+                  "currency": null
+                },
+                "location": "line:1",
+                "relation": "supports",
+                "reasoning": "该片段给出报告主体名称，是确定公司字段的依据。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "CONSOLIDATED STATEMENTS OF CASH FLOWS",
+                "fields": {
+                  "unit": null,
+                  "basis": "CONSOLIDATED STATEMENTS OF CASH FLOWS",
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:2",
+                "relation": "supports",
+                "reasoning": "标明报表为合并现金流量表，支持合并口径判断。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "(In millions)",
+                "fields": {
+                  "unit": "(In millions)",
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:3",
+                "relation": "supports",
+                "reasoning": "该连续字串给出金额单位，支持单位字段为百万。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "Years Ended December 31,",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": "Years Ended December 31,",
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:4",
+                "relation": "supports",
+                "reasoning": "该连续字串说明列标题为截至12月31日的年度期间，支持期间字段。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "$",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": "$"
+                },
+                "location": "line:10",
+                "relation": "supports",
+                "reasoning": "币种符号片段支持币种字段填 $。"
+              }
+            ],
+            "statement": "来源为 GENERAL MOTORS COMPANY AND SUBSIDIARIES 的合并现金流量表（CONSOLIDATED STATEMENTS OF CASH FLOWS），金额单位 (In millions)，币种符号 $，列示期间为 Years Ended December 31, 的多期列，属合并口径且片段未提供分部拆分。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "2025",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": "2025",
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:5",
+                "relation": "supports",
+                "reasoning": "该片段是列标题第一年，用于确定第一个数值列的年度。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "2024",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": "2024",
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:6",
+                "relation": "supports",
+                "reasoning": "该片段是列标题第二年，用于确定第二个数值列的年度。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "2023",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": "2023",
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:7",
+                "relation": "supports",
+                "reasoning": "该片段是列标题第三年，用于确定第三个数值列的年度。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "Net cash provided by (used in) operating activities",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:12",
+                "relation": "supports",
+                "reasoning": "该行标签界定后续三个数值为经营活动净现金流。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "26,867",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:13",
+                "relation": "supports",
+                "reasoning": "该数值为经营活动净现金流首列，按列序对应 2025，用于最高值判断。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "20,129",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:14",
+                "relation": "supports",
+                "reasoning": "该数值为第二列，对应 2024，用于最低值判断。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "20,930",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:15",
+                "relation": "supports",
+                "reasoning": "该数值为第三列，对应 2023，用于居中排序判断。"
+              }
+            ],
+            "statement": "列标题年度依次为 2025、2024、2023；合并经营活动净现金流对应为 26,867、20,129、20,930（百万美元），三年均为净流入，其中 2025 最高、2024 最低、2023 居中；在同币种同单位下 2025 比 2024 多 6,738、比 2023 多 5,937。金额规模不用于判断经营质量或风险高低。"
+          },
+          {
+            "missing": [
+              "Net income (loss) 行 2024 年对应数值",
+              "Net income (loss) 行 2023 年对应数值",
+              "与净利润行相关的完整行项（片段跳过 text 11 至 text 77）"
+            ],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "Net income (loss)",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:9",
+                "relation": "supports",
+                "reasoning": "该行标签界定后续数值为净利润（亏损）行。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "$",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": "$"
+                },
+                "location": "line:10",
+                "relation": "supports",
+                "reasoning": "币种符号片段与紧随其后的数值共同构成金额表述。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "2,780",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:11",
+                "relation": "supports",
+                "reasoning": "该片段为净利润行唯一可见数值，按列序位置推断对应 2025。"
+              }
+            ],
+            "statement": "Net income (loss) 行仅出现一个数值 $ 2,780（单位同表 In millions）；按 2025/2024/2023 列序位置推断其属 2025 年，此属位置推断；2024、2023 对应数值在片段中缺失（未知，不视为零），不得据此推算自由现金流。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "Risks related to our competition and strategy",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:16",
+                "relation": "supports",
+                "reasoning": "该片段是风险类别标题，界定下述风险因素的归属。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "If we do not deliver new products, services, technologies, and customer experiences in response to increased competition",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:17",
+                "relation": "supports",
+                "reasoning": "该片段给出风险触发条件与竞争含义，支撑定性风险描述。"
+              },
+              {
+                "ref": {
+                  "parse_id": "3eb2ad6d-bca2-423e-a562-6abeeffd62c6",
+                  "resource_id": "5b614ecc-8451-4627-903a-c046d387b97a",
+                  "snapshot_id": "07576481-dc15-484f-b230-dd410ead39f7"
+                },
+                "quote": "and changing consumer needs and preferences, our business could suffer.",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "line:18",
+                "relation": "supports",
+                "reasoning": "该片段给出消费者需求变化条件与业务受损后果，与前一片段共同构成完整风险语句。"
+              }
+            ],
+            "statement": "在 Risks related to our competition and strategy 项下，来源披露：若未能针对加剧的竞争以及变化的消费者需求与偏好，交付新产品、服务、技术和客户体验，业务可能受损。该表述为定性风险披露，未附量化竞争指标。"
+          },
+          {
+            "missing": [
+              "资本开支（capital expenditures）",
+              "投资活动净现金流",
+              "筹资活动净现金流",
+              "自由现金流"
+            ],
+            "citations": [],
+            "statement": "所给片段未包含资本开支、投资活动与筹资活动现金流以及自由现金流数据，因此无法给出资本开支或自由现金流数值（不以未知为零、不据经营现金流反推自由现金流）。"
+          },
+          {
+            "missing": [
+              "市场份额数据",
+              "竞争对手经营数据",
+              "销量或价格等竞争量化指标",
+              "分部（automotive / GM Financial）口径拆分"
+            ],
+            "citations": [],
+            "statement": "片段未提供市场份额、竞争对手经营数据、销量或价格等量化竞争指标，也未提供分部口径，竞争风险分析只能停留在上述定性披露层面。"
+          }
+        ],
+        "report": "# 2025 汽车制造业：GM 现金流与竞争风险核对\n\n**口径**：GENERAL MOTORS COMPANY AND SUBSIDIARIES 的 CONSOLIDATED STATEMENTS OF CASH FLOWS，单位 (In millions)，币种 $，期间 Years Ended December 31, 2025/2024/2023，合并口径（片段未给分部拆分）。\n\n## 一、经营活动现金流（合并，百万美元）\n\n| 年度 | 经营活动净现金流 | 期内排序 |\n| --- | --- | --- |\n| 2025 | 26,867 | 最高 |\n| 2024 | 20,129 | 最低 |\n| 2023 | 20,930 | 居中 |\n\n三年均为净流入；在明确同币种、同单位前提下，2025 比 2024 多 6,738、比 2023 多 5,937（差额为算术结果）。现金流规模不用于推断经营质量或风险高低。\n\n## 二、净利润（亏损）\n\n仅见 Net income (loss) 行一个数值 $ 2,780（单位同表）；按 2025/2024/2023 的列序位置推断其属 2025 年（属位置推断）。2024、2023 对应数值缺失，缺失记为未知，不视为零。\n\n## 三、竞争与战略风险\n\nRisks related to our competition and strategy：若未能针对加剧的竞争以及变化的消费者需求与偏好，交付新产品、服务、技术和客户体验，业务可能受损。该披露为定性表述，未含量化竞争指标。\n\n## 四、缺失\n\n资本开支；投资活动与筹资活动现金流；自由现金流（缺资本开支，无法计算，不推算）；2024/2023 净利润数值；分部口径；市场份额、竞争对手经营数据等量化竞争信息。上述结论均基于所给片段，未作独立验证。",
+        "missing": [
+          "资本开支（capital expenditures）数据",
+          "投资活动现金流与筹资活动现金流",
+          "自由现金流（缺资本开支，无法计算）",
+          "Net income (loss) 行 2024 年与 2023 年数值",
+          "分部（automotive / GM Financial）拆分口径",
+          "市场份额、竞争对手经营数据、销量或价格等量化竞争指标"
+        ]
+      },
+      "usage": {
+        "requests": 1,
+        "input_tokens": 3026,
+        "output_tokens": 9359,
+        "complete": true
+      },
+      "error": null
+    },
+    "commit_id": "run:892f806c-cc7f-407e-bf3c-51e88fa10c04",
+    "created_at": "2026-10-03T01:29:22.079993+08:00"
+  }
+}

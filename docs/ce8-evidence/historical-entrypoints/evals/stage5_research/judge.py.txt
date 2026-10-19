@@ -1,0 +1,131 @@
+"""Second, explicit model judgment of live Stage 5 claims and a negative control."""
+import json
+import os
+from pathlib import Path
+from datetime import datetime, timezone
+
+import httpx
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks
+
+
+ROOT = Path('docs')
+REPORT = ROOT / 'stage5-live-eval.json'
+RAW = ROOT / 'stage5-tinyfish-raw.json'
+OUT = ROOT / 'stage5-model-judge.json'
+NEGATIVE = '通用汽车 2025 年合并经营活动现金流为 106 亿美元。'
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def credential():
+    if os.environ.get('STAGE5_CREDENTIAL_FILE'):
+        value = json.loads(Path(os.environ['STAGE5_CREDENTIAL_FILE']).read_text())
+        os.environ['OPENAI_API_KEY'] = value['api_key']
+        os.environ['OPENAI_BASE_URL'] = value['base_url']
+    return os.environ['OPENAI_API_KEY'], os.environ['OPENAI_BASE_URL']
+
+
+def program_negative(report):
+    db = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        scopes = build_resources(db, os.environ['STAGE5_BLOBS'])
+        research = build_research(db, scopes)
+        build_tasks(db, scopes, research)
+        web = report['web_claims']
+        original = web['bundle']['evidence'][0]
+        binding = research.query('run', web['run_id'])
+        draft = {'claims': [{'statement': NEGATIVE,
+                  'citations': [{'ref': original['ref'], 'location': original['location'],
+                                 'quote': original['quote'], 'relation': 'supports',
+                                 'reasoning': '负例：引用存在，但该口径不能支持合并经营活动现金流'}]}]}
+        bundle = research.evidence.prepare('stage5-negative-control', binding, draft)
+        return {'program_accepts_location_and_quote': len(bundle.evidence) == 1,
+                'statement': NEGATIVE, 'citation': original,
+                'program_relation_assessment': bundle.relations[0].assessment,
+                'expected_semantic_assessment': 'unsupported'}
+    finally:
+        db.close()
+
+
+def cases(report, raw, section):
+    run = report[section]
+    evidence = {e['id']: e for e in run['bundle']['evidence']}
+    relations = run['bundle']['relations']
+    claims = []
+    for index, claim in enumerate(run['bundle']['claims']):
+        related = [r for r in relations if r['claim_id'] == claim['id']]
+        claims.append({'index': index, 'statement': claim['statement'],
+            'citations': [{'evidence_id': r['evidence_id'], 'relation': r['relation'],
+                           'reasoning': r['reasoning'],
+                           'location': evidence[r['evidence_id']]['location'],
+                           'quote': evidence[r['evidence_id']]['quote'],
+                           'fields': evidence[r['evidence_id']]['fields']}
+                          for r in related if r['evidence_id']],
+            'missing': [r['reasoning'] for r in related if r['relation'] == 'missing']})
+    sources = {}
+    if section == 'web_claims':
+        sources['official_gm_web_snapshot'] = raw['calls'][1]['payload']['results'][0]['text']
+        original = run['bundle']['evidence'][0]
+        claims.append({'index': 'negative_control', 'statement': NEGATIVE,
+                       'citations': [{'evidence_id': 'negative-control', 'relation': 'supports',
+                                      'reasoning': '引用存在但可能不支持该口径',
+                                      'location': original['location'],
+                                      'quote': original['quote'], 'fields': {}}], 'missing': []})
+    else:
+        for name, packet in report['packets'].items():
+            if section == 'continuation' and name != 'tesla-2025.pdf':
+                continue
+            sources[name] = Path(packet['path']).read_text()
+    return {'section': section, 'sources': sources, 'claims': claims}
+
+
+def main():
+    key, base_url = credential()
+    report = json.loads(REPORT.read_text())
+    raw = json.loads(RAW.read_text())
+    output = {'started_at': now(), 'requested_model': 'deepseek-flash',
+              'display_model': 'DeepSeek-V4.1-Flash',
+              'negative_program_check': program_negative(report), 'sections': {}}
+    system = ('你是独立于原报告生成步骤的严格证据评判器。逐条审查 claim 是否由给定固定来源和引用支持，'
+              '关注公司、期间、币种、单位、合并/汽车业务/调整后口径、表格列、计算与风险披露。'
+              '有引用只证明片段存在，不证明结论成立。区分 supports、opposes 与 missing；'
+              '对每个引用给 supported、unsupported 或 uncertain，并给整条 claim '
+              'supported、partially_supported、unsupported 或 insufficient_evidence。'
+              '不要替人类签收。只返回 JSON 对象，键为 judgments 数组；每项含 index、verdict、reason、'
+              'citation_judgments 数组（evidence_id、verdict、reason）。理由简洁。')
+    with httpx.Client(timeout=240, trust_env=False) as client:
+        for section in ('comparison', 'continuation', 'web_claims'):
+            request = cases(report, raw, section)
+            response = client.post(base_url.rstrip('/') + '/chat/completions',
+                headers={'Authorization': 'Bearer ' + key},
+                json={'model': 'deepseek-flash', 'temperature': 0,
+                      'thinking': {'type': 'disabled'},
+                      'response_format': {'type': 'json_object'}, 'max_tokens': 7000,
+                      'messages': [{'role': 'system', 'content': system},
+                                   {'role': 'user', 'content': json.dumps(request, ensure_ascii=False)}]})
+            response.raise_for_status()
+            value = response.json()
+            content = value['choices'][0]['message']['content']
+            output['sections'][section] = {'request': request,
+                'response_id': value.get('id'), 'response_model': value.get('model'),
+                'usage': value.get('usage'), 'finish_reason': value['choices'][0].get('finish_reason'),
+                'raw_content': content, 'finished_at': now()}
+            OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
+            result = json.loads(content)
+            output['sections'][section]['parsed'] = result
+            OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
+    output['finished_at'] = now()
+    OUT.write_text(json.dumps(output, ensure_ascii=False, indent=2) + '\n')
+    print(json.dumps({'status': 'complete', 'model_responses':
+        {s: {'model': v['response_model'], 'judgments': len(v['parsed'].get('judgments', []))}
+         for s, v in output['sections'].items()},
+        'negative_program_check': output['negative_program_check']['program_accepts_location_and_quote']},
+        ensure_ascii=False))
+
+
+if __name__ == '__main__':
+    main()

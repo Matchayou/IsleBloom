@@ -1,0 +1,35 @@
+{
+  "project_id": "af55b69d-d51f-4803-a4ed-7530b3f5d143",
+  "research_id": "e5829b9e-5ca5-4ab9-8506-2a44902036bc",
+  "source_ref": {
+    "resource_id": "2750a1ea-d62d-4683-8ae5-7ffb703a17d0",
+    "snapshot_id": "356ea646-87ad-4588-8ef2-5e1afffd15bd",
+    "parse_id": "85fb59d3-3618-49fc-8b7a-710cdd10bff5"
+  },
+  "manager_run_id": "6e9be6df-55df-41f1-90b9-bc3eb598b9d5",
+  "manager_status": "succeeded",
+  "manager_error": null,
+  "tool_names": [
+    "find_experts",
+    "read_context",
+    "read_context",
+    "delegate_task"
+  ],
+  "dispatches": [
+    {
+      "command_id": "manager:9e0b821bdfedcbe78ba387e2bdd7509929e5deb024f25322434c44e97d016f09",
+      "status": "completed",
+      "task_id": "74064453-1ef9-5f14-9430-fae74887ecb2",
+      "session_id": "4d6f648b-c7c7-47fa-96d9-1a0798b51fff",
+      "packet_id": "70ad3ef8-a4fd-5302-a4e2-fb8d2ab036a5",
+      "packet_has_original": true,
+      "receipts": [
+        {
+          "result_id": "task-result:b982033e-f9fd-492b-9888-ef3f535ad819",
+          "delivery": "pending_review"
+        }
+      ]
+    }
+  ],
+  "assistant_report": "## 结论汇报\n\n已按要求让**综合整理专家（expert_synthesize / synthesize-v1）**阅读当前主任务中的合成资料 `synthetic-market-c1.txt`，并携带了你的原始要求与资料。专家已返回结果（状态：`pending_review`，即**初步结果、尚未经过独立复核**，以下为其要点转述与复核说明）。\n\n### 一、能否支持真实市场规模结论\n**不能。** 专家判定：该资料无法支持任何真实市场规模结论，甚至连“市场规模存在且增长”这一最弱命题都不能当作真实市场事实。理由不是对数据质量的怀疑，而是**资料本身的性质**——它自我声明为合成测试样本、非真实市场报告，陈述对象是虚构市场 A，样本期未指明，且自述不提供任何规模研究关键要素。\n\n### 二、缺失信息（原文自述 + 逐项）\n资料全文仅 1 行（`line:1`），明确自述缺失以下要素，专家并据此逐项展开：市场规模数值、历史值/预测值、增速量化数值、期间起止、任何日期、方法论、数据采集与统计口径、地域口径、市场定义与边界、**币种与单位**、竞争格局、独立来源、发布主体与权威性、置信区间/误差说明、细分结构、供需侧证据。\n\n### 三、局限与风险\n- **性质风险（最根本）**：合成测试样本，不指涉真实市场，用作真实证据即构成事实性错误；\n- **主体错位**：对象为“fictional market A”，无法映射到任何真实市场/地区/行业；\n- **不可量化**：仅有定性动词 “grew”，任何由此推导的规模、增速、份额都必然是编造；\n- **时间不可用**：样本期未指明，无法与真实期间对齐；\n- **无法复核**：无方法论、无独立来源，第三方无法复现或交叉验证；\n- **误用放大**：若被二手摘要引用，可能形成“以合成样本冒充实证依据”的合规与声誉风险。\n\n### 四、必要说明\n专家结论仅依据所挂载资料正文作出，未引入外部数据，也未给出任何市场规模数字；因此本任务可交付的仅为“资料不足”的判定，而非任何量级、情景或区间估算。\n\n> 复核提示：上述专家结果标记为 `pending_review`（初步），我尚未对其进行独立复核；其中逐字引用均可回溯到资料 `line:1`，但“结论是否成立”的判断性质属程序可定位、语义需独立复核的范畴。\n\n**来源**：`synthetic-market-c1.txt`（当前主任务挂载资料，ref: resource_id=2750a1ea-d62d-4683-8ae5-7ffb703a17d0；无对外 URL，故不附网页链接）。"
+}

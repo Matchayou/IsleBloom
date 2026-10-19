@@ -1,0 +1,15 @@
+{
+  "manager_run_id": "433be15c-9661-43eb-9283-a21100bdb9fd",
+  "manager_status": "failed",
+  "error_code": "tool_failed",
+  "completed_tools": [
+    "find_experts",
+    "read_context",
+    "read_context"
+  ],
+  "failed_tool": "send_agent_message",
+  "agent_message_saved": false,
+  "fix": "find_experts now returns visible task IDs and versions for each session; the read_context catalog also returns task and session IDs.",
+  "retest": "collaboration-c2-message-verification.json",
+  "suspected_cause": "The expert discovery result did not expose linked task IDs, so a reliable target was unavailable to the model. Core masked the handler exception as tool_failed, and the exact tool arguments were not persisted; this cause is inferred, not proven."
+}

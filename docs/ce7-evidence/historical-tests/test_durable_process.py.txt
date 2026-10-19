@@ -1,0 +1,332 @@
+"""Real SIGKILL and fresh-process recovery against a dedicated PostgreSQL database."""
+import os
+import json
+import signal
+import subprocess
+import sys
+import time
+from pathlib import Path
+from uuid import uuid4
+
+import httpx
+import pytest
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_research, build_resources, build_tasks
+
+
+def until(fn, timeout=20):
+    deadline = time.monotonic() + timeout
+    last = None
+    while time.monotonic() < deadline:
+        try:
+            last = fn()
+            if last: return last
+        except (httpx.ConnectError, httpx.ReadError):
+            pass
+        time.sleep(.1)
+    raise AssertionError(f'Timed out: {last}')
+
+
+@pytest.mark.parametrize('point', ['before_call', 'after_call', 'after_commit'])
+def test_kill_worker_and_resume_only_remaining(point, tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    blobs = tmp_path / 'blobs'
+    db = PostgresDatabase(url)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Crash recovery ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        refs = []
+        for company in ('tesla', 'ford', 'gm'):
+            scope, ref = scopes.ingest(scope,
+                content=(Path(__file__).parents[1] / 'docs' / 'stage5-packets' /
+                    f'{company}-2025.txt').read_bytes(),
+                name=f'{company}-2025.txt', media_type='text/plain')
+            refs.append(ref)
+        tasks = build_tasks(db, scopes, research)
+        first, second, third = [tasks.create(research_id=root.id, kind='search',
+            user_request=f'Find {company} 2025 cash flow and competition', required_refs=(ref,))
+            for company, ref in zip(('Tesla', 'Ford', 'GM'), refs)]
+    finally:
+        db.close()
+    port = 8800 + int(uuid4().int % 1000)
+    base = f'http://127.0.0.1:{port}'
+    job_id = str(uuid4())
+    marker = tmp_path / 'paused'
+    log = (tmp_path / 'worker.log').open('w')
+    env = dict(os.environ, DATABASE_URL=url, STAGE6_PAUSE_AT=point,
+        STAGE6_PAUSE_TASK_ID=second.id, STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--blobs', str(blobs),
+        'serve', '--durable', '--port', str(port)]
+    proc = None
+    try:
+        proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code == 404)
+        response = httpx.post(base + '/api/durable_submit', json={'job_id':job_id,
+            'task_ids':[first.id, second.id, third.id]})
+        assert response.status_code == 202, response.text
+        until(lambda: marker.exists())
+        before = httpx.get(base + '/api/durable_status', params={'job_id':job_id}).json()
+        assert len(before['tasks'][0]['receipts']) == 1
+        first_id = before['tasks'][0]['run_ids'][0]
+        second_id = before['tasks'][1]['run_ids'][0]
+        proc.send_signal(signal.SIGKILL)
+        kill_exit = proc.wait(timeout=5)
+        assert kill_exit == -signal.SIGKILL
+        marker.unlink()
+        clean = {k:v for k,v in env.items() if not k.startswith('STAGE6_PAUSE_')}
+        proc = subprocess.Popen(cmd, env=clean, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code == 200)
+        state = until(lambda: (value if value['status'] in ('SUCCESS','ERROR') else None)
+            if (value := httpx.get(base + '/api/durable_status', params={'job_id':job_id}).json()) else None)
+        assert state['status'] == 'SUCCESS', state
+        assert [x['run_ids'][0] for x in state['tasks'][:2]] == [first_id, second_id]
+        assert [len(x['receipts']) for x in state['tasks']] == [1, 1, 1]
+        assert len(state['tasks'][0]['attempts'][first_id]) == 1
+        assert len(state['tasks'][1]['attempts'][second_id]) == (1 if point == 'after_commit' else 2)
+        third_id = state['tasks'][2]['run_ids'][0]
+        assert len(state['tasks'][2]['attempts'][third_id]) == 1
+        assert len(state['summary']['experts']) == 3
+        (Path(__file__).parents[1] / 'docs' / f'stage6-fault-{point}.json').write_text(
+            json.dumps({'point':point, 'worker_exit_code':kill_exit, 'before':before,
+                'after':state}, ensure_ascii=False, indent=2))
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=5)
+        log.close()
+
+
+def test_cancel_paused_background_job(tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    blobs = tmp_path / 'blobs'
+    db = PostgresDatabase(url)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Cancel ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research)
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+    finally:
+        db.close()
+    port = 8800 + int(uuid4().int % 1000)
+    base = f'http://127.0.0.1:{port}'
+    job_id = str(uuid4())
+    marker = tmp_path / 'paused'
+    log = (tmp_path / 'worker.log').open('w')
+    env = dict(os.environ, DATABASE_URL=url, STAGE6_PAUSE_AT='before_call',
+        STAGE6_PAUSE_TASK_ID=spec.id, STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--blobs', str(blobs),
+        'serve', '--durable', '--port', str(port)]
+    proc = None
+    try:
+        proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code == 404)
+        assert httpx.post(base + '/api/durable_submit', json={'job_id':job_id,
+            'task_ids':[spec.id]}).status_code == 202
+        until(lambda: marker.exists())
+        response = httpx.post(base + '/api/durable_cancel', json={'job_id':job_id})
+        assert response.status_code == 200, response.text
+        state = until(lambda: (value if value['status'] == 'CANCELLED' else None)
+            if (value := httpx.get(base + '/api/durable_status', params={'job_id':job_id}).json()) else None)
+        assert state['tasks'][0]['receipts'] == []
+        assert len(state['tasks'][0]['attempts'][state['tasks'][0]['run_ids'][0]]) == 1
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=5)
+        log.close()
+
+
+@pytest.mark.parametrize('mutation', ['revoke', 'supersede'])
+def test_recovery_rejects_changed_authority_or_version(mutation, tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    blobs = tmp_path / 'blobs'
+    db = PostgresDatabase(url)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Changed authority ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research)
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+    finally:
+        db.close()
+    port = 8800 + int(uuid4().int % 1000)
+    base = f'http://127.0.0.1:{port}'
+    job_id = str(uuid4())
+    marker = tmp_path / 'paused'
+    log = (tmp_path / 'worker.log').open('w')
+    env = dict(os.environ, DATABASE_URL=url, STAGE6_PAUSE_AT='before_call',
+        STAGE6_PAUSE_TASK_ID=spec.id, STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--blobs', str(blobs),
+        'serve', '--durable', '--port', str(port)]
+    proc = None
+    try:
+        proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code == 404)
+        assert httpx.post(base + '/api/durable_submit', json={'job_id':job_id,
+            'task_ids':[spec.id]}).status_code == 202
+        until(lambda: marker.exists())
+        proc.send_signal(signal.SIGKILL)
+        assert proc.wait(timeout=5) == -signal.SIGKILL
+        db = PostgresDatabase(url)
+        try:
+            scopes = build_resources(db, blobs)
+            research = build_research(db, scopes)
+            tasks = build_tasks(db, scopes, research)
+            if mutation == 'revoke':
+                current = scopes.current(root.scope_id, 'local')
+                scopes.revoke(current, ref)
+            else:
+                tasks.create(research_id=root.id, kind='search', user_request='Updated task',
+                    required_refs=(ref,), task_id=spec.id)
+        finally:
+            db.close()
+        clean = {k:v for k,v in env.items() if not k.startswith('STAGE6_PAUSE_')}
+        proc = subprocess.Popen(cmd, env=clean, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/researches').status_code == 200)
+        until(lambda: httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code in (403,409))
+        assert httpx.get(base + '/api/durable_status', params={'job_id':job_id}).status_code == (
+            403 if mutation == 'revoke' else 409)
+        proc.terminate()
+        proc.wait(timeout=5)
+        proc = None
+        db = PostgresDatabase(url)
+        try:
+            scopes = build_resources(db, blobs)
+            research = build_research(db, scopes)
+            tasks = build_tasks(db, scopes, research)
+            assert tasks.query('receipt', f'task-result:{tasks.query("list_runs", spec.id)[0].id}') is None
+        finally:
+            db.close()
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=5)
+        log.close()
+
+
+def test_uncommitted_call_attempt_limit(tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    blobs = tmp_path / 'blobs'
+    db = PostgresDatabase(url)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Attempt limit ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research)
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+    finally:
+        db.close()
+    port = 8800 + int(uuid4().int % 1000)
+    base = f'http://127.0.0.1:{port}'
+    job_id = str(uuid4())
+    marker = tmp_path / 'paused'
+    log = (tmp_path / 'worker.log').open('w')
+    env = dict(os.environ, DATABASE_URL=url, STAGE6_PAUSE_AT='before_call',
+        STAGE6_PAUSE_TASK_ID=spec.id, STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--blobs', str(blobs),
+        'serve', '--durable', '--port', str(port)]
+    proc = None
+    try:
+        for attempt in range(2):
+            marker.unlink(missing_ok=True)
+            proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
+            until(lambda: httpx.get(base + '/api/researches').status_code == 200)
+            if attempt == 0:
+                assert httpx.post(base + '/api/durable_submit', json={'job_id':job_id,
+                    'task_ids':[spec.id]}).status_code == 202
+            until(lambda: marker.exists())
+            proc.send_signal(signal.SIGKILL)
+            assert proc.wait(timeout=5) == -signal.SIGKILL
+        proc = subprocess.Popen(cmd, env={k:v for k,v in env.items()
+            if not k.startswith('STAGE6_PAUSE_')}, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/researches').status_code == 200)
+        state = until(lambda: (value if value['status'] == 'ERROR' else None)
+            if (value := httpx.get(base + '/api/durable_status', params={'job_id':job_id}).json()) else None)
+        run_id = state['tasks'][0]['run_ids'][0]
+        assert len(state['tasks'][0]['attempts'][run_id]) == 2
+        assert state['tasks'][0]['receipts'] == []
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=5)
+        log.close()
+
+
+def test_browser_close_then_worker_restart(tmp_path):
+    url = os.environ.get('TEST_DATABASE_URL')
+    if not url: pytest.skip('Dedicated PostgreSQL database required')
+    blobs = tmp_path / 'blobs'
+    db = PostgresDatabase(url)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Browser disconnect ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research)
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+    finally:
+        db.close()
+    port = 8800 + int(uuid4().int % 1000)
+    base = f'http://127.0.0.1:{port}'
+    job_id = f'{spec.id}-v1'
+    marker = tmp_path / 'paused'
+    log = (tmp_path / 'worker.log').open('w')
+    env = dict(os.environ, DATABASE_URL=url, STAGE6_PAUSE_AT='before_call',
+        STAGE6_PAUSE_TASK_ID=spec.id, STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--blobs', str(blobs),
+        'serve', '--durable', '--port', str(port), '--frontend', 'frontend/dist']
+    browser_script = Path(__file__).parents[1] / 'frontend' / 'scripts' / 'stage6-browser.mjs'
+    proc = None
+    try:
+        proc = subprocess.Popen(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/researches').status_code == 200)
+        result = subprocess.check_output(['node', str(browser_script), 'submit', base, spec.id],
+            cwd=browser_script.parents[1])
+        submitted = json.loads(result)
+        assert submitted['status'] == 202
+        until(lambda: marker.exists())
+        proc.send_signal(signal.SIGKILL)
+        kill_exit = proc.wait(timeout=5)
+        assert kill_exit == -signal.SIGKILL
+        proc = subprocess.Popen(cmd, env={k:v for k,v in env.items()
+            if not k.startswith('STAGE6_PAUSE_')}, stdout=log, stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/researches').status_code == 200)
+        until(lambda: (value if value['status'] == 'SUCCESS' else None)
+            if (value := httpx.get(base + '/api/durable_status', params={'job_id':job_id}).json()) else None)
+        reopened = subprocess.check_output(['node', str(browser_script), 'status', base, job_id],
+            cwd=browser_script.parents[1])
+        view = json.loads(reopened)
+        assert view['status'] == 200
+        assert view['body']['status'] == 'SUCCESS'
+        assert len(view['body']['tasks'][0]['receipts']) == 1
+        (Path(__file__).parents[1] / 'docs' / 'stage6-browser-reopen.json').write_text(
+            json.dumps({'browser_submit':submitted, 'worker_exit_code':kill_exit,
+                'new_browser_status':view}, ensure_ascii=False, indent=2))
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=5)
+        log.close()

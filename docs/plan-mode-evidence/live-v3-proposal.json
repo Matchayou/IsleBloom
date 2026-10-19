@@ -1,0 +1,158 @@
+{
+  "id": "c7a9db03-a614-40da-83f1-0205e099de78",
+  "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+  "origin_node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+  "request_id": "local-v3-timeout-audit-7ebde8db-a948-4758-9551-c885958c927c",
+  "request": "比较 ReAct 与先规划、用户确认、再执行在研究型智能体中的机制、适用场景、成本与可靠性。交付权威资料清单、对照表、有来源的简短报告与项目建议；不编造实验、价格或性能数字。新版依据本地超时审计调整预算：每步600秒，总1800秒，最多3次串行运行，120000 tokens，每步8轮模型、6次工具调用。保留前两轮失败记录和未知计费；新计划独立批准后才执行。",
+  "revision": 1,
+  "status": "awaiting_confirmation",
+  "created_at": "2026-10-12T03:01:00.695752Z",
+  "updated_at": "2026-10-12T03:01:00.695763Z",
+  "origin_revision": 0,
+  "chat_revision": 0,
+  "root_scope_version": 1,
+  "node_scope_version": 1,
+  "resource_refs": [
+    {
+      "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+      "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+      "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+    }
+  ],
+  "result_ids": [],
+  "planning_result": null,
+  "model": "deepseek-v4-pro",
+  "analysis": "本地编制的新版计划，未调用外部规划模型。第二轮180秒耗尽：模型与压缩占主要耗时，摘要约45秒超时，交付非JSON触发修正且只剩约6秒。单步延长至600秒，总1800秒；预算由30000提高至120000 tokens，为联网读取、上下文压缩与输出修正预留空间。模型继续deepseek-v4-pro。前两轮记录不变；第二轮已确认24024 tokens，另两条已发送请求的用量未知，旧账不并入新执行预算。优先复用已保存ReAct论文，仅定向补齐官方工作流来源。",
+  "assumptions": [
+    "已保存ReAct论文正文解析ready，可以复用；发现记录和摘要不作为事实证据。",
+    "600秒及120000 tokens是新版上限，不保证必然完成，也不是费用估算。",
+    "旧请求usage未知保持未知；新版是新的独立研究，不重放旧run。"
+  ],
+  "questions": [],
+  "plan": {
+    "id": "fc0b4ca5-36d5-45ea-916d-5d8da545e7c8",
+    "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+    "steps": [
+      {
+        "node_id": "1481529b-e6ca-45e1-be81-c70528e85e8f",
+        "depends_on": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "d3345ea2-7583-47cc-aa95-c20949d18dbb",
+        "depends_on": [
+          "1481529b-e6ca-45e1-be81-c70528e85e8f"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "241d303c-b451-43bc-a280-a9630f354f44",
+        "depends_on": [
+          "1481529b-e6ca-45e1-be81-c70528e85e8f",
+          "d3345ea2-7583-47cc-aa95-c20949d18dbb"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      }
+    ],
+    "policy": {
+      "max_concurrency": 1,
+      "max_runs": 3,
+      "max_total_tokens": 120000,
+      "timeout_seconds": 1800.0,
+      "completion": "fail_fast"
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "1481529b-e6ca-45e1-be81-c70528e85e8f",
+      "goal": "核对并补齐ReAct与先规划后执行的权威来源",
+      "instructions": "优先定位读取已保存且解析ready的ReAct原论文；针对人工确认/计划执行工作流定向检索官方文档。最多核对2至3份关键来源，避免广泛检索和重复整页读取。保留原文定位、URL、版本或日期、可信度、核对状态；无法核对标未知。用户确认本提案后直接执行本步骤，不重新生成整份计划或请求重复确认。最终输出严格符合系统JSON schema，不用Markdown围栏包裹JSON；报告控制在1500中文字符左右，缺口显式记录。只引用已读取和核对的正文定位，检索摘要不算证据。\n交付要求：2至3份权威来源清单，含标题、URL、日期或未知、关键摘录及定位、核对状态与缺口。",
+      "deliverable": "2至3份权威来源清单，含标题、URL、日期或未知、关键摘录及定位、核对状态与缺口。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    },
+    {
+      "node_id": "d3345ea2-7583-47cc-aa95-c20949d18dbb",
+      "goal": "比较机制、失败模式、适用场景、成本结构与可靠性",
+      "instructions": "依赖第一步的完整交付，优先复用摘要和来源定位；仅必要缺口允许定向搜索与获取。比较控制流、人工介入、错误计划、工具失败、上下文和重试；成本只比较模型轮次、工具次数、上下文及人工确认开销，缺实测则标未知。用户确认本提案后直接执行本步骤，不重新生成整份计划或请求重复确认。最终输出严格符合系统JSON schema，不用Markdown围栏包裹JSON；报告控制在1500中文字符左右，缺口显式记录。只引用已读取和核对的正文定位，检索摘要不算证据。\n交付要求：带来源定位的机制与失败模式对照表草稿，明确实测未知项。",
+      "deliverable": "带来源定位的机制与失败模式对照表草稿，明确实测未知项。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    },
+    {
+      "node_id": "241d303c-b451-43bc-a280-a9630f354f44",
+      "goal": "综合最终对照表、有来源报告与本项目建议",
+      "instructions": "依赖前两步完整交付，复用上游结果，只定位读已有资料，不联网。给出ReAct与计划确认后执行的使用场景、成本和可靠性对照；建议仅涉及研究工具调用和人工确认，不安排代码、发布或基准实验。说明不能由资料推出的数字与因果结论。用户确认本提案后直接执行本步骤，不重新生成整份计划或请求重复确认。最终输出严格符合系统JSON schema，不用Markdown围栏包裹JSON；报告控制在1500中文字符左右，缺口显式记录。只引用已读取和核对的正文定位，检索摘要不算证据。\n交付要求：最终对照表、有来源的简短报告、研究工作流建议和局限性。",
+      "deliverable": "最终对照表、有来源的简短报告、研究工作流建议和局限性。",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "result_ids": []
+    }
+  ],
+  "approved_revision": null,
+  "approved_by": null,
+  "approved_at": null,
+  "workflow_id": null,
+  "execution_started_at": null,
+  "reason": null,
+  "recovery_of": null,
+  "sources": [
+    {
+      "ref": {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      },
+      "name": "Synergizing Reasoning and Acting in Language Models"
+    }
+  ],
+  "execution_steps": []
+}

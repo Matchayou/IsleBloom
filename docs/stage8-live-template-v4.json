@@ -1,0 +1,65 @@
+{
+  "category": "workflow",
+  "asset_id": "three-company-research",
+  "version": "v4",
+  "description": "行业 → 三家公司并行研究 → 财务与竞争比较",
+  "body": {
+    "parameters": {
+      "industry": "text",
+      "company_a": "text",
+      "report_a": "resource",
+      "company_b": "text",
+      "report_b": "resource",
+      "company_c": "text",
+      "report_c": "resource"
+    },
+    "steps": [
+      {
+        "key": "a",
+        "goal": "{industry}：分析 {company_a} 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-evidence-v3",
+        "source_parameters": [
+          "report_a"
+        ]
+      },
+      {
+        "key": "b",
+        "goal": "{industry}：分析 {company_b} 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-evidence-v3",
+        "source_parameters": [
+          "report_b"
+        ]
+      },
+      {
+        "key": "c",
+        "goal": "{industry}：分析 {company_c} 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-evidence-v3",
+        "source_parameters": [
+          "report_c"
+        ]
+      },
+      {
+        "key": "compare",
+        "goal": "比较 {industry} 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。",
+        "expert_id": "expert_analyze",
+        "method_version": "analyze-evidence-v3",
+        "depends_on": [
+          "a",
+          "b",
+          "c"
+        ]
+      }
+    ],
+    "policy": {
+      "max_concurrency": 3,
+      "max_runs": 4,
+      "timeout_seconds": 300
+    }
+  },
+  "author": "local-operator",
+  "evidence": "Stage 8 control tests and explicit source-literal citation methods; acceptance criteria in docs/stage8-live-protocol.md",
+  "sanitized": true
+}

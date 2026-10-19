@@ -1,0 +1,73 @@
+"""Additional development-only DeepSeek unit probes; no holdout text reaches a generator."""
+import asyncio
+import json
+import os
+import sys
+import termios
+from pathlib import Path
+from uuid import uuid4
+from agents import set_default_openai_api, set_default_openai_client
+from openai import AsyncOpenAI
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks, build_evaluation, build_evolution
+from agent_core.contracts import RunLimits
+
+ROOT=Path(__file__).resolve().parents[1]
+OUTPUT=ROOT/'docs/stage10-live-probes.json'
+SOURCES=(
+ ('fictional-jingchuan.txt','虚构镜川公司。两张现金流表。上表：2024 年，单位：元人民币，经营现金流 900000，购建固定资产支出 200000。下表：2025 年，单位：万元人民币，经营活动现金流量净额 12.3，购建固定资产支付的现金 4.5。请勿把上表单位套用于下表。'),
+ ('fictional-xinglan.txt','虚构星澜公司。2025 年现金流量表（金额单位：RMB 千元）。经营活动产生的现金流量净额 52,400；购建固定资产支付的现金 8,300。同页另列股本（单位：百万股），该股数单位不适用于现金流。'),
+ ('fictional-linyuan.txt','虚构林源公司。管理摘要（单位：百万元人民币）列 2025 经营现金流 18.2、投资支出 3.1；后附经审阅的 2025 现金流量表（单位：万元人民币）列经营活动产生的现金流量净额 1,820、购建固定资产支付的现金 310。本任务以附表原始行项目及其单位为准，不取管理摘要口径。'),
+)
+
+async def main():
+ if sys.stdin.isatty():
+  settings=termios.tcgetattr(sys.stdin.fileno());settings[3]&=~termios.ECHO
+  termios.tcsetattr(sys.stdin.fileno(),termios.TCSANOW,settings)
+ print('READY_FOR_KEY',flush=True)
+ key=sys.stdin.readline().strip()
+ if not key: raise RuntimeError('No key supplied')
+ os.environ['OPENAI_API_KEY']=key;os.environ['OPENAI_MODEL']='deepseek-flash'
+ client=AsyncOpenAI(api_key=key,base_url='https://api.deepseek.com',max_retries=0,timeout=180)
+ report={'model':'deepseek-flash','phase':'additional_development_baseline','runs':[]}
+ def save():OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str).replace(key,'[REDACTED]'))
+ db=None
+ try:
+  set_default_openai_client(client,use_for_tracing=False);set_default_openai_api('responses')
+  db=PostgresDatabase(os.environ['DATABASE_URL'])
+  scopes=build_resources(db,'/private/tmp/stage10-live-blobs')
+  engine=OpenAIEngine();research=build_research(db,scopes,engine)
+  root=research.research(json.loads((ROOT/'docs/stage10-live-baseline.json').read_text())['research_id'])
+  tasks=build_tasks(db,scopes,research,engine);evaluation=build_evaluation(db,tasks)
+  build_evolution(db,tasks,evaluation)
+  report['research_id']=root.id;save()
+  for name,body in SOURCES:
+   scope=scopes.current(root.scope_id,'local')
+   _,ref=scopes.ingest(scope,content=body.encode(),name=name,media_type='text/plain')
+   spec=tasks.create(research_id=root.id,kind='extract',
+    user_request='以 2025 年原始现金流量表为准，提取公司、期间、经营现金流、资本开支、其原有金额单位和来源位置。保持原文数值，不做换算。',
+    required_refs=(ref,),model='deepseek-flash',limits=RunLimits(max_turns=4,max_calls=4,timeout_seconds=180))
+   row={'source_name':name,'source_text':body,'task_id':spec.id,'runs':[]};report['runs'].append(row);save()
+   for attempt in (1,2):
+    outcome=await tasks.run(spec.id);run=tasks.ledger.get(outcome['run_id']);result=run.result
+    record={'attempt':attempt,'run_id':outcome['run_id'],
+     'result_id':outcome['receipt'].result_id if outcome['receipt'] else None,
+     'status':result.status if result else run.status,
+     'error':result.error.model_dump(mode='json') if result and result.error else None,
+     'output':result.output if result else None,
+     'usage':result.usage.model_dump(mode='json') if result else None,
+     'delivery':outcome['receipt'].delivery if outcome['receipt'] else None}
+    row['runs'].append(record);save()
+    print(f'{name} attempt {attempt}: {record["status"]}',flush=True)
+    if record['status']=='succeeded' or not record['error'] or record['error']['code']!='model_behavior':break
+  print('PROBES_COMPLETE',flush=True)
+ except Exception as exc:
+  report['failure']={'type':type(exc).__name__,'message':str(exc).replace(key,'[REDACTED]')};save()
+  print('FAILED '+report['failure']['type'],flush=True)
+  raise SystemExit(1) from None
+ finally:
+  if db:db.close()
+  await client.close();os.environ.pop('OPENAI_API_KEY',None)
+
+if __name__=='__main__':asyncio.run(main())

@@ -1,0 +1,173 @@
+..........FF...........................s.s.s.s.s.s.s.s.s.s.s............ [ 63%]
+...ss.......s........................sssss                               [100%]
+=================================== FAILURES ===================================
+________ test_controlled_engine_runs_sdk_private_tools_and_denies_shell ________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-2/test_controlled_engine_runs_sd0')
+
+    async def test_controlled_engine_runs_sdk_private_tools_and_denies_shell(tmp_path):
+        from openai.types.responses import ResponseFunctionToolCall
+        from agent_core.contracts import ToolBinding
+        queue = [
+            [ResponseFunctionToolCall(type='function_call', name='write_private_note', call_id='w',
+                                     arguments='{"name":"draft","text":"persisted marker"}')],
+            [ResponseFunctionToolCall(type='function_call', name='read_private_note', call_id='r', arguments='{"name":"draft"}')],
+            [ResponseOutputMessage(id='final', type='message', role='assistant', status='completed', content=[
+                ResponseOutputText(type='output_text', text='{"report":"persisted marker"}', annotations=[])])],
+        ]
+        class Model:
+            async def get_response(self, **kwargs):
+                assert {t.name for t in kwargs['tools']} == {'write_private_note', 'read_private_note'}
+                return ModelResponse(output=queue.pop(0), usage=SDKUsage(requests=1), response_id=None)
+        engine, ledger, request = controlled_engine(tmp_path, Model())
+        async def forbidden(*_): raise AssertionError('Shell must not run')
+        shell = ToolBinding('host_shell', 'Forbidden', SimpleNamespace(), forbidden)
+>       result = await engine.execute(request, AgentSpec('expert', '', output_type=ExpertAnswer), (shell,), forbidden)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_controlled.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.controlled.engine.ControlledEngine object at 0x107c98b60>
+request = RunRequest(run_id='r', parent_run_id=None, agent_id='expert', input=PreparedInput(messages=(Message(role='user', content='Use the notebook'),)), limits=RunLimits(max_turns=8, timeout_seconds=60, max_depth=1, max_calls=8), depth=0)
+spec = AgentSpec(id='expert', instructions='', tools=(), delegates=(), output_type=<class 'agent_core.tasks.models.ExpertAnswer'>, model='gpt-4.1-mini', strict_output=False)
+tools = (ToolBinding(name='host_shell', description='Forbidden', input_type=namespace(), handler=<function test_controlled_engine_runs_sdk_private_tools_and_denies_shell.<locals>.forbidden at 0x107c92200>),)
+invoke = <function test_controlled_engine_runs_sdk_private_tools_and_denies_shell.<locals>.forbidden at 0x107c92200>
+
+    async def execute(self, request, spec, tools, invoke):
+        _, identity, workspace_id = self.binding(request)
+>       kind = identity['entrance']
+               ^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'entrance'
+
+src/agent_core/controlled/engine.py:83: KeyError
+______ test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request _______
+
+fut = <coroutine object Event.wait at 0x107ce42e0>, timeout = 2
+
+    async def wait_for(fut, timeout):
+        """Wait for the single Future or coroutine to complete, with timeout.
+    
+        Coroutine will be wrapped in Task.
+    
+        Returns result of the Future or coroutine.  When a timeout occurs,
+        it cancels the task and raises TimeoutError.  To avoid the task
+        cancellation, wrap it in shield().
+    
+        If the wait is cancelled, the task is also cancelled.
+    
+        If the task suppresses the cancellation and returns a value instead,
+        that value is returned.
+    
+        This function is a coroutine.
+        """
+        # The special case for timeout <= 0 is for the following case:
+        #
+        # async def test_waitfor():
+        #     func_started = False
+        #
+        #     async def func():
+        #         nonlocal func_started
+        #         func_started = True
+        #
+        #     try:
+        #         await asyncio.wait_for(func(), 0)
+        #     except asyncio.TimeoutError:
+        #         assert not func_started
+        #     else:
+        #         assert False
+        #
+        # asyncio.run(test_waitfor())
+    
+    
+        if timeout is not None and timeout <= 0:
+            fut = ensure_future(fut)
+    
+            if fut.done():
+                return fut.result()
+    
+            await _cancel_and_wait(fut)
+            try:
+                return fut.result()
+            except exceptions.CancelledError as exc:
+                raise TimeoutError from exc
+    
+        async with timeouts.timeout(timeout):
+>           return await fut
+                   ^^^^^^^^^
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py:520: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <asyncio.locks.Event object at 0x107c99d90 [unset]>
+
+    async def wait(self):
+        """Block until the internal flag is true.
+    
+        If the internal flag is true on entry, return True
+        immediately.  Otherwise, block until another coroutine calls
+        set() to set the flag to true, then return True.
+        """
+        if self._value:
+            return True
+    
+        fut = self._get_loop().create_future()
+        self._waiters.append(fut)
+        try:
+>           await fut
+E           asyncio.exceptions.CancelledError
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/locks.py:212: CancelledError
+
+The above exception was the direct cause of the following exception:
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-2/test_controlled_cancellation_a0')
+
+    async def test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request(tmp_path):
+        started, stopped = asyncio.Event(), asyncio.Event()
+        class Model:
+            async def get_response(self, **kwargs):
+                started.set()
+                try: await asyncio.Event().wait()
+                finally: stopped.set()
+        engine, ledger, request = controlled_engine(tmp_path, Model())
+        execution = asyncio.create_task(engine.execute(request, AgentSpec('expert', '', output_type=ExpertAnswer), (), None))
+>       await asyncio.wait_for(started.wait(), 2)
+
+tests/test_controlled.py:238: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/tasks.py:519: in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Timeout [expired]>
+exc_type = <class 'asyncio.exceptions.CancelledError'>
+exc_val = CancelledError(), exc_tb = <traceback object at 0x107d6b7c0>
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType],
+    ) -> Optional[bool]:
+        assert self._state in (_State.ENTERED, _State.EXPIRING)
+    
+        if self._timeout_handler is not None:
+            self._timeout_handler.cancel()
+            self._timeout_handler = None
+    
+        if self._state is _State.EXPIRING:
+            self._state = _State.EXPIRED
+    
+            if self._task.uncancel() <= self._cancelling and exc_type is exceptions.CancelledError:
+                # Since there are no new cancel requests, we're
+                # handling this.
+>               raise TimeoutError from exc_val
+E               TimeoutError
+
+/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/timeouts.py:115: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/test_controlled.py::test_controlled_engine_runs_sdk_private_tools_and_denies_shell
+FAILED tests/test_controlled.py::test_controlled_cancellation_awaits_sdk_and_keeps_unknown_request
+2 failed, 93 passed, 19 skipped in 16.81s

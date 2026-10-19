@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-07",
+  "status": "blocked",
+  "model_credentials_verified": true,
+  "model_calls": 0,
+  "runner_image": "sha256:dedb4e94f8542d9fa2b64b4e2aeecfd50f3996c1f1648fb391445963544b69f8",
+  "container_test": {
+    "first_attempt": "failed: start/exec readiness race",
+    "second_attempt": "1 passed, 2 deselected",
+    "later_cgroup_assertions": "not run"
+  },
+  "coordinator_build": {
+    "status": "failed",
+    "dependency": "nvidia-cudnn-cu13==9.24.0.43",
+    "error": "Input/output error during extraction; host disk critically low",
+    "intervention": "terminated only verified CE1 build CLI processes after graceful cancellation did not finish"
+  },
+  "docker_recovery": {
+    "api_ping": "ReadTimeout (5 seconds)",
+    "desktop_restart": "failed to stop within 30 seconds",
+    "failed_build_cache_reclaimed": "unconfirmed"
+  },
+  "disk": {
+    "total_bytes": 245107195904,
+    "used_bytes": 244828536832,
+    "free_bytes": 278659072
+  },
+  "postgres": {
+    "compose_project": "research-ce1-20261007",
+    "initial_start": "succeeded",
+    "tests": "not run",
+    "current_runtime_state": "unconfirmed after Docker became unresponsive"
+  },
+  "remaining": [
+    "real PostgreSQL suite",
+    "real model positive and in-flight cancellation cases",
+    "hard private-volume disk quota",
+    "latest slim coordinator image build"
+  ],
+  "no_global_prune": true,
+  "historical_host_services_modified": false,
+  "key_saved_to_repository": false
+}

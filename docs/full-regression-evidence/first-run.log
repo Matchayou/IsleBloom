@@ -1,0 +1,256 @@
+....F.................................FF................................ [  9%]
+.............FF......................................................FF. [ 18%]
+...FF................................................................... [ 27%]
+...........F...F...............................FF....................... [ 36%]
+..............................................s......................... [ 45%]
+...........................F..............FF........................FF.. [ 54%]
+................FF...................................................... [ 63%]
+............................F................................FF......... [ 72%]
+FF.........................................FF........................... [ 81%]
+........................................................................ [ 90%]
+........................................................................ [100%]
+=================================== FAILURES ===================================
+_______ test_context_discovery_crosses_controlled_broker_and_is_audited ________
+tests/test_agent_context_layer.py:176: in test_context_discovery_crosses_controlled_broker_and_is_audited
+    assert operations.count('model') == 3 and operations.count('tool') == 2
+E   AssertionError: assert (3 == 3 and 1 == 2)
+E    +  where 3 = <built-in method count of list object at 0x1332bee40>('model')
+E    +    where <built-in method count of list object at 0x1332bee40> = ['model', 'private', 'model', 'tool', 'model', 'result'].count
+E    +  and   1 = <built-in method count of list object at 0x1332bee40>('tool')
+E    +    where <built-in method count of list object at 0x1332bee40> = ['model', 'private', 'model', 'tool', 'model', 'result'].count
+_ test_retry_after_node_revision_change_returns_original_command_and_rejects_changed_input _
+tests/test_chat_streaming.py:123: in test_retry_after_node_revision_change_returns_original_command_and_rejects_changed_input
+    assert events.status_code==200 and '"status": "succeeded"' in events.text
+E   assert (200 == 200 and '"status": "succeeded"' in 'data: {"text": "", "phase": "thinking", "status": "failed", "reason": "output_contract", "command_id": "request-1", "run_id": "9eb109ae-f1d4-4131-aed7-75d67750179d", "timeout_seconds": 900.0}\n\n')
+E    +  where 200 = <Response [200 OK]>.status_code
+E    +  and   'data: {"text": "", "phase": "thinking", "status": "failed", "reason": "output_contract", "command_id": "request-1", "run_id": "9eb109ae-f1d4-4131-aed7-75d67750179d", "timeout_seconds": 900.0}\n\n' = <Response [200 OK]>.text
+_________ test_sse_reconnect_and_disconnect_do_not_resubmit_or_cancel __________
+tests/test_chat_streaming.py:153: in test_sse_reconnect_and_disconnect_do_not_resubmit_or_cancel
+    assert '"status": "succeeded"' in await anext(replies.stream('stream-1',thread.node_id).body_iterator)
+E   assert '"status": "succeeded"' in 'data: {"text": "", "phase": "thinking", "status": "failed", "reason": "output_contract", "command_id": "stream-1", "run_id": "5e785339-1db1-4a74-b548-caf9b51f1de5", "timeout_seconds": 900.0}\n\n'
+______________ test_coding_through_broker_receipt_and_save_retry _______________
+tests/test_coding_controlled.py:34: in test_coding_through_broker_receipt_and_save_retry
+    assert record.result.status=='succeeded',record.result
+E   AssertionError: RunResult(run_id='e951de36-068b-493d-bc7e-f6b35d076199', status='failed', output=None, usage=Usage(requests=2, input_t...output contract: Tool write_code not found in agent expert_coding', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+_______ test_manager_selects_only_granted_contract_and_reads_saved_diff ________
+tests/test_coding_controlled.py:71: in test_manager_selects_only_granted_contract_and_reads_saved_diff
+    assert receipt.delivery=='pending_review'
+E   AssertionError: assert 'rework' == 'pending_review'
+E     
+E     - pending_review
+E     + rework
+_____________ test_summary_budget_manifest_and_incremental_cursor ______________
+tests/test_compaction_controlled.py:61: in test_summary_budget_manifest_and_incremental_cursor
+    assert result.status=='succeeded',result
+E   AssertionError: RunResult(run_id='cb9575e4-61a2-499f-80b2-d398b009a6f5', status='failed', output=None, usage=Usage(requests=1, input_t...rigin='engine', message='Provider request failed (AssertionError)', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+___________ test_summary_failure_retains_original_no_repeated_retry ____________
+tests/test_compaction_controlled.py:81: in test_summary_failure_retains_original_no_repeated_retry
+    assert len(attempts)==1 and attempts[0]['state']=='failed'
+E   assert (0 == 1)
+E    +  where 0 = len([])
+___________ test_saved_summary_rejected_after_real_scope_revocation ____________
+tests/test_compaction_controlled.py:125: in test_saved_summary_rejected_after_real_scope_revocation
+    head=ledger.compaction_head(workspace_id,'business:history');assert head
+                                                                 ^^^^^^^^^^^
+E   assert None
+______ test_documented_summary_effort_does_not_change_main_model_settings ______
+tests/test_compaction_controlled.py:143: in test_documented_summary_effort_does_not_change_main_model_settings
+    assert tasks.ledger.get(receipt.run_id).result.status=='succeeded'
+E   AssertionError: assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+________________ test_batched_calls_stop_at_actual_tool_budget _________________
+tests/test_controlled_delivery.py:72: in test_batched_calls_stop_at_actual_tool_budget
+    assert receipt.artifact and tasks.engine.ledger.run_budget(receipt.run_id)['tools']==1
+E   AssertionError: assert (None)
+E    +  where None = TaskReceipt(code_candidate=None, artifact=None, result_id='task-result:4fb8d0b3-368c-41ca-aabf-7d8c91ff79aa', task_id=...licts=(), missing=(), limitations=(), follow_up=(), delivery='rework', adoption='for_discussion', adoption_reason=None).artifact
+__________ test_tool_timeout_leaves_uncertain_operation_and_finalizes __________
+tests/test_controlled_delivery.py:155: in test_tool_timeout_leaves_uncertain_operation_and_finalizes
+    assert result.status=='succeeded',result
+E   AssertionError: RunResult(run_id='4394b2b7-9c8f-43bf-87ac-25e773885d78', status='failed', output=None, usage=Usage(requests=1, input_t...act: Tool write_private_note not found in agent expert_synthesize', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+________ test_two_sided_investigation_returns_to_original_experts[True] ________
+tests/test_disagreement_followup.py:142: in test_two_sided_investigation_returns_to_original_experts
+    assert run.status == 'succeeded', run.result
+E   AssertionError: RunResult(run_id='bc4840a0-fcb3-43d4-9338-ed9526821d98', status='failed', output=None, usage=Usage(requests=0, input_t...engine_failed', origin='engine', message='Engine execution failed', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+_______ test_two_sided_investigation_returns_to_original_experts[False] ________
+tests/test_disagreement_followup.py:142: in test_two_sided_investigation_returns_to_original_experts
+    assert run.status == 'succeeded', run.result
+E   AssertionError: RunResult(run_id='89d42bac-e6b2-4715-bda4-48363e184886', status='failed', output=None, usage=Usage(requests=0, input_t...engine_failed', origin='engine', message='Engine execution failed', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+_ test_sdk_long_reasoning_two_dispatches_finish_without_summary_or_lost_results _
+tests/test_incremental_input_budget.py:91: in test_sdk_long_reasoning_two_dispatches_finish_without_summary_or_lost_results
+    command=await research.submit(NodeCommand(command_id=uuid4().hex,research_id=node.research_id,
+src/agent_core/research/service.py:160: in submit
+    binding, snapshot = self._prepare(record)
+                        ^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:330: in _prepare
+    snapshot = self.context.assemble(self.scopes, scope, run_id, text,
+src/agent_core/context/assembler.py:36: in assemble
+    return ContextBuilder(scopes).build(scope, run_id, goal, refs=refs, results=results,
+src/agent_core/context/builder.py:67: in build
+    prepared = project_payload(payload, max(0, scope.max_input_chars-reserve))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/context/projection.py:56: in project_payload
+    raise ContextBudgetExceeded('Required instructions and user constraints exceed input budget; narrow the task explicitly')
+E   agent_core.context.projection.ContextBudgetExceeded: Required instructions and user constraints exceed input budget; narrow the task explicitly
+________ test_sdk_status_only_reads_named_task_and_http_needs_no_model _________
+tests/test_manager_routing.py:56: in test_sdk_status_only_reads_named_task_and_http_needs_no_model
+    await reply(research, node, chat)
+tests/test_manager_routing.py:26: in reply
+    assert result.status == 'succeeded', result
+E   AssertionError: RunResult(run_id='d835081d-057e-4934-be15-a6619944552e', status='failed', output=None, usage=Usage(requests=1, input_t...rigin='engine', message='Provider request failed (AssertionError)', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+___________ test_sdk_loads_only_selected_tools_and_reads_new_content ___________
+tests/test_manager_routing.py:97: in test_sdk_loads_only_selected_tools_and_reads_new_content
+    await reply(research, node, chat)
+tests/test_manager_routing.py:26: in reply
+    assert result.status == 'succeeded', result
+E   AssertionError: RunResult(run_id='4c53b4a7-eb06-4c51-a578-3b370494e09c', status='failed', output=None, usage=Usage(requests=1, input_t...rigin='engine', message='Provider request failed (AssertionError)', retryable=False, cause_id=None), output_repairs=())
+E   assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+______ test_compile_idempotent_new_inputs_and_manual_equivalence[memory] _______
+tests/test_methods.py:140: in test_compile_idempotent_new_inputs_and_manual_equivalence
+    assert research.read_result(research.node(planned.node_id).current_result_id)[1]==research.read_result(research.node(step.node_id).current_result_id)[1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:79: in read_result
+    result = self.check_result(key, allow_excluded=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:60: in check_result
+    result = self.query('result', key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:28: in query
+    return getattr(tx.research, method)(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/adapters/memory_research.py:13: in result
+    def result(self, key): return self.results[key]
+                                  ^^^^^^^^^^^^^^^^^
+E   KeyError: None
+_____ test_compile_idempotent_new_inputs_and_manual_equivalence[postgres] ______
+tests/test_methods.py:140: in test_compile_idempotent_new_inputs_and_manual_equivalence
+    assert research.read_result(research.node(planned.node_id).current_result_id)[1]==research.read_result(research.node(step.node_id).current_result_id)[1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:79: in read_result
+    result = self.check_result(key, allow_excluded=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:60: in check_result
+    result = self.query('result', key)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/research/service.py:28: in query
+    return getattr(tx.research, method)(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/adapters/postgres/research.py:51: in result
+    def result(self, key): return self._required('node_result_versions', key, NodeResultVersion)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/adapters/postgres/research.py:40: in _required
+    if value is None: raise KeyError(key)
+                      ^^^^^^^^^^^^^^^^^^^
+E   KeyError: None
+_______ test_bundled_three_company_workflow_uses_current_assets[memory] ________
+tests/test_methods.py:311: in test_bundled_three_company_workflow_uses_current_assets
+    assert len(engine.requests)==4
+E   AssertionError: assert 3 == 4
+E    +  where 3 = len([RunRequest(run_id='2c830e7a-0eb7-4c29-9d04-42891369fb1d', parent_run_id='plan:b3cefefd-d9b1-475e-9677-049252c1c994:0:...为当前获准 ref、真实 location 与原文。'), limits=RunLimits(max_turns=8, timeout_seconds=180.0, max_depth=1, max_calls=8), depth=1)])
+E    +    where [RunRequest(run_id='2c830e7a-0eb7-4c29-9d04-42891369fb1d', parent_run_id='plan:b3cefefd-d9b1-475e-9677-049252c1c994:0:...为当前获准 ref、真实 location 与原文。'), limits=RunLimits(max_turns=8, timeout_seconds=180.0, max_depth=1, max_calls=8), depth=1)] = <agent_core.adapters.scripted.ScriptedEngine object at 0x17af8d2b0>.requests
+______ test_bundled_three_company_workflow_uses_current_assets[postgres] _______
+tests/test_methods.py:311: in test_bundled_three_company_workflow_uses_current_assets
+    assert len(engine.requests)==4
+E   AssertionError: assert 3 == 4
+E    +  where 3 = len([RunRequest(run_id='dbc0ea25-6617-4569-a026-ff9d34ea9412', parent_run_id='plan:a07f5c80-933f-4e7a-84a8-0f8b24dd75eb:0:...为当前获准 ref、真实 location 与原文。'), limits=RunLimits(max_turns=8, timeout_seconds=180.0, max_depth=1, max_calls=8), depth=1)])
+E    +    where [RunRequest(run_id='dbc0ea25-6617-4569-a026-ff9d34ea9412', parent_run_id='plan:a07f5c80-933f-4e7a-84a8-0f8b24dd75eb:0:...为当前获准 ref、真实 location 与原文。'), limits=RunLimits(max_turns=8, timeout_seconds=180.0, max_depth=1, max_calls=8), depth=1)] = <agent_core.adapters.scripted.ScriptedEngine object at 0x17aff53a0>.requests
+_____ test_planner_and_steps_share_controlled_budget_and_checkpoint_chain ______
+tests/test_planning_controlled.py:28: in test_planner_and_steps_share_controlled_budget_and_checkpoint_chain
+    assert p.status=='awaiting_confirmation',p.reason
+E   AssertionError: Model violated SDK protocol or output contract: Tool read_source not found in agent planner:5b8494e7-6d33-44e6-bd40-406f8a36b695
+E   assert 'generation_failed' == 'awaiting_confirmation'
+E     
+E     - awaiting_confirmation
+E     + generation_failed
+_ test_harness_rejects_invalid_evidence_without_prompt_warnings[foreign_source] _
+tests/test_prompt_harness.py:28: in test_harness_rejects_invalid_evidence_without_prompt_warnings
+    assert result.error.code == 'evidence_invalid'
+E   AssertionError: assert 'model_request_failed' == 'evidence_invalid'
+E     
+E     - evidence_invalid
+E     + model_request_failed
+_ test_harness_rejects_invalid_evidence_without_prompt_warnings[context_artifact_as_source] _
+tests/test_prompt_harness.py:28: in test_harness_rejects_invalid_evidence_without_prompt_warnings
+    assert result.error.code == 'evidence_invalid'
+E   AssertionError: assert 'model_request_failed' == 'evidence_invalid'
+E     
+E     - evidence_invalid
+E     + model_request_failed
+________ test_wait_for_b_format_correction_before_single_summary[True] _________
+tests/test_report_delivery.py:106: in test_wait_for_b_format_correction_before_single_summary
+    assert len(manager_calls) == 2
+E   assert 3 == 2
+E    +  where 3 = len(['{"agent":{"id":"0ef1bcd4-182c-4bc8-8992-5822e361c972","instructions":"","mode":"assistant"},"content":[],"context_mo...d96aca","resource_id":"919b67ef-2275-4e09-9b3c-ce9d01d5e700","snapshot_id":"0397d6a4-d077-4f6f-b35a-19d94d7643db"}}]}'])
+________ test_wait_for_b_format_correction_before_single_summary[False] ________
+tests/test_report_delivery.py:106: in test_wait_for_b_format_correction_before_single_summary
+    assert len(manager_calls) == 2
+E   assert 3 == 2
+E    +  where 3 = len(['{"agent":{"id":"2c8c8974-d472-4da0-a466-be9cddb1dd66","instructions":"","mode":"assistant"},"content":[],"context_mo...865bf6","resource_id":"47a1c9d1-59ff-45db-80ee-7e769b6eb361","snapshot_id":"d75c4a27-9d0a-4c07-ac01-44d0115f24d5"}}]}'])
+_________________ test_research_sigkill_atomic_reopen[before] __________________
+tests/test_research_process.py:16: in test_research_sigkill_atomic_reopen
+    assert process.returncode==-9,process.stderr
+E   AssertionError: Traceback (most recent call last):
+E       File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/stage4_crash_worker.py", line 46, in <module>
+E         asyncio.run(main())
+E       File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 195, in run
+E         return runner.run(main)
+E                ^^^^^^^^^^^^^^^^
+E       File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/runners.py", line 118, in run
+E         return self._loop.run_until_complete(task)
+E                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       File "/opt/homebrew/Cellar/python@3.12/3.12.12/Frameworks/Python.framework/Versions/3.12/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+E         return future.result()
+E                ^^^^^^^^^^^^^^^
+E       File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/stage4_crash_worker.py", line 44, in main
+E         await s.submit(NodeCommand(command_id=str(uuid4()),research_id=r.id,kind='run',node_id=node.node_id))
+E       File "/Users/chenyouran/Documents/ChatGPT/New project 2/src/agent_core/research/service.py", line 160, in submit
+E         binding, snapshot = self._prepare(record)
+E                             ^^^^^^^^^^^^^^^^^^^^^
+E       File "/Users/chenyouran/Documents/ChatGPT/New project 2/src/agent_core/research/service.py", line 324, in _prepare
+E         'memories': self.memories.list(node.research_id),
+E                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       File "/Users/chenyouran/Documents/ChatGPT/New project 2/src/agent_core/memories/service.py", line 38, in list
+E         values = [v for v in tx.memories.list(self.owner) if (v.scope, v.scope_id) in namespaces]
+E                              ^^^^^^^^^^^
+E     AttributeError: 'types.SimpleNamespace' object has no attribute 'memories'
+E     
+E   assert 1 == -9
+E    +  where 1 = CompletedProcess(args=['/Users/chenyouran/Documents/ChatGPT/New project 2/.venv/bin/python', '/Users/chenyouran/Docume...                        ^^^^^^^^^^^\nAttributeError: \'types.SimpleNamespace\' object has no attribute \'memories\'\n').returncode
+__________________ test_research_sigkill_atomic_reopen[after] __________________
+tests/test_research_process.py:23: in test_research_sigkill_atomic_reopen
+    assert node['execution_status']==('succeeded' if mode=='after' else 'interrupted')
+E   AssertionError: assert 'failed' == 'succeeded'
+E     
+E     - succeeded
+E     + failed
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_evolution.py:172: PostgreSQL-only persistence check
+27 failed, 764 passed, 1 skipped in 273.52s (0:04:33)

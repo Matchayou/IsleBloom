@@ -1,0 +1,81 @@
+..........F.F                                                            [100%]
+=================================== FAILURES ===================================
+_____________ test_stale_test_forged_candidate_links_and_tampering _____________
+
+coding = (<agent_core.coding.workspace.CodingService object at 0x108711f10>, <function coding.<locals>.admit at 0x1086cac00>, P...ar/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-40/test_stale_test_forged_candida0/source'))
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-40/test_stale_test_forged_candida0')
+
+    async def test_stale_test_forged_candidate_links_and_tampering(coding,tmp_path):
+        _,admit,_=coding;work=admit()
+>       await work.test('syntax');work.write('a.py','ANSWER = 9\n')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_coding.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/agent_core/coding/workspace.py:202: in test
+    snapshot = self.checkpoint()
+               ^^^^^^^^^^^^^^^^^
+src/agent_core/coding/workspace.py:189: in checkpoint
+    git(self.path, 'add', '--all', '--', *self.contract.write_paths)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-40/test_stale_test_forged_candida0/managed/task-b6451fe698e1a286ed3cfd25893aa67ae451de7de4a9e66a8c17c0bc5c3aa0cf')
+data = None, check = True, args = ('add', '--all', '--', 'a.py', 'new.py')
+command = ['/usr/bin/git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', '-c', ...]
+
+    def git(root, *args, data=None, check=True):
+        command = ['/usr/bin/git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false',
+                   '-c', 'core.attributesFile=/dev/null', '-c', 'commit.gpgSign=false',
+                   '-c', 'core.autocrlf=false', '-c', 'protocol.file.allow=always', '-C', str(root), *args]
+        result = subprocess.run(command, input=data, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                env=ENV, timeout=30)
+        if check and result.returncode:
+>           raise ValueError('Controlled Git operation failed: ' + result.stderr.decode(errors='replace')[:1500])
+E           ValueError: Controlled Git operation failed: git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+E           fatal: pathspec 'new.py' did not match any files
+
+src/agent_core/coding/git.py:20: ValueError
+_______ test_failed_test_never_freezes_and_command_not_model_controlled ________
+
+coding = (<agent_core.coding.workspace.CodingService object at 0x108712f00>, <function coding.<locals>.admit at 0x108764680>, P...ar/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-40/test_failed_test_never_freezes0/source'))
+
+    async def test_failed_test_never_freezes_and_command_not_model_controlled(coding):
+        _,admit,_=coding;work=admit();work.write('a.py','invalid python !')
+>       result=await work.test('syntax');assert result['exit_code']!=0
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_coding.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/agent_core/coding/workspace.py:202: in test
+    snapshot = self.checkpoint()
+               ^^^^^^^^^^^^^^^^^
+src/agent_core/coding/workspace.py:189: in checkpoint
+    git(self.path, 'add', '--all', '--', *self.contract.write_paths)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-40/test_failed_test_never_freezes0/managed/task-b6451fe698e1a286ed3cfd25893aa67ae451de7de4a9e66a8c17c0bc5c3aa0cf')
+data = None, check = True, args = ('add', '--all', '--', 'a.py', 'new.py')
+command = ['/usr/bin/git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false', '-c', ...]
+
+    def git(root, *args, data=None, check=True):
+        command = ['/usr/bin/git', '-c', 'core.hooksPath=/dev/null', '-c', 'core.fsmonitor=false',
+                   '-c', 'core.attributesFile=/dev/null', '-c', 'commit.gpgSign=false',
+                   '-c', 'core.autocrlf=false', '-c', 'protocol.file.allow=always', '-C', str(root), *args]
+        result = subprocess.run(command, input=data, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                env=ENV, timeout=30)
+        if check and result.returncode:
+>           raise ValueError('Controlled Git operation failed: ' + result.stderr.decode(errors='replace')[:1500])
+E           ValueError: Controlled Git operation failed: git: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead
+E           fatal: pathspec 'new.py' did not match any files
+
+src/agent_core/coding/git.py:20: ValueError
+=============================== warnings summary ===============================
+src/agent_core/coding/workspace.py:24
+  /Users/chenyouran/Documents/ChatGPT/New project 2/src/agent_core/coding/workspace.py:24: PytestCollectionWarning: cannot collect test class 'TestProfile' because it has a __init__ constructor (from: tests/test_coding.py)
+    @dataclass(frozen=True)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_coding.py::test_stale_test_forged_candidate_links_and_tampering
+FAILED tests/test_coding.py::test_failed_test_never_freezes_and_command_not_model_controlled
+2 failed, 11 passed, 1 warning in 2.26s

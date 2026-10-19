@@ -1,0 +1,51 @@
+{
+  "real_model": true,
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "case": "project_to_user_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "5a88f376-07fb-414f-a004-7ca73bca4859",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/project-scope-retest/project_to_user_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12386,
+        "output_tokens": 1090,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [],
+  "passed": true
+}

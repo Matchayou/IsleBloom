@@ -1,0 +1,32 @@
+F
+=================================== FAILURES ===================================
+________ test_four_entrances_consultation_and_followup_use_same_broker _________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x10b234c50>, <agent_core.context.scopes.ScopeService object...jectService object at 0x10c602e70>, <agent_core.collaboration.service.CollaborationService object at 0x10b572480>, ...)
+
+    async def test_four_entrances_consultation_and_followup_use_same_broker(controlled):
+        _, scopes, research, tasks, projects, c, provider = controlled
+        node, ref, chat = await seed(controlled)
+        provider.plans.append([answer({'report': 'I will review the synthetic source.', 'claims': []})])
+        command = await research.submit(NodeCommand(command_id=uuid4().hex, research_id=node.research_id,
+            node_id=node.id, kind='chat_reply', chat_revision=chat.revision))
+        assert research.ledger.get(command.run_id).result.status == 'succeeded'
+        intent = c.delegate_task(command_id=uuid4().hex, node_id=node.id, expert_id='expert_synthesize',
+            task_instruction='Read the source then ask for missing year.', delivery_requirements='State unknowns',
+            resource_refs=(ref,))
+        provider.plans.extend([
+            [call('read_source', ref=ref.model_dump(mode='json')),
+>            call('write_private_note', name='draft', text='expert-only marker'),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+             call('read_private_note', name='draft'),
+             call('request_manager_information', question='Which year?', progress='Read synthetic count 7.'),
+             answer({'report': 'Count 7; year unknown.', 'missing': ['year']})],
+            [answer({'available': False, 'answer': 'Year was not provided.', 'missing': ['year']})],
+        ])
+E       TypeError: call() got multiple values for argument 'name'
+
+tests/test_controlled_collaboration.py:100: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_collaboration.py::test_four_entrances_consultation_and_followup_use_same_broker
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 1.47s

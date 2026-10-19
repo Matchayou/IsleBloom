@@ -1,0 +1,260 @@
+{
+  "model": "deepseek-flash",
+  "protocol": "responses",
+  "base_url": "https://api.deepseek.com",
+  "source": "four synthetic financial tables; independent review pending",
+  "runs": [
+    {
+      "split": "development",
+      "source_name": "fictional-hexing.txt",
+      "source_text": "虚构恒星公司。2025 年度现金流量表，金额单位：万元人民币。经营活动产生的现金流量净额为 1,240；购建固定资产、无形资产和其他长期资产支付的现金为 310。文末员工人数 4,000 人，人数不属于金额单位。",
+      "task_id": "34de26bc-18e4-4c94-b3c1-1db130f36de2",
+      "method_version": "extract-v1",
+      "runs": [
+        {
+          "attempt": 1,
+          "result_id": "task-result:4f055961-aa5e-4353-949b-37fb5d0c9d3d",
+          "run_id": "4f055961-aa5e-4353-949b-37fb5d0c9d3d",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "万元人民币",
+              "period": "2025 年度",
+              "company": "虚构恒星公司",
+              "capital_expenditure": "310",
+              "operating_cash_flow": "1,240"
+            },
+            "report": "本资料为单一文本文件 fictional-hexing.txt（resource_id e7c0ef28-3d01-4f25-99ae-4638d0de33ad，snapshot 26d543aa-7f22-422e-9ea0-2ea7db32d6a6，parse 37e183fd-d022-4bb6-8a9a-4ead364107cc，状态 ready，无缺失依赖）。已读取位置 line:1，原文为：“虚构恒星公司。2025 年度现金流量表，金额单位：万元人民币。经营活动产生的现金流量净额为 1,240；购建固定资产、无形资产和其他长期资产支付的现金为 310。文末员工人数 4,000 人，人数不属于金额单位。”据此：公司为虚构恒星公司；报告期为 2025 年度（现金流量表）；经营现金流净额 1,240；资本开支（购建固定资产、无形资产和其他长期资产支付的现金）310；表格原有金额单位为 万元人民币。数值按原文照录，未做任何换算或缩放。文末“员工人数 4,000 人”为人数而非金额，已明确排除，不作为金额单位或金额字段来源。全部五个必需字段均具备来源位置，未出现可解析数值或单位缺失的情况。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-hexing.txt，line:1，原文：“金额单位：万元人民币”（同句另注：“文末员工人数 4,000 人，人数不属于金额单位”）",
+              "period": "fictional-hexing.txt，line:1，原文：“2025 年度现金流量表”",
+              "company": "fictional-hexing.txt，line:1，原文：“虚构恒星公司。”",
+              "capital_expenditure": "fictional-hexing.txt，line:1，原文：“购建固定资产、无形资产和其他长期资产支付的现金为 310”",
+              "operating_cash_flow": "fictional-hexing.txt，line:1，原文：“经营活动产生的现金流量净额为 1,240”"
+            },
+            "conflicts": [],
+            "follow_up": [],
+            "assumptions": [],
+            "limitations": [
+              "资料仅为单一文本片段，无法独立交叉验证数值准确性。",
+              "未提供 2025 年度内其他现金流项目或上年可比数据。"
+            ],
+            "self_checks": {
+              "unit_stated": "是，万元人民币。",
+              "claims_empty": "是，claims 为空数组。",
+              "no_conversion": "是，数值按原文照录，未换算。",
+              "numeric_parseable": "是，operating_cash_flow=1,240，capital_expenditure=310，均为可解析数值。",
+              "authorized_sources_only": "是，仅使用本任务授权资料 fictional-hexing.txt。",
+              "unit_and_numbers_sourced": "是，五个字段均给出 line:1 原文来源位置。",
+              "company_and_period_stated": "是，虚构恒星公司 / 2025 年度。",
+              "non_amount_items_excluded": "是，员工人数 4,000 人未计入金额字段或单位。"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4596,
+            "output_tokens": 1053,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    },
+    {
+      "split": "development",
+      "source_name": "fictional-muguang.txt",
+      "source_text": "虚构沐光公司。表格列标题：2025 年，单位：千元人民币。经营活动产生的现金流量净额为 8,500；购建固定资产支付的现金为 1,250。上一年 2024 年表格单位为元，非本年口径。",
+      "task_id": "48f900c7-de60-4d4a-b02d-d273dec5aac6",
+      "method_version": "extract-v1",
+      "runs": [
+        {
+          "attempt": 1,
+          "result_id": "task-result:fffdc0d6-6f3b-4a20-8985-7a2470a9f558",
+          "run_id": "fffdc0d6-6f3b-4a20-8985-7a2470a9f558",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "千元人民币",
+              "period": "2025 年",
+              "company": "虚构沐光公司",
+              "capital_expenditure": "1,250",
+              "operating_cash_flow": "8,500"
+            },
+            "report": "在授权资料 fictional-muguang.txt（resource_id f285609b-ec53-4796-8006-b0f0b8a65052，parse_id 5965fc9a-653e-4f2e-a024-46704480a7d0）中仅有一条可用文本片段，位置为 line:1，原文为：“虚构沐光公司。表格列标题：2025 年，单位：千元人民币。经营活动产生的现金流量净额为 8,500；购建固定资产支付的现金为 1,250。上一年 2024 年表格单位为元，非本年口径。”据此：公司为“虚构沐光公司”；报告期为 2025 年（表格列标题“2025 年”）；表格原有金额单位为“千元人民币”；2025 年经营活动产生的现金流量净额为 8,500（按原文记为 8,500）；对应资本开支口径的项目“购建固定资产支付的现金”为 1,250（按原文记为 1,250）。全部数值按原文照录，未做任何换算（未将千元折算为元或其他单位）。原文另提示 2024 年表格单位为元，属上一年口径，与本年 2025 年字段无关，未用于本任务取数。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-muguang.txt（同上 ref）line:1：“单位：千元人民币”",
+              "period": "fictional-muguang.txt（同上 ref）line:1：“表格列标题：2025 年，单位：千元人民币。”（另见同句末“上一年 2024 年表格单位为元，非本年口径。”，仅说明上年口径，不用于本年取值）",
+              "company": "fictional-muguang.txt（resource_id f285609b-ec53-4796-8006-b0f0b8a65052 / parse_id 5965fc9a-653e-4f2e-a024-46704480a7d0）line:1：“虚构沐光公司。”",
+              "capital_expenditure": "fictional-muguang.txt（同上 ref）line:1：“购建固定资产支付的现金为 1,250”（capex 对应项）",
+              "operating_cash_flow": "fictional-muguang.txt（同上 ref）line:1：“经营活动产生的现金流量净额为 8,500”"
+            },
+            "conflicts": [],
+            "follow_up": [
+              "如需与 2024 年对比，需另取 2024 年表数据并将其单位（元）单独记录，不可与本年千元口径直接混用。"
+            ],
+            "assumptions": [
+              "将“经营活动产生的现金流量净额”对应到 operating_cash_flow 字段。",
+              "将“购建固定资产支付的现金”作为材料中的 capex，对应 capital_expenditure 字段。",
+              "表格列标题“2025 年”即本资料报告期，该片段数值均视为 2025 年口径。"
+            ],
+            "limitations": [
+              "资料为单行虚构文本片段，仅有 line:1 行号位置，未提供页码信息。",
+              "材料未给出报表科目编号、审计状态或与其他期间数据的交叉核对信息。"
+            ],
+            "self_checks": {
+              "no_guessing": "未对缺失项进行猜测；本片段所需五项字段均已出现，故 missing 为空。",
+              "unit_present": "单位取自原文“单位：千元人民币”，未改写为符号形式。",
+              "sources_located": "五个字段均在 sources 中给出文件名与 line:1 及对应原文字段引文。",
+              "values_verbatim": "operating_cash_flow 记为 8,500、capital_expenditure 记为 1,250，均为原文照录，未换算、未四舍五入。",
+              "company_period_present": "已按 line:1 原文给出公司“虚构沐光公司”与报告期“2025 年”。"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4798,
+            "output_tokens": 1480,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    },
+    {
+      "split": "holdout",
+      "source_name": "fictional-yunqiao.txt",
+      "source_text": "虚构云桥公司。2025 年现金流量表附注：本表金额以百万元人民币呈列。经营活动现金流量净额 76.5；资本开支 21.8。股价另以元每股表示，非本表现金流单位。",
+      "task_id": "37195186-2f4d-47e0-82a7-5a01d19dc458",
+      "method_version": "extract-v1",
+      "runs": [
+        {
+          "attempt": 1,
+          "result_id": "task-result:46595121-957c-4f0d-93c0-4fb97a9378f5",
+          "run_id": "46595121-957c-4f0d-93c0-4fb97a9378f5",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "百万元人民币",
+              "period": "2025 年",
+              "company": "虚构云桥公司",
+              "capital_expenditure": "21.8",
+              "operating_cash_flow": "76.5"
+            },
+            "report": "本任务仅读取一份已授权上传资料 fictional-yunqiao.txt（resource_id 381e7b40-e707-4d60-a02f-00cc5cfd365b，snapshot_id 2d5d2968-e048-4e8c-a476-390635551769，parse_id 2878cac0-ccc9-4778-bfeb-209b4eb8ff3f），该文件仅含 1 个文本片段，位置 line:1。原文（line:1）为：“虚构云桥公司。2025 年现金流量表附注：本表金额以百万元人民币呈列。经营活动现金流量净额 76.5；资本开支 21.8。股价另以元每股表示，非本表现金流单位。”\n\n提取结果：\n1) 公司：虚构云桥公司（来源 line:1，句首）。\n2) 报告期：2025 年（来源 line:1，“2025 年现金流量表附注”）。\n3) 经营现金流（经营活动现金流量净额）：76.5（来源 line:1，原文数值，未做换算）。\n4) 资本开支（capex）：21.8（来源 line:1，原文数值，未做换算）。\n5) 表格原有金额单位：百万元人民币（来源 line:1，“本表金额以百万元人民币呈列”）。\n\n说明：line:1 另提到“股价另以元每股表示”，原文明确该单位“非本表现金流单位”，故不作为本表现金流/资本开支的单位；本任务按要求保持原文数值与原有单位，未换算为元、亿元或任何其他单位。本资料只给出单一表格单位（百万元人民币），未提供百万以外的其他备选单位，故 unit 无冲突。报告期仅以“2025 年”给出，未细分年度/期间口径。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-yunqiao.txt, line:1：“本表金额以百万元人民币呈列”（同句另注“股价另以元每股表示，非本表现金流单位”）",
+              "period": "fictional-yunqiao.txt, line:1：“2025 年现金流量表附注”",
+              "company": "fictional-yunqiao.txt (resource_id 381e7b40-e707-4d60-a02f-00cc5cfd365b, snapshot_id 2d5d2968-e048-4e8c-a476-390635551769, parse_id 2878cac0-ccc9-4778-bfeb-209b4eb8ff3f), line:1 片段句首：“虚构云桥公司。”",
+              "capital_expenditure": "fictional-yunqiao.txt, line:1：“资本开支 21.8”",
+              "operating_cash_flow": "fictional-yunqiao.txt, line:1：“经营活动现金流量净额 76.5”"
+            },
+            "conflicts": [],
+            "follow_up": [
+              "如需验算，请提供该公司 2025 年现金流量表正表及资本开支明细行。",
+              "如需区分年度与期间口径，请提供报表期间起止说明或审计报告页码。"
+            ],
+            "assumptions": [
+              "将原文“资本开支”按任务约定对应到字段 capital_expenditure。",
+              "将“经营活动现金流量净额”视为经营现金流 operating_cash_flow 的口径。"
+            ],
+            "limitations": [
+              "资料仅 1 个文本片段（line:1），为虚构公司示例材料，无正式财报编号、报表页码或可交叉核对的明细行。",
+              "报告期仅写“2025 年”，未说明是全年、期间或期末口径；活动/期间边界无法从材料进一步确认。",
+              "经营现金流与资本开支为原文直接给出的汇总数值，材料未提供其计算过程或明细科目，无法在材料内验算。"
+            ],
+            "self_checks": {
+              "single_source_only": "是，仅使用本任务输入的 1 份资料，未引用历史或其他任务内容。",
+              "values_unconverted": "是，76.5 与 21.8 均按原文照录，未做任何换算。",
+              "no_guess_on_missing": "本任务未出现缺失单位或缺失数字，missing 为空数组；未对外部信息作补充。",
+              "unit_source_present": "是，unit 来源为 line:1“本表金额以百万元人民币呈列”。",
+              "period_and_company_clear": "是，公司为虚构云桥公司，报告期为 2025 年，均来自 line:1。"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4407,
+            "output_tokens": 1307,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    },
+    {
+      "split": "holdout",
+      "source_name": "fictional-yuanchuan.txt",
+      "source_text": "虚构远川公司。2025 年主要现金流数据表，单位：亿元人民币。经营活动产生的现金流量净额 2.4；购建固定资产支付的现金 0.7。子公司合同另以万元记账，不影响本表。",
+      "task_id": "667d4330-c6fd-492c-bb0f-32ce0a9d8932",
+      "method_version": "extract-v1",
+      "runs": [
+        {
+          "attempt": 1,
+          "result_id": "task-result:a9fdfb1c-3d42-47b1-9c3b-ab1109e4fd52",
+          "run_id": "a9fdfb1c-3d42-47b1-9c3b-ab1109e4fd52",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "亿元人民币",
+              "period": "2025 年",
+              "company": "虚构远川公司",
+              "capital_expenditure": "0.7",
+              "operating_cash_flow": "2.4"
+            },
+            "report": "读取材料：fictional-yuanchuan.txt（resource_id 7ca23583-798b-4d83-b9cb-4070300774b3，snapshot 0e485a84-9a3c-4f7a-8a83-abfec981ef0d，parse aa8ca28e-91af-470b-a57b-61704e611fdd），解析状态 ready，全文仅 1 个文本片段，位置 line:1。原文为：“虚构远川公司。2025 年主要现金流数据表，单位：亿元人民币。经营活动产生的现金流量净额 2.4；购建固定资产支付的现金 0.7。子公司合同另以万元记账，不影响本表。”据此：公司为虚构远川公司（line:1 首句）；报告期为 2025 年（line:1 第二句）；表格原有金额单位为亿元人民币（line:1 第二句“单位：亿元人民币”）；2025 年经营活动产生的现金流量净额为 2.4（line:1 第三句前半）；购建固定资产支付的现金（即资本开支）为 0.7（line:1 第三句后半）。全部数值按原文照录，未做任何换算或进位处理；line:1 末句仅说明子公司合同另以万元记账且不影响本表，故本表仍统一采用亿元人民币单位，未据此调整任何字段。该材料为虚构文本，数值不可用于真实分析。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-yuanchuan.txt line:1 —— “单位：亿元人民币”",
+              "period": "fictional-yuanchuan.txt line:1 —— “2025 年主要现金流数据表”",
+              "company": "fictional-yuanchuan.txt line:1 —— “虚构远川公司。”",
+              "capital_expenditure": "fictional-yuanchuan.txt line:1 —— “购建固定资产支付的现金 0.7”",
+              "operating_cash_flow": "fictional-yuanchuan.txt line:1 —— “经营活动产生的现金流量净额 2.4”"
+            },
+            "conflicts": [],
+            "follow_up": [
+              "如需完整核对，请补充该现金流数据表的完整表格页或原始报表页码。",
+              "如后续分析需要，请提供子公司合同的万元金额及其与人民币亿元口径的换算规则（本任务不做换算）。",
+              "建议确认该 2025 年数据的期间口径（全年/某期间）及是否经审计。"
+            ],
+            "assumptions": [
+              "“资本开支”按材料中的“购建固定资产支付的现金”对应填写（任务说明规定 capex 对应 capital_expenditure）。",
+              "“报告期”取材料标题中的“2025 年”，按年度口径理解。",
+              "材料全文仅 1 行文本，因此所有字段来源位置均为 line:1。"
+            ],
+            "limitations": [
+              "材料为虚构示例文本（fictional-yuanchuan.txt），不宜作为真实经营数据使用。",
+              "材料仅给出单行汇总表述，未提供报表全表、页码或审计口径说明，无法交叉复核数值。",
+              "line:1 提到子公司合同以万元记账，但未给出具体金额，故无法确认是否存在未纳入本表的其他口径差异。"
+            ],
+            "self_checks": {
+              "unit_match": "unit 字段填写“亿元人民币”，与 line:1“单位：亿元人民币”一致。",
+              "claims_empty": "按任务要求 claims 留为空数组，未构建形式化证据关系。",
+              "missing_check": "材料中五个必需字段均有明确原文出处，故 missing 为空数组。",
+              "no_conversion": "数值 2.4 与 0.7 均为原文照录，未做亿元/万元换算或四舍五入。",
+              "value_parsable": "operating_cash_flow=2.4、capital_expenditure=0.7 均为可解析数值字符串。",
+              "source_coverage": "company、period、operating_cash_flow、capital_expenditure、unit 五项均在 sources 中给出文件与 line:1 原文位置。"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4480,
+            "output_tokens": 1331,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    }
+  ],
+  "research_id": "32d1b214-acf2-4c8b-a8f8-aa7b3e879f2a",
+  "phase": "baseline_complete_needs_independent_source_review"
+}

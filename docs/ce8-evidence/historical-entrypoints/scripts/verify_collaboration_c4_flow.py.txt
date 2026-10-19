@@ -1,0 +1,106 @@
+"""Seed one labeled synthetic multi-expert Flow in the isolated 8783 preview."""
+import asyncio
+import json
+from pathlib import Path
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_projects, build_research, build_resources, build_tasks
+from agent_core.contracts import RunResult
+from agent_core.research.chat import ChatService
+
+
+DATABASE_URL = 'postgresql+psycopg://chenyouran@127.0.0.1:55449/collaboration_verify'
+PROJECT_ID = 'c4-synthetic-flow-verification'
+RESEARCH_ID = 'c4-synthetic-flow-main'
+
+
+class Engine:
+    async def execute(self, request, agent, tools, invoke):
+        if agent.output_type is None:
+            return RunResult(run_id=request.run_id, status='succeeded',
+                output='The illustrative sample does not establish any real market size.')
+        names = {tool.name for tool in tools}
+        if 'ask_collaborator' in names:
+            target = next(row for row in collaboration.find_experts(RESEARCH_ID)
+                          if row['expert_id'] == 'expert_synthesize')
+            task_id = target['tasks'][0]['task_id']
+            await invoke('ask_collaborator', 'c4-question', {
+                'task_id': task_id, 'session_id': target['session_id'],
+                'question': 'Does the illustrative source support a real market estimate?'})
+            await invoke('delegate_collaborator', 'c4-child', {
+                'session_id': target['session_id'],
+                'task_instruction': 'Independently check the illustrative source',
+                'delivery_requirements': 'State that this is synthetic test data',
+                'resource_refs': [source_ref.model_dump(mode='json')]})
+        return RunResult(run_id=request.run_id, status='succeeded', output={
+            'report': 'Synthetic verification only: no real market estimate.',
+            'fields': {}, 'sources': {}, 'assumptions': ['Illustrative input'],
+            'conflicts': [], 'missing': ['Real market evidence'],
+            'limitations': ['Synthetic test data'], 'follow_up': [],
+            'self_checks': {}, 'claims': []})
+
+
+async def main():
+    global collaboration, source_ref
+    PostgresDatabase.LOCK_PATH = Path('/private/tmp/collaboration-verify.lock')
+    database = PostgresDatabase(DATABASE_URL)
+    try:
+        scopes = build_resources(database, Path('/private/tmp/collaboration-verify-blobs'))
+        research = build_research(database, scopes)
+        tasks = build_tasks(database, scopes, research, Engine())
+        projects = build_projects(database, research, tasks)
+        collaboration = research.collaboration
+        project = projects.create('C4 synthetic collaboration flow', key=PROJECT_ID)
+        if projects.query('member', RESEARCH_ID):
+            print(json.dumps({'project_id': PROJECT_ID, 'research_id': RESEARCH_ID,
+                'status': 'already_present'}, ensure_ascii=False))
+            return
+        main_task = await projects.create_main_task(project.id,
+            'Synthetic multi-expert handoff and dependencies', research_id=RESEARCH_ID)
+        node = research.query('list_nodes', main_task.research_id)[0]
+        root = research.research(RESEARCH_ID)
+        scope = scopes.current(root.scope_id, research.owner)
+        _, source_ref = scopes.ingest(scope,
+            content=b'Illustrative C4 source only. This text contains no real market estimate.',
+            name='c4-synthetic-source.txt', media_type='text/plain')
+        ChatService(research, tasks).send(node.id,
+            'Synthetic verification: ask independent experts to check this illustrative source.',
+            0, 'c4-synthetic-user')
+        first = collaboration.delegate_task(command_id='c4-synthetic-first', node_id=node.id,
+            expert_id='expert_synthesize', task_instruction='Check the illustrative source',
+            delivery_requirements='State missing real evidence', resource_refs=(source_ref,))
+        second = collaboration.delegate_task(command_id='c4-synthetic-second', node_id=node.id,
+            expert_id='expert_search', task_instruction='Ask an approved collaborator',
+            delivery_requirements='Preserve the collaborator reply', resource_refs=(source_ref,),
+            collaborator_session_ids=(first.session_id,))
+        await collaboration.execute(first.command_id)
+        first_receipt = collaboration.status(first.command_id)['receipts'][0]
+        checked = tasks.review(first_receipt.result_id, {
+            1: ('passed', 'Checked only the saved synthetic source'),
+            2: ('passed', 'Independently confirmed no real estimate is present'),
+        }, reviewer='c4-synthetic-verifier')
+        await collaboration.execute(second.command_id)
+        child = next(row for row in collaboration.query('intents_for', RESEARCH_ID)
+                     if tasks.spec(row.task_id).parent_task_id == second.task_id)
+        await collaboration.execute(child.command_id)
+        downstream = collaboration.delegate_task(command_id='c4-synthetic-downstream',
+            node_id=node.id, expert_id='expert_synthesize',
+            task_instruction='Combine only the independently checked illustrative finding',
+            delivery_requirements='Keep the synthetic limitation explicit',
+            result_ids=(checked.result_id,))
+        await collaboration.execute(downstream.command_id)
+        evidence = {'project_id': PROJECT_ID, 'research_id': RESEARCH_ID,
+            'tasks': [first.task_id, second.task_id, child.task_id, downstream.task_id],
+            'dependency_result_id': checked.result_id,
+            'collaboration_messages': [row.id for row in collaboration.query('messages_for', first.session_id)
+                if row.sender_task_id == second.task_id],
+            'statuses': {row.command_id: row.status for row in collaboration.query('intents_for', RESEARCH_ID)}}
+        Path('docs/collaboration-c4-flow-verification.json').write_text(
+            json.dumps(evidence, ensure_ascii=False, indent=2) + '\n')
+        print(json.dumps(evidence, ensure_ascii=False))
+    finally:
+        database.close()
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

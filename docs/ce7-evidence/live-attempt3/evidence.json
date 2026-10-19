@@ -1,0 +1,3730 @@
+{
+  "mode": "live",
+  "result": {
+    "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+    "status": "succeeded",
+    "output": {
+      "claims": [],
+      "fields": {
+        "收入": "未知",
+        "版本": "v1",
+        "审阅状态": "未审阅",
+        "笔记名称": "ce7_note",
+        "笔记哈希": "47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0",
+        "设备数量": "7 台",
+        "采用状态": "未采用",
+        "write_private_note 调用次数": "1"
+      },
+      "report": "按任务执行结果（简短汇报）：\n\n1) 已按指令调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。（保存成功，sha256=47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0，41 字节）。该笔记为会话内私有草稿，不构成正式证据或授权。\n\n2) 本次授权的固定事实（v1）仅两项：\n   - 设备数量：7 台；\n   - 收入：未知（不推算、不补值）。\n\n3) 保留未知项：收入数据缺失，未做任何估算或替代口径填列；无期间、币种、单位、统计口径等补充信息。\n\n4) 状态说明：本次未执行任何审阅或采用动作（既未声称“已审”，也未声称“已采用”）；未联网检索，未读取任何外部正文，因任务未提供受控来源，故无引用材料，正文位置无从标注。",
+      "missing": [
+        "收入数值及其期间、币种、单位、口径",
+        "设备数量的期间与统计口径（如期末/平均、台套定义）",
+        "任何可引用的受控来源或原始文件（本次未提供）"
+      ],
+      "sources": {},
+      "conflicts": [],
+      "follow_up": [
+        "如需确认收入，请提供受控来源（如财报正文）及期间、币种与口径。",
+        "如需将 v1 事实正式化，需指定来源与审阅/采用流程。"
+      ],
+      "assumptions": [
+        "假定任务中“固定 v1：7 台设备；收入未知”即为本次全部授权事实，无需外部资料佐证。"
+      ],
+      "limitations": [
+        "私有草稿（private note）仅为会话内草稿，不构成正式证据或授权，不能作为事实出处。",
+        "未获得任何授权来源文件，因此无法提供引用、页码或文本位置。",
+        "未联网、未做交叉核验；结论完全来自任务给定的固定事实。"
+      ],
+      "self_checks": {
+        "claims": "按要求留空数组",
+        "联网": "未使用（任务未要求且无授权来源）",
+        "是否保留未知": "是，收入仍为未知",
+        "笔记名称与文本": "ce7_note / “固定 v1：7 台设备；收入未知。” 完全按指令",
+        "write_private_note 次数": "1（符合“只调用一次”要求）",
+        "是否声称已审/已采用": "否"
+      }
+    },
+    "usage": {
+      "requests": 3,
+      "input_tokens": 6220,
+      "output_tokens": 897,
+      "complete": false
+    },
+    "error": null,
+    "output_repairs": []
+  },
+  "receipt": {
+    "code_candidate": null,
+    "artifact": {
+      "result_id": "task-result:48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "sha256": "d483faffbd996673824d57a2332d4207411add63cd14662fbc287aa125b678c6",
+      "bytes": 2398,
+      "chars": 1182,
+      "complete": true,
+      "brief": "按任务执行结果（简短汇报）：\n\n1) 已按指令调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。（保存成功，sha256=47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0，41 字节）。该笔记为会话内私有草稿，不构成正式证据或授权。\n\n2) 本次授权的固定事实（v1）仅两项：\n   - 设备数量：7 台；\n   - 收入：未知（不推算、不补值）。\n\n3) 保留未知项：收入数据缺失，未做任何估算或替代口径填列；无期间、币种、单位、统计口径等补充信息。\n\n4) 状态说明：本次未执行任何审阅或采用动作（既未声称“已审”，也未声称“已采用”）；未联网检索，未读取任何外部正文，因任务未提供受控来源，故无引用材料，正文位置无从标注。",
+      "brief_truncated": false
+    },
+    "result_id": "task-result:48a1559d-101e-401c-98da-832a9e3fcaf8",
+    "task_id": "a2a02cd9-9fd0-4bf7-8543-51f1637207b7",
+    "spec_version": 1,
+    "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+    "context_snapshot_id": "2814db3d-bca0-4fa4-b5c9-19bd4a061549",
+    "model": "deepseek-flash",
+    "route_id": null,
+    "method_version": "synthesize-v2",
+    "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+    "result_ids": [],
+    "resource_refs": [],
+    "missing_optional_refs": [],
+    "program_checks": [
+      {
+        "number": 1,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Run output and fixed input identity checked",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Report present",
+        "reviewer": null
+      }
+    ],
+    "semantic_checks": [
+      {
+        "number": 1,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      }
+    ],
+    "assumptions": [
+      "假定任务中“固定 v1：7 台设备；收入未知”即为本次全部授权事实，无需外部资料佐证。"
+    ],
+    "conflicts": [],
+    "missing": [
+      "收入数值及其期间、币种、单位、口径",
+      "设备数量的期间与统计口径（如期末/平均、台套定义）",
+      "任何可引用的受控来源或原始文件（本次未提供）"
+    ],
+    "limitations": [
+      "私有草稿（private note）仅为会话内草稿，不构成正式证据或授权，不能作为事实出处。",
+      "未获得任何授权来源文件，因此无法提供引用、页码或文本位置。",
+      "未联网、未做交叉核验；结论完全来自任务给定的固定事实。"
+    ],
+    "follow_up": [
+      "如需确认收入，请提供受控来源（如财报正文）及期间、币种与口径。",
+      "如需将 v1 事实正式化，需指定来源与审阅/采用流程。"
+    ],
+    "delivery": "pending_review",
+    "adoption": "for_discussion",
+    "adoption_reason": null
+  },
+  "budget": {
+    "id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+    "binding": {
+      "model": "deepseek-flash",
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "task_id": "a2a02cd9-9fd0-4bf7-8543-51f1637207b7",
+      "entrance": "expert",
+      "scope_id": "63f6aed5-4ce9-410d-a143-35ef88a3abc9",
+      "execution": "controlled_tools",
+      "agent_hash": "a242c9dcdd66c834ba2c364f8a191b5f0f0201621bc8bc01ec2b061e19bc699c",
+      "session_id": "a2a02cd9-9fd0-4bf7-8543-51f1637207b7",
+      "research_id": "0c2a11fc-68a7-4242-b000-fb160f1d9af1",
+      "request_hash": "181f442cb5710fc89213614296a99d4edb87ef9235ae146f04bfa3c9085cfea3",
+      "spec_version": 1,
+      "code_contract": null,
+      "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+      "root_scope_id": "97fe46c9-9562-41bf-9772-947a74303827",
+      "scope_version": 2,
+      "root_scope_version": 1,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "a0e1bce4ee7e1404134e8f99a53063b290da28cf5623c87ac1632b0fb905548b"
+    },
+    "models": 3,
+    "tools": 1,
+    "deadline": "2026-10-08 09:42:43.796824+08:00"
+  },
+  "operations": [
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "id": "model:1",
+      "kind": "model",
+      "request_hash": "cd36e8f1fefbca63e444aa6c6db4cc66cf1204d2717801a4b1d8fc006af048a5",
+      "usage": null,
+      "status": "unconfirmed"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "id": "model:1:retry:1",
+      "kind": "model",
+      "request_hash": "cd36e8f1fefbca63e444aa6c6db4cc66cf1204d2717801a4b1d8fc006af048a5",
+      "usage": {
+        "complete": true,
+        "requests": 1,
+        "input_tokens": 3007,
+        "output_tokens": 132
+      },
+      "status": "confirmed"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "id": "tool:call_00_3zYKQ5bqwKXMV5KapTPN8838",
+      "kind": "private",
+      "request_hash": "91524ba916a3baa60deebc560d5b9165f003d449af30e8e0a0147167899580f5",
+      "usage": null,
+      "status": "confirmed"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "id": "model:2",
+      "kind": "model",
+      "request_hash": "f9632d8648f03a1b9f52c336d3a96db3ed8503b12a985a2767d1f22d600217df",
+      "usage": {
+        "complete": true,
+        "requests": 1,
+        "input_tokens": 3213,
+        "output_tokens": 765
+      },
+      "status": "confirmed"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "id": "result:48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "kind": "result",
+      "request_hash": "c356b124dc61acd19a82548958d508736ed29d9a04151cef55114b8758d460e0",
+      "usage": null,
+      "status": "confirmed"
+    }
+  ],
+  "checkpoints": [
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "code",
+      "artifact": "ac3d727d30c92edd649fe8150269c75047781e58df89eba0250b3fb339d84812"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "sdk",
+      "artifact": "22100a28a527c989c0ef5a24c0174bbc2321afbcf7aeec7d2f975812891506c3"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "input:1",
+      "artifact": "e894fbeb7be993d212266d9a5dcc1aa012a46c961400ef9d6af9e5d36488b62f"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "receipt:model:1:retry:1",
+      "artifact": "ff898db192b3e15912fcbe316328c6341eadc1e60c6adbfa8b0c5a36f1919389"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "receipt:tool:call_00_3zYKQ5bqwKXMV5KapTPN8838",
+      "artifact": "15f7384ac51054938eb529856dfc5dab4f946130d485848d7549234a0ac2285d"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "input:2",
+      "artifact": "41a58e0f885edbaf0b20148a2090b27e333dec6efefe062c60d6dcc3ae307b0d"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "receipt:model:2",
+      "artifact": "13806ca7abf48d19150f2655d27805d922be2dfc6f0b98dba3cea527fdf23dcf"
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "key": "receipt:result:48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "artifact": "7b61b9b2e0741273660f8b2dd9e59dd6488e45346d8ffe739cdce7d6a4e7f139"
+    }
+  ],
+  "manifests": [
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "operation_id": "model:1",
+      "state": "sent",
+      "manifest": {
+        "usage": null,
+        "purpose": "task",
+        "excluded": [],
+        "wire_body": {
+          "text": {
+            "format": {
+              "name": "final_output",
+              "type": "json_schema",
+              "schema": {
+                "type": "object",
+                "$defs": {
+                  "ClaimDraft": {
+                    "type": "object",
+                    "title": "ClaimDraft",
+                    "required": [
+                      "statement"
+                    ],
+                    "properties": {
+                      "missing": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "Missing",
+                        "default": []
+                      },
+                      "citations": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/CitationDraft"
+                        },
+                        "title": "Citations",
+                        "default": []
+                      },
+                      "statement": {
+                        "type": "string",
+                        "title": "Statement",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "SourceFields": {
+                    "type": "object",
+                    "title": "SourceFields",
+                    "properties": {
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Unit",
+                        "default": null
+                      },
+                      "basis": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Basis",
+                        "default": null
+                      },
+                      "period": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Period",
+                        "default": null
+                      },
+                      "company": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Company",
+                        "default": null
+                      },
+                      "currency": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Currency",
+                        "default": null
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "CitationDraft": {
+                    "type": "object",
+                    "title": "CitationDraft",
+                    "required": [
+                      "ref",
+                      "location",
+                      "quote",
+                      "relation",
+                      "reasoning"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/$defs/ResourceRef"
+                      },
+                      "quote": {
+                        "type": "string",
+                        "title": "Quote",
+                        "minLength": 1
+                      },
+                      "fields": {
+                        "$ref": "#/$defs/SourceFields",
+                        "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                      },
+                      "location": {
+                        "type": "string",
+                        "title": "Location",
+                        "minLength": 1
+                      },
+                      "relation": {
+                        "enum": [
+                          "supports",
+                          "opposes"
+                        ],
+                        "type": "string",
+                        "title": "Relation"
+                      },
+                      "reasoning": {
+                        "type": "string",
+                        "title": "Reasoning",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ExpertAnswer",
+                "required": [
+                  "report"
+                ],
+                "properties": {
+                  "claims": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/ClaimDraft"
+                    },
+                    "title": "Claims",
+                    "default": []
+                  },
+                  "fields": {
+                    "type": "object",
+                    "title": "Fields",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "report": {
+                    "type": "string",
+                    "title": "Report",
+                    "minLength": 1
+                  },
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "sources": {
+                    "type": "object",
+                    "title": "Sources",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "conflicts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Conflicts",
+                    "default": []
+                  },
+                  "follow_up": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Follow Up",
+                    "default": []
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Assumptions",
+                    "default": []
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Limitations",
+                    "default": []
+                  },
+                  "self_checks": {
+                    "type": "object",
+                    "title": "Self Checks",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          },
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "include": [],
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "max_output_tokens": 8192,
+          "parallel_tool_calls": false
+        },
+        "wire_text": "{\"include\":[],\"input\":[{\"role\":\"user\",\"content\":\"{\\\"content\\\":[],\\\"goal\\\":\\\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\\",\\\"sources\\\":[]}\"}],\"instructions\":\"综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。\",\"max_output_tokens\":8192,\"model\":\"deepseek-flash\",\"parallel_tool_calls\":false,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"final_output\",\"schema\":{\"$defs\":{\"CitationDraft\":{\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"minLength\":1,\"title\":\"Location\",\"type\":\"string\"},\"quote\":{\"minLength\":1,\"title\":\"Quote\",\"type\":\"string\"},\"relation\":{\"enum\":[\"supports\",\"opposes\"],\"title\":\"Relation\",\"type\":\"string\"},\"reasoning\":{\"minLength\":1,\"title\":\"Reasoning\",\"type\":\"string\"},\"fields\":{\"$ref\":\"#/$defs/SourceFields\",\"description\":\"Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date.\"}},\"required\":[\"ref\",\"location\",\"quote\",\"relation\",\"reasoning\"],\"title\":\"CitationDraft\",\"type\":\"object\"},\"ClaimDraft\":{\"additionalProperties\":false,\"properties\":{\"statement\":{\"minLength\":1,\"title\":\"Statement\",\"type\":\"string\"},\"citations\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/CitationDraft\"},\"title\":\"Citations\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"}},\"required\":[\"statement\"],\"title\":\"ClaimDraft\",\"type\":\"object\"},\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"},\"SourceFields\":{\"additionalProperties\":false,\"properties\":{\"company\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Company\"},\"period\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Period\"},\"currency\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Currency\"},\"unit\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Unit\"},\"basis\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Basis\"}},\"title\":\"SourceFields\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"report\":{\"minLength\":1,\"title\":\"Report\",\"type\":\"string\"},\"fields\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Fields\",\"type\":\"object\"},\"sources\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Sources\",\"type\":\"object\"},\"assumptions\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Assumptions\",\"type\":\"array\"},\"conflicts\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Conflicts\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"},\"limitations\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Limitations\",\"type\":\"array\"},\"follow_up\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Follow Up\",\"type\":\"array\"},\"self_checks\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Self Checks\",\"type\":\"object\"},\"claims\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/ClaimDraft\"},\"title\":\"Claims\",\"type\":\"array\"}},\"required\":[\"report\"],\"title\":\"ExpertAnswer\",\"type\":\"object\"},\"strict\":false}},\"tools\":[{\"name\":\"read_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"Location\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"ref\",\"location\",\"offset\",\"limit\"],\"title\":\"ReadSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read an immutable source. For large sources, use search_source first and pass a page or fragment location here.\"},{\"name\":\"search_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"query\":{\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"ref\",\"query\"],\"title\":\"SearchSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search located fragments in one permitted immutable source version.\"},{\"name\":\"search_web\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"query\":{\"maxLength\":500,\"minLength\":1,\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"query\"],\"title\":\"WebSearch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering.\"},{\"name\":\"fetch_web\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"}},\"required\":[\"ref\"],\"title\":\"WebFetch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref.\"},{\"name\":\"write_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"},\"text\":{\"maxLength\":256000,\"title\":\"Text\",\"type\":\"string\"}},\"required\":[\"name\",\"text\"],\"title\":\"WriteNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Save a private draft; this does not publish evidence.\"},{\"name\":\"read_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"}},\"required\":[\"name\"],\"title\":\"ReadNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a saved private draft and verify its hash.\"},{\"name\":\"read_context_page\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"artifact_id\":{\"pattern\":\"^[a-f0-9]{64}$\",\"title\":\"Artifact Id\",\"type\":\"string\"},\"pointer\":{\"default\":\"\",\"title\":\"Pointer\",\"type\":\"string\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"artifact_id\",\"pointer\",\"offset\",\"limit\"],\"title\":\"ReadContextPage\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths.\"}]}",
+        "characters": 8724,
+        "wire_sha256": "6db8cb6d6240773df48d242b383b73a9af9f413579b04765d82cfb617d8034cc",
+        "public_input": {
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "settings": {
+            "retry": null,
+            "store": null,
+            "top_p": null,
+            "timeout": 569.929673,
+            "metadata": null,
+            "reasoning": null,
+            "verbosity": null,
+            "extra_args": null,
+            "extra_body": null,
+            "max_tokens": 8192,
+            "truncation": null,
+            "extra_query": null,
+            "temperature": null,
+            "tool_choice": null,
+            "top_logprobs": null,
+            "extra_headers": null,
+            "include_usage": null,
+            "presence_penalty": null,
+            "response_include": null,
+            "frequency_penalty": null,
+            "context_management": null,
+            "preserve_raw_usage": null,
+            "parallel_tool_calls": false,
+            "prompt_cache_options": null,
+            "prompt_cache_retention": null
+          },
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "output_schema": {
+            "type": "object",
+            "$defs": {
+              "ClaimDraft": {
+                "type": "object",
+                "title": "ClaimDraft",
+                "required": [
+                  "statement"
+                ],
+                "properties": {
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/CitationDraft"
+                    },
+                    "title": "Citations",
+                    "default": []
+                  },
+                  "statement": {
+                    "type": "string",
+                    "title": "Statement",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "ResourceRef": {
+                "type": "object",
+                "title": "ResourceRef",
+                "required": [
+                  "resource_id",
+                  "snapshot_id",
+                  "parse_id"
+                ],
+                "properties": {
+                  "parse_id": {
+                    "type": "string",
+                    "title": "Parse Id"
+                  },
+                  "resource_id": {
+                    "type": "string",
+                    "title": "Resource Id"
+                  },
+                  "snapshot_id": {
+                    "type": "string",
+                    "title": "Snapshot Id"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "SourceFields": {
+                "type": "object",
+                "title": "SourceFields",
+                "properties": {
+                  "unit": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Unit",
+                    "default": null
+                  },
+                  "basis": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Basis",
+                    "default": null
+                  },
+                  "period": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Period",
+                    "default": null
+                  },
+                  "company": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Company",
+                    "default": null
+                  },
+                  "currency": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Currency",
+                    "default": null
+                  }
+                },
+                "additionalProperties": false
+              },
+              "CitationDraft": {
+                "type": "object",
+                "title": "CitationDraft",
+                "required": [
+                  "ref",
+                  "location",
+                  "quote",
+                  "relation",
+                  "reasoning"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "quote": {
+                    "type": "string",
+                    "title": "Quote",
+                    "minLength": 1
+                  },
+                  "fields": {
+                    "$ref": "#/$defs/SourceFields",
+                    "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "minLength": 1
+                  },
+                  "relation": {
+                    "enum": [
+                      "supports",
+                      "opposes"
+                    ],
+                    "type": "string",
+                    "title": "Relation"
+                  },
+                  "reasoning": {
+                    "type": "string",
+                    "title": "Reasoning",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "title": "ExpertAnswer",
+            "required": [
+              "report"
+            ],
+            "properties": {
+              "claims": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/ClaimDraft"
+                },
+                "title": "Claims",
+                "default": []
+              },
+              "fields": {
+                "type": "object",
+                "title": "Fields",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "report": {
+                "type": "string",
+                "title": "Report",
+                "minLength": 1
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Missing",
+                "default": []
+              },
+              "sources": {
+                "type": "object",
+                "title": "Sources",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Conflicts",
+                "default": []
+              },
+              "follow_up": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Follow Up",
+                "default": []
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Assumptions",
+                "default": []
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Limitations",
+                "default": []
+              },
+              "self_checks": {
+                "type": "object",
+                "title": "Self Checks",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "margin_tokens": 4096,
+        "business_excluded": [],
+        "public_input_sha256": "34867d4f32abb633745b8c1c819e93661ca0cdf45b954b722d7db45a90e8a95c",
+        "output_reserve_tokens": 8192,
+        "estimated_input_tokens": 10218
+      }
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "operation_id": "model:1:retry:1",
+      "state": "responded",
+      "manifest": {
+        "usage": {
+          "input_tokens": 3007,
+          "output_tokens": 132,
+          "cached_input_tokens": 2816,
+          "cache_tokens_included_in_input": true,
+          "sdk_normalized_cached_input_tokens": 2816
+        },
+        "purpose": "task",
+        "excluded": [],
+        "wire_body": {
+          "text": {
+            "format": {
+              "name": "final_output",
+              "type": "json_schema",
+              "schema": {
+                "type": "object",
+                "$defs": {
+                  "ClaimDraft": {
+                    "type": "object",
+                    "title": "ClaimDraft",
+                    "required": [
+                      "statement"
+                    ],
+                    "properties": {
+                      "missing": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "Missing",
+                        "default": []
+                      },
+                      "citations": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/CitationDraft"
+                        },
+                        "title": "Citations",
+                        "default": []
+                      },
+                      "statement": {
+                        "type": "string",
+                        "title": "Statement",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "SourceFields": {
+                    "type": "object",
+                    "title": "SourceFields",
+                    "properties": {
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Unit",
+                        "default": null
+                      },
+                      "basis": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Basis",
+                        "default": null
+                      },
+                      "period": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Period",
+                        "default": null
+                      },
+                      "company": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Company",
+                        "default": null
+                      },
+                      "currency": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Currency",
+                        "default": null
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "CitationDraft": {
+                    "type": "object",
+                    "title": "CitationDraft",
+                    "required": [
+                      "ref",
+                      "location",
+                      "quote",
+                      "relation",
+                      "reasoning"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/$defs/ResourceRef"
+                      },
+                      "quote": {
+                        "type": "string",
+                        "title": "Quote",
+                        "minLength": 1
+                      },
+                      "fields": {
+                        "$ref": "#/$defs/SourceFields",
+                        "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                      },
+                      "location": {
+                        "type": "string",
+                        "title": "Location",
+                        "minLength": 1
+                      },
+                      "relation": {
+                        "enum": [
+                          "supports",
+                          "opposes"
+                        ],
+                        "type": "string",
+                        "title": "Relation"
+                      },
+                      "reasoning": {
+                        "type": "string",
+                        "title": "Reasoning",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ExpertAnswer",
+                "required": [
+                  "report"
+                ],
+                "properties": {
+                  "claims": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/ClaimDraft"
+                    },
+                    "title": "Claims",
+                    "default": []
+                  },
+                  "fields": {
+                    "type": "object",
+                    "title": "Fields",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "report": {
+                    "type": "string",
+                    "title": "Report",
+                    "minLength": 1
+                  },
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "sources": {
+                    "type": "object",
+                    "title": "Sources",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "conflicts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Conflicts",
+                    "default": []
+                  },
+                  "follow_up": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Follow Up",
+                    "default": []
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Assumptions",
+                    "default": []
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Limitations",
+                    "default": []
+                  },
+                  "self_checks": {
+                    "type": "object",
+                    "title": "Self Checks",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          },
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "include": [],
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "max_output_tokens": 8192,
+          "parallel_tool_calls": false
+        },
+        "wire_text": "{\"include\":[],\"input\":[{\"content\":\"{\\\"content\\\":[],\\\"goal\\\":\\\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\\",\\\"sources\\\":[]}\",\"role\":\"user\"}],\"instructions\":\"综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。\",\"max_output_tokens\":8192,\"model\":\"deepseek-flash\",\"parallel_tool_calls\":false,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"final_output\",\"schema\":{\"$defs\":{\"CitationDraft\":{\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"minLength\":1,\"title\":\"Location\",\"type\":\"string\"},\"quote\":{\"minLength\":1,\"title\":\"Quote\",\"type\":\"string\"},\"relation\":{\"enum\":[\"supports\",\"opposes\"],\"title\":\"Relation\",\"type\":\"string\"},\"reasoning\":{\"minLength\":1,\"title\":\"Reasoning\",\"type\":\"string\"},\"fields\":{\"$ref\":\"#/$defs/SourceFields\",\"description\":\"Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date.\"}},\"required\":[\"ref\",\"location\",\"quote\",\"relation\",\"reasoning\"],\"title\":\"CitationDraft\",\"type\":\"object\"},\"ClaimDraft\":{\"additionalProperties\":false,\"properties\":{\"statement\":{\"minLength\":1,\"title\":\"Statement\",\"type\":\"string\"},\"citations\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/CitationDraft\"},\"title\":\"Citations\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"}},\"required\":[\"statement\"],\"title\":\"ClaimDraft\",\"type\":\"object\"},\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"},\"SourceFields\":{\"additionalProperties\":false,\"properties\":{\"company\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Company\"},\"period\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Period\"},\"currency\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Currency\"},\"unit\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Unit\"},\"basis\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Basis\"}},\"title\":\"SourceFields\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"report\":{\"minLength\":1,\"title\":\"Report\",\"type\":\"string\"},\"fields\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Fields\",\"type\":\"object\"},\"sources\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Sources\",\"type\":\"object\"},\"assumptions\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Assumptions\",\"type\":\"array\"},\"conflicts\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Conflicts\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"},\"limitations\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Limitations\",\"type\":\"array\"},\"follow_up\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Follow Up\",\"type\":\"array\"},\"self_checks\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Self Checks\",\"type\":\"object\"},\"claims\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/ClaimDraft\"},\"title\":\"Claims\",\"type\":\"array\"}},\"required\":[\"report\"],\"title\":\"ExpertAnswer\",\"type\":\"object\"},\"strict\":false}},\"tools\":[{\"name\":\"read_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"Location\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"ref\",\"location\",\"offset\",\"limit\"],\"title\":\"ReadSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read an immutable source. For large sources, use search_source first and pass a page or fragment location here.\"},{\"name\":\"search_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"query\":{\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"ref\",\"query\"],\"title\":\"SearchSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search located fragments in one permitted immutable source version.\"},{\"name\":\"search_web\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"query\":{\"maxLength\":500,\"minLength\":1,\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"query\"],\"title\":\"WebSearch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering.\"},{\"name\":\"fetch_web\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"}},\"required\":[\"ref\"],\"title\":\"WebFetch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref.\"},{\"name\":\"write_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"},\"text\":{\"maxLength\":256000,\"title\":\"Text\",\"type\":\"string\"}},\"required\":[\"name\",\"text\"],\"title\":\"WriteNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Save a private draft; this does not publish evidence.\"},{\"name\":\"read_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"}},\"required\":[\"name\"],\"title\":\"ReadNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a saved private draft and verify its hash.\"},{\"name\":\"read_context_page\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"artifact_id\":{\"pattern\":\"^[a-f0-9]{64}$\",\"title\":\"Artifact Id\",\"type\":\"string\"},\"pointer\":{\"default\":\"\",\"title\":\"Pointer\",\"type\":\"string\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"artifact_id\",\"pointer\",\"offset\",\"limit\"],\"title\":\"ReadContextPage\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths.\"}]}",
+        "characters": 8724,
+        "wire_sha256": "411acb5bf5bada3ce89da191be961dbefa3293e20ab6ec90ec531335d88cf5d8",
+        "public_input": {
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "settings": {
+            "retry": null,
+            "store": null,
+            "top_p": null,
+            "timeout": 569.929673,
+            "metadata": null,
+            "reasoning": null,
+            "verbosity": null,
+            "extra_args": null,
+            "extra_body": null,
+            "max_tokens": 8192,
+            "truncation": null,
+            "extra_query": null,
+            "temperature": null,
+            "tool_choice": null,
+            "top_logprobs": null,
+            "extra_headers": null,
+            "include_usage": null,
+            "presence_penalty": null,
+            "response_include": null,
+            "frequency_penalty": null,
+            "context_management": null,
+            "preserve_raw_usage": null,
+            "parallel_tool_calls": false,
+            "prompt_cache_options": null,
+            "prompt_cache_retention": null
+          },
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "output_schema": {
+            "type": "object",
+            "$defs": {
+              "ClaimDraft": {
+                "type": "object",
+                "title": "ClaimDraft",
+                "required": [
+                  "statement"
+                ],
+                "properties": {
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/CitationDraft"
+                    },
+                    "title": "Citations",
+                    "default": []
+                  },
+                  "statement": {
+                    "type": "string",
+                    "title": "Statement",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "ResourceRef": {
+                "type": "object",
+                "title": "ResourceRef",
+                "required": [
+                  "resource_id",
+                  "snapshot_id",
+                  "parse_id"
+                ],
+                "properties": {
+                  "parse_id": {
+                    "type": "string",
+                    "title": "Parse Id"
+                  },
+                  "resource_id": {
+                    "type": "string",
+                    "title": "Resource Id"
+                  },
+                  "snapshot_id": {
+                    "type": "string",
+                    "title": "Snapshot Id"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "SourceFields": {
+                "type": "object",
+                "title": "SourceFields",
+                "properties": {
+                  "unit": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Unit",
+                    "default": null
+                  },
+                  "basis": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Basis",
+                    "default": null
+                  },
+                  "period": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Period",
+                    "default": null
+                  },
+                  "company": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Company",
+                    "default": null
+                  },
+                  "currency": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Currency",
+                    "default": null
+                  }
+                },
+                "additionalProperties": false
+              },
+              "CitationDraft": {
+                "type": "object",
+                "title": "CitationDraft",
+                "required": [
+                  "ref",
+                  "location",
+                  "quote",
+                  "relation",
+                  "reasoning"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "quote": {
+                    "type": "string",
+                    "title": "Quote",
+                    "minLength": 1
+                  },
+                  "fields": {
+                    "$ref": "#/$defs/SourceFields",
+                    "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "minLength": 1
+                  },
+                  "relation": {
+                    "enum": [
+                      "supports",
+                      "opposes"
+                    ],
+                    "type": "string",
+                    "title": "Relation"
+                  },
+                  "reasoning": {
+                    "type": "string",
+                    "title": "Reasoning",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "title": "ExpertAnswer",
+            "required": [
+              "report"
+            ],
+            "properties": {
+              "claims": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/ClaimDraft"
+                },
+                "title": "Claims",
+                "default": []
+              },
+              "fields": {
+                "type": "object",
+                "title": "Fields",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "report": {
+                "type": "string",
+                "title": "Report",
+                "minLength": 1
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Missing",
+                "default": []
+              },
+              "sources": {
+                "type": "object",
+                "title": "Sources",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Conflicts",
+                "default": []
+              },
+              "follow_up": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Follow Up",
+                "default": []
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Assumptions",
+                "default": []
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Limitations",
+                "default": []
+              },
+              "self_checks": {
+                "type": "object",
+                "title": "Self Checks",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "margin_tokens": 4096,
+        "business_excluded": [],
+        "response_metadata": {
+          "usage": {
+            "input_tokens": 3007,
+            "total_tokens": 3139,
+            "output_tokens": 132,
+            "input_tokens_details": {
+              "cached_tokens": 2816
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 62
+            }
+          },
+          "status": "completed",
+          "incomplete_details": null
+        },
+        "public_input_sha256": "34867d4f32abb633745b8c1c819e93661ca0cdf45b954b722d7db45a90e8a95c",
+        "output_reserve_tokens": 8192,
+        "estimated_input_tokens": 10218
+      }
+    },
+    {
+      "run_id": "48a1559d-101e-401c-98da-832a9e3fcaf8",
+      "operation_id": "model:2",
+      "state": "responded",
+      "manifest": {
+        "usage": {
+          "input_tokens": 3213,
+          "output_tokens": 765,
+          "cached_input_tokens": 3072,
+          "cache_tokens_included_in_input": true,
+          "sdk_normalized_cached_input_tokens": 3072
+        },
+        "purpose": "task",
+        "excluded": [],
+        "wire_body": {
+          "text": {
+            "format": {
+              "name": "final_output",
+              "type": "json_schema",
+              "schema": {
+                "type": "object",
+                "$defs": {
+                  "ClaimDraft": {
+                    "type": "object",
+                    "title": "ClaimDraft",
+                    "required": [
+                      "statement"
+                    ],
+                    "properties": {
+                      "missing": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "Missing",
+                        "default": []
+                      },
+                      "citations": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/CitationDraft"
+                        },
+                        "title": "Citations",
+                        "default": []
+                      },
+                      "statement": {
+                        "type": "string",
+                        "title": "Statement",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "SourceFields": {
+                    "type": "object",
+                    "title": "SourceFields",
+                    "properties": {
+                      "unit": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Unit",
+                        "default": null
+                      },
+                      "basis": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Basis",
+                        "default": null
+                      },
+                      "period": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Period",
+                        "default": null
+                      },
+                      "company": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Company",
+                        "default": null
+                      },
+                      "currency": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "title": "Currency",
+                        "default": null
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "CitationDraft": {
+                    "type": "object",
+                    "title": "CitationDraft",
+                    "required": [
+                      "ref",
+                      "location",
+                      "quote",
+                      "relation",
+                      "reasoning"
+                    ],
+                    "properties": {
+                      "ref": {
+                        "$ref": "#/$defs/ResourceRef"
+                      },
+                      "quote": {
+                        "type": "string",
+                        "title": "Quote",
+                        "minLength": 1
+                      },
+                      "fields": {
+                        "$ref": "#/$defs/SourceFields",
+                        "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                      },
+                      "location": {
+                        "type": "string",
+                        "title": "Location",
+                        "minLength": 1
+                      },
+                      "relation": {
+                        "enum": [
+                          "supports",
+                          "opposes"
+                        ],
+                        "type": "string",
+                        "title": "Relation"
+                      },
+                      "reasoning": {
+                        "type": "string",
+                        "title": "Reasoning",
+                        "minLength": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ExpertAnswer",
+                "required": [
+                  "report"
+                ],
+                "properties": {
+                  "claims": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/ClaimDraft"
+                    },
+                    "title": "Claims",
+                    "default": []
+                  },
+                  "fields": {
+                    "type": "object",
+                    "title": "Fields",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "report": {
+                    "type": "string",
+                    "title": "Report",
+                    "minLength": 1
+                  },
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "sources": {
+                    "type": "object",
+                    "title": "Sources",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "conflicts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Conflicts",
+                    "default": []
+                  },
+                  "follow_up": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Follow Up",
+                    "default": []
+                  },
+                  "assumptions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Assumptions",
+                    "default": []
+                  },
+                  "limitations": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Limitations",
+                    "default": []
+                  },
+                  "self_checks": {
+                    "type": "object",
+                    "title": "Self Checks",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "strict": false
+            }
+          },
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            },
+            {
+              "id": "6fd73bf7-1cac-4cdd-b97b-c25f200397ca",
+              "type": "reasoning",
+              "status": "completed",
+              "content": [
+                {
+                  "text": "I need to call write_private_note once with name=ce7_note, text=固定 v1：7 台设备；收入未知。 Then deliver a short Chinese report.\n\nThen reply in JSON schema with report, fields, etc. claims empty array.\n\nLet me do the tool call.",
+                  "type": "reasoning_text"
+                }
+              ],
+              "summary": [],
+              "encrypted_content": "63987920-b9c4-4e1b-8ee7-23a03b4f0106-0"
+            },
+            {
+              "id": "5b801278-8fc5-4885-90a7-2077189f6180",
+              "name": "write_private_note",
+              "type": "function_call",
+              "status": "completed",
+              "call_id": "call_00_3zYKQ5bqwKXMV5KapTPN8838",
+              "arguments": "{\"name\": \"ce7_note\", \"text\": \"固定 v1：7 台设备；收入未知。\"}"
+            },
+            {
+              "type": "function_call_output",
+              "output": "{\"value\":{\"name\":\"ce7_note\",\"sha256\":\"47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0\",\"bytes\":41,\"saved\":true}}",
+              "call_id": "call_00_3zYKQ5bqwKXMV5KapTPN8838"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "type": "function",
+              "strict": true,
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "include": [],
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "max_output_tokens": 8192,
+          "parallel_tool_calls": false
+        },
+        "wire_text": "{\"include\":[],\"input\":[{\"content\":\"{\\\"content\\\":[],\\\"goal\\\":\\\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\\",\\\"sources\\\":[]}\",\"role\":\"user\"},{\"id\":\"6fd73bf7-1cac-4cdd-b97b-c25f200397ca\",\"summary\":[],\"type\":\"reasoning\",\"content\":[{\"text\":\"I need to call write_private_note once with name=ce7_note, text=固定 v1：7 台设备；收入未知。 Then deliver a short Chinese report.\\n\\nThen reply in JSON schema with report, fields, etc. claims empty array.\\n\\nLet me do the tool call.\",\"type\":\"reasoning_text\"}],\"encrypted_content\":\"63987920-b9c4-4e1b-8ee7-23a03b4f0106-0\",\"status\":\"completed\"},{\"arguments\":\"{\\\"name\\\": \\\"ce7_note\\\", \\\"text\\\": \\\"固定 v1：7 台设备；收入未知。\\\"}\",\"call_id\":\"call_00_3zYKQ5bqwKXMV5KapTPN8838\",\"name\":\"write_private_note\",\"type\":\"function_call\",\"id\":\"5b801278-8fc5-4885-90a7-2077189f6180\",\"status\":\"completed\"},{\"call_id\":\"call_00_3zYKQ5bqwKXMV5KapTPN8838\",\"output\":\"{\\\"value\\\":{\\\"name\\\":\\\"ce7_note\\\",\\\"sha256\\\":\\\"47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0\\\",\\\"bytes\\\":41,\\\"saved\\\":true}}\",\"type\":\"function_call_output\"}],\"instructions\":\"综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。\",\"max_output_tokens\":8192,\"model\":\"deepseek-flash\",\"parallel_tool_calls\":false,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"final_output\",\"schema\":{\"$defs\":{\"CitationDraft\":{\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"minLength\":1,\"title\":\"Location\",\"type\":\"string\"},\"quote\":{\"minLength\":1,\"title\":\"Quote\",\"type\":\"string\"},\"relation\":{\"enum\":[\"supports\",\"opposes\"],\"title\":\"Relation\",\"type\":\"string\"},\"reasoning\":{\"minLength\":1,\"title\":\"Reasoning\",\"type\":\"string\"},\"fields\":{\"$ref\":\"#/$defs/SourceFields\",\"description\":\"Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date.\"}},\"required\":[\"ref\",\"location\",\"quote\",\"relation\",\"reasoning\"],\"title\":\"CitationDraft\",\"type\":\"object\"},\"ClaimDraft\":{\"additionalProperties\":false,\"properties\":{\"statement\":{\"minLength\":1,\"title\":\"Statement\",\"type\":\"string\"},\"citations\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/CitationDraft\"},\"title\":\"Citations\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"}},\"required\":[\"statement\"],\"title\":\"ClaimDraft\",\"type\":\"object\"},\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"},\"SourceFields\":{\"additionalProperties\":false,\"properties\":{\"company\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Company\"},\"period\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Period\"},\"currency\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Currency\"},\"unit\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Unit\"},\"basis\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"default\":null,\"title\":\"Basis\"}},\"title\":\"SourceFields\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"report\":{\"minLength\":1,\"title\":\"Report\",\"type\":\"string\"},\"fields\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Fields\",\"type\":\"object\"},\"sources\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Sources\",\"type\":\"object\"},\"assumptions\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Assumptions\",\"type\":\"array\"},\"conflicts\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Conflicts\",\"type\":\"array\"},\"missing\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Missing\",\"type\":\"array\"},\"limitations\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Limitations\",\"type\":\"array\"},\"follow_up\":{\"default\":[],\"items\":{\"type\":\"string\"},\"title\":\"Follow Up\",\"type\":\"array\"},\"self_checks\":{\"additionalProperties\":{\"type\":\"string\"},\"title\":\"Self Checks\",\"type\":\"object\"},\"claims\":{\"default\":[],\"items\":{\"$ref\":\"#/$defs/ClaimDraft\"},\"title\":\"Claims\",\"type\":\"array\"}},\"required\":[\"report\"],\"title\":\"ExpertAnswer\",\"type\":\"object\"},\"strict\":false}},\"tools\":[{\"name\":\"read_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"location\":{\"anyOf\":[{\"type\":\"string\"},{\"type\":\"null\"}],\"title\":\"Location\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"ref\",\"location\",\"offset\",\"limit\"],\"title\":\"ReadSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read an immutable source. For large sources, use search_source first and pass a page or fragment location here.\"},{\"name\":\"search_source\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"},\"query\":{\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"ref\",\"query\"],\"title\":\"SearchSource\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search located fragments in one permitted immutable source version.\"},{\"name\":\"search_web\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"query\":{\"maxLength\":500,\"minLength\":1,\"title\":\"Query\",\"type\":\"string\"}},\"required\":[\"query\"],\"title\":\"WebSearch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering.\"},{\"name\":\"fetch_web\",\"parameters\":{\"$defs\":{\"ResourceRef\":{\"additionalProperties\":false,\"properties\":{\"resource_id\":{\"title\":\"Resource Id\",\"type\":\"string\"},\"snapshot_id\":{\"title\":\"Snapshot Id\",\"type\":\"string\"},\"parse_id\":{\"title\":\"Parse Id\",\"type\":\"string\"}},\"required\":[\"resource_id\",\"snapshot_id\",\"parse_id\"],\"title\":\"ResourceRef\",\"type\":\"object\"}},\"additionalProperties\":false,\"properties\":{\"ref\":{\"$ref\":\"#/$defs/ResourceRef\"}},\"required\":[\"ref\"],\"title\":\"WebFetch\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref.\"},{\"name\":\"write_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"},\"text\":{\"maxLength\":256000,\"title\":\"Text\",\"type\":\"string\"}},\"required\":[\"name\",\"text\"],\"title\":\"WriteNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Save a private draft; this does not publish evidence.\"},{\"name\":\"read_private_note\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"name\":{\"pattern\":\"^[A-Za-z0-9_-]{1,80}$\",\"title\":\"Name\",\"type\":\"string\"}},\"required\":[\"name\"],\"title\":\"ReadNote\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a saved private draft and verify its hash.\"},{\"name\":\"read_context_page\",\"parameters\":{\"additionalProperties\":false,\"properties\":{\"artifact_id\":{\"pattern\":\"^[a-f0-9]{64}$\",\"title\":\"Artifact Id\",\"type\":\"string\"},\"pointer\":{\"default\":\"\",\"title\":\"Pointer\",\"type\":\"string\"},\"offset\":{\"default\":0,\"minimum\":0,\"title\":\"Offset\",\"type\":\"integer\"},\"limit\":{\"default\":4000,\"maximum\":12000,\"minimum\":1,\"title\":\"Limit\",\"type\":\"integer\"}},\"required\":[\"artifact_id\",\"pointer\",\"offset\",\"limit\"],\"title\":\"ReadContextPage\",\"type\":\"object\"},\"strict\":true,\"type\":\"function\",\"description\":\"Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths.\"}]}",
+        "characters": 9620,
+        "wire_sha256": "a90636469c1d55fb32e9adcae4f7bd85fb0f4071faf79d897b25929c9020bc96",
+        "public_input": {
+          "input": [
+            {
+              "role": "user",
+              "content": "{\"content\":[],\"goal\":\"Task a2a02cd9-9fd0-4bf7-8543-51f1637207b7 v1: 已授权固定事实：v1 是 7 台设备，收入未知。只调用一次 write_private_note，name=ce7_note，text=固定 v1：7 台设备；收入未知。然后交付简短中文报告，保留未知，不声称已审或采用。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\",\"sources\":[]}"
+            },
+            {
+              "id": "6fd73bf7-1cac-4cdd-b97b-c25f200397ca",
+              "type": "reasoning",
+              "status": "completed",
+              "content": [
+                {
+                  "text": "I need to call write_private_note once with name=ce7_note, text=固定 v1：7 台设备；收入未知。 Then deliver a short Chinese report.\n\nThen reply in JSON schema with report, fields, etc. claims empty array.\n\nLet me do the tool call.",
+                  "type": "reasoning_text"
+                }
+              ],
+              "summary": [],
+              "encrypted_content": "63987920-b9c4-4e1b-8ee7-23a03b4f0106-0"
+            },
+            {
+              "id": "5b801278-8fc5-4885-90a7-2077189f6180",
+              "name": "write_private_note",
+              "type": "function_call",
+              "status": "completed",
+              "call_id": "call_00_3zYKQ5bqwKXMV5KapTPN8838",
+              "arguments": "{\"name\": \"ce7_note\", \"text\": \"固定 v1：7 台设备；收入未知。\"}"
+            },
+            {
+              "type": "function_call_output",
+              "output": "{\"value\":{\"name\":\"ce7_note\",\"sha256\":\"47320db7b091e236230582f03ae54ef9f409b00d6b4f2a89c8b42a3da8ff72d0\",\"bytes\":41,\"saved\":true}}",
+              "call_id": "call_00_3zYKQ5bqwKXMV5KapTPN8838"
+            }
+          ],
+          "model": "deepseek-flash",
+          "tools": [
+            {
+              "name": "read_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "ReadSource",
+                "required": [
+                  "ref",
+                  "location",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "location": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Location"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read an immutable source. For large sources, use search_source first and pass a page or fragment location here."
+            },
+            {
+              "name": "search_source",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "SearchSource",
+                "required": [
+                  "ref",
+                  "query"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "query": {
+                    "type": "string",
+                    "title": "Query"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search located fragments in one permitted immutable source version."
+            },
+            {
+              "name": "search_web",
+              "parameters": {
+                "type": "object",
+                "title": "WebSearch",
+                "required": [
+                  "query"
+                ],
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "title": "Query",
+                    "maxLength": 500,
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Search the public web for current information. Returns discovery references and URLs; use fetch_web to read bodies before answering."
+            },
+            {
+              "name": "fetch_web",
+              "parameters": {
+                "type": "object",
+                "$defs": {
+                  "ResourceRef": {
+                    "type": "object",
+                    "title": "ResourceRef",
+                    "required": [
+                      "resource_id",
+                      "snapshot_id",
+                      "parse_id"
+                    ],
+                    "properties": {
+                      "parse_id": {
+                        "type": "string",
+                        "title": "Parse Id"
+                      },
+                      "resource_id": {
+                        "type": "string",
+                        "title": "Resource Id"
+                      },
+                      "snapshot_id": {
+                        "type": "string",
+                        "title": "Snapshot Id"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "title": "WebFetch",
+                "required": [
+                  "ref"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Fetch a discovery ref returned by search_web in this run. Saves an immutable web body and returns located text. If too large, use search_source then read_source on the returned ref."
+            },
+            {
+              "name": "write_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "WriteNote",
+                "required": [
+                  "name",
+                  "text"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  },
+                  "text": {
+                    "type": "string",
+                    "title": "Text",
+                    "maxLength": 256000
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Save a private draft; this does not publish evidence."
+            },
+            {
+              "name": "read_private_note",
+              "parameters": {
+                "type": "object",
+                "title": "ReadNote",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "Name",
+                    "pattern": "^[A-Za-z0-9_-]{1,80}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a saved private draft and verify its hash."
+            },
+            {
+              "name": "read_context_page",
+              "parameters": {
+                "type": "object",
+                "title": "ReadContextPage",
+                "required": [
+                  "artifact_id",
+                  "pointer",
+                  "offset",
+                  "limit"
+                ],
+                "properties": {
+                  "limit": {
+                    "type": "integer",
+                    "title": "Limit",
+                    "default": 4000,
+                    "maximum": 12000,
+                    "minimum": 1
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "title": "Offset",
+                    "default": 0,
+                    "minimum": 0
+                  },
+                  "pointer": {
+                    "type": "string",
+                    "title": "Pointer",
+                    "default": ""
+                  },
+                  "artifact_id": {
+                    "type": "string",
+                    "title": "Artifact Id",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Read a fixed context artifact by hash and JSON pointer. Follow next_cursor until complete; concatenate text ranges to reconstruct the exact original JSON. No arbitrary paths."
+            }
+          ],
+          "settings": {
+            "retry": null,
+            "store": null,
+            "top_p": null,
+            "timeout": 561.260256,
+            "metadata": null,
+            "reasoning": null,
+            "verbosity": null,
+            "extra_args": null,
+            "extra_body": null,
+            "max_tokens": 8192,
+            "truncation": null,
+            "extra_query": null,
+            "temperature": null,
+            "tool_choice": null,
+            "top_logprobs": null,
+            "extra_headers": null,
+            "include_usage": null,
+            "presence_penalty": null,
+            "response_include": null,
+            "frequency_penalty": null,
+            "context_management": null,
+            "preserve_raw_usage": null,
+            "parallel_tool_calls": false,
+            "prompt_cache_options": null,
+            "prompt_cache_retention": null
+          },
+          "instructions": "综合获准结论，必要时联网补查，区分来源事实、推论和仍未知项。 输出 JSON: report、fields、sources、assumptions、conflicts、missing、limitations、follow_up、self_checks、claims。需要补充信息时可使用 search_web 搜索、fetch_web 读取网页正文；搜索摘要只作为线索，不作为事实依据。优先原始和权威来源，记录网址、期间、统计口径与新证据如何改变结论；没有可靠依据时明确缺口，不编造。取得直接回答问题且符合目标期间和口径的官方正文后，停止扩展搜索并交付；不要反复抓取同一链接。通常搜索一至两次、抓取一至三份正文即可。工具返回 remaining_tool_calls 是本次实际剩余额度，降至 0 必须立即交付已有结论及缺口，不再调用工具。遵守用户限定的资料范围，明确禁止联网时不使用联网工具；不得为虚构数字捏造真实出处。自检只供参考，系统独立检查。仅使用本任务固定输入、获授权补充资料和本次工具实际取得的正文；获准读取的历史报告保留原版本及复核状态，待复核不等于已正式采用。approved_memory 仅是用户确认的历史偏好或经验，本次任务目标和用户指令优先；记忆不是事实来源，不得据此省略反证或替代资料引用。本任务不要求形式化证据关系，将 claims 留为空数组；在报告中写出所读材料的页码或文本位置。\n仅使用本次显式提供的受控工具；不提供 Shell、任意代码、任意路径或任意 HTTP 代理。若提供私有草稿工具，笔记仅属于本会话与授权世代，不构成正式证据或授权。读取返回 format=json_text 时，text 是固定原文的 JSON 片段。按该返回的 next_cursor 参数继续 read_context_page；artifact_id 必须取自对应返回，不混用初始上下文和工具结果的 ID。可用 available_pointers 定位目录或对象，不能猜字段。\n工具返回 invalid_input 表示参数格式错误且工具没有执行。依据 issues 修正参数后用新的调用 ID 重试；不要改变原任务意图、猜测来源或把错误当成成功。每次尝试都消耗调用预算，预算耗尽时说明未完成的操作及影响。",
+          "output_schema": {
+            "type": "object",
+            "$defs": {
+              "ClaimDraft": {
+                "type": "object",
+                "title": "ClaimDraft",
+                "required": [
+                  "statement"
+                ],
+                "properties": {
+                  "missing": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "title": "Missing",
+                    "default": []
+                  },
+                  "citations": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/CitationDraft"
+                    },
+                    "title": "Citations",
+                    "default": []
+                  },
+                  "statement": {
+                    "type": "string",
+                    "title": "Statement",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "ResourceRef": {
+                "type": "object",
+                "title": "ResourceRef",
+                "required": [
+                  "resource_id",
+                  "snapshot_id",
+                  "parse_id"
+                ],
+                "properties": {
+                  "parse_id": {
+                    "type": "string",
+                    "title": "Parse Id"
+                  },
+                  "resource_id": {
+                    "type": "string",
+                    "title": "Resource Id"
+                  },
+                  "snapshot_id": {
+                    "type": "string",
+                    "title": "Snapshot Id"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "SourceFields": {
+                "type": "object",
+                "title": "SourceFields",
+                "properties": {
+                  "unit": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Unit",
+                    "default": null
+                  },
+                  "basis": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Basis",
+                    "default": null
+                  },
+                  "period": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Period",
+                    "default": null
+                  },
+                  "company": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Company",
+                    "default": null
+                  },
+                  "currency": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "title": "Currency",
+                    "default": null
+                  }
+                },
+                "additionalProperties": false
+              },
+              "CitationDraft": {
+                "type": "object",
+                "title": "CitationDraft",
+                "required": [
+                  "ref",
+                  "location",
+                  "quote",
+                  "relation",
+                  "reasoning"
+                ],
+                "properties": {
+                  "ref": {
+                    "$ref": "#/$defs/ResourceRef"
+                  },
+                  "quote": {
+                    "type": "string",
+                    "title": "Quote",
+                    "minLength": 1
+                  },
+                  "fields": {
+                    "$ref": "#/$defs/SourceFields",
+                    "description": "Optional financial-report metadata. For general web facts, omit this object or leave every field null. For financial comparisons, values must occur verbatim in the source, without translating or normalizing dates or units. period means the financial reporting period, not the current date or web publication date."
+                  },
+                  "location": {
+                    "type": "string",
+                    "title": "Location",
+                    "minLength": 1
+                  },
+                  "relation": {
+                    "enum": [
+                      "supports",
+                      "opposes"
+                    ],
+                    "type": "string",
+                    "title": "Relation"
+                  },
+                  "reasoning": {
+                    "type": "string",
+                    "title": "Reasoning",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "title": "ExpertAnswer",
+            "required": [
+              "report"
+            ],
+            "properties": {
+              "claims": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/ClaimDraft"
+                },
+                "title": "Claims",
+                "default": []
+              },
+              "fields": {
+                "type": "object",
+                "title": "Fields",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "report": {
+                "type": "string",
+                "title": "Report",
+                "minLength": 1
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Missing",
+                "default": []
+              },
+              "sources": {
+                "type": "object",
+                "title": "Sources",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "conflicts": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Conflicts",
+                "default": []
+              },
+              "follow_up": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Follow Up",
+                "default": []
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Assumptions",
+                "default": []
+              },
+              "limitations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "title": "Limitations",
+                "default": []
+              },
+              "self_checks": {
+                "type": "object",
+                "title": "Self Checks",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "margin_tokens": 4096,
+        "business_excluded": [],
+        "response_metadata": {
+          "usage": {
+            "input_tokens": 3213,
+            "total_tokens": 3978,
+            "output_tokens": 765,
+            "input_tokens_details": {
+              "cached_tokens": 3072
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 66
+            }
+          },
+          "status": "completed",
+          "incomplete_details": null
+        },
+        "public_input_sha256": "c89081c88b160dba0df9fe9b8a218b24de193e756a3b2e74d4e4faabfed2758d",
+        "output_reserve_tokens": 8192,
+        "estimated_input_tokens": 11162
+      }
+    }
+  ]
+}

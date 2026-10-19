@@ -1,0 +1,60 @@
+"""Stage 4 real semantic gate. Missing credentials exit 2, never pass."""
+import argparse
+import asyncio
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from scenarios import brainstorm, companies, scripted
+from agent_core.composition import build_resources,build_research
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.adapters.scripted import ScriptedEngine
+from agent_core.adapters.openai import OpenAIEngine
+
+ROOT=Path(__file__).resolve().parents[2]
+
+async def evaluate(args):
+    required=['DATABASE_URL']+(['OPENAI_API_KEY','OPENAI_BASE_URL','OPENAI_MODEL'] if args.engine=='openai' else [])
+    missing=[key for key in required if not os.environ.get(key)]
+    if missing:return {'status':'not_run','missing':missing},2
+    database=PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        engine=OpenAIEngine() if args.engine=='openai' else ScriptedEngine(scripted)
+        scopes=build_resources(database,ROOT/'.stage4/eval-blobs')
+        service=build_research(database,scopes,engine)
+        values={'brainstorm':await brainstorm(service),'companies':await companies(service,ROOT/'tests/fixtures/stage4')}
+        if args.engine=='openai':
+            output=values['companies']['output']
+            assert all(x in output for x in ['青松','白鹭','海棠','2025','120','90','60','80','30','5','CNY','百万元','合并','|']), 'Company comparison lacks required figures or basis'
+            answer=values['brainstorm']['output']
+            assert 'BRANCH_A_728' in answer and 'BRANCH_B_953' in answer
+        runs=[]
+        for case in values.values():
+            for node in service.query('list_nodes',case['research_id']):
+                for binding in service.query('list_runs',node.id):
+                    record=service.ledger.get(binding.run_id)
+                    runs.append({'binding':binding.model_dump(mode='json'),'run':record.model_dump(mode='json'),
+                        'events':[e.model_dump(mode='json') for e in service.ledger.events(binding.run_id)]})
+        if args.engine=='openai':
+            assert all(r['run']['status']=='succeeded' for r in runs), 'Real sample contains failed runs'
+            dimensions=[r for r in runs if '先用 read_source' in r['binding']['goal']]
+            assert len(dimensions)==6 and all(any(e['event'].get('name')=='read_source' for e in r['events']) for r in dimensions), 'Each company dimension must read its source'
+    finally:database.close()
+    queries=[]
+    for case in values.values():
+        process=subprocess.run([sys.executable,'-m','agent_core.research_cli','--blobs',str(ROOT/'.stage4/eval-blobs'),'show',case['research_id']],cwd=ROOT,capture_output=True,text=True)
+        assert process.returncode==0,process.stderr
+        queries.append({'research_id':case['research_id'],'exit_code':process.returncode,'projection':json.loads(process.stdout)})
+    return {'status':'passed' if args.engine=='openai' else 'infrastructure_passed',
+        'model':os.environ.get('OPENAI_MODEL') if args.engine=='openai' else 'scripted',
+        'base_url':os.environ.get('OPENAI_BASE_URL') if args.engine=='openai' else None,
+        'cases':values,'runs':runs,'independent_process_queries':queries},0
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--engine',choices=['openai','scripted'],default='openai');parser.add_argument('--report',default='docs/stage-4-real-eval.json');args=parser.parse_args()
+    try:report,code=asyncio.run(evaluate(args))
+    except Exception as exc:report,code={'status':'failed','error_type':type(exc).__name__,'error':str(exc)},1
+    Path(args.report).write_text(json.dumps(report,ensure_ascii=False,indent=2))
+    print(json.dumps({k:v for k,v in report.items() if k not in ('runs','independent_process_queries')},ensure_ascii=False,indent=2));raise SystemExit(code)

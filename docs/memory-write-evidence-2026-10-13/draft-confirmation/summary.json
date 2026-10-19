@@ -1,0 +1,59 @@
+{
+  "real_model": true,
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "case": "draft_confirmation",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "085f0a8d-17ed-42ae-9789-44bf2bffba59",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/draft-confirmation/draft_confirmation/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12796,
+        "output_tokens": 1100,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [],
+  "passed": true
+}

@@ -1,0 +1,769 @@
+{
+  "stage": "CE2",
+  "status": "control_checks_passed_semantic_review_required",
+  "model": "deepseek-flash",
+  "api": "responses",
+  "provider_http_statuses": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "synthetic_source": true,
+  "checks": {
+    "all_four_entrances": true,
+    "manager_resumed": true,
+    "two_expert_sessions": true,
+    "expert_success": true,
+    "required_tools": true,
+    "source_marker_and_note": true,
+    "consultations_resolved": true,
+    "save_retry_without_model": true,
+    "pending_independent_review": true,
+    "real_http_success": true
+  },
+  "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+  "node_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04",
+  "source_ref": {
+    "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+    "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+    "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+  },
+  "original_source": "SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.",
+  "main": {
+    "run_id": "bc48930d-fb84-4e0e-bdda-541ce38bb3bb",
+    "status": "succeeded",
+    "output": {
+      "claims": [
+        {
+          "missing": [],
+          "citations": [
+            {
+              "ref": {
+                "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed",
+                "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+                "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2"
+              },
+              "quote": "SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.",
+              "fields": {
+                "unit": null,
+                "basis": null,
+                "period": null,
+                "company": null,
+                "currency": null
+              },
+              "location": "line:1",
+              "relation": "supports",
+              "reasoning": "该行逐字给出三个字段值，直接支持该事实陈述。"
+            }
+          ],
+          "statement": "合成资料 ce2-source.txt 正文载明：Marker 为 CE2-f3087a168bdf4dc7a6fdb72ae5552c90，Confirmed units 为 7，Market size 为 unknown。"
+        }
+      ],
+      "report": "## 处理中\n\n已按合成验收要求完成发现与派发，两份独立专家任务均在后台运行。\n\n**已执行的步骤**\n- `find_experts`：确认 `expert_search`（search-v2）与 `expert_synthesize`（synthesize-v2）均存在，且各自具备 `read_source`、`write_private_note`、`read_private_note`、`request_manager_information` 等工具。\n- `read_context`（无参数）：定位到本轮唯一合成资料 `ce2-source.txt`，并读取其正文。\n\n**资料正文（逐字）**：`SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n\n| 项 | 原文值 |\n|---|---|\n| Marker | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90` |\n| Confirmed units | `7` |\n| Market size | `unknown`（未知） |\n| 目标年份 | 资料未注明；当前无任何信息 |\n\n**已派发任务（后台执行，尚未完成）**\n\n| 专家 | task_id | session_id | 状态 |\n|---|---|---|---|\n| expert_search | `3375154a-3509-59b6-b13f-7170f0bed2b6` | `2145f238-155a-4cdd-939e-6a9acf7905aa` | accepted（运行中） |\n| expert_synthesize | `8e47519c-9007-5067-8963-eddf604aee85` | `6b0b37ea-7215-4e61-8d08-39beef4c4271` | accepted（运行中） |\n\n两份任务指令已明确要求：禁止联网；用 `read_source` 读正文；`write_private_note` 保存名为 `ce2_draft` 的笔记并 `read_private_note` 重读；调用 `request_manager_information` 询问资料未注明的目标年份（因当前无信息，须明确说明“未提供”，不得自行假设）；据原文报告 Marker、已确认数量与市场规模未知，不得编造。\n\n**状态说明**：以上仅为任务已受理，专家报告尚未产出、未经复核；`request_manager_information` 的实际返回结果、笔记读写是否成功，均须待专家报告返回后据实核对。",
+      "missing": [
+        "两份专家任务的结果正文尚未返回，无法比较其一致性与工具执行情况（read_source / write_private_note / read_private_note / request_manager_information 的实际执行结果）。",
+        "目标年份：资料未注明，且主助手本轮未收到任何该信息，权威来源缺位，故为未知。",
+        "市场规模：原文为 unknown，缺乏任何市场规模数据来源。"
+      ]
+    },
+    "usage": {
+      "requests": 5,
+      "input_tokens": 46107,
+      "output_tokens": 4017,
+      "complete": true
+    },
+    "error": null,
+    "output_repairs": []
+  },
+  "experts": [
+    {
+      "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+      "session_id": "6b0b37ea-7215-4e61-8d08-39beef4c4271",
+      "run_id": "5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+      "intent_status": "completed",
+      "result": {
+        "run_id": "5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+        "status": "succeeded",
+        "output": {
+          "claims": [],
+          "fields": {},
+          "report": "## 合成验收报告（独立正式任务）\n\n**任务**：Task 8e47519c-9007-5067-8963-eddf604aee85 v1（合成验收，禁止联网）  \n**资料来源**：`ce2-source.txt`（resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`），全文仅 1 个片段，位于 `line:1`，parse_status=ready  \n**联网限制遵守情况**：未调用 `search_web`、`fetch_web`、`search_source`（遵守禁止联网要求）\n\n---\n\n### ① 工具步骤执行清单\n\n| # | 工具 | 调用内容 | 结果 |\n|---|---|---|---|\n| 1 | `read_source` | 使用所附 ref 读取 `ce2-source.txt`，location=`line:1`，offset=0，limit=4000 | **成功**。返回 1 个片段（`line:1`），逐字文本为：`SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.` |\n| 2 | `write_private_note` | name=`ce2_draft`，写入从正文读到的事实 | **成功**。saved=true，bytes=622，sha256=`09dea4f2239f211455feca6b44312c4bf8d2e02c5eda24fc435ff7e60322bcc6` |\n| 3 | `read_private_note` | name=`ce2_draft` 重读核对 | **成功**。complete=true，sha256 与写入时一致（`09dea4f2…bcc6`），笔记内容与 `read_source` 正文逐字一致，核对无误 |\n| 4 | `request_manager_information` | 询问资料未注明的目标年份，并明确要求：若主助手亦无该信息请直接说明“未提供” | **成功且已获答复**（request_id `information:5943420d-5044-4e05-a7be-c50d6d6fcfe6`，status=resolved，available=true）。答复结论：**资料未提供目标年份；主助手处也没有该信息 → 目标年份 = 未提供，不得自行假设**。答复依据：唯一挂载来源仅有 `line:1` 一个片段，元数据 metadata 为空（无年份字段），正文中无任何年份信息；报告目录（result_ids）为空，无报告版本可补充年份 |\n\n**失败项**：无（4 项工具步骤全部成功执行）。\n\n---\n\n### ② 据原文的事实清单（逐字）\n\n来源：`ce2-source.txt`，位置 `line:1`。原文（全文）逐字为：\n\n> `SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n\n| 项 | 原文表述（逐字） |\n|---|---|\n| Marker | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90` |\n| Confirmed units（已确认数量） | `7` |\n| Market size（市场规模） | `unknown`（未知；原文未给出任何数值或区间） |\n\n补充说明：原文首句为 `SYNTHETIC acceptance only.`，即该资料本身标明为合成验收用途。以上事实均直接取自原文，未引入任何外部数据或推测数字。\n\n---\n\n### ③ 目标年份状态\n\n**资料未注明，主助手亦未提供，故未知（未提供）。**\n\n- 资料侧：`ce2-source.txt` 正文（`line:1`）中不含任何年份或统计期间；其元数据 metadata 为空，无年份字段。\n- 咨询侧：已按任务要求调用 `request_manager_information` 向主助手询问目标年份，主助手明确答复**没有该信息**，并要求在报告中写明“未提供”，不得假设或推断年份。\n- 本次未对该年份作任何假设，也未使用年份去推算任何数值。\n\n---\n\n### ④ 未解缺口\n\n1. **目标年份未知**：资料正文与元数据均未注明；主助手答复亦未提供（详见 ③）。这是本次任务的主要缺口，导致无法判定 Marker / Confirmed units / Market size 的适用期间。\n2. **市场规模无具体数值**：原文仅表述为 `unknown`，资料中不存在可用于补充的规模数据、单位或口径。\n3. **无外部来源可补充**：本任务禁止联网，且未使用任何外部数据；资料范围为单一文件 `ce2-source.txt`，无其他已挂载来源。\n4. **“Confirmed units: 7”的单位与口径未说明**：原文未注明该数量对应的对象、单位、统计口径或期间（按原文字面报告，不补充定义）。\n5. **缺乏独立复核记录**：本报告中的事实仅由本次 `read_source` 这一来源取得，无第二来源交叉验证（且按任务要求不得联网取证）。\n\n---\n\n**范围与状态说明**：本报告所述事实仅限于来源 `ce2-source.txt`（`line:1`）的逐字内容及 `request_manager_information` 的答复；“未提供/未知”仅指本次可读来源与咨询答复的覆盖范围，不代表该年份在任何其他资料中不存在。`write_private_note` 所存笔记为私有草稿，不构成正式证据或授权。\n\n信息缺口（主助手未能补齐）：本次研究的目标年份：所挂载来源 ce2-source.txt 正文与元数据均未注明，报告目录为空、无报告版本可补充，主助手侧无该信息。",
+          "missing": [
+            "本次研究的目标年份：ce2-source.txt 正文（line:1）与元数据均未注明；request_manager_information 答复亦明确“未提供”，无报告版本可补充。",
+            "市场规模 Market size 的具体数值、单位与统计口径：原文仅为 unknown。",
+            "Confirmed units: 7 对应的对象、单位与统计口径：原文未说明。",
+            "本次研究的目标年份：所挂载来源 ce2-source.txt 正文与元数据均未注明，报告目录为空、无报告版本可补充，主助手侧无该信息。"
+          ],
+          "sources": {
+            "ce2-source.txt": "resource_id 2666971f-6809-4d93-a470-547f3c6554c1 / snapshot_id 70454aef-9a6c-40df-84ab-600ec8ad7fb2 / parse_id cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed；line:1，parse_status=ready，共 1 个片段，metadata 为空",
+            "私有笔记 ce2_draft": "name=ce2_draft，sha256=09dea4f2239f211455feca6b44312c4bf8d2e02c5eda24fc435ff7e60322bcc6，bytes=622（私有草稿，非正式证据）",
+            "request_manager_information 答复": "request_id information:5943420d-5044-4e05-a7be-c50d6d6fcfe6，status=resolved，available=true；答复结论：目标年份未提供，不得自行假设"
+          },
+          "conflicts": [],
+          "follow_up": [
+            "若任务方后续给出目标年份，应以新给信息为准并在报告中标明其来源与期间。",
+            "若需补充市场规模数值，需提供含该数据的原始来源（本任务范围内未提供）。",
+            "如需明确 Confirmed units 的口径与单位，需补充资料中对应的定义说明。"
+          ],
+          "assumptions": [],
+          "limitations": [
+            "任务禁止联网，且未调用 search_web / fetch_web / search_source，故无外部来源可交叉验证或补充年份、规模数据。",
+            "唯一来源 ce2-source.txt 仅含 1 个片段（line:1），无第二来源独立复核。",
+            "“未知/未提供”仅指本次可读来源与咨询答复的覆盖范围，不能据此推断该信息在其他资料中不存在。",
+            "私有笔记 ce2_draft 为会话内草稿，不构成正式证据或授权。"
+          ],
+          "self_checks": {
+            "年份处理": "未假设任何年份；③明确写为“资料未注明，主助手亦未提供，故未知”，与 missing 一致。",
+            "笔记核对": "read_private_note 返回 sha256 与 write_private_note 一致，complete=true，内容与来源正文一致。",
+            "联网限制": "未调用 search_web、fetch_web、search_source，符合禁止联网要求。",
+            "逐字一致性": "Marker、Confirmed units、Market size 三项均取自 line:1 逐字文本，未做改写、翻译或数值加工。",
+            "缺失项一致性": "报告中未将未知项表述为确定结论；missing 与正文③④无矛盾。",
+            "工具步骤完整性": "4 项必需工具步骤（read_source / write_private_note / read_private_note / request_manager_information）全部执行且均成功，已在报告①逐项记录。"
+          }
+        },
+        "usage": {
+          "requests": 7,
+          "input_tokens": 43668,
+          "output_tokens": 4307,
+          "complete": true
+        },
+        "error": null,
+        "output_repairs": []
+      },
+      "receipt": {
+        "code_candidate": null,
+        "artifact": {
+          "result_id": "task-result:5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+          "sha256": "b30007e06474118df25eb38cf97ab2a0766a5d7585e2cf3e07e3881d1e3d3267",
+          "bytes": 7638,
+          "chars": 4420,
+          "complete": true,
+          "brief": "## 合成验收报告（独立正式任务）\n\n**任务**：Task 8e47519c-9007-5067-8963-eddf604aee85 v1（合成验收，禁止联网）  \n**资料来源**：`ce2-source.txt`（resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`），全文仅 1 个片段，位于 `line:1`，parse_status=ready  \n**联网限制遵守情况**：未调用 `search_web`、`fetch_web`、`search_source`（遵守禁止联网要求）\n\n---\n\n### ① 工具步骤执行清单\n\n| # | 工具 | 调用内容 | 结果 |\n|---|---|---|---|\n| 1 | `read_source` | 使用所附 ref 读取 `ce2-source.txt`，location=`line:1`，offset=0，limit=4000 | **成功**。返回 1 个片段（`line:1`），逐字文本为：`SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.` |\n| 2 | `write_private_note` | name=`ce2_draft`，写入从正文读到的事实 | **成功**。saved=true，bytes=622，sha256=`09dea4f2239f211455feca6b44312c4bf8d2e02c5eda24fc435ff7e60322bcc6` |\n| 3 | `read_private_note` | name=`ce2_draft` 重读核对 | **成功**。complete=true，sha256 与写入时一致（`09dea4f2…bcc6`），笔记内容与 `read_source` 正文逐字一致，核对无误 |\n| 4 | `request_manager_information` | 询问资料未注明的目标年份，并明确要求：若主助手亦无该信息请直接说明“未提供” | **成功且已获答复**（request_id `information:5943420d-5044-4e05-a7be-c50d6d6fcfe6`，status=resolved，available=true）。答复结论：**资料未提供目标年份；主助手处也没有该信息 → 目标年",
+          "brief_truncated": true
+        },
+        "result_id": "task-result:5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+        "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+        "spec_version": 1,
+        "run_id": "5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+        "context_snapshot_id": "6ee331ad-ce3d-4e08-9eae-99037e19ec6c",
+        "model": "deepseek-flash",
+        "route_id": null,
+        "method_version": "synthesize-v2",
+        "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+        "result_ids": [],
+        "resource_refs": [
+          {
+            "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+            "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+            "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+          }
+        ],
+        "missing_optional_refs": [],
+        "program_checks": [
+          {
+            "number": 1,
+            "checker": "program",
+            "status": "passed",
+            "evidence": "Run output and fixed input identity checked",
+            "reviewer": null
+          },
+          {
+            "number": 2,
+            "checker": "program",
+            "status": "passed",
+            "evidence": "Report present",
+            "reviewer": null
+          }
+        ],
+        "semantic_checks": [
+          {
+            "number": 1,
+            "checker": "semantic",
+            "status": "pending",
+            "evidence": "Independent review required",
+            "reviewer": null
+          },
+          {
+            "number": 2,
+            "checker": "semantic",
+            "status": "pending",
+            "evidence": "Independent review required",
+            "reviewer": null
+          }
+        ],
+        "assumptions": [],
+        "conflicts": [],
+        "missing": [
+          "本次研究的目标年份：ce2-source.txt 正文（line:1）与元数据均未注明；request_manager_information 答复亦明确“未提供”，无报告版本可补充。",
+          "市场规模 Market size 的具体数值、单位与统计口径：原文仅为 unknown。",
+          "Confirmed units: 7 对应的对象、单位与统计口径：原文未说明。",
+          "本次研究的目标年份：所挂载来源 ce2-source.txt 正文与元数据均未注明，报告目录为空、无报告版本可补充，主助手侧无该信息。"
+        ],
+        "limitations": [
+          "任务禁止联网，且未调用 search_web / fetch_web / search_source，故无外部来源可交叉验证或补充年份、规模数据。",
+          "唯一来源 ce2-source.txt 仅含 1 个片段（line:1），无第二来源独立复核。",
+          "“未知/未提供”仅指本次可读来源与咨询答复的覆盖范围，不能据此推断该信息在其他资料中不存在。",
+          "私有笔记 ce2_draft 为会话内草稿，不构成正式证据或授权。"
+        ],
+        "follow_up": [
+          "若任务方后续给出目标年份，应以新给信息为准并在报告中标明其来源与期间。",
+          "若需补充市场规模数值，需提供含该数据的原始来源（本任务范围内未提供）。",
+          "如需明确 Confirmed units 的口径与单位，需补充资料中对应的定义说明。"
+        ],
+        "delivery": "pending_review",
+        "adoption": "for_discussion",
+        "adoption_reason": null
+      },
+      "called_tools": [
+        "read_source",
+        "write_private_note",
+        "read_private_note",
+        "request_manager_information"
+      ],
+      "note": {
+        "name": "ce2_draft",
+        "sha256": "09dea4f2239f211455feca6b44312c4bf8d2e02c5eda24fc435ff7e60322bcc6",
+        "text": "来源：ce2-source.txt（resource_id 2666971f-6809-4d93-a470-547f3c6554c1 / snapshot_id 70454aef-9a6c-40df-84ab-600ec8ad7fb2 / parse_id cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed），位置 line:1。\n\n逐字正文：SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\n\n从正文读到的事实：\n- Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90\n- Confirmed units: 7\n- Market size: unknown（未知）\n- 目标年份：资料未注明，主助手亦未提供，故未知。\n\n未解缺口：目标年份未知；市场规模无具体数值；无外部数据来源。",
+        "complete": true
+      },
+      "information": [
+        {
+          "id": "information:5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+          "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+          "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+          "spec_version": 1,
+          "run_id": "5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+          "question": "资料 ce2-source.txt（line:1）正文为：“SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.”该资料完全未注明本次研究的目标年份。请问本次研究的目标年份是什么？请明确：是否有目标年份；若主助手处也没有该信息，请直接说明“未提供”，我不会自行假设年份。",
+          "progress": "已完成：1) read_source 读取 ce2-source.txt 正文成功（line:1，逐字：SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.）；2) write_private_note 保存私有笔记 ce2_draft 成功（sha256 09dea4f2...bcc6，622 bytes）；3) read_private_note 重读成功，内容与 sha256 一致，核对无误。现就资料未注明的目标年份向主助手咨询；未使用 search_web / fetch_web / search_source。",
+          "resource_refs": [
+            {
+              "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+              "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+              "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+            }
+          ],
+          "requested_result_ids": [],
+          "report_grants": [],
+          "status": "resolved",
+          "attempts": 1,
+          "answer": {
+            "available": true,
+            "answer": "**结论：本次资料未提供目标年份；主助手处也没有该信息 → 目标年份 = 未提供（不得自行假设）。**\n\n**依据（本次已读正文，逐字）**\n- 唯一挂载来源 `ce2-source.txt` 仅有 1 个片段，位于 `line:1`，parse_status=ready，元数据 metadata 为空（无年份等字段）。其正文逐字为：\n  `SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n- 该正文中没有任何年份信息：无目标年份、基准年份或统计期间。元数据中亦无年份字段。\n\n**与你问题相关的三点，逐项回答**\n1. 是否有目标年份：**没有**。资料正文与元数据均未注明，主助手侧也没有该信息。\n2. 主助手处是否另有目标年份：**没有**。本次可访问范围内，除上述来源外无其他来源；报告目录（result_ids）为空，即本次咨询时尚未保存任何专家报告版本，故也无报告可补充年份。\n3. 处理方式：请直接在报告中写明“资料未注明，主助手亦未提供，故年份未知/未提供”，不要假设或推断任何年份。\n\n**仅供你核对的事实（同一来源，逐字）**\n- Marker：`CE2-f3087a168bdf4dc7a6fdb72ae5552c90`\n- Confirmed units：`7`\n- Market size：`unknown`（未知）\n\n**范围说明**：以上“未提供”仅指本次可读来源与报告目录的覆盖范围；报告目录只反映本次咨询时已保存的版本，不排除后续产生新版本。若后续任务方另行给出目标年份，应以新给信息为准。",
+            "missing": [
+              "本次研究的目标年份：所挂载来源 ce2-source.txt 正文与元数据均未注明，报告目录为空、无报告版本可补充，主助手侧无该信息。"
+            ],
+            "resource_refs": [
+              {
+                "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+                "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+                "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+              }
+            ],
+            "message_ids": [
+              "e1df530e-6c6f-493c-902c-fa0d0077b061",
+              "chat-reply:bc48930d-fb84-4e0e-bdda-541ce38bb3bb"
+            ],
+            "result_ids": []
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 8302,
+            "output_tokens": 1130,
+            "complete": true
+          }
+        }
+      ],
+      "save_retry_same_result": true,
+      "save_retry_no_model": true
+    },
+    {
+      "task_id": "3375154a-3509-59b6-b13f-7170f0bed2b6",
+      "session_id": "2145f238-155a-4cdd-939e-6a9acf7905aa",
+      "run_id": "9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+      "intent_status": "completed",
+      "result": {
+        "run_id": "9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+        "status": "succeeded",
+        "output": {
+          "claims": [],
+          "fields": {
+            "marker": "CE2-f3087a168bdf4dc7a6fdb72ae5552c90",
+            "note_name": "ce2_draft",
+            "source_ref": "resource_id=2666971f-6809-4d93-a470-547f3c6554c1; snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2; parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed",
+            "market_size": "unknown",
+            "note_sha256": "d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724",
+            "target_year": "unknown",
+            "resource_name": "ce2-source.txt",
+            "confirmed_units": "7",
+            "source_location": "line:1"
+          },
+          "report": "# 合成验收报告（任务 3375154a-3509-59b6-b13f-7170f0bed2b6 v1）\n\n**范围声明**：本次为合成验收任务，禁止联网。未调用 `search_web`、`fetch_web`、`search_source`；全部事实仅来自已挂载来源 `ce2-source.txt`（line:1）与授权的主助手答复。\n\n## ①工具步骤执行清单\n\n| 步骤 | 调用 | 参数要点 | 结果 |\n| --- | --- | --- | --- |\n| 1 | `read_source` | ref = resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`；location `line:1` | **成功**。返回 fragments[0].location = line:1，text = \"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"（remaining_tool_calls = 23） |\n| 2 | `write_private_note` | name = `ce2_draft` | **成功**。saved = true，bytes = 712，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724` |\n| 3 | `read_private_note` | name = `ce2_draft` | **成功**。complete = true，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724`（与写入时一致），正文逐字回读与步骤 1 原文一致，核对无误 |\n| 4 | `request_manager_information` | 询问资料未注明的目标年份；requested_result_ids = [] | **成功**（request_id `information:9811b31c-8a88-4eea-94cb-2f487cd89aa6`，status = resolved，available = true）。答复：主助手当前没有任何目标年份信息，未提供目标年份；并确认资料正文中未出现任何年份字段。**未重复咨询** |\n\n## ②据原文的事实清单（逐字）\n\n资料 `ce2-source.txt`（line:1）全文逐字为：\n\n> \"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"\n\n| 项目 | 原文表述（逐字） |\n| --- | --- |\n| Marker 原文值 | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90`（原文：\"Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90\"） |\n| Confirmed units 原文值 | `7`（原文：\"Confirmed units: 7\"） |\n| Market size 原文表述 | `unknown`（原文：\"Market size: unknown.\"），即市场规模未知/未给出数值 |\n\n说明：原文共三项字段（Marker / Confirmed units / Market size）。市场规模的原文表述为 `unknown`，本次资料未给出任何市场规模数值；报告中不引入任何外部数据或推测数字。\n\n## ③目标年份状态\n\n**目标年份：资料未注明，主助手亦未提供，故未知。**\n\n- 资料状态：`ce2-source.txt`（line:1）正文仅含 Marker、Confirmed units、Market size 三项内容，未出现任何年份字段。\n- 咨询结果：已依任务要求调用 `request_manager_information` 询问目标年份；主助手答复\"当前没有任何目标年份信息，未提供目标年份\"，并确认资料本身也未注明目标年份。\n- 处理方式：按要求**未自行假设任何年份**，也未按任何年份口径做推导。\n\n## ④未解缺口\n\n1. **目标年份未知**：资料未注明，主助手在本次咨询中亦未提供。影响：无法判定任何年份口径，本轮结论不绑定具体年份。\n2. **市场规模数值缺失**：原文仅为 `unknown`，未给出任何数值、单位、期间或统计口径；故无法报告市场规模，也不得推测。\n3. **Confirmed units 的口径缺失**：原文仅给出数值 `7`，未注明单位含义（如件/台/个）、统计范围或期间；本次资料未覆盖。\n4. **与目标年份对应的其他口径信息缺失**：由于年份本身未知，与之对应的口径（期间、货币、单位、统计基准）均无从确定。\n\n## 自检要点\n\n- 报告中的 Marker、Confirmed units、Market size 均为逐字原文（来源：`ce2-source.txt`，line:1）；未做日期或单位归一化。\n- 四个必需工具步骤均实际执行并全部成功，各自的返回结果已如实记录。\n- 未编造任何出处、年份或数字；未知项在正文与 missing 中表述一致（均为\"未知/缺失\"）。\n- 遵守禁止联网限制：未调用 `search_web` / `fetch_web` / `search_source`。\n\n信息缺口（主助手未能补齐）：目标年份（资料未注明，主助手未提供，故为未知）；与目标年份对应的其他口径信息（本次资料未覆盖）",
+          "missing": [
+            "目标年份：资料未注明，主助手亦未提供，故未知；未自行假设任何年份。",
+            "市场规模数值：原文仅 \"Market size: unknown.\"，无任何数值、单位或统计口径。",
+            "Confirmed units=7 的单位含义、统计范围与期间：原文未注明。",
+            "与目标年份对应的口径信息（期间/货币/单位/统计基准）：因年份未知而无法确定。",
+            "目标年份（资料未注明，主助手未提供，故为未知）",
+            "与目标年份对应的其他口径信息（本次资料未覆盖）"
+          ],
+          "sources": {
+            "ce2-source.txt": "resource_id=2666971f-6809-4d93-a470-547f3c6554c1 | snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2 | parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed | 位置 line:1 | 正文：\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"",
+            "private_note:ce2_draft": "sha256=d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724 | 范围：本会话私有草稿，非正式证据",
+            "request_manager_information": "request_id=information:9811b31c-8a88-4eea-94cb-2f487cd89aa6 | status=resolved | 答复：主助手无目标年份信息、未提供目标年份；资料正文未出现年份字段"
+          },
+          "conflicts": [],
+          "follow_up": [
+            "如需绑定年份口径，请提供目标年份或含年份字段的资料。",
+            "如需报告市场规模，请提供给出数值、单位与期间的来源。",
+            "如需明确 Confirmed units=7 的含义，请提供注明单位与统计范围的原文。"
+          ],
+          "assumptions": [
+            "仅使用本次挂载的 ce2-source.txt 与本次授权的主助手答复；未使用记忆或历史报告作为事实来源。"
+          ],
+          "limitations": [
+            "资料正文仅一条（line:1）三字段，信息量极小，无年份、无单位、无市场规模数值，结论仅限逐字复述原文。",
+            "禁止联网，未做任何外部检索；无法对原文之外的任何事实作出判断。",
+            "私有笔记 ce2_draft 属于本会话草稿，不构成正式证据或授权。",
+            "本次资料未包含某因素，只能说明本次资料缺失或口径未覆盖，不代表该因素不存在或不会影响结果。"
+          ],
+          "self_checks": {
+            "no_network": "未调用 search_web / fetch_web / search_source。",
+            "tool_steps": "read_source / write_private_note / read_private_note / request_manager_information 四步均实际执行且成功，返回结果已逐项记录。",
+            "no_fabrication": "未引入外部数据、推测数字或虚构出处；未知项在正文与 missing 中一致表述为未知。",
+            "verbatim_check": "Marker、Confirmed units、Market size 均逐字取自 ce2-source.txt line:1，未翻译或归一化。",
+            "no_repeat_consult": "request_manager_information 仅调用一次，收到答复后未再次咨询。"
+          }
+        },
+        "usage": {
+          "requests": 8,
+          "input_tokens": 48962,
+          "output_tokens": 6927,
+          "complete": true
+        },
+        "error": null,
+        "output_repairs": [
+          {
+            "raw_output": "```json\n{\n  \"report\": \"# 合成验收报告（任务 3375154a-3509-59b6-b13f-7170f0bed2b6 v1）\\n\\n**范围声明**：本次为合成验收任务，禁止联网。未调用 `search_web`、`fetch_web`、`search_source`；全部事实仅来自已挂载来源 `ce2-source.txt`（line:1）与授权的主助手答复。\\n\\n## ①工具步骤执行清单\\n\\n| 步骤 | 调用 | 参数要点 | 结果 |\\n| --- | --- | --- | --- |\\n| 1 | `read_source` | ref = resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`；location `line:1` | **成功**。返回 fragments[0].location = line:1，text = \\\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\\\"（remaining_tool_calls = 23） |\\n| 2 | `write_private_note` | name = `ce2_draft` | **成功**。saved = true，bytes = 712，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724` |\\n| 3 | `read_private_note` | name = `ce2_draft` | **成功**。complete = true，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724`（与写入时一致），正文逐字回读与步骤 1 原文一致，核对无误 |\\n| 4 | `request_manager_information` | 询问资料未注明的目标年份；requested_result_ids = [] | **成功**（request_id `information:9811b31c-8a88-4eea-94cb-2f487cd89aa6`，status = resolved，available = true）。答复：主助手当前没有任何目标年份信息，未提供目标年份；并确认资料正文中未出现任何年份字段。**未重复咨询** |\\n\\n## ②据原文的事实清单（逐字）\\n\\n资料 `ce2-source.txt`（line:1）全文逐字为：\\n\\n> \\\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\\\"\\n\\n| 项目 | 原文表述（逐字） |\\n| --- | --- |\\n| Marker 原文值 | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90`（原文：\\\"Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90\\\"） |\\n| Confirmed units 原文值 | `7`（原文：\\\"Confirmed units: 7\\\"） |\\n| Market size 原文表述 | `unknown`（原文：\\\"Market size: unknown.\\\"），即市场规模未知/未给出数值 |\\n\\n说明：原文共三项字段（Marker / Confirmed units / Market size）。市场规模的原文表述为 `unknown`，本次资料未给出任何市场规模数值；报告中不引入任何外部数据或推测数字。\\n\\n## ③目标年份状态\\n\\n**目标年份：资料未注明，主助手亦未提供，故未知。**\\n\\n- 资料状态：`ce2-source.txt`（line:1）正文仅含 Marker、Confirmed units、Market size 三项内容，未出现任何年份字段。\\n- 咨询结果：已依任务要求调用 `request_manager_information` 询问目标年份；主助手答复\\\"当前没有任何目标年份信息，未提供目标年份\\\"，并确认资料本身也未注明目标年份。\\n- 处理方式：按要求**未自行假设任何年份**，也未按任何年份口径做推导。\\n\\n## ④未解缺口\\n\\n1. **目标年份未知**：资料未注明，主助手在本次咨询中亦未提供。影响：无法判定任何年份口径，本轮结论不绑定具体年份。\\n2. **市场规模数值缺失**：原文仅为 `unknown`，未给出任何数值、单位、期间或统计口径；故无法报告市场规模，也不得推测。\\n3. **Confirmed units 的口径缺失**：原文仅给出数值 `7`，未注明单位含义（如件/台/个）、统计范围或期间；本次资料未覆盖。\\n4. **与目标年份对应的其他口径信息缺失**：由于年份本身未知，与之对应的口径（期间、货币、单位、统计基准）均无从确定。\\n\\n## 自检要点\\n\\n- 报告中的 Marker、Confirmed units、Market size 均为逐字原文（来源：`ce2-source.txt`，line:1）；未做日期或单位归一化。\\n- 四个必需工具步骤均实际执行并全部成功，各自的返回结果已如实记录。\\n- 未编造任何出处、年份或数字；未知项在正文与 missing 中表述一致（均为\\\"未知/缺失\\\"）。\\n- 遵守禁止联网限制：未调用 `search_web` / `fetch_web` / `search_source`。\",\n  \"fields\": {\n    \"resource_name\": \"ce2-source.txt\",\n    \"source_ref\": \"resource_id=2666971f-6809-4d93-a470-547f3c6554c1; snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2; parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed\",\n    \"source_location\": \"line:1\",\n    \"marker\": \"CE2-f3087a168bdf4dc7a6fdb72ae5552c90\",\n    \"confirmed_units\": \"7\",\n    \"market_size\": \"unknown\",\n    \"target_year\": \"unknown\",\n    \"note_name\": \"ce2_draft\",\n    \"note_sha256\": \"d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724\"\n  },\n  \"sources\": {\n    \"ce2-source.txt\": \"resource_id=2666971f-6809-4d93-a470-547f3c6554c1 | snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2 | parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed | 位置 line:1 | 正文：\\\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\\\"\",\n    \"request_manager_information\": \"request_id=information:9811b31c-8a88-4eea-94cb-2f487cd89aa6 | status=resolved | 答复：主助手无目标年份信息、未提供目标年份；资料正文未出现年份字段\",\n    \"private_note:ce2_draft\": \"sha256=d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724 | 范围：本会话私有草稿，非正式证据\"\n  },\n  \"assumptions\": [\n    \"仅使用本次挂载的 ce2-source.txt 与本次授权的主助手答复；未使用记忆或历史报告作为事实来源。\"\n  ],\n  \"conflicts\": [],\n  \"missing\": [\n    \"目标年份：资料未注明，主助手亦未提供，故未知；未自行假设任何年份。\",\n    \"市场规模数值：原文仅 \\\"Market size: unknown.\\\"，无任何数值、单位或统计口径。\",\n    \"Confirmed units=7 的单位含义、统计范围与期间：原文未注明。\",\n    \"与目标年份对应的口径信息（期间/货币/单位/统计基准）：因年份未知而无法确定。\"\n  ],\n  \"limitations\": [\n    \"资料正文仅一条（line:1）三字段，信息量极小，无年份、无单位、无市场规模数值，结论仅限逐字复述原文。\",\n    \"禁止联网，未做任何外部检索；无法对原文之外的任何事实作出判断。\",\n    \"私有笔记 ce2_draft 属于本会话草稿，不构成正式证据或授权。\",\n    \"本次资料未包含某因素，只能说明本次资料缺失或口径未覆盖，不代表该因素不存在或不会影响结果。\"\n  ],\n  \"follow_up\": [\n    \"如需绑定年份口径，请提供目标年份或含年份字段的资料。\",\n    \"如需报告市场规模，请提供给出数值、单位与期间的来源。\",\n    \"如需明确 Confirmed units=7 的含义，请提供注明单位与统计范围的原文。\"\n  ],\n  \"self_checks\": {\n    \"verbatim_check\": \"Marker、Confirmed units、Market size 均逐字取自 ce2-source.txt line:1，未翻译或归一化。\",\n    \"tool_steps\": \"read_source / write_private_note / read_private_note / request_manager_information 四步均实际执行且成功，返回结果已逐项记录。\",\n    \"no_network\": \"未调用 search_web / fetch_web / search_source。\",\n    \"no_fabrication\": \"未引入外部数据、推测数字或虚构出处；未知项在正文与 missing 中一致表述为未知。\",\n    \"no_repeat_consult\": \"request_manager_information 仅调用一次，收到答复后未再次咨询。\"\n  },\n  \"claims\": []\n}\n```",
+            "issues": [
+              {
+                "loc": [],
+                "msg": "Invalid JSON: expected value at line 1 column 1",
+                "type": "json_invalid"
+              }
+            ]
+          }
+        ]
+      },
+      "receipt": {
+        "code_candidate": null,
+        "artifact": {
+          "result_id": "task-result:9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+          "sha256": "47deb510bb3314827659564c1fcdd4ea54bc5462d6562a2857a3fc926a023184",
+          "bytes": 7618,
+          "chars": 4782,
+          "complete": true,
+          "brief": "# 合成验收报告（任务 3375154a-3509-59b6-b13f-7170f0bed2b6 v1）\n\n**范围声明**：本次为合成验收任务，禁止联网。未调用 `search_web`、`fetch_web`、`search_source`；全部事实仅来自已挂载来源 `ce2-source.txt`（line:1）与授权的主助手答复。\n\n## ①工具步骤执行清单\n\n| 步骤 | 调用 | 参数要点 | 结果 |\n| --- | --- | --- | --- |\n| 1 | `read_source` | ref = resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`；location `line:1` | **成功**。返回 fragments[0].location = line:1，text = \"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"（remaining_tool_calls = 23） |\n| 2 | `write_private_note` | name = `ce2_draft` | **成功**。saved = true，bytes = 712，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724` |\n| 3 | `read_private_note` | name = `ce2_draft` | **成功**。complete = true，sha256 = `d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724`（与写入时一致），正文逐字回读与步骤 1 原文一致，核对无误 |\n| 4 | `request_manager_information` | 询问资料未注明的目标年份；requested_result_ids = [] | **成功**（request_id `information:9811b31c-8a88-4eea-94cb-2f487cd89aa6`，status = resolved，available = true）。答复：主助手当前没有任何目标年份信息，未提供目标年份；并确认资料正文中未出现任何年份字段",
+          "brief_truncated": true
+        },
+        "result_id": "task-result:9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+        "task_id": "3375154a-3509-59b6-b13f-7170f0bed2b6",
+        "spec_version": 1,
+        "run_id": "9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+        "context_snapshot_id": "d53f85b9-2d1b-4851-8bc2-63ff602dabe8",
+        "model": "deepseek-flash",
+        "route_id": null,
+        "method_version": "search-v2",
+        "method_digest": "f743c8546622784d6530e7d05f64a157592677e51be0859c62b664a67bb1ce9b",
+        "result_ids": [],
+        "resource_refs": [
+          {
+            "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+            "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+            "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+          }
+        ],
+        "missing_optional_refs": [],
+        "program_checks": [
+          {
+            "number": 1,
+            "checker": "program",
+            "status": "passed",
+            "evidence": "Run output and fixed input identity checked",
+            "reviewer": null
+          },
+          {
+            "number": 2,
+            "checker": "program",
+            "status": "passed",
+            "evidence": "Report present",
+            "reviewer": null
+          }
+        ],
+        "semantic_checks": [
+          {
+            "number": 1,
+            "checker": "semantic",
+            "status": "pending",
+            "evidence": "Independent review required",
+            "reviewer": null
+          },
+          {
+            "number": 2,
+            "checker": "semantic",
+            "status": "pending",
+            "evidence": "Independent review required",
+            "reviewer": null
+          }
+        ],
+        "assumptions": [
+          "仅使用本次挂载的 ce2-source.txt 与本次授权的主助手答复；未使用记忆或历史报告作为事实来源。"
+        ],
+        "conflicts": [],
+        "missing": [
+          "目标年份：资料未注明，主助手亦未提供，故未知；未自行假设任何年份。",
+          "市场规模数值：原文仅 \"Market size: unknown.\"，无任何数值、单位或统计口径。",
+          "Confirmed units=7 的单位含义、统计范围与期间：原文未注明。",
+          "与目标年份对应的口径信息（期间/货币/单位/统计基准）：因年份未知而无法确定。",
+          "目标年份（资料未注明，主助手未提供，故为未知）",
+          "与目标年份对应的其他口径信息（本次资料未覆盖）"
+        ],
+        "limitations": [
+          "资料正文仅一条（line:1）三字段，信息量极小，无年份、无单位、无市场规模数值，结论仅限逐字复述原文。",
+          "禁止联网，未做任何外部检索；无法对原文之外的任何事实作出判断。",
+          "私有笔记 ce2_draft 属于本会话草稿，不构成正式证据或授权。",
+          "本次资料未包含某因素，只能说明本次资料缺失或口径未覆盖，不代表该因素不存在或不会影响结果。"
+        ],
+        "follow_up": [
+          "如需绑定年份口径，请提供目标年份或含年份字段的资料。",
+          "如需报告市场规模，请提供给出数值、单位与期间的来源。",
+          "如需明确 Confirmed units=7 的含义，请提供注明单位与统计范围的原文。"
+        ],
+        "delivery": "pending_review",
+        "adoption": "for_discussion",
+        "adoption_reason": null
+      },
+      "called_tools": [
+        "read_source",
+        "write_private_note",
+        "read_private_note",
+        "request_manager_information"
+      ],
+      "note": {
+        "name": "ce2_draft",
+        "sha256": "d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724",
+        "text": "任务 3375154a-3509-59b6-b13f-7170f0bed2b6 v1（合成验收，禁止联网）\n\n资料：ce2-source.txt\nref: resource_id=2666971f-6809-4d93-a470-547f3c6554c1, snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2, parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed\n位置：line:1\n\n从正文中读到的事实（逐字）：\n\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"\n\n要点：\n- Marker：CE2-f3087a168bdf4dc7a6fdb72ae5552c90\n- Confirmed units：7\n- Market size：unknown（未知）\n- 资料未注明目标年份，未提供任何年份信息；不得假设。\n- 未获得任何市场规模数值，也不得引入外部数据或推测数字。\n",
+        "complete": true
+      },
+      "information": [
+        {
+          "id": "information:9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+          "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+          "task_id": "3375154a-3509-59b6-b13f-7170f0bed2b6",
+          "spec_version": 1,
+          "run_id": "9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+          "question": "资料 ce2-source.txt 正文（line:1）为：\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"。该资料中未注明本次研究的目标年份，请问目标年份是什么？说明：主助手当前未提供任何目标年份信息（未提供），我不会自行假设年份，请明确告知；若确实未提供，我将把目标年份记为未知。",
+          "progress": "任务 3375154a-3509-59b6-b13f-7170f0bed2b6 v1（合成验收，禁止联网，未调用 search_web/fetch_web/search_source）。已完成：1) read_source 读取 ce2-source.txt（ref: resource_id=2666971f-6809-4d93-a470-547f3c6554c1 / snapshot_id=70454aef-9a6c-40df-84ab-600ec8ad7fb2 / parse_id=cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed），成功，正文为：\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"；2) write_private_note 保存 ce2_draft，成功，sha256=d9ef3037c32592af0bf537d8721d632244b5740d7e1924a70c1f20c063780724；3) read_private_note 重读 ce2_draft，成功，内容与保存一致（complete=true）。已知事实：Marker=CE2-f3087a168bdf4dc7a6fdb72ae5552c90；Confirmed units=7；Market size=unknown。缺口：目标年份（本资料未注明，主助手未提供）。",
+          "resource_refs": [
+            {
+              "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+              "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+              "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+            }
+          ],
+          "requested_result_ids": [],
+          "report_grants": [],
+          "status": "resolved",
+          "attempts": 1,
+          "answer": {
+            "available": true,
+            "answer": "主助手当前没有任何目标年份信息，未提供目标年份。\n\n已核对的资料正文（ce2-source.txt，line:1，逐字）为：\n\"SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.\"\n\n该正文中仅含 Marker、Confirmed units、Market size 三项内容，未出现任何年份字段，因此资料本身也未注明目标年份。\n\n结论：目标年份 = 未知（资料未注明，主助手亦未提供；不自行假设）。\n\n可据原文报告的事实：Marker = CE2-f3087a168bdf4dc7a6fdb72ae5552c90；Confirmed units = 7；Market size = unknown（未知）。\n\n说明：本次咨询时报告目录中没有任何已保存专家报告正文可读（results 为空），因此无可引用的专家报告结论。",
+            "missing": [
+              "目标年份（资料未注明，主助手未提供，故为未知）",
+              "与目标年份对应的其他口径信息（本次资料未覆盖）"
+            ],
+            "resource_refs": [
+              {
+                "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+                "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+                "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+              }
+            ],
+            "message_ids": [],
+            "result_ids": []
+          },
+          "usage": {
+            "requests": 3,
+            "input_tokens": 12093,
+            "output_tokens": 795,
+            "complete": true
+          }
+        }
+      ],
+      "save_retry_same_result": true,
+      "save_retry_no_model": true
+    }
+  ],
+  "resumed_chat": {
+    "node_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04",
+    "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+    "revision": 3,
+    "fork_message_id": null,
+    "fork_source_revision": null,
+    "inherited": [],
+    "messages": [
+      {
+        "id": "e1df530e-6c6f-493c-902c-fa0d0077b061",
+        "role": "user",
+        "content": "这是合成验收，禁止联网。请用 find_experts 和 read_context 找到合成资料，向 expert_search 和 expert_synthesize 各派发一次独立正式任务。两份任务均要求：用 read_source 读正文，write_private_note 保存名为 ce2_draft 的私有笔记，用 read_private_note 重读；必须调用 request_manager_information 问主助手资料未注明的目标年份，然后据原文报告 Marker、已确认数量和市场规模未知，不编造。当前没有提供目标年份，咨询时应明确无信息。将上述工具步骤写入任务指令；派发后告知处理中。",
+        "resource_refs": [],
+        "result_ids": [],
+        "assumptions": [],
+        "limitations": [],
+        "sender": null,
+        "sender_session_id": null,
+        "source_session_id": null,
+        "reply_to": null,
+        "task_id": null,
+        "spec_version": null,
+        "run_id": null
+      },
+      {
+        "id": "chat-reply:bc48930d-fb84-4e0e-bdda-541ce38bb3bb",
+        "role": "assistant",
+        "content": "## 处理中\n\n已按合成验收要求完成发现与派发，两份独立专家任务均在后台运行。\n\n**已执行的步骤**\n- `find_experts`：确认 `expert_search`（search-v2）与 `expert_synthesize`（synthesize-v2）均存在，且各自具备 `read_source`、`write_private_note`、`read_private_note`、`request_manager_information` 等工具。\n- `read_context`（无参数）：定位到本轮唯一合成资料 `ce2-source.txt`，并读取其正文。\n\n**资料正文（逐字）**：`SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n\n| 项 | 原文值 |\n|---|---|\n| Marker | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90` |\n| Confirmed units | `7` |\n| Market size | `unknown`（未知） |\n| 目标年份 | 资料未注明；当前无任何信息 |\n\n**已派发任务（后台执行，尚未完成）**\n\n| 专家 | task_id | session_id | 状态 |\n|---|---|---|---|\n| expert_search | `3375154a-3509-59b6-b13f-7170f0bed2b6` | `2145f238-155a-4cdd-939e-6a9acf7905aa` | accepted（运行中） |\n| expert_synthesize | `8e47519c-9007-5067-8963-eddf604aee85` | `6b0b37ea-7215-4e61-8d08-39beef4c4271` | accepted（运行中） |\n\n两份任务指令已明确要求：禁止联网；用 `read_source` 读正文；`write_private_note` 保存名为 `ce2_draft` 的笔记并 `read_private_note` 重读；调用 `request_manager_information` 询问资料未注明的目标年份（因当前无信息，须明确说明“未提供”，不得自行假设）；据原文报告 Marker、已确认数量与市场规模未知，不得编造。\n\n**状态说明**：以上仅为任务已受理，专家报告尚未产出、未经复核；`request_manager_information` 的实际返回结果、笔记读写是否成功，均须待专家报告返回后据实核对。",
+        "resource_refs": [
+          {
+            "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+            "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+            "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+          }
+        ],
+        "result_ids": [],
+        "assumptions": [],
+        "limitations": [],
+        "sender": null,
+        "sender_session_id": null,
+        "source_session_id": null,
+        "reply_to": null,
+        "task_id": null,
+        "spec_version": null,
+        "run_id": "bc48930d-fb84-4e0e-bdda-541ce38bb3bb"
+      },
+      {
+        "id": "chat-reply:1676265a-f60d-48c0-b6a7-c600ddb8ab84",
+        "role": "assistant",
+        "content": "## 合成资料独立双专家核对 — 汇总结果\n\n**资料来源**：`ce2-source.txt`（resource_id `2666971f-6809-4d93-a470-547f3c6554c1` / snapshot_id `70454aef-9a6c-40df-84ab-600ec8ad7fb2` / parse_id `cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed`），全文仅 1 个片段，位于 `line:1`，parse_status=ready。\n\n**来源链接**：该资料为本次上传的本地合成文件，无公开 URL 可引用；因此本报告不附网页链接。\n\n### 一、原文事实（逐字）\n\n> `SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n\n| 项 | 原文值（逐字） | 说明 |\n|---|---|---|\n| Marker | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90` | 原文直接给出 |\n| Confirmed units | `7` | 原文直接给出；对象、单位与统计口径原文未说明 |\n| Market size | `unknown` | 原文标为未知，无任何数值、区间或单位 |\n| 资料性质 | `SYNTHETIC acceptance only.` | 资料自述为合成验收用途 |\n| 目标年份 | 未提供 | 正文与元数据均未注明；主助手侧亦无 |\n\n### 二、两份专家报告的一致与分歧\n\n| 项目 | expert_synthesize（task `8e47519c…`） | expert_search（task `3375154a…`） |\n|---|---|---|\n| 执行状态 | succeeded，delivery = pending_review | succeeded，delivery = pending_review |\n| 联网 | 未调用 search_web / fetch_web / search_source（遵守禁止联网） | 同左（据目录预览声明） |\n| Marker | `CE2-f3087a168bdf4dc7a6fdb72ae5552c90` | 同左 |\n| Confirmed units | `7` | 同左 |\n| Market size | `unknown` | 同左 |\n| 目标年份 | 未提供（资料未注明，主助手亦未提供） | 未提供 |\n| 是否提出相反观点 | 未见相反观点 | 未见相反观点 |\n\n**核对说明**：本轮已通过 `read_context(result_ids)` 取得两份结果的返回；我对 expert_synthesize 的结果字段（report、missing、limitations、conflicts、adoption）逐项读取，其 `conflicts` 为空。expert_search 的结果中我读取到的是目录与报告正文前缀（预览），其正文的后续部分未完整读取（分页读取已触发重复提示而终止）。因此「双方一致」这一判断，一侧依据完整结果字段，另一侧依据正文前缀与目录元数据，**不等同于两份完整正文的逐字通读**。\n\n### 三、结论\n\n1. **原文事实无分歧**：Marker、Confirmed units: 7、Market size: unknown 三个事实，两份报告与原始来源完全一致。\n2. **目标年份 = 未提供**：唯一来源正文与元数据均无年份信息；两份专家各自的 `request_manager_information` 答复均明确「未提供」，且要求不得自行假设。此点双方一致。\n3. **无事实矛盾，但一致意见不构成独立证据**：两份报告使用同一唯一来源（1 个片段），属同一证据基础，其一致只能说明两侧对原文的读法相同，不能用于对外部事实成立与否的双源验证。\n4. **规模与口径缺口未解决**：市场规模无具体数值（原文 unknown）；`Confirmed units: 7` 的对象、单位与统计口径原文均未说明。资料未包含这些信息，只能说明本轮资料与口径未覆盖，不能推定为该信息不存在或未来不会变化。\n5. **复核状态**：两份结果均为 `pending_review`、`adoption = for_discussion`，本轮未做独立复核，也未通过任何正式采用动作，故不能称为「已独立复核」或「已正式采用」。以上判断仅依据来源正文与待复核结果作出，边界以本节为准。\n\n### 四、本次已做与未做\n\n- 已做：`read_context(result_ids)` 读取两份结果正文与目录；`read_source` 读取 `ce2-source.txt` 正文（line:1）；分页读取结果工件（未完整覆盖 expert_search 结果正文剩余部分）。\n- 未做：未联网（本轮为禁止联网的合成验收，且调查工具已关闭）；未派发新的补查任务（用户要求不重复派发，且事实随原文唯一片段已确定）。\n\n**局限**：私有笔记 `ce2_draft` 属会话内草稿，不构成正式证据或授权；「未知/未提供」仅指本次可读来源与答复的覆盖范围，不能推断该信息在其他资料中不存在。",
+        "resource_refs": [
+          {
+            "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+            "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+            "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+          }
+        ],
+        "result_ids": [],
+        "assumptions": [],
+        "limitations": [],
+        "sender": null,
+        "sender_session_id": null,
+        "source_session_id": null,
+        "reply_to": null,
+        "task_id": null,
+        "spec_version": null,
+        "run_id": "1676265a-f60d-48c0-b6a7-c600ddb8ab84"
+      }
+    ]
+  },
+  "discussion": {
+    "id": "expert-reply:f47d93c6-4254-470f-aaac-3d722216e7a5",
+    "role": "assistant",
+    "content": "## 为什么市场规模仍是未知\n\n**1. 最直接的原因：原文本身就这么写的（来源事实）**\n\n唯一挂载来源 `ce2-source.txt` 全文只有 1 个片段（`line:1`），逐字为：\n\n> `SYNTHETIC acceptance only. Marker: CE2-f3087a168bdf4dc7a6fdb72ae5552c90. Confirmed units: 7. Market size: unknown.`\n\n其中市场规模一项的原文表述就是 `unknown`——不是\"某个数值但我们没查到\"，而是原文明确标注为未知，且**没有给出任何数值、区间、单位或统计口径**。因此报告只能照原文字面报告\"未知\"，不能替它填任何数字。\n\n**2. 没有可用来补齐的替代途径（推论，基于本次任务设定）**\n\n- 任务明确禁止联网，实际也未调用任何联网检索工具，所以没有外部来源可供交叉验证或补数；\n- 资料范围只有这一个文件，没有第二来源；其元数据为空，不含年份或规模字段；\n- 已按任务要求向主助手咨询过，答复也只涉及目标年份（\"未提供\"），并未提供任何规模数据。\n\n**3. 口径上还缺前提条件（推论）**\n\n即便别处存在某个规模数字，本次任务也缺目标年份，而 `Confirmed units: 7` 的对象、单位与统计口径原文同样未说明。没有年份和口径，任何数字都无法归到\"本次研究\"的规模上，所以\"未知\"不能靠推断补上。\n\n**4. 边界（避免过度推论）**\n\n以上\"未知\"只说明在**本次可读来源与咨询答复的覆盖范围内**没有该数据；不能据此推断该数据在其他资料中不存在、或今后不会有——若需补齐，需由任务方另行提供含规模数值及其年份、口径的原始来源。\n\n**状态说明**：当前保存的报告版本处于**待复核**状态，尚未经独立核实；上面结论中\"原文表述为 unknown\"直接取自本次讨论附带的来源正文（`line:1`），可直接核对；其余为基于任务设定的解释性推论。本次未重做任务，也未改动或重新发布任何结果。",
+    "resource_refs": [
+      {
+        "resource_id": "2666971f-6809-4d93-a470-547f3c6554c1",
+        "snapshot_id": "70454aef-9a6c-40df-84ab-600ec8ad7fb2",
+        "parse_id": "cd56ddc5-a76f-425b-9d74-ebbe32e4b6ed"
+      }
+    ],
+    "result_ids": [],
+    "assumptions": [],
+    "limitations": [],
+    "sender": "expert",
+    "sender_session_id": null,
+    "source_session_id": null,
+    "reply_to": "f47d93c6-4254-470f-aaac-3d722216e7a5",
+    "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+    "spec_version": 1,
+    "run_id": "6f0f796f-0d8d-4bea-8fb7-175cbebbea7e"
+  },
+  "bindings": [
+    {
+      "model": "deepseek-flash",
+      "run_id": "9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+      "task_id": "3375154a-3509-59b6-b13f-7170f0bed2b6",
+      "entrance": "expert",
+      "scope_id": "d1a0b321-58af-4805-9867-e6b8078f1d4f",
+      "execution": "controlled_tools",
+      "agent_hash": "9bbb5869c2881a32427c8ebff923a344e9b9ca05ab16b046e7d34c2b8b87e0a7",
+      "session_id": "2145f238-155a-4cdd-939e-6a9acf7905aa",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "1d4cb63b78be0cda6b7aa79790797877ce8d4aa2b6c54d982da15c1753399365",
+      "spec_version": 1,
+      "code_contract": null,
+      "method_digest": "f743c8546622784d6530e7d05f64a157592677e51be0859c62b664a67bb1ce9b",
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "scope_version": 3,
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "7b9e1268db99bf20b2e2f10d50056e8e2c53ca2f87cbcef46d596e2d6df851f2"
+    },
+    {
+      "run_id": "bc48930d-fb84-4e0e-bdda-541ce38bb3bb",
+      "entrance": "manager",
+      "scope_id": "e6d5657a-d3e6-4cec-b04e-61e75d0d2048",
+      "execution": "controlled_tools",
+      "agent_hash": "4cc8d53294a160241bb2b44381c686ee73c85291b482f88210ff5c438265b5b4",
+      "session_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "56295c0198c04efa7ab3a342b28b456e71a72290a6498ae04126801d434c6be6",
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "scope_version": 1,
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "14f5f22647b00fe0b6b668320263ed397e4a9819069dab7c2faf370e8d39eca0"
+    },
+    {
+      "run_id": "information:9811b31c-8a88-4eea-94cb-2f487cd89aa6:manager:1",
+      "task_id": "3375154a-3509-59b6-b13f-7170f0bed2b6",
+      "entrance": "consultation",
+      "execution": "controlled_tools",
+      "agent_hash": "34e35e9a2aa79f1f7029459bc182968cbd57391de985c4cf04daf071b228aff1",
+      "session_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04:information:information:9811b31c-8a88-4eea-94cb-2f487cd89aa6",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "34cff1ca798e46f6ece8aeae58eb80a2d709765b6d73b71a3cd056d5a471f8b3",
+      "spec_version": 1,
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "77fc5313c57d884d50c743c2bd5ec888230ab8cf35b6c5017b281b6471e2e2ea"
+    },
+    {
+      "model": "deepseek-flash",
+      "run_id": "5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+      "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+      "entrance": "expert",
+      "scope_id": "c982e7b7-b070-4721-90c3-c0de176ac2e2",
+      "execution": "controlled_tools",
+      "agent_hash": "cfbfa5118290f7472da564ea6e56d5a35d6868580ec76133bba5a85a2c4d0182",
+      "session_id": "6b0b37ea-7215-4e61-8d08-39beef4c4271",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "c19c54ef91fa458987cbaf27448b2495fe01a06bc7b1d08fbe49823c0d7bbdb2",
+      "spec_version": 1,
+      "code_contract": null,
+      "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "scope_version": 3,
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "244c415771b4efe87f1928fab9ef125aada74b2fbe593f7684cecbf69c44b08c"
+    },
+    {
+      "run_id": "information:5943420d-5044-4e05-a7be-c50d6d6fcfe6:manager:1",
+      "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+      "entrance": "consultation",
+      "execution": "controlled_tools",
+      "agent_hash": "34e35e9a2aa79f1f7029459bc182968cbd57391de985c4cf04daf071b228aff1",
+      "session_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04:information:information:5943420d-5044-4e05-a7be-c50d6d6fcfe6",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "022d92941ca721814fc0aef62deefbef21d09ddb3671c752ecaa6754f5ceb3b3",
+      "spec_version": 1,
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "94f5251ec2a1ed2e35db142c37448454634a797531a8ca1ec319a91095492fa2"
+    },
+    {
+      "run_id": "9e3c123a-49d0-4a30-bb21-9e40b9a74a0e",
+      "entrance": "manager",
+      "scope_id": "e6d5657a-d3e6-4cec-b04e-61e75d0d2048",
+      "execution": "controlled_tools",
+      "agent_hash": "a0513340bc6d954694a28b240d2ea096e11f48ffb9ad33e76eac2442c75cc50d",
+      "session_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "5c9b1fc23ab97190bbf8ed61342cb5e178cf18dcab8a700d5c06309f5e391409",
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "scope_version": 1,
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "14f5f22647b00fe0b6b668320263ed397e4a9819069dab7c2faf370e8d39eca0"
+    },
+    {
+      "run_id": "1676265a-f60d-48c0-b6a7-c600ddb8ab84",
+      "entrance": "manager",
+      "scope_id": "e6d5657a-d3e6-4cec-b04e-61e75d0d2048",
+      "execution": "controlled_tools",
+      "agent_hash": "a0513340bc6d954694a28b240d2ea096e11f48ffb9ad33e76eac2442c75cc50d",
+      "session_id": "b4752e8b-0e40-44c4-93f3-8f0fb0417a04",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "305790891e89cf81ef7f690bfd587435c00a25cb62c3c48335527a2d8c34a0cb",
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "scope_version": 1,
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "14f5f22647b00fe0b6b668320263ed397e4a9819069dab7c2faf370e8d39eca0"
+    },
+    {
+      "run_id": "6f0f796f-0d8d-4bea-8fb7-175cbebbea7e",
+      "task_id": "8e47519c-9007-5067-8963-eddf604aee85",
+      "entrance": "discussion",
+      "execution": "controlled_tools",
+      "agent_hash": "c377a6240b8f0e0b9e9a09289c4d4b799613bce5bba6f7643ccd1d09770d5219",
+      "session_id": "6b0b37ea-7215-4e61-8d08-39beef4c4271",
+      "research_id": "6b5e8551-de80-4569-95ad-39aacbc63ff2",
+      "request_hash": "642687566a88dfbacd81efc82c4c604ada4c3a5fdc52b8b9189417be0ab64b23",
+      "spec_version": 1,
+      "code_contract": null,
+      "root_scope_id": "c83bd36f-19d2-457c-999a-e921bc0aecec",
+      "root_scope_version": 2,
+      "checkpoint_protocol": "ce7-v1",
+      "authorization_generation": "94f5251ec2a1ed2e35db142c37448454634a797531a8ca1ec319a91095492fa2"
+    }
+  ],
+  "semantic_review": "Compare both full reports, consultation and synthesis to original_source. Regex/tool success is not semantic acceptance."
+}

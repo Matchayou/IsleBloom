@@ -1,0 +1,64 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_real_container_confinement_private_rebuild_and_stop ___________
+
+runtime = DockerRuntime(image='sha256:dedb4e94f8542d9fa2b64b4e2aeecfd50f3996c1f1648fb391445963544b69f8')
+
+    async def test_real_container_confinement_private_rebuild_and_stop(runtime):
+        await runtime.preflight()
+        workspace = uuid4().hex + uuid4().hex
+        first, second = 'ce1-' + uuid4().hex, 'ce1-' + uuid4().hex
+        proc = None
+        try:
+            proc = await runtime.start(first, workspace)
+            probe = '''
+    import json, os, socket, subprocess
+    from pathlib import Path
+    from agent_core.sandbox.workspace import Workspace
+    assert os.getuid() == 10001
+    assert not Path('/var/run/docker.sock').exists()
+    assert not any(k in os.environ for k in ('OPENAI_API_KEY','DATABASE_URL','PGPASSWORD'))
+    assert not Path('/Users').exists()
+    try:
+     Path('/root-denied').write_text('x')
+     raise AssertionError('root filesystem writable')
+    except PermissionError: pass
+    except OSError as e:
+     assert e.errno == 30
+    sock=socket.socket(); sock.settimeout(1)
+    assert sock.connect_ex(('1.1.1.1',443)) != 0
+    assert 'Seccomp:\\t2' in Path('/proc/self/status').read_text()
+    assert 'NoNewPrivs:\\t1' in Path('/proc/self/status').read_text()
+    w=Workspace('/state'); saved=w.save('persist','CE1 persistent draft'); w.close()
+    child=subprocess.Popen(['sleep','120'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    print(json.dumps({'saved':saved,'child':child.pid}))
+    '''
+>           data = json.loads(await runtime.command('exec', first, 'python', '-c', probe))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_external.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = DockerRuntime(image='sha256:dedb4e94f8542d9fa2b64b4e2aeecfd50f3996c1f1648fb391445963544b69f8')
+args = ('exec', 'ce1-16d1dcd860d040b89c80c2aa9f1b1148', 'python', '-c', "\nimport json, os, socket, subprocess\nfrom pathlib ...','120'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)\nprint(json.dumps({'saved':saved,'child':child.pid}))\n")
+proc = <Process 32671>, stdout = b''
+stderr = b'Error response from daemon: container bb78e05a87cc242342749e9c401fd7a6cf43a854720c8a2566244476ffdd4ea5 is not running\n'
+
+    async def command(self, *args):
+        proc = await asyncio.create_subprocess_exec('docker', *args,
+            stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+        try:
+            async with asyncio.timeout(20): stdout, stderr = await proc.communicate()
+        except BaseException:
+            proc.kill()
+            await proc.wait()
+            raise
+        if proc.returncode:
+            # Docker errors may include host paths; do not expose them to a model.
+>           raise RuntimeError('Docker operation failed: ' + args[0])
+E           RuntimeError: Docker operation failed: exec
+
+src/agent_core/sandbox/docker.py:28: RuntimeError
+=========================== short test summary info ============================
+FAILED tests/test_sandbox_external.py::test_real_container_confinement_private_rebuild_and_stop
+1 failed, 2 deselected in 1.68s

@@ -1,0 +1,160 @@
+........................................................................ [ 27%]
+........................................................................ [ 54%]
+........................................................................ [ 81%]
+...F.............................................                        [100%]
+=================================== FAILURES ===================================
+_____________ test_report_discovery_read_grant_and_continue[grant] _____________
+
+workspace = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x309465610>, <agent_core.context.scopes.ScopeService obj...e.ProjectService object at 0x309465a60>, <agent_core.collaboration.service.CollaborationService object at 0x30939c4d0>)
+mode = 'grant'
+
+    @pytest.mark.parametrize('mode', ['grant', 'unread', 'revoke', 'none'])
+    async def test_report_discovery_read_grant_and_continue(workspace, mode):
+        _, scopes, research, tasks, _, c = workspace
+        node, extra, saved, followup = await reports(workspace)
+        own, peer = saved[0][1], saved[1][1]
+        original_records = [tasks.ledger.get(receipt.run_id) for _, receipt in saved]
+        observed = []
+    
+        class Engine:
+            async def execute(self, request, agent, tools, invoke):
+                if agent.id == 'manager_information':
+                    payload = json.loads(request.input.messages[0].content)
+                    assert payload['requested_result_ids'] == [peer.result_id]
+                    directory = (await invoke('read_information', 'directory', {})).value
+                    assert {r['result_id'] for r in directory['results']} == {own.result_id, peer.result_id}
+                    if mode in ('grant', 'revoke'):
+                        read = (await invoke('read_information', 'report', {'result_ids': [peer.result_id]})).value
+                        report = read['results'][0]
+                        assert report['output']['report'].startswith('Historical draft')
+                        assert report['spec_version'] == 1 and report['delivery'] == 'pending_review'
+                    if mode == 'revoke':
+                        scope = scopes.current(research.research(node.research_id).scope_id, research.owner)
+                        scopes.revoke(scope, extra)
+                    return RunResult(run_id=request.run_id, status='succeeded', output={
+                        'available': mode != 'none', 'answer': 'Read this fixed draft; not independently reviewed.',
+                        'result_ids': [peer.result_id] if mode != 'none' else [],
+                        'missing': ['Peer report not provided'] if mode == 'none' else []})
+                if not tools:
+                    assert any(m.role == 'assistant' and '索要信息' in m.content for m in request.input.messages)
+                    return RunResult(run_id=request.run_id, status='succeeded', output='Historical report discussion continues.')
+                assert 'read_context' in {tool.name for tool in tools}
+                directory = (await invoke('read_context', 'own-directory', {})).value
+                assert [r['result_id'] for r in directory['results']] == [own.result_id]
+                assert directory['results'][0]['access'] == 'available'
+                body = (await invoke('read_context', 'own-body', {'result_ids': [own.result_id]})).value
+                assert body['results'][0]['run_id'] == own.run_id
+                messages = (await invoke('read_context', 'own-discussion', {
+                    'message_ids': ['own-history-note', 'foreign-message-id']})).value
+                assert messages['messages'][0]['content'] == 'Own historical discussion note.'
+                assert messages['unavailable'] == [{'message_id': 'foreign-message-id', 'reason': 'not_found'}]
+                denied = (await invoke('read_context', 'peer-before-grant', {'result_ids': [peer.result_id]})).value
+                assert denied['results'] == []
+                assert denied['unavailable'][0]['reason'] == 'authorization_required'
+                reply = (await invoke('request_manager_information', 'ask', {
+                    'question': 'Please provide the peer report.', 'progress': 'Read my earlier report.',
+                    'requested_result_ids': [peer.result_id]})).value
+                observed.append(reply)
+                if mode == 'grant':
+                    assert reply['report_grants'] == [{'result_id': peer.result_id, 'task_id': peer.task_id,
+                        'spec_version': 1, 'run_id': peer.run_id}]
+                    assert reply['context']['results'][0]['output']['report'].startswith('Historical draft')
+                    read = (await invoke('read_context', 'peer-after-grant', {'result_ids': [peer.result_id]})).value
+                    assert read['results'][0]['delivery'] == 'pending_review'
+                    source = (await invoke('read_source', 'authorized-source', {'ref': extra.model_dump()})).value
+                    assert 'Peer source' in json.dumps(source)
+                else:
+                    assert not reply['available'] and not reply['context']['results']
+                return RunResult(run_id=request.run_id, status='succeeded', output=output('Continued original task.'))
+    
+        tasks.engine = Engine()
+        outcome = await c.execute(followup.command_id)
+        run = outcome['runs'][0]
+        record = tasks.ledger.get(run.id)
+        assert record.status == ('failed' if mode in ('unread', 'revoke') else 'succeeded'), record.result
+        if mode in ('unread', 'revoke'):
+            assert not observed
+            with pytest.raises(ScopeDenied): scopes.check(scopes.repository.scope(run.scope_id), extra)
+        else:
+            info = c.information.get(run.id)
+            restored = InformationRequest.model_validate_json(info.model_dump_json())
+            assert restored == info and info.requested_result_ids == (peer.result_id,)
+            assert len(outcome['runs']) == 1 and tasks.spec(followup.task_id).version == 1
+            if mode == 'grant':
+                assert extra in outcome['receipts'][0].resource_refs
+                assert extra not in tasks.spec(followup.task_id).required_refs
+                token = scopes.running.set(run.id)
+                try:
+                    bad_pin = restored.report_grants[0].model_copy(update={'spec_version': 999})
+                    with pytest.raises(ScopeDenied):
+                        c.information._deliver(tasks.spec(followup.task_id), run,
+                            restored.model_copy(update={'report_grants': (bad_pin,)}))
+                    with scopes.track(run.id, scopes.repository.scope(run.scope_id)):
+                        repeated = c.information._deliver(tasks.spec(followup.task_id), run, restored)
+                    assert repeated.value['context']['results'][0]['run_id'] == peer.run_id
+                finally:
+                    scopes.running.reset(token)
+                thread = c.projects.expert_thread(followup.task_id)
+>               await c.projects.discuss(followup.task_id, 'Explain the saved report.', thread.revision, 'after-info')
+
+tests/test_report_information.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.projects.service.ProjectService object at 0x309465a60>
+task_id = 'edf53cbf-3d81-57e6-92cb-d071490d2075'
+content = 'Explain the saved report.', expected_revision = 3
+message_id = 'after-info', sender = 'user', reply_to = None
+sender_session_id = None, resource_refs = (), result_ids = ()
+
+    async def discuss(self, task_id, content, expected_revision, message_id=None,
+                      sender='user', reply_to=None, sender_session_id=None,
+                      resource_refs=(), result_ids=()):
+        spec = self.tasks.spec(task_id)
+        thread = self.expert_thread(task_id)
+        content = content.strip()
+        if not content: raise ValueError('Empty message')
+        message_id = message_id or identity()
+        old = next((m for m in thread.messages if m.id == message_id), None)
+        if old:
+            if old.content != content or old.role != 'user' or old.sender != sender:
+                raise Conflict('Message ID reused')
+            return thread
+        if thread.revision != expected_revision: raise Conflict('Expert chat revision changed')
+        context = self._fixed_context(spec)
+        context['history_rule'] = ('Earlier consultation directories describe that earlier point in time. '
+            'task_results here are the currently saved versions; do not claim there are no reports when this list is nonempty.')
+        current = ChatMessage(id=message_id, role='user', content=content,
+            sender=sender, sender_session_id=sender_session_id, reply_to=reply_to,
+            task_id=task_id, spec_version=spec.version,
+            resource_refs=tuple(dict.fromkeys((*spec.required_refs, *resource_refs))),
+            result_ids=tuple(dict.fromkeys((*spec.required_results, *result_ids))))
+        context['supplemental_messages'] = self._discussion_additions(spec, (*thread.messages, current))
+        asset, method = self.tasks.methods.method(spec.expert_id, spec.method_version)
+        from ..context.projection import project_payload
+        context['history'] = [m.model_dump(mode='json') for m in thread.messages]
+        context['current_instruction'] = content
+        prepared = project_payload(context, 30000)
+        agent = AgentSpec(id=spec.expert_id, model=spec.model, instructions=method.prompt + '\n当前模式为专家对话。沿用上述专家的分析方法，但输出为直接面向用户的自然语言或 Markdown，不使用执行交付的 JSON 格式。你正在讨论固定专家任务和结果。补充消息中附带的资料是讨论材料，尚未成为正式任务输入；附带结果保留其复核状态，待复核内容不能当成已独立核实的事实。解释、质疑、引用来源与版本；不得声称已修改任务、运行、回执、已发布结果或主线。若用户要求改变执行，请让其使用明确的重新执行操作。没有成功结果时，明确说明当前讨论的是分析思路，不捏造已完成的分析。使用自然的用户语言解释任务和来源；除非用户明确询问技术细节，不展示内部字段名、状态码或原始 JSON。内部失败状态应表述为“上次分析未完成”或“尚无可用结论”。',output_type=None)
+        if self.tasks.engine is None:
+            answer = '当前服务未启用模型，讨论消息未保存；请使用模型服务开启专家续聊。'
+            raise Conflict(answer)
+        request = RunRequest(agent_id=spec.expert_id, input=prepared,
+            limits=RunLimits(max_turns=8, timeout_seconds=180, max_calls=8))
+        def validate_discussion():
+            if self.tasks.spec(task_id).version != spec.version:
+                raise Conflict('Task changed during discussion')
+            self._fixed_context(spec)
+            self._discussion_additions(spec, (*thread.messages, current))
+        from ..controlled.admission import admit
+        with admit(request, research_id=spec.research_id, session_id=thread.id,
+                   task_id=spec.id, spec_version=spec.version, kind='discussion',
+                   validate=validate_discussion):
+            result = await CoreRunner(self.tasks.engine, AgentCatalog([agent])).execute(request)
+>       if result.status != 'succeeded': raise Conflict(result.error.message if result.error else 'Expert discussion failed')
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       agent_core.execution.ports.Conflict: Engine execution failed
+
+src/agent_core/projects/service.py:297: Conflict
+=========================== short test summary info ============================
+FAILED tests/test_report_information.py::test_report_discovery_read_grant_and_continue[grant]
+1 failed, 264 passed in 62.45s (0:01:02)

@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_coding_through_broker_receipt_and_save_retry _______________
+
+coding = (<agent_core.coding.workspace.CodingService object at 0x10a8c50a0>, <function coding.<locals>.admit at 0x10a888680>, P...ar/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-45/test_coding_through_broker_rec0/source'))
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-45/test_coding_through_broker_rec0')
+
+    async def test_coding_through_broker_receipt_and_save_retry(coding,tmp_path):
+        url=os.environ.get('CE5_TEST_DATABASE_URL')
+        if not url:pytest.skip('Fresh CE5 PostgreSQL required')
+        service,admit,_=coding
+        provider=Provider();db=PostgresDatabase(url)
+        try:
+            scopes=build_resources(db,tmp_path/'blobs')
+>           research,tasks,_=build_controlled_services(db,scopes,private_root=tmp_path/'private',model_provider=provider,coding=service)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_coding_controlled.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/agent_core/composition.py:305: in build_controlled_services
+    tasks = build_tasks(database, scopes, research, router=router)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:168: in build_tasks
+    methods = build_methods(database, research)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/agent_core/composition.py:279: in build_methods
+    tx.methods.add(value)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.adapters.postgres.methods.PostgresMethods object at 0x10c5c61e0>
+value = AssetVersion(category='method', asset_id='expert_coding', version='coding-v1', description='coding research using the ...aseline', evidence='R1–Stage 7 fixed method baseline; control tests, no claim of semantic improvement', sanitized=True)
+
+    def add(self, value):
+        self.c.execute(pg_insert(self.t['versions']).values(category=value.category,asset_id=value.asset_id,version=value.version,payload=value.model_dump(mode='json')).on_conflict_do_nothing())
+>       if self.get(value.category,value.asset_id,value.version) != value: raise Conflict('Immutable version already exists')
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       agent_core.execution.ports.Conflict: Immutable version already exists
+
+src/agent_core/adapters/postgres/methods.py:26: Conflict
+=========================== short test summary info ============================
+FAILED tests/test_coding_controlled.py::test_coding_through_broker_receipt_and_save_retry
+1 failed in 1.26s

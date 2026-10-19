@@ -1,0 +1,306 @@
+{
+  "id": "940833e7-47d5-46a8-8244-78c51a409616",
+  "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+  "origin_node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+  "request_id": "recovery:b9c66710-ff5b-4d0b-a5a1-52b87e99999d:4:tokens:184651",
+  "request": "生成中文三步串行研究计划：比较 ReAct 与先规划、人工确认、再执行在研究型智能体中的机制、失败模式、适用场景、成本构成与可靠性。\n仅使用原始论文和官方工程文档，优先复用 sources 内已有 ReAct arXiv PDF/HTML 全文、OpenAI Agents SDK HITL、LangChain HITL 正文。规划时仅看现有元数据，不需调用工具；执行时用 search_source 定向核对已有正文，只有必需证据确实缺失才联网。不安排代码、实验或发布。\n步骤1：核对2-3份关键一级资料，交付标题/URL/全文状态/带位置短摘录的资料清单。步骤2依赖1：交付机制、失败模式、适用场景、成本构成的定性对照表和来源依据。步骤3依赖1和2：交付最终对照表、约1500字有来源报告、工作流建议及研究局限；仅read_source/search_source，不联网。\n本研究不要求实测费用、token数量、时延或失败率。缺少实测数字是允许的limitations，必须明确未知，不阻止已完成的定性报告；不能编造数字。分类标签可以是明确注明的分析归纳，不要求来源逐字使用同一中文标签。结构化blocking_missing只列真正未完成的必需交付，例如没有要求的对照表或没有可核对来源，不能把允许未知放进去。每步交付标准写清这一点，避免笼统要求未知标missing。\n冻结预算policy：max_runs=3,max_concurrency=1,timeout_seconds=1800,max_total_tokens=120000,completion=fail_fast。每步limits：max_turns=8,max_calls=6,timeout_seconds=600,max_depth=1。工具仅read_source/search_source/search_web/fetch_web，第三步仅read_source/search_source。研究目标明确，无必需问题，questions=[]。analysis不超过300字，步骤指令不超过300字。现在只生成计划，等待确认后由受控执行链执行。",
+  "revision": 1,
+  "status": "awaiting_confirmation",
+  "created_at": "2026-10-12T06:16:03.543187Z",
+  "updated_at": "2026-10-12T06:16:03.543189Z",
+  "origin_revision": 0,
+  "chat_revision": 0,
+  "root_scope_version": 1,
+  "node_scope_version": 1,
+  "resource_refs": [
+    {
+      "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+      "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+      "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+    },
+    {
+      "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+      "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+      "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+    },
+    {
+      "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+      "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+      "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+    },
+    {
+      "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+      "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+      "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+    },
+    {
+      "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+      "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+      "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+    },
+    {
+      "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+      "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+      "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+    }
+  ],
+  "result_ids": [
+    "result:b2cb6f80-4a59-458f-afed-e2962b81c21d"
+  ],
+  "planning_result": null,
+  "model": "deepseek-v4-pro",
+  "analysis": "生成中文三步串行研究计划，比较 ReAct 与\"先规划→人工确认→再执行\"在研究型智能体中的机制、失败模式、适用场景、成本构成与可靠性。仅复用 sources 内现有原始论文与官方文档，search_source 定向核对，仅证据确实缺失才联网。不安排代码/实验/发布，不编造数字，实测缺失作为 limitations。\n恢复方案：保持原研究目标、步骤、权限与时限。已完成步骤复用，未完成步骤续跑；完成步骤用量计入总预算，失败记录与用量另存。\n待确认总token预算由157606调整为184651；仅在确认后生效。\n复用已完成步骤的保存结果，不重跑其模型；仅续跑未完成步骤，原成功与失败记录不变。已有步骤用量计入三步总预算。",
+  "assumptions": [
+    "sources 中 6 份资料已含 ReAct arXiv 摘要/PDF/HTML 全文、OpenAI Agents SDK HITL、LangChain HITL 正文，可支撑定性对照",
+    "'先规划→人工确认→再执行'以 OpenAI/LangChain HITL 官方文档为主要依据，作为分析归纳",
+    "实测费用/token/时延/失败率属允许未知，不构成 blocking_missing"
+  ],
+  "questions": [],
+  "plan": {
+    "id": "b7569909-6281-49af-aad7-d01dd00ca297",
+    "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+    "steps": [
+      {
+        "node_id": "2421f422-db84-4d08-853d-6146adf1b2a6",
+        "depends_on": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "1f0ef481-eeda-4bc5-96a0-8e5944e67d45",
+        "depends_on": [
+          "2421f422-db84-4d08-853d-6146adf1b2a6"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      },
+      {
+        "node_id": "79b90b12-ce44-4b46-928c-d87a262310cd",
+        "depends_on": [
+          "2421f422-db84-4d08-853d-6146adf1b2a6",
+          "1f0ef481-eeda-4bc5-96a0-8e5944e67d45"
+        ],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 600.0,
+          "max_depth": 1,
+          "max_calls": 6
+        }
+      }
+    ],
+    "policy": {
+      "max_concurrency": 1,
+      "max_runs": 3,
+      "max_total_tokens": 184651,
+      "timeout_seconds": 1800.0,
+      "completion": "fail_fast"
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "2421f422-db84-4d08-853d-6146adf1b2a6",
+      "goal": "核对 2-3 份关键一级资料，确认全文可用性并产出带位置短摘录的资料清单。",
+      "instructions": "用 search_source 在 ReAct arXiv PDF/HTML、OpenAI Agents SDK HITL、LangChain HITL 中定向检索关键段落（如 ReAct 的 thought/act 机制、HITL 的 approve/plan 流程），read_source 读小文档。仅当必要证据确实缺失才用 search_web/fetch_web。记录每份资料的标题、URL、全文状态、位置与短摘录。\n交付要求：资料清单：标题、URL、全文状态、带位置短摘录；标明哪些关键证据缺失。允许未知的实测数字不列入缺失。",
+      "deliverable": "资料清单：标题、URL、全文状态、带位置短摘录；标明哪些关键证据缺失。允许未知的实测数字不列入缺失。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        }
+      ],
+      "result_ids": [
+        "result:f9a2f8be-bfc8-42af-b8ba-7d7a0c3f4b48"
+      ]
+    },
+    {
+      "node_id": "1f0ef481-eeda-4bc5-96a0-8e5944e67d45",
+      "goal": "基于已核对资料，产出机制、失败模式、适用场景、成本构成的定性对照表及来源依据。",
+      "instructions": "复用步骤1核对结果，用 search_source/read_source 补充佐证；必要时联网。从 ReAct 论证循环 vs 先规划+人工确认+再执行两个范式，分别归纳机制、典型失败模式、适用场景、成本构成（定性），每格标注来源位置。分类标签可为注明归纳，不要求逐字同源。\n交付要求：定性对照表（机制/失败模式/适用场景/成本构成/可靠性）及逐项来源依据；未给实测数字处明确标未知，不构成 blocking。",
+      "deliverable": "定性对照表（机制/失败模式/适用场景/成本构成/可靠性）及逐项来源依据；未给实测数字处明确标未知，不构成 blocking。",
+      "allowed_tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        }
+      ],
+      "result_ids": []
+    },
+    {
+      "node_id": "79b90b12-ce44-4b46-928c-d87a262310cd",
+      "goal": "综合上游交付，产出最终对照表、约1500字有来源报告、工作流建议与研究局限。",
+      "instructions": "仅用 read_source/search_source，综合步骤1、2结果。输出最终对照表、约1500字带来源的中文报告、工作流建议，并在研究局限中明确实测费用/token/时延/失败率为允许未知，不编造数字。\n交付要求：最终对照表 + 约1500字有来源报告 + 工作流建议 + 研究局限；blocking_missing 仅列真正未完成的必需交付（如缺对照表或无来源），允许未知不列入。",
+      "deliverable": "最终对照表 + 约1500字有来源报告 + 工作流建议 + 研究局限；blocking_missing 仅列真正未完成的必需交付（如缺对照表或无来源），允许未知不列入。",
+      "allowed_tools": [
+        "read_source",
+        "search_source"
+      ],
+      "resource_refs": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        }
+      ],
+      "result_ids": []
+    }
+  ],
+  "approved_revision": null,
+  "approved_by": null,
+  "approved_at": null,
+  "workflow_id": null,
+  "execution_started_at": null,
+  "reason": null,
+  "recovery_of": "b9c66710-ff5b-4d0b-a5a1-52b87e99999d",
+  "reused_steps": {
+    "1f0ef481-eeda-4bc5-96a0-8e5944e67d45": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+    "2421f422-db84-4d08-853d-6146adf1b2a6": "result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2"
+  },
+  "sources": [
+    {
+      "ref": {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      },
+      "name": "Synergizing Reasoning and Acting in Language Models"
+    },
+    {
+      "ref": {
+        "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+        "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+        "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+      },
+      "name": "ReAct: Synergizing Reasoning and Acting in Language ..."
+    },
+    {
+      "ref": {
+        "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+        "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+        "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+      },
+      "name": "Human-in-the-loop - OpenAI Agents SDK"
+    },
+    {
+      "ref": {
+        "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+        "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+        "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+      },
+      "name": "Synergizing Reasoning and Acting in Language Models"
+    },
+    {
+      "ref": {
+        "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+        "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+        "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+      },
+      "name": "Human-in-the-loop - Docs by LangChain"
+    },
+    {
+      "ref": {
+        "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+        "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+        "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+      },
+      "name": "Synergizing Reasoning and Acting in Language Models [PDF full text]"
+    }
+  ],
+  "execution_steps": []
+}

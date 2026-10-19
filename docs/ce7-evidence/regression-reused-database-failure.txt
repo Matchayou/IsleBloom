@@ -1,0 +1,43 @@
+........................................................................ [ 24%]
+.................................F...................................... [ 49%]
+........................................................................ [ 73%]
+........................................................................ [ 98%]
+....                                                                     [100%]
+=================================== FAILURES ===================================
+___ test_manager_delegates_two_experts_and_resumes_with_public_reports_only ____
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x110f905f0>, <agent_core.context.scopes.ScopeService object...jectService object at 0x1108ad9a0>, <agent_core.collaboration.service.CollaborationService object at 0x110e71e50>, ...)
+
+    async def test_manager_delegates_two_experts_and_resumes_with_public_reports_only(controlled):
+        _, _, research, tasks, _, c, provider = controlled
+        node, ref, chat = await seed(controlled)
+        manager_plan = [call('find_experts'), call('read_context')]
+        for expert in ('expert_search', 'expert_synthesize'):
+            manager_plan.append(call('delegate_task', expert_id=expert,
+                task_instruction='Read synthetic material independently', delivery_requirements='State gaps',
+                resource_refs=[ref.model_dump(mode='json')]))
+        manager_plan.append(answer({'report': 'Two experts are working.'}))
+        provider.plans.append(manager_plan)
+        command = await research.submit(NodeCommand(command_id=uuid4().hex, research_id=node.research_id,
+            node_id=node.id, kind='chat_reply', chat_revision=chat.revision))
+        assert research.ledger.get(command.run_id).status == 'succeeded'
+        intents = c.query('intents_for', node.research_id)
+        assert len(intents) == 2 and all(i.manager_run_id == command.run_id for i in intents)
+        for _ in intents:
+            provider.plans.append([call('write_private_note', name='private', text='EXPERT_NOTE_MUST_NOT_REACH_MANAGER'),
+                answer({'report': 'PUBLIC_REPORT; confirmed count 7, unknown market size.'})])
+        await c.recover_pending()
+        receipts = [c.status(i.command_id)['receipts'][0] for i in intents]
+        before = len(provider.requests)
+        provider.plans.append([call('read_context', result_ids=[r.result_id for r in receipts]),
+            answer({'report': 'Both public drafts agree, pending independent review.'})])
+        await c.resume_manager()
+        resumed = provider.requests[before:]
+>       assert len(resumed) == 2
+E       assert 1 == 2
+E        +  where 1 = len([{'conversation_id': None, 'handoffs': [], 'input': [{'content': '{"content":[],"goal":"研究目标：Examine sample\\n当前分支获准对话...ne, retry=None, context_management=None, prompt_cache_options=None, preserve_raw_usage=None, timeout=149.956127), ...}])
+
+tests/test_controlled_collaboration.py:462: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_collaboration.py::test_manager_delegates_two_experts_and_resumes_with_public_reports_only
+1 failed, 291 passed in 124.09s (0:02:04)

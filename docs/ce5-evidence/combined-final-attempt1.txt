@@ -1,0 +1,221 @@
+..................................EEEEEE................EEEEEEEEE.....ss [ 30%]
+s...s................................................................... [ 61%]
+........................................................................ [ 91%]
+....................                                                     [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_real_postgres_fencing_persistent_budget_and_unknown_attempt _
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+__ ERROR at setup of test_real_postgres_cancellation_survives_adapter_restart __
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+_ ERROR at setup of test_real_postgres_broker_rejects_forgery_replay_and_late_result _
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+_ ERROR at setup of test_real_postgres_new_process_keeps_budget_cancel_and_fence _
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+___ ERROR at setup of test_real_postgres_tool_budget_and_persistent_deadline ___
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+_ ERROR at setup of test_real_postgres_private_tool_scope_budget_and_revocation _
+
+    @pytest.fixture
+    def database():
+        url = os.environ.get('CE1_TEST_DATABASE_URL')
+        if not url: pytest.skip('Dedicated PostgreSQL coordinator environment required; persistence NOT verified')
+        if not (make_url(url).database or '').startswith('ce1_'):
+>           pytest.fail('Database name must start with ce1_ and be dedicated to this test')
+E           Failed: Database name must start with ce1_ and be dedicated to this test
+
+tests/test_controlled_external.py:19: Failed
+__ ERROR at setup of test_reserved_turns_close_tools_and_bound_format_repair ___
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_reserved_turns_close_tool0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d6e5980>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d6e5980> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+_______ ERROR at setup of test_batched_calls_stop_at_actual_tool_budget ________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_batched_calls_stop_at_act0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d3ec670>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d3ec670> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+_ ERROR at setup of test_repeated_reads_finalize_but_new_ranges_and_waits_do_not _
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_repeated_reads_finalize_b0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e4440>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e4440> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+_ ERROR at setup of test_model_timeout_uses_reserved_budget_and_keeps_unknown_usage _
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_model_timeout_uses_reserv0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e4210>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e4210> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+___ ERROR at setup of test_artifact_api_hash_review_failures_and_save_retry ____
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_artifact_api_hash_review_0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e7b40>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e7b40> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+_ ERROR at setup of test_tool_timeout_leaves_uncertain_operation_and_finalizes _
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_tool_timeout_leaves_uncer0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e5840>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e5840> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+________ ERROR at setup of test_failed_final_format_is_not_an_artifact _________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_failed_final_format_is_no0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e4c10>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e4c10> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+______ ERROR at setup of test_lost_save_response_is_retried_without_model ______
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_lost_save_response_is_ret0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d4e6f10>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d4e6f10> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+__ ERROR at setup of test_revocation_during_finalization_prevents_publication __
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-51/test_revocation_during_finaliz0')
+
+    @pytest.fixture
+    def controlled(tmp_path):
+        url=os.environ.get('CE4_TEST_DATABASE_URL')
+        if not url:pytest.skip('Dedicated CE4 PostgreSQL required')
+>       assert make_url(url).database.startswith('ce4_')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x10d3ec670>('ce4_')
+E        +    where <built-in method startswith of str object at 0x10d3ec670> = 'ce2_ce5_final_regression'.startswith
+E        +      where 'ce2_ce5_final_regression' = postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression.database
+E        +        where postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression = make_url('postgresql+psycopg://chenyouran@127.0.0.1:55462/ce2_ce5_final_regression')
+
+tests/test_controlled_delivery.py:20: AssertionError
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_context_projection.py:120: CE3 dedicated PostgreSQL required
+SKIPPED [1] tests/test_context_projection.py:147: CE3 dedicated PostgreSQL required
+SKIPPED [1] tests/test_context_projection.py:159: CE3 dedicated PostgreSQL required
+SKIPPED [1] tests/test_context_projection.py:236: CE3 dedicated PostgreSQL required
+217 passed, 4 skipped, 15 errors in 83.00s (0:01:22)

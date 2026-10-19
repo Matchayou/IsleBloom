@@ -1,0 +1,49 @@
+"""Real model + real PostgreSQL acceptance. Exit 2 is explicitly NOT RUN."""
+import asyncio
+import json
+import os
+from uuid import uuid4
+
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_execution
+from agent_core.execution.ledger import Ledger
+
+
+async def main():
+    missing = [name for name in ('OPENAI_API_KEY', 'DATABASE_URL') if not os.environ.get(name)]
+    if missing:
+        print(json.dumps({'status': 'not_run', 'missing': missing}))
+        return 2
+    c = f'stage1-real-{uuid4()}'
+    events, states, outputs = [], [], []
+    db = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        service = build_execution(db, OpenAIEngine(), events.append, states.append)
+        first = await service.send(c, 'assistant', '算出 12×8，再让表达专家把结果说成一句中文')
+        outputs.append(first.model_dump(mode='json'))
+    finally:
+        db.close()
+    # Reopen the connection/lifecycle, then continue using only stored history.
+    db = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        ledger = Ledger(db)
+        assert ledger.get(first.run_id).result == first.result
+        assert ledger.events(first.run_id)
+        service = build_execution(db, OpenAIEngine(), events.append, states.append)
+        second = await service.send(c, 'assistant', '刚才结果是多少？')
+        outputs.append(second.model_dump(mode='json'))
+        snapshot = ledger.history(c)
+    finally:
+        db.close()
+    calls = [e.name for e in events if e.phase == 'tool' and e.status == 'started']
+    passed = (all(r.status == 'completed' and '96' in (r.result.output or '') for r in (first, second))
+              and calls == ['multiply', 'delegate'] and snapshot.revision == 2)
+    print(json.dumps({'status': 'passed' if passed else 'failed', 'model': os.environ.get('OPENAI_MODEL', 'gpt-4.1-mini'),
+                      'conversation_id': c, 'states': states, 'outcomes': outputs,
+                      'events': [e.model_dump(mode='json') for e in events]}, ensure_ascii=False, indent=2))
+    return 0 if passed else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(asyncio.run(main()))

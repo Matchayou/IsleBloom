@@ -1,0 +1,39 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_coding_through_broker_receipt_and_save_retry _______________
+
+coding = (<agent_core.coding.workspace.CodingService object at 0x108476450>, <function coding.<locals>.admit at 0x108460720>, P...ar/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-43/test_coding_through_broker_rec0/source'))
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-43/test_coding_through_broker_rec0')
+
+    async def test_coding_through_broker_receipt_and_save_retry(coding,tmp_path):
+        url=os.environ.get('CE5_TEST_DATABASE_URL')
+        if not url:pytest.skip('Fresh CE5 PostgreSQL required')
+        service,admit,_=coding
+        provider=Provider();db=PostgresDatabase(url)
+        try:
+            scopes=build_resources(db,tmp_path/'blobs')
+            research,tasks,_=build_controlled_services(db,scopes,private_root=tmp_path/'private',model_provider=provider,coding=service)
+            root=research.create('CE5 '+uuid4().hex);scope=scopes.current(root.scope_id,'local')
+            scopes._replace(scope,tools=tuple(sorted(CODING_TOOLS)))
+            contract=admit().contract
+            spec=tasks.create(research_id=root.id,kind='coding',user_request='Change a and add new file; test and freeze.',
+                coding=contract,limits=RunLimits(max_turns=10,max_calls=12,timeout_seconds=60))
+            async def finish(kwargs):
+                records=[json.loads(v['output']) for v in kwargs['input'] if v.get('type')=='function_call_output']
+                candidate=next(v for v in reversed(records) if isinstance(v,dict) and v.get('workspace_id') and v.get('commit'))
+                return answer({'report':'Fixed code, approved syntax validation only; awaiting independent review.', 'candidate':candidate})
+            provider.plans.append([call('code_status'),call('write_code',path='a.py',text='ANSWER = 3\n'),
+                call('write_code',path='new.py',text='NEW = True\n'),call('test_code',profile='syntax'),call('freeze_code'),finish])
+            receipt=(await tasks.run(spec.id))['receipt']
+            record=tasks.ledger.get(receipt.run_id)
+>           assert record.result.status=='succeeded',record.result
+E           AssertionError: RunResult(run_id='3231b75e-e780-453d-9d96-a10144ac15e0', status='failed', output=None, usage=Usage(requests=6, input_t... origin='engine', message='Provider request failed (RuntimeError)', retryable=False, cause_id=None), output_repairs=())
+E           assert 'failed' == 'succeeded'
+E             
+E             - succeeded
+E             + failed
+
+tests/test_coding_controlled.py:34: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_coding_controlled.py::test_coding_through_broker_receipt_and_save_retry
+1 failed in 1.86s

@@ -1,0 +1,705 @@
+{
+  "base_url": "http://127.0.0.1:8768",
+  "configured_model": "deepseek-flash",
+  "synthetic_only": true,
+  "passed": true,
+  "checks": [
+    {
+      "binding": {
+        "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+        "node_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+        "command_id": "473e9324-33da-41f9-bca7-e070dfffccb0",
+        "node_revision": 1,
+        "context_snapshot_id": "d15aa124-e986-4ab8-977c-d21c4518be5e",
+        "goal": "真实模型验收 · 问答与资料工具",
+        "instructions": "",
+        "instruction_version": 1,
+        "resource_refs": [],
+        "result_ids": [],
+        "missing": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 60.0,
+          "max_depth": 1,
+          "max_calls": 8
+        },
+        "chat_revision": 1,
+        "evidence_required": false
+      },
+      "run": {
+        "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+        "conversation_id": null,
+        "process_id": "9d130747-6681-4685-8af7-5bf29132f2a6",
+        "request": {
+          "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+          "parent_run_id": null,
+          "agent_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+          "input": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"a8c987af-aa5b-4fa3-b29a-e877e249af6f\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+              }
+            ]
+          },
+          "limits": {
+            "max_turns": 8,
+            "timeout_seconds": 60.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "depth": 0
+        },
+        "expected_revision": 0,
+        "status": "succeeded",
+        "result": {
+          "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+          "status": "succeeded",
+          "output": {
+            "report": "146 乘以 7 等于 1022。",
+            "missing": [],
+            "claims": []
+          },
+          "usage": {
+            "requests": 1,
+            "input_tokens": 1301,
+            "output_tokens": 68,
+            "complete": true
+          },
+          "error": null
+        },
+        "commit_id": "run:7c5773ba-c24f-4c0c-b725-858c91c2224c",
+        "created_at": "2026-10-03T12:15:31.776959Z"
+      },
+      "events": [
+        {
+          "root_run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+          "sequence": 1,
+          "event": {
+            "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "started",
+            "name": null,
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:31.778815Z"
+        },
+        {
+          "root_run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+          "sequence": 2,
+          "event": {
+            "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "completed",
+            "name": null,
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:34.950588Z"
+        }
+      ],
+      "context": {
+        "id": "d15aa124-e986-4ab8-977c-d21c4518be5e",
+        "run_id": "7c5773ba-c24f-4c0c-b725-858c91c2224c",
+        "conversation_id": null,
+        "scope_id": "b1e58229-4250-4f10-a067-da099efe215f",
+        "scope_version": 1,
+        "scope": {
+          "id": "b1e58229-4250-4f10-a067-da099efe215f",
+          "owner": "local",
+          "version": 1,
+          "allowed": [],
+          "grants": [],
+          "inherited": [],
+          "tools": [
+            "read_source",
+            "search_source"
+          ],
+          "max_input_chars": 30000,
+          "max_tool_chars": 20000,
+          "web_urls": [],
+          "enabled": true
+        },
+        "mounts": [],
+        "result_mounts": [],
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"a8c987af-aa5b-4fa3-b29a-e877e249af6f\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "binding": {
+        "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+        "node_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+        "command_id": "32845052-9335-4ddc-8e5c-877b7bf9852c",
+        "node_revision": 3,
+        "context_snapshot_id": "90e43b1f-29e4-4270-bf08-462233b975a5",
+        "goal": "真实模型验收 · 问答与资料工具",
+        "instructions": "",
+        "instruction_version": 1,
+        "resource_refs": [
+          {
+            "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+            "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+            "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+          }
+        ],
+        "result_ids": [],
+        "missing": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 60.0,
+          "max_depth": 1,
+          "max_calls": 8
+        },
+        "chat_revision": 3,
+        "evidence_required": false
+      },
+      "run": {
+        "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+        "conversation_id": null,
+        "process_id": "9d130747-6681-4685-8af7-5bf29132f2a6",
+        "request": {
+          "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "parent_run_id": null,
+          "agent_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+          "input": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"a8c987af-aa5b-4fa3-b29a-e877e249af6f\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}, {\\\"id\\\": \\\"chat-reply:7c5773ba-c24f-4c0c-b725-858c91c2224c\\\", \\\"role\\\": \\\"assistant\\\", \\\"content\\\": \\\"146 乘以 7 等于 1022。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}, {\\\"id\\\": \\\"f449ce3f-84ac-468e-a1ce-8d0ceb12cf51\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"请实际调用 search_source 查询已挂载资料里的 NEBULA_BATCH，再调用 read_source 读取命中片段。请回答 Verification marker 的完整值，以及 Crate A 与 Crate B 的合计数量；给出原文位置和逐字引用。不要猜测标记值。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [{\"ref\": {\"resource_id\": \"b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31\", \"snapshot_id\": \"cdf721dc-8bec-48cf-8803-4fa779adcdae\", \"parse_id\": \"e4df0f3d-b4a7-43a6-9607-3473300d1ddc\"}, \"name\": \"工具验收资料.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31\", \"snapshot_id\": \"cdf721dc-8bec-48cf-8803-4fa779adcdae\", \"parse_id\": \"e4df0f3d-b4a7-43a6-9607-3473300d1ddc\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"Synthetic tool verification fixture. No private data.\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"NEBULA_BATCH\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"Verification marker: VERIFIED-d0fb2b433be6\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"Crate A: 29 units.\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"Crate B: 14 units.\", \"kind\": \"text\"}]}]}"
+              }
+            ]
+          },
+          "limits": {
+            "max_turns": 8,
+            "timeout_seconds": 60.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "depth": 0
+        },
+        "expected_revision": 0,
+        "status": "succeeded",
+        "result": {
+          "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "status": "succeeded",
+          "output": {
+            "report": "## 结果\n\n已按要求实际调用 `search_source`（查询 `NEBULA_BATCH`）与 `read_source`（逐条读取命中片段）。资料：`工具验收资料.txt`（synthetic tool verification fixture，无私有数据）。\n\n### 1. Verification marker 完整值\n\n> **`VERIFIED-d0fb2b433be6`**\n\n- 原文位置：`line:3`\n- 逐字引用：`Verification marker: VERIFIED-d0fb2b433be6`\n- 说明：标记值来自资料原文，非推测；`search_source` 对 `NEBULA_BATCH` 的命中定位在 `line:2`（文本即 `NEBULA_BATCH`）。\n\n### 2. Crate A 与 Crate B 合计数量\n\n| 项目 | 原文位置 | 逐字引用 | 数量 |\n|---|---|---|---|\n| Crate A | `line:4` | `Crate A: 29 units.` | 29 units |\n| Crate B | `line:5` | `Crate B: 14 units.` | 14 units |\n| **合计** | 由上述两行相加 | 29 + 14 | **43 units** |\n\n合计为 43 units（单位与原文一致，均为 units；该合计为对两行数值的自明算术推导）。\n\n### 附注\n\n本分支早前的自包含算术（146 × 7 = 1022）与本次资料查询无关，此处仅就当前指令作答。",
+            "missing": [],
+            "claims": [
+              {
+                "statement": "资料中 NEBULA_BATCH 出现在 line:2，文本即为 “NEBULA_BATCH”。",
+                "citations": [
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:2",
+                    "quote": "NEBULA_BATCH",
+                    "relation": "supports",
+                    "reasoning": "search_source 查询 NEBULA_BATCH 的返回片段定位在 line:2，且该片段文本与查询词一致。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  }
+                ],
+                "missing": []
+              },
+              {
+                "statement": "Verification marker 的完整值为 VERIFIED-d0fb2b433be6。",
+                "citations": [
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:3",
+                    "quote": "Verification marker: VERIFIED-d0fb2b433be6",
+                    "relation": "supports",
+                    "reasoning": "该片段逐字给出标记行的完整取值，标记值直接摘自原文而非推测。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  }
+                ],
+                "missing": []
+              },
+              {
+                "statement": "Crate A 数量为 29 units，Crate B 数量为 14 units。",
+                "citations": [
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:4",
+                    "quote": "Crate A: 29 units.",
+                    "relation": "supports",
+                    "reasoning": "line:4 原文直接给出 Crate A 的数量。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  },
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:5",
+                    "quote": "Crate B: 14 units.",
+                    "relation": "supports",
+                    "reasoning": "line:5 原文直接给出 Crate B 的数量。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  }
+                ],
+                "missing": []
+              },
+              {
+                "statement": "Crate A 与 Crate B 的合计数量为 43 units。",
+                "citations": [
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:4",
+                    "quote": "Crate A: 29 units.",
+                    "relation": "supports",
+                    "reasoning": "合计是被加数之一，29+14=43。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  },
+                  {
+                    "ref": {
+                      "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+                      "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+                      "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+                    },
+                    "location": "line:5",
+                    "quote": "Crate B: 14 units.",
+                    "relation": "supports",
+                    "reasoning": "另一被加数，29+14=43。",
+                    "fields": {
+                      "company": null,
+                      "period": null,
+                      "currency": null,
+                      "unit": null,
+                      "basis": null
+                    }
+                  }
+                ],
+                "missing": []
+              }
+            ]
+          },
+          "usage": {
+            "requests": 3,
+            "input_tokens": 9480,
+            "output_tokens": 2205,
+            "complete": true
+          },
+          "error": null
+        },
+        "commit_id": "run:185a28d0-f3af-4d22-835d-47f61a482e70",
+        "created_at": "2026-10-03T12:15:36.355444Z"
+      },
+      "events": [
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 1,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "started",
+            "name": null,
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:36.358216Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 2,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_00_hz20CkpSlorGn8cHxzuR5133",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "started",
+            "name": "search_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:38.384272Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 3,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_00_hz20CkpSlorGn8cHxzuR5133",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "completed",
+            "name": "search_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:38.387746Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 4,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_01_mgJcq8ebATmymVN0jgaE3557",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "started",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:38.389017Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 5,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_01_mgJcq8ebATmymVN0jgaE3557",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "completed",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:38.392308Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 6,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_00_SN3KHpLzTLKzfeDYKuU64593",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "started",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.515247Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 7,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_00_SN3KHpLzTLKzfeDYKuU64593",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "completed",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.524638Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 8,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_01_4WfpmHU9GIBwe0gZVnNi4123",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "started",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.525674Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 9,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_01_4WfpmHU9GIBwe0gZVnNi4123",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "completed",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.533141Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 10,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_02_gELjBhYrfETJs3coqB684515",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "started",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.534107Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 11,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": "call_02_gELjBhYrfETJs3coqB684515",
+            "child_run_id": null,
+            "phase": "tool",
+            "status": "completed",
+            "name": "read_source",
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:40.540604Z"
+        },
+        {
+          "root_run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+          "sequence": 12,
+          "event": {
+            "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "completed",
+            "name": null,
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:15:46.610874Z"
+        }
+      ],
+      "context": {
+        "id": "90e43b1f-29e4-4270-bf08-462233b975a5",
+        "run_id": "185a28d0-f3af-4d22-835d-47f61a482e70",
+        "conversation_id": null,
+        "scope_id": "b1e58229-4250-4f10-a067-da099efe215f",
+        "scope_version": 3,
+        "scope": {
+          "id": "b1e58229-4250-4f10-a067-da099efe215f",
+          "owner": "local",
+          "version": 3,
+          "allowed": [
+            {
+              "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+              "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+              "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+            }
+          ],
+          "grants": [
+            {
+              "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+              "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+              "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+            }
+          ],
+          "inherited": [],
+          "tools": [
+            "read_source",
+            "search_source"
+          ],
+          "max_input_chars": 30000,
+          "max_tool_chars": 20000,
+          "web_urls": [],
+          "enabled": true
+        },
+        "mounts": [
+          {
+            "scope_id": "b1e58229-4250-4f10-a067-da099efe215f",
+            "scope_version": 3,
+            "ref": {
+              "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+              "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+              "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+            },
+            "mode": "read_only"
+          }
+        ],
+        "result_mounts": [],
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"a8c987af-aa5b-4fa3-b29a-e877e249af6f\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}, {\\\"id\\\": \\\"chat-reply:7c5773ba-c24f-4c0c-b725-858c91c2224c\\\", \\\"role\\\": \\\"assistant\\\", \\\"content\\\": \\\"146 乘以 7 等于 1022。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}, {\\\"id\\\": \\\"f449ce3f-84ac-468e-a1ce-8d0ceb12cf51\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"请实际调用 search_source 查询已挂载资料里的 NEBULA_BATCH，再调用 read_source 读取命中片段。请回答 Verification marker 的完整值，以及 Crate A 与 Crate B 的合计数量；给出原文位置和逐字引用。不要猜测标记值。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [{\"ref\": {\"resource_id\": \"b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31\", \"snapshot_id\": \"cdf721dc-8bec-48cf-8803-4fa779adcdae\", \"parse_id\": \"e4df0f3d-b4a7-43a6-9607-3473300d1ddc\"}, \"name\": \"工具验收资料.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31\", \"snapshot_id\": \"cdf721dc-8bec-48cf-8803-4fa779adcdae\", \"parse_id\": \"e4df0f3d-b4a7-43a6-9607-3473300d1ddc\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"Synthetic tool verification fixture. No private data.\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"NEBULA_BATCH\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"Verification marker: VERIFIED-d0fb2b433be6\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"Crate A: 29 units.\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"Crate B: 14 units.\", \"kind\": \"text\"}]}]}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "research_id": "30aded4a-c561-4ec9-aa74-0da84fddc065",
+  "node_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+  "tool_names": [
+    "search_source",
+    "read_source",
+    "read_source",
+    "read_source",
+    "read_source"
+  ],
+  "expected_marker": "VERIFIED-d0fb2b433be6",
+  "expected_total": 43,
+  "chat": {
+    "chat": {
+      "node_id": "5913cd68-e1a4-487e-a655-6510f8f5de9a",
+      "research_id": "30aded4a-c561-4ec9-aa74-0da84fddc065",
+      "revision": 4,
+      "fork_message_id": null,
+      "fork_source_revision": null,
+      "inherited": [],
+      "messages": [
+        {
+          "id": "a8c987af-aa5b-4fa3-b29a-e877e249af6f",
+          "role": "user",
+          "content": "这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": []
+        },
+        {
+          "id": "chat-reply:7c5773ba-c24f-4c0c-b725-858c91c2224c",
+          "role": "assistant",
+          "content": "146 乘以 7 等于 1022。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": []
+        },
+        {
+          "id": "f449ce3f-84ac-468e-a1ce-8d0ceb12cf51",
+          "role": "user",
+          "content": "请实际调用 search_source 查询已挂载资料里的 NEBULA_BATCH，再调用 read_source 读取命中片段。请回答 Verification marker 的完整值，以及 Crate A 与 Crate B 的合计数量；给出原文位置和逐字引用。不要猜测标记值。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": []
+        },
+        {
+          "id": "chat-reply:185a28d0-f3af-4d22-835d-47f61a482e70",
+          "role": "assistant",
+          "content": "## 结果\n\n已按要求实际调用 `search_source`（查询 `NEBULA_BATCH`）与 `read_source`（逐条读取命中片段）。资料：`工具验收资料.txt`（synthetic tool verification fixture，无私有数据）。\n\n### 1. Verification marker 完整值\n\n> **`VERIFIED-d0fb2b433be6`**\n\n- 原文位置：`line:3`\n- 逐字引用：`Verification marker: VERIFIED-d0fb2b433be6`\n- 说明：标记值来自资料原文，非推测；`search_source` 对 `NEBULA_BATCH` 的命中定位在 `line:2`（文本即 `NEBULA_BATCH`）。\n\n### 2. Crate A 与 Crate B 合计数量\n\n| 项目 | 原文位置 | 逐字引用 | 数量 |\n|---|---|---|---|\n| Crate A | `line:4` | `Crate A: 29 units.` | 29 units |\n| Crate B | `line:5` | `Crate B: 14 units.` | 14 units |\n| **合计** | 由上述两行相加 | 29 + 14 | **43 units** |\n\n合计为 43 units（单位与原文一致，均为 units；该合计为对两行数值的自明算术推导）。\n\n### 附注\n\n本分支早前的自包含算术（146 × 7 = 1022）与本次资料查询无关，此处仅就当前指令作答。",
+          "resource_refs": [
+            {
+              "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+              "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+              "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+            }
+          ],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": []
+        }
+      ]
+    },
+    "upstream_updated": false
+  },
+  "resources": {
+    "scope": {
+      "id": "abe09c17-b0a9-4318-920b-fc11d8f5bf41",
+      "owner": "local",
+      "version": 2,
+      "allowed": [
+        {
+          "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+          "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+          "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+        }
+      ],
+      "grants": [
+        {
+          "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+          "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+          "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+        }
+      ],
+      "inherited": [],
+      "tools": [
+        "read_source"
+      ],
+      "max_input_chars": 30000,
+      "max_tool_chars": 20000,
+      "web_urls": [],
+      "enabled": true
+    },
+    "resources": [
+      {
+        "ref": {
+          "resource_id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+          "snapshot_id": "cdf721dc-8bec-48cf-8803-4fa779adcdae",
+          "parse_id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc"
+        },
+        "resource": {
+          "id": "b1ca40e8-fa79-48e4-b97c-f7dd6d59ee31",
+          "owner": "local",
+          "name": "工具验收资料.txt",
+          "kind": "upload"
+        },
+        "parse": {
+          "id": "e4df0f3d-b4a7-43a6-9607-3473300d1ddc",
+          "status": "ready",
+          "phase": "finished",
+          "fragment_count": 5,
+          "issues": [],
+          "ocr_pages": [],
+          "cached_from": null
+        }
+      }
+    ]
+  }
+}

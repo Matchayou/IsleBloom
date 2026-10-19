@@ -1,0 +1,51 @@
+{
+  "real_model": true,
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "case": "conflicting_create_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "ec8d8e93-06d0-4da2-9b8f-e1c18a590c38",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/conflicting-create/conflicting_create_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 10243,
+        "output_tokens": 934,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [],
+  "passed": true
+}

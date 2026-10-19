@@ -1,0 +1,99 @@
+{
+  "scenario": "cancel",
+  "execution": "controlled_tools",
+  "run_id": "74a0a9ff-f1f1-4145-ab07-59132fac7ed6",
+  "provider_http_statuses": [
+    200
+  ],
+  "cancellation_boundary": "HTTP 200 received; SDK response consumption paused by test hook",
+  "result": {
+    "run_id": "74a0a9ff-f1f1-4145-ab07-59132fac7ed6",
+    "status": "cancelled",
+    "output": null,
+    "usage": {
+      "requests": 1,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "complete": false
+    },
+    "error": {
+      "code": "cancelled",
+      "origin": "engine",
+      "message": "Controlled execution cancelled",
+      "retryable": false,
+      "cause_id": null
+    },
+    "output_repairs": []
+  },
+  "receipt": {
+    "result_id": "task-result:74a0a9ff-f1f1-4145-ab07-59132fac7ed6",
+    "task_id": "bfe23a52-9f7d-438d-9446-9a3d9105a869",
+    "spec_version": 1,
+    "run_id": "74a0a9ff-f1f1-4145-ab07-59132fac7ed6",
+    "context_snapshot_id": "f83bc880-786e-4f97-8b33-2457de7e1625",
+    "model": "deepseek-flash",
+    "route_id": null,
+    "method_version": "synthesize-v2",
+    "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+    "result_ids": [],
+    "resource_refs": [
+      {
+        "resource_id": "33de0942-4e8a-431c-b026-8ef76d9c2c4c",
+        "snapshot_id": "07eac594-2098-4351-8d99-366897f204fb",
+        "parse_id": "2d09c4cd-0f59-48d9-9e86-c151b603db9b"
+      }
+    ],
+    "missing_optional_refs": [],
+    "program_checks": [
+      {
+        "number": 1,
+        "checker": "program",
+        "status": "failed",
+        "evidence": "cancelled",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "program",
+        "status": "failed",
+        "evidence": "cancelled",
+        "reviewer": null
+      }
+    ],
+    "semantic_checks": [
+      {
+        "number": 1,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      }
+    ],
+    "assumptions": [],
+    "conflicts": [],
+    "missing": [],
+    "limitations": [],
+    "follow_up": [],
+    "delivery": "rework",
+    "adoption": "for_discussion",
+    "adoption_reason": null
+  },
+  "checks": {
+    "real_response_observed": true,
+    "unknown_usage_retained": true,
+    "cancel_persisted": true,
+    "late_binding_denied": true,
+    "no_success_output": true,
+    "not_publishable": true,
+    "execution_stopped": true,
+    "writer_released": true
+  },
+  "usage_note": "Cancellation can leave a sent request with unknown provider usage; reservations remain."
+}

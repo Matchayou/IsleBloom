@@ -1,0 +1,63 @@
+import {test,expect} from '@playwright/test';
+
+async function newResearch(page,goal){
+ await page.goto('/');
+ await page.getByLabel('新的研究目标').fill(goal+' '+Date.now());
+ await page.getByRole('button',{name:'创建研究',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'当前分支：主线'})).toBeVisible();
+}
+
+async function send(page,content){
+ await page.getByRole('textbox',{name:'在当前分支继续'}).fill(content);
+ await page.getByRole('button',{name:'发送并续聊'}).click();
+}
+
+test('R3 message cutoff, siblings and explicit transfer adoption',async({page})=>{
+ await newResearch(page,'R3 browser cutoff');
+ await send(page,'BEFORE_R3');
+ await expect(page.locator('.messages .message')).toHaveCount(2);
+ await send(page,'AFTER_SECRET_R3');
+ await expect(page.locator('.messages .message')).toHaveCount(4);
+ await page.getByRole('textbox',{name:'新分支名称'}).fill('方向 A');
+ await page.locator('.messages .message').nth(1).getByRole('button',{name:'从此消息分支'}).click();
+ await expect(page.getByRole('heading',{name:'当前分支：方向 A'})).toBeVisible();
+ await expect(page.locator('.messages')).not.toContainText('AFTER_SECRET_R3');
+ await send(page,'ONLY_A_R3');
+ await expect(page.locator('.messages .message')).toHaveCount(4);
+ await page.locator('.branch-tabs').getByRole('button',{name:'主线'}).click();
+ await page.getByRole('textbox',{name:'新分支名称'}).fill('方向 B');
+ await page.locator('.messages .message').nth(1).getByRole('button',{name:'从此消息分支'}).click();
+ await expect(page.getByRole('heading',{name:'当前分支：方向 B'})).toBeVisible();
+ await expect(page.locator('.messages')).not.toContainText('ONLY_A_R3');
+ await expect(page.locator('.messages')).not.toContainText('AFTER_SECRET_R3');
+ await send(page,'ONLY_B_R3');
+ await expect(page.locator('.messages .message')).toHaveCount(4);
+ await page.locator('.messages .message').last().getByRole('button',{name:'带回主线供讨论'}).click();
+ await page.locator('.branch-tabs').getByRole('button',{name:'主线'}).click();
+ await expect(page.getByText(/来自分支.*供讨论/)).toBeVisible();
+ await page.getByRole('button',{name:'明确采用'}).click();
+ await expect(page.getByText(/来自分支.*已采用/)).toBeVisible();
+ await page.screenshot({path:'../docs/r3-browser-branch.png',fullPage:true});
+ await page.reload();
+ await expect(page.getByRole('heading',{name:'当前分支：主线'})).toBeVisible();
+ await expect(page.getByText(/来自分支.*已采用/)).toBeVisible();
+});
+
+test('R3 two experts share a branch without automatic chat insertion',async({page})=>{
+ await newResearch(page,'R3 browser experts');
+ await send(page,'先讨论专家输入');
+ await expect(page.locator('.messages .message')).toHaveCount(2);
+ await page.getByLabel('上传资料',{exact:true}).setInputFiles({name:'fictional.txt',mimeType:'text/plain',buffer:Buffer.from('Fictional Company 2025 cash flow 100 capex 20 million')});
+ await expect(page.getByRole('checkbox',{name:/fictional.txt ready/})).toBeVisible();
+ await page.getByRole('checkbox',{name:/fictional.txt ready/}).check();
+ await page.getByRole('combobox',{name:'专家类型'}).selectOption('search');
+ await page.getByRole('textbox',{name:'专家任务'}).fill('搜索虚构资料');
+ await page.getByRole('button',{name:'派发专家任务'}).click();
+ await expect(page.locator('.task')).toHaveCount(1);
+ await page.getByRole('combobox',{name:'专家类型'}).selectOption('synthesize');
+ await page.getByRole('textbox',{name:'专家任务'}).fill('综合虚构资料');
+ await page.getByRole('button',{name:'派发专家任务'}).click();
+ await expect(page.locator('.task')).toHaveCount(2);
+ await expect(page.locator('.messages .message')).toHaveCount(2);
+ await page.screenshot({path:'../docs/r3-browser-experts.png',fullPage:true});
+});

@@ -1,0 +1,184 @@
+"""Run the live Stage 6 crash recovery acceptance on the isolated database."""
+import asyncio
+import getpass
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import tempfile
+import time
+from uuid import uuid4
+
+import httpx
+from openai import AsyncOpenAI
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_research, build_resources, build_tasks
+from agent_core.contracts import RunLimits
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DATABASE_URL = 'postgresql+psycopg://chenyouran@127.0.0.1:55444/stage6_release'
+BASE_URL = 'https://api.deepseek.com'
+MODEL = 'deepseek-flash'
+
+
+def until(fn, timeout=300):
+    deadline = time.monotonic() + timeout
+    last = None
+    while time.monotonic() < deadline:
+        try:
+            last = fn()
+            if last:
+                return last
+        except (httpx.ConnectError, httpx.ReadError):
+            pass
+        time.sleep(.25)
+    raise TimeoutError(f'Acceptance state was not reached: {str(last)[:500]}')
+
+
+async def probe(key):
+    client = AsyncOpenAI(api_key=key, base_url=BASE_URL, max_retries=0, timeout=30)
+    try:
+        models = await client.models.list()
+        names = [item.id for item in models.data]
+        if MODEL not in names:
+            raise RuntimeError(f'{MODEL} unavailable; API returned {names}')
+        return names
+    finally:
+        await client.close()
+
+
+def main():
+    key = getpass.getpass('DeepSeek API key: ')
+    if not key:
+        raise ValueError('API key required')
+    names = asyncio.run(probe(key))
+    print('Authenticated; available model IDs:', ', '.join(names), flush=True)
+    temp = Path(tempfile.mkdtemp(prefix='stage6-real-', dir='/private/tmp'))
+    blobs = temp / 'blobs'
+    db = PostgresDatabase(DATABASE_URL)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        root = research.create('Stage 6 live recovery ' + str(uuid4()))
+        scope = scopes.current(root.scope_id, 'local')
+        refs = []
+        for company in ('tesla', 'ford', 'gm'):
+            scope, ref = scopes.ingest(scope,
+                content=(ROOT / 'docs' / 'stage5-packets' / f'{company}-2025.txt').read_bytes(),
+                name=f'{company}-2025.txt', media_type='text/plain')
+            refs.append(ref)
+        tasks = build_tasks(db, scopes, research)
+        specs = [tasks.create(research_id=root.id, kind='search', model=MODEL,
+            user_request=(f'For {company}, report 2025 consolidated net cash provided by '
+                'operating activities, the unit and exact source page/text positions. '
+                'Briefly state the competition or operating risk in the attached '
+                'annual-report excerpt. Do not use facts outside that excerpt.'),
+            required_refs=(ref,), limits=RunLimits(max_turns=16, max_calls=16,
+                timeout_seconds=120))
+            for company, ref in zip(('Tesla', 'Ford', 'GM'), refs)]
+    finally:
+        db.close()
+
+    port = 8950 + int(uuid4().int % 300)
+    base = f'http://127.0.0.1:{port}'
+    job_id = str(uuid4())
+    marker = temp / 'paused'
+    env = dict(os.environ, DATABASE_URL=DATABASE_URL, OPENAI_API_KEY=key,
+        OPENAI_BASE_URL=BASE_URL, OPENAI_MODEL=MODEL,
+        STAGE6_PAUSE_AT='before_call', STAGE6_PAUSE_TASK_ID=specs[1].id,
+        STAGE6_PAUSE_MARKER=str(marker))
+    cmd = [sys.executable, '-m', 'agent_core.research_cli', '--engine', 'openai',
+           '--blobs', str(blobs), 'serve', '--durable', '--port', str(port)]
+    worker_log = (temp / 'worker.log').open('w')
+    proc = None
+    before = after = None
+    killed = None
+    try:
+        proc = subprocess.Popen(cmd, env=env, stdout=worker_log,
+                                stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status',
+              params={'job_id': job_id}, timeout=5).status_code == 404, 60)
+        response = httpx.post(base + '/api/durable_submit',
+            json={'job_id': job_id, 'task_ids': [s.id for s in specs]}, timeout=10)
+        if response.status_code != 202:
+            raise RuntimeError(f'Durable submit failed: {response.status_code} {response.text[:500]}')
+        print('Live job submitted:', job_id, flush=True)
+        until(lambda: marker.exists() or proc.poll() is not None)
+        if not marker.exists():
+            raise RuntimeError(f'Worker exited before second call: {proc.returncode}')
+        before = httpx.get(base + '/api/durable_status',
+                           params={'job_id': job_id}, timeout=10).json()
+        if [len(t['receipts']) for t in before['tasks']] != [1, 0, 0]:
+            raise AssertionError(f'Unexpected pre-crash receipts: {before["tasks"]}')
+        print('First company committed; killing worker before second model call.', flush=True)
+        proc.send_signal(signal.SIGKILL)
+        killed = proc.wait(timeout=10)
+        if killed != -signal.SIGKILL:
+            raise AssertionError(f'Worker exited with {killed}')
+        clean = {k: v for k, v in env.items() if not k.startswith('STAGE6_PAUSE_')}
+        proc = subprocess.Popen(cmd, env=clean, stdout=worker_log,
+                                stderr=subprocess.STDOUT)
+        until(lambda: httpx.get(base + '/api/durable_status',
+              params={'job_id': job_id}, timeout=5).status_code == 200, 60)
+        after = until(lambda: (state if state['status'] in ('SUCCESS', 'ERROR') else None)
+            if (state := httpx.get(base + '/api/durable_status',
+                params={'job_id': job_id}, timeout=10).json()) else None)
+        if after['status'] != 'SUCCESS':
+            raise AssertionError(f'Job did not succeed: {after}')
+        if [len(t['receipts']) for t in after['tasks']] != [1, 1, 1]:
+            raise AssertionError('Job did not produce exactly three receipts')
+        if [len(t['attempts'][t['run_ids'][0]]) for t in after['tasks']] != [1, 2, 1]:
+            raise AssertionError('Unexpected durable attempt counts')
+        if before['tasks'][0]['run_ids'] != after['tasks'][0]['run_ids']:
+            raise AssertionError('First company was rerun')
+        if before['tasks'][1]['run_ids'] != after['tasks'][1]['run_ids']:
+            raise AssertionError('Second company run identity changed')
+        if len(after['summary']['experts']) != 3:
+            raise AssertionError('Missing expert in final summary')
+    finally:
+        if proc and proc.poll() is None:
+            proc.terminate()
+            proc.wait(timeout=10)
+        worker_log.close()
+
+    db = PostgresDatabase(DATABASE_URL)
+    try:
+        scopes = build_resources(db, blobs)
+        research = build_research(db, scopes)
+        tasks = build_tasks(db, scopes, research)
+        outputs = []
+        for company, task in zip(('Tesla', 'Ford', 'GM'), after['tasks']):
+            run_id = task['run_ids'][0]
+            execution = tasks.ledger.get(run_id)
+            receipt = tasks.query('receipt', f'task-result:{run_id}')
+            outputs.append({'company': company, 'run_id': run_id,
+                'result_status': execution.result.status,
+                'error': execution.result.error.model_dump() if execution.result.error else None,
+                'output': execution.result.output, 'usage': execution.result.usage.model_dump(),
+                'delivery': receipt.delivery,
+                'program_checks': [c.model_dump() for c in receipt.program_checks],
+                'semantic_checks': [c.model_dump() for c in receipt.semantic_checks]})
+    finally:
+        db.close()
+    if any(item['result_status'] != 'succeeded' or item['delivery'] != 'pending_review'
+           or any(check['status'] != 'passed' for check in item['program_checks'])
+           for item in outputs):
+        raise AssertionError(f'Expert business results failed: '
+            f'{[(item["company"], item["error"], item["delivery"]) for item in outputs]}')
+    for item, expected in zip(outputs, ('14,747', '21,282', '26,867')):
+        if expected not in item['output']['report']:
+            raise AssertionError(f'{item["company"]} cash flow missing from report')
+    record = {'model': MODEL, 'base_url': BASE_URL, 'job_id': job_id,
+        'worker_exit_code': killed, 'before': before, 'after': after, 'outputs': outputs,
+        'source_packets': [f'docs/stage5-packets/{x}-2025.txt' for x in ('tesla','ford','gm')]}
+    target = ROOT / 'docs' / 'stage6-real-model-recovery.json'
+    target.write_text(json.dumps(record, ensure_ascii=False, indent=2))
+    print('Acceptance passed; evidence:', target, flush=True)
+
+
+if __name__ == '__main__':
+    main()

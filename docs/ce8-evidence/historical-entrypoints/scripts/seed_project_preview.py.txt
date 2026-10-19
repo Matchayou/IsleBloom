@@ -1,0 +1,50 @@
+"""Populate only the isolated Stage 3 preview database with synthetic material."""
+import asyncio
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks, build_projects
+from agent_core.research.chat import ChatService
+from agent_core.contracts import RunResult
+from agent_core.tasks.models import ExpertAnswer
+
+PostgresDatabase.LOCK_PATH=Path('/private/tmp/project3-verify-execution.lock')
+load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+
+class FixtureEngine:
+    async def execute(self, request, spec, tools, invoke):
+        if spec.output_type is None:
+            output='该讨论只解释固定来源和已有结果。若要改变交付，请创建新的任务单版本。'
+        else:
+            output=ExpertAnswer(report='合成示例：A 市场在样本期增长。来源仅为项目内虚构材料。').model_dump(mode='json')
+        return RunResult(run_id=request.run_id,status='succeeded',output=output)
+
+async def main():
+    db=PostgresDatabase(os.environ['TEST_DATABASE_URL'])
+    try:
+        scopes=build_resources(db,Path(os.environ['TEST_BLOBS']))
+        engine=FixtureEngine()
+        research=build_research(db,scopes,engine)
+        tasks=build_tasks(db,scopes,research,engine)
+        projects=build_projects(db,research,tasks)
+        p=projects.project('persistence-a')
+        main=projects.main_task('persistence-main-1')
+        root=research.research(main.research_id)
+        scope=scopes.current(root.scope_id,research.owner)
+        scope,ref=scopes.ingest(scope,content='本资料为虚构样本。A 市场在样本期增长；没有真实公司、金额或个人资料。'.encode(),name='synthetic-market.txt',media_type='text/plain')
+        root_node=research.query('list_nodes',root.id)[0]
+        chat=ChatService(research,tasks)
+        source=chat.send(root_node.id,'分析这个虚构市场',0,message_id='preview-user-1')
+        branch=await chat.branch(root_node.id,source.messages[0].id,'对比风险',source.revision,command_id='preview-branch-1')
+        first=tasks.create(research_id=root.id,node_id=root_node.id,kind='synthesize',user_request='总结虚构市场',required_refs=(ref,),task_id='preview-expert-1')
+        await tasks.run(first.id)
+        await projects.discuss(first.id,'这份结论的来源是什么？',0,message_id='preview-question-1')
+        next_spec=projects.rerun_spec(first.id,1,'补充局限性并重新总结虚构市场')
+        await tasks.run(first.id)
+        tasks.create(research_id=root.id,node_id=root_node.id,parent_task_id=first.id,kind='analyze',user_request='分析样本风险',required_refs=(ref,),task_id='preview-expert-child')
+        projects.arrange(p.id,'node',branch.node_id,0,folder_id='persistence-folder',title='风险讨论分支')
+        print('project-preview: synthetic source, branch, expert discussion, task/result v1 and v2, child expert seeded')
+    finally: db.close()
+
+asyncio.run(main())

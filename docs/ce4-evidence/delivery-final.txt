@@ -1,0 +1,34 @@
+.....F..                                                                 [100%]
+=================================== FAILURES ===================================
+__________ test_tool_timeout_leaves_uncertain_operation_and_finalizes __________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x115ebf920>, <agent_core.context.scopes.ScopeService object...jectService object at 0x115c91b20>, <agent_core.collaboration.service.CollaborationService object at 0x115d39e20>, ...)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x115d39040>
+
+    async def test_tool_timeout_leaves_uncertain_operation_and_finalizes(controlled,monkeypatch):
+        tasks,provider=controlled[3],controlled[-1]
+        spec,_=await task(controlled,max_turns=5,max_calls=5,timeout_seconds=4)
+        from agent_core.controlled.workspace import Workspace
+        from agent_core.contracts import ToolBinding,ToolResult,Value
+        class Args(Value):name:str;text:str
+        async def hang(_):await asyncio.Event().wait()
+        monkeypatch.setattr(Workspace,'bindings',lambda self:(ToolBinding('write_private_note','fixture stalled private write',Args,hang),))
+        provider.plans.append([call('write_private_note',name='draft',text='unknown'),answer({'report':'Tool completion unconfirmed; evidence insufficient.'})])
+        receipt=(await tasks.run(spec.id))['receipt'];result=tasks.ledger.get(receipt.run_id).result
+        assert result.status=='succeeded',result
+        assert 'investigation_timeout' in json.dumps(provider.requests[-1]['input']) and not provider.requests[-1]['tools']
+        from sqlalchemy import select
+        ledger=tasks.engine.ledger
+        with controlled[0].transaction():
+            states=controlled[0].connection.execute(select(ledger.operations.c.status).where(
+                ledger.operations.c.run_id==receipt.run_id,ledger.operations.c.kind=='private')).scalars().all()
+>       assert states==['reserved']
+E       AssertionError: assert ['unconfirmed'] == ['reserved']
+E         
+E         At index 0 diff: 'unconfirmed' != 'reserved'
+E         Use -v to get more diff
+
+tests/test_controlled_delivery.py:144: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_delivery.py::test_tool_timeout_leaves_uncertain_operation_and_finalizes
+1 failed, 7 passed in 8.95s

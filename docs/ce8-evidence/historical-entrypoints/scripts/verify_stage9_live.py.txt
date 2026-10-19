@@ -1,0 +1,118 @@
+"""Live DeepSeek control case for explicit Stage 9 memory application and override.
+
+Reads the authorized key from stdin. Never writes it to an artifact or process argument.
+"""
+import asyncio
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+from agents import set_default_openai_api, set_default_openai_client
+from openai import AsyncOpenAI
+
+from agent_core.adapters.memory_ledger import MemoryDatabase
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.composition import build_resources, build_research, build_tasks
+from agent_core.contracts import RunLimits
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / 'docs/stage9-live.json'
+HEADINGS = re.compile(r'^##\s*(经营现金流|竞争风险)\s*$', re.MULTILINE)
+
+
+async def main():
+    print('READY_FOR_KEY', flush=True)
+    key = sys.stdin.readline().strip()
+    if not key: raise RuntimeError('No key supplied to the test process')
+    os.environ['OPENAI_API_KEY'] = key
+    os.environ['OPENAI_MODEL'] = 'deepseek-flash'
+    client = AsyncOpenAI(api_key=key, base_url='https://api.deepseek.com', max_retries=0, timeout=180)
+    report = {'model':'deepseek-flash','base_url':'https://api.deepseek.com',
+        'protocol':'responses','source':'synthetic company A control fixture',
+        'runs':[],'checks':{},'semantic_review':'Codex control-case review; no human signoff'}
+    db = MemoryDatabase()
+    try:
+        set_default_openai_client(client, use_for_tracing=False)
+        set_default_openai_api('responses')
+        available = [item.id for item in (await client.models.list()).data]
+        if 'deepseek-flash' not in available: raise RuntimeError('deepseek-flash unavailable for this account')
+        print('AUTHENTICATED', flush=True)
+        scopes = build_resources(db, '/private/tmp/stage9-live-blobs')
+        engine = OpenAIEngine()
+        research = build_research(db, scopes, engine)
+        root = research.create('Stage 9 DeepSeek preference control')
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=(
+            '虚构案例公司 A。2025 年经营现金流为 100 百万元，资本开支为 20 百万元。'
+            '竞争风险：新进入者可能压低价格。本资料仅用于 Stage 9 控制验收，'
+            '不代表真实公司事实。').encode(),name='fictional-company-A.txt',media_type='text/plain')
+        tasks = build_tasks(db, scopes, research, engine)
+        memory = tasks.memories.create(kind='preference', content='公司研究先看现金流',
+            source='用户明确保存；Stage 9 真实模型控制案例', research_id=root.id, confirmed=True)
+        report['memory'] = memory.model_dump(mode='json')
+
+        async def execute(label, request, memory_ids):
+            spec = tasks.create(research_id=root.id, kind='synthesize', user_request=request,
+                required_refs=(ref,), model='deepseek-flash', memory_ids=memory_ids,
+                limits=RunLimits(max_turns=4,timeout_seconds=180,max_calls=4))
+            for attempt in (1,2):
+                outcome = await tasks.run(spec.id)
+                record = tasks.ledger.get(outcome['run_id'])
+                snapshot = scopes.repository.snapshot(outcome['run_id'])
+                prepared = json.loads(snapshot.input.messages[0].content)
+                result = record.result
+                value = {'label':label,'attempt':attempt,'task_id':spec.id,'run_id':outcome['run_id'],
+                    'status':result.status if result else record.status,
+                    'error':result.error.model_dump(mode='json') if result and result.error else None,
+                    'delivery':outcome['receipt'].delivery if outcome['receipt'] else None,
+                    'memory_refs':[v.model_dump(mode='json') for v in spec.memory_refs],
+                    'input_memory':prepared.get('approved_memory',[]),
+                    'current_goal':prepared['goal'],
+                    'output':result.output if result else None,
+                    'usage':result.usage.model_dump(mode='json') if result else None}
+                output = value['output'] if isinstance(value['output'],dict) else {}
+                value['headings'] = HEADINGS.findall(output.get('report',''))
+                report['runs'].append(value)
+                OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2).replace(key,'[REDACTED]'))
+                print(f'{label} attempt {attempt}: {value["status"]}',flush=True)
+                if value['status']=='succeeded' or value['error'] is None or value['error']['code']!='model_behavior':
+                    return value
+            return value
+
+        neutral = await execute('selected_preference',
+            '根据获准资料写一份简短报告，仅有两节，标题固定为“## 经营现金流”和“## 竞争风险”。'
+            '覆盖两个方面，按适合的顺序排列。', (memory.id,))
+        override = await execute('current_instruction_override',
+            '本次先看竞争风险，再看现金流。报告仅有两节，顺序严格为“## 竞争风险”然后“## 经营现金流”。'
+            '本次顺序优先于任何历史偏好。', (memory.id,))
+        tasks.memories.delete(memory.id,memory.version)
+        report['memory_deleted'] = memory.id not in {item.id for item in tasks.memories.list(root.id)}
+        deleted = await execute('after_deletion',
+            '报告仅有两节，顺序严格为“## 竞争风险”然后“## 经营现金流”。', ())
+        report['checks'] = {
+            'selected_memory_present_in_input':len(neutral['input_memory'])==1,
+            'selected_memory_applied_cash_flow_first':neutral['headings']==['经营现金流','竞争风险'],
+            'current_instruction_overrides_preference':override['headings']==['竞争风险','经营现金流'],
+            'deleted_memory_absent_from_input':report['memory_deleted'] and not deleted['input_memory'] and not deleted['memory_refs'],
+            'base_research_after_deletion':deleted['headings']==['竞争风险','经营现金流'],
+            'final_runs_succeeded':all(value['status']=='succeeded' and value['delivery']=='pending_review'
+                for value in (neutral,override,deleted)),
+        }
+        report['attempt_count'] = len(report['runs'])
+        report['failed_attempt_count'] = sum(value['status']!='succeeded' for value in report['runs'])
+        OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2).replace(key,'[REDACTED]'))
+        print('CHECKS '+json.dumps(report['checks'],ensure_ascii=False),flush=True)
+        if not all(report['checks'].values()): raise RuntimeError('Live control-case check failed; inspect stage9-live.json')
+    except Exception as exc:
+        report['failure'] = {'type':type(exc).__name__,'message':str(exc).replace(key,'[REDACTED]')}
+        OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2).replace(key,'[REDACTED]'))
+        print('FAILED '+report['failure']['type']+': '+report['failure']['message'],flush=True)
+        raise SystemExit(1) from None
+    finally:
+        db.close()
+        await client.close()
+
+
+if __name__ == '__main__': asyncio.run(main())

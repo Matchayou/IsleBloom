@@ -1,0 +1,104 @@
+{
+  "control": "scripted, not real model or human semantic signoff",
+  "source": "A 2025 CFO 100 capex 20 thousand USD",
+  "before_unit": "million USD",
+  "after_unit": "thousand USD",
+  "feedback": {
+    "id": "7bdf98cb-2dd2-4fe6-8d59-aa9534efcff1",
+    "result_id": "task-result:7e403b22-310e-46c1-b8ea-c495799f9a08",
+    "research_id": "b1a08cce-9ff2-43a3-b5b9-0a370506566d",
+    "task_id": "39c44c28-d1ba-4f6d-815e-2484d18d60a8",
+    "spec_version": 1,
+    "run_id": "7e403b22-310e-46c1-b8ea-c495799f9a08",
+    "expert_id": "expert_extract",
+    "method_version": "extract-v1",
+    "method_digest": "d77013c257182b6d36ba78ded23ed8b3f828d2c6c88962eafd7aaf381c87f519",
+    "model": "gpt-4.1-mini",
+    "route_id": null,
+    "resource_refs": [
+      {
+        "resource_id": "232192bb-8fd8-4272-9c97-45b5043f0fdd",
+        "snapshot_id": "423c0e2d-2030-4a96-afb5-e0d55c8785a0",
+        "parse_id": "d6f08f88-a631-47e8-bb1e-7f8e881e5c93"
+      }
+    ],
+    "kind": "fact_error",
+    "description": "第 4 项单位错误：原文是 thousand USD，回答写为 million USD。",
+    "proposed_correction": "thousand USD",
+    "status": "verified",
+    "attribution": "checker",
+    "finding": "Control fixture source says thousand USD; output says million USD; program item 4 passed presence only",
+    "reviewer": "scripted-control-audit",
+    "acceptance_number": 4
+  },
+  "case": {
+    "id": "7bdf98cb-2dd2-4fe6-8d59-aa9534efcff1",
+    "feedback_id": "7bdf98cb-2dd2-4fe6-8d59-aa9534efcff1",
+    "result_id": "task-result:7e403b22-310e-46c1-b8ea-c495799f9a08",
+    "research_id": "b1a08cce-9ff2-43a3-b5b9-0a370506566d",
+    "task_id": "39c44c28-d1ba-4f6d-815e-2484d18d60a8",
+    "spec_version": 1,
+    "run_id": "7e403b22-310e-46c1-b8ea-c495799f9a08",
+    "expert_id": "expert_extract",
+    "method_version": "extract-v1",
+    "method_digest": "d77013c257182b6d36ba78ded23ed8b3f828d2c6c88962eafd7aaf381c87f519",
+    "model": "gpt-4.1-mini",
+    "route_id": null,
+    "resource_refs": [
+      {
+        "resource_id": "232192bb-8fd8-4272-9c97-45b5043f0fdd",
+        "snapshot_id": "423c0e2d-2030-4a96-afb5-e0d55c8785a0",
+        "parse_id": "d6f08f88-a631-47e8-bb1e-7f8e881e5c93"
+      }
+    ],
+    "split": "development",
+    "dimension": "checker",
+    "input_digest": "838b0d9d78a1b94c987de20dea040da6dd706e8d70ce7fa7f9396af648c28119",
+    "output_digest": "47498042888196c9c9cda4180b7eb6e828f4859fb21981270bf3ca10c3fd6cb8",
+    "label": "Control fixture source says thousand USD; output says million USD; program item 4 passed presence only",
+    "original_assessment": "incorrect",
+    "attribution": "checker",
+    "acceptance_number": 4
+  },
+  "comparison": {
+    "experiment": {
+      "id": "1d5fe78f-6826-4d18-a4ad-7c0b57d08d11",
+      "research_id": "b1a08cce-9ff2-43a3-b5b9-0a370506566d",
+      "split": "development",
+      "dimension": "checker",
+      "case_ids": [
+        "7bdf98cb-2dd2-4fe6-8d59-aa9534efcff1"
+      ],
+      "arms": [
+        "before",
+        "after"
+      ],
+      "candidate_pool": [],
+      "task_split_digest": "c27bee5b7aa0a7767b4143f242cbe2605874ca8314db455f2c0eec7f0cb625e2",
+      "quality_floor": 1.0,
+      "max_total_cost_usd": 0.01,
+      "min_quality_gain": 1.0,
+      "frozen_digest": "08463174813c83aef18f2f11e5f500cbad26f1f7b8ed58386239122c5e1eb10e"
+    },
+    "complete": true,
+    "metrics": {
+      "before": {
+        "scored": 1,
+        "quality": 0.0,
+        "total_cost_usd": 0.0,
+        "cost_basis": "estimated",
+        "total_latency_ms": null
+      },
+      "after": {
+        "scored": 1,
+        "quality": 1.0,
+        "total_cost_usd": 0.0,
+        "cost_basis": "estimated",
+        "total_latency_ms": null
+      }
+    },
+    "verdict": "provisional_estimated_cost",
+    "history_gain": null,
+    "online_history_enabled": false
+  }
+}

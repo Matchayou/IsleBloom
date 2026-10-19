@@ -1,0 +1,507 @@
+{
+  "projection": {
+    "research": {
+      "id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+      "owner": "local",
+      "goal": "通用提示词协作验证",
+      "scope_id": "ec98275e-7988-4e2d-9b8d-a178c9093963",
+      "plans": []
+    },
+    "nodes": [
+      {
+        "node": {
+          "id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+          "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "display_parent_id": null,
+          "goal": "通用提示词协作验证",
+          "allowed_tools": [
+            "read_source",
+            "search_source",
+            "search_web",
+            "fetch_web"
+          ],
+          "instructions": "",
+          "instruction_version": 1,
+          "scope_id": "947dabce-2bda-430e-af13-2794118b8982",
+          "resource_refs": [],
+          "result_ids": [],
+          "selection": "selected",
+          "revision": 3,
+          "active_run_id": null,
+          "current_result_id": "result:5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e",
+          "position": [
+            0.0,
+            0.0
+          ]
+        },
+        "execution_status": "succeeded",
+        "stop_reason": null,
+        "versions": [
+          {
+            "id": "result:e73a96ac-d9a7-4fe0-a5d5-883387cd83b8",
+            "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+            "version": 1,
+            "run_id": "e73a96ac-d9a7-4fe0-a5d5-883387cd83b8",
+            "context_snapshot_id": "4e75b6d2-42d9-400a-8fa8-38f8c46b4162",
+            "instruction_version": 1,
+            "completion": "partial",
+            "missing": [
+              "未找到可委派的专家，无法完成“委派—专家产出—汇总”的协作路径；需先提供可用的专家能力或会话"
+            ],
+            "resource_refs": []
+          },
+          {
+            "id": "result:5cd8313d-962d-4f95-8cae-a2e47836b9cf",
+            "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+            "version": 2,
+            "run_id": "5cd8313d-962d-4f95-8cae-a2e47836b9cf",
+            "context_snapshot_id": "b1f2e5e1-9e54-4054-ae52-5c384f3c1c19",
+            "instruction_version": 1,
+            "completion": "complete",
+            "missing": [],
+            "resource_refs": []
+          },
+          {
+            "id": "result:5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e",
+            "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+            "version": 3,
+            "run_id": "5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e",
+            "context_snapshot_id": "2add8345-154c-44ea-a2e2-3eeb1d3b3f07",
+            "instruction_version": 1,
+            "completion": "complete",
+            "missing": [],
+            "resource_refs": []
+          }
+        ],
+        "upstream_updates": []
+      }
+    ],
+    "display_edges": [],
+    "commands": [
+      {
+        "command": {
+          "command_id": "563ece4d-f129-4177-be4c-22a5e618a539",
+          "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "kind": "chat_reply",
+          "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+          "display_parent_id": null,
+          "expected_revision": 0,
+          "chat_revision": 1,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 900.0,
+            "max_depth": 1,
+            "max_calls": 12
+          },
+          "evidence_required": false
+        },
+        "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+        "run_id": "e73a96ac-d9a7-4fe0-a5d5-883387cd83b8",
+        "status": "completed",
+        "reason": null
+      },
+      {
+        "command": {
+          "command_id": "5890dcbd-2a76-44c2-8b34-a848180be909",
+          "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "kind": "chat_reply",
+          "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+          "display_parent_id": null,
+          "expected_revision": 1,
+          "chat_revision": 3,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 900.0,
+            "max_depth": 1,
+            "max_calls": 12
+          },
+          "evidence_required": false
+        },
+        "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+        "run_id": "5cd8313d-962d-4f95-8cae-a2e47836b9cf",
+        "status": "completed",
+        "reason": null
+      },
+      {
+        "command": {
+          "command_id": "chat-main:8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "kind": "create",
+          "node_id": null,
+          "display_parent_id": null,
+          "expected_revision": null,
+          "chat_revision": null,
+          "goal": "通用提示词协作验证",
+          "allowed_tools": [
+            "read_source",
+            "search_source",
+            "search_web",
+            "fetch_web"
+          ],
+          "instructions": "",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 8,
+            "timeout_seconds": 60.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "evidence_required": false
+        },
+        "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+        "run_id": null,
+        "status": "completed",
+        "reason": null
+      },
+      {
+        "command": {
+          "command_id": "resume:manager:78618b8bba11aa1a081f85b97212d63b155b26d2a31eebaebbcee14fb0d42d1c:1",
+          "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+          "kind": "chat_followup",
+          "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+          "display_parent_id": null,
+          "expected_revision": 2,
+          "chat_revision": 4,
+          "goal": "",
+          "allowed_tools": [
+            "read_source",
+            "search_source"
+          ],
+          "instructions": "本轮专家任务已结束。根据保存的执行结果和相关报告，继续完成用户目标。",
+          "resource_refs": [],
+          "result_ids": [],
+          "missing": [],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "limits": {
+            "max_turns": 12,
+            "timeout_seconds": 180.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "evidence_required": false
+        },
+        "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+        "run_id": "5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e",
+        "status": "completed",
+        "reason": null
+      }
+    ]
+  },
+  "activities": [
+    {
+      "spec": {
+        "id": "57b18e17-7381-5865-ae78-faadb262e3e0",
+        "version": 1,
+        "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+        "expert_session_id": "da6605c3-1363-4a4d-9a88-9f63e207b80d",
+        "context_packet_id": "38f46edd-9968-5d60-bc10-612939ffcb57",
+        "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+        "node_revision": 2,
+        "chat_context": [],
+        "parent_task_id": null,
+        "user_request": "请再试一次，仍由一位专家完成这份三步交接清单，完成后交给你汇总。",
+        "goal": "请为一个小团队设计一份「三步任务交接清单」（task handoff checklist），用于团队成员之间交接任务时使用。三步需分别覆盖：① 交接准备（离手前梳理）；② 交接沟通（同步对齐）；③ 交接收尾（确认与留痕）。每一步给出 3–5 条具体、可执行的动作要点，语言简洁。这是一般性写作任务，无需外部检索，直接产出清单即可。\n交付要求：以结构化清单形式交付：包含三个步骤的标题，以及每一步下的动作要点（用简洁短语或短句）。语言使用中文。不要添加与任务无关的内容，不要引入外部链接或来源。",
+        "kind": "synthesize",
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-v3",
+        "method_digest": "c9e009d72337e1f1fda503b8d4b49ef1f39d84cc9bb8753313e38853210eaae4",
+        "model": "deepseek-flash",
+        "routing_version": null,
+        "route_id": null,
+        "required_refs": [],
+        "optional_refs": [],
+        "required_results": [],
+        "pending_dependency_task_ids": [],
+        "memory_refs": [],
+        "allow_partial_results": false,
+        "required_fields": [],
+        "acceptance": [
+          {
+            "number": 1,
+            "requirement": "必需资料与依赖均获授权",
+            "blocking": true
+          },
+          {
+            "number": 2,
+            "requirement": "按任务目标交付报告",
+            "blocking": true
+          }
+        ],
+        "limits": {
+          "max_turns": 20,
+          "timeout_seconds": 360.0,
+          "max_depth": 1,
+          "max_calls": 24
+        },
+        "evidence_required": false,
+        "coding": null
+      },
+      "route": null,
+      "runs": [
+        {
+          "binding": {
+            "id": "d4eafbb7-47a2-4516-8296-efd229705e13",
+            "task_id": "57b18e17-7381-5865-ae78-faadb262e3e0",
+            "spec_version": 1,
+            "context_snapshot_id": "a39ec681-0a2a-44d5-8e5d-d397363462af",
+            "scope_id": "2f26326e-3395-44fd-bbdc-2cd09c51f68f",
+            "scope_version": 2,
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "synthesize-v3",
+            "method_digest": "c9e009d72337e1f1fda503b8d4b49ef1f39d84cc9bb8753313e38853210eaae4",
+            "result_ids": [],
+            "resource_refs": [],
+            "missing_optional_refs": [],
+            "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+            "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+            "evidence_required": false
+          },
+          "execution_status": "succeeded",
+          "receipt": {
+            "code_candidate": null,
+            "artifact": {
+              "result_id": "task-result:d4eafbb7-47a2-4516-8296-efd229705e13",
+              "sha256": "1c163a7120fa3e8ca4264e6b160fd922483f3ba35be139264293379b231e88f5",
+              "bytes": 2087,
+              "chars": 924,
+              "complete": true,
+              "brief": "# 三步任务交接清单\n\n## 第一步 · 交接准备（离手前梳理）\n- **明确交接范围**：写清任务目标、当前进度、截止时间。\n- **整理关键资料**：文档、文件、账号权限归到一处，标注存放位置。\n- **列风险与卡点**：已知问题、外部依赖方、容易出错的环节。\n- **定标准与验收**：说清「做到什么算完成」。\n- **指定接收人与备份人**：明确主责接收人及临时替补。\n\n## 第二步 · 交接沟通（同步对齐）\n- **逐条过一遍**：当面或线上按清单口头说明，不留跳项。\n- **讲清优先级与时间点**：先做什么、什么时候要什么。\n- **请对方复述**：让接收人复述关键点，当场纠偏。\n- **明确接口与联系人**：谁对接外部、遇问题找谁。\n- **约定沟通节奏**：多久同步一次、用哪个渠道。\n\n## 第三步 · 交接收尾（确认与留痕）\n- **书面确认**：接收人回复「已接收并理解」。\n- **归档留痕**：交接清单与记录存入团队共享位置。\n- **更新任务状态**：在看板/系统中改负责人与进度。\n- **设过渡缓冲期**：留一段并行期，随时答疑。\n- **复盘后关闭**：确认无遗留事项后正式关闭交接。",
+              "brief_truncated": false
+            },
+            "result_id": "task-result:d4eafbb7-47a2-4516-8296-efd229705e13",
+            "task_id": "57b18e17-7381-5865-ae78-faadb262e3e0",
+            "spec_version": 1,
+            "run_id": "d4eafbb7-47a2-4516-8296-efd229705e13",
+            "context_snapshot_id": "a39ec681-0a2a-44d5-8e5d-d397363462af",
+            "model": "deepseek-flash",
+            "route_id": null,
+            "method_version": "synthesize-v3",
+            "method_digest": "c9e009d72337e1f1fda503b8d4b49ef1f39d84cc9bb8753313e38853210eaae4",
+            "result_ids": [],
+            "resource_refs": [],
+            "missing_optional_refs": [],
+            "program_checks": [
+              {
+                "number": 1,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Run output and fixed input identity checked",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "program",
+                "status": "passed",
+                "evidence": "Report present",
+                "reviewer": null
+              }
+            ],
+            "semantic_checks": [
+              {
+                "number": 1,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              },
+              {
+                "number": 2,
+                "checker": "semantic",
+                "status": "pending",
+                "evidence": "Independent review required",
+                "reviewer": null
+              }
+            ],
+            "assumptions": [
+              "任务为通用小团队场景，未限定行业或工具，故动作要点采用通用表述。",
+              "「5 条」为每一步的说明粒度，接收方可根据实际裁剪至 3–4 条。"
+            ],
+            "conflicts": [],
+            "missing": [],
+            "limitations": [
+              "为一般性写作任务，未引用任何外部来源；如需贴合特定团队（如研发/运营）可进一步定制动作要点。"
+            ],
+            "follow_up": [],
+            "delivery": "pending_review",
+            "adoption": "for_discussion",
+            "adoption_reason": null
+          },
+          "artifact": {
+            "result_id": "task-result:d4eafbb7-47a2-4516-8296-efd229705e13",
+            "sha256": "1c163a7120fa3e8ca4264e6b160fd922483f3ba35be139264293379b231e88f5",
+            "bytes": 2087,
+            "chars": 924,
+            "complete": true,
+            "brief": "# 三步任务交接清单\n\n## 第一步 · 交接准备（离手前梳理）\n- **明确交接范围**：写清任务目标、当前进度、截止时间。\n- **整理关键资料**：文档、文件、账号权限归到一处，标注存放位置。\n- **列风险与卡点**：已知问题、外部依赖方、容易出错的环节。\n- **定标准与验收**：说清「做到什么算完成」。\n- **指定接收人与备份人**：明确主责接收人及临时替补。\n\n## 第二步 · 交接沟通（同步对齐）\n- **逐条过一遍**：当面或线上按清单口头说明，不留跳项。\n- **讲清优先级与时间点**：先做什么、什么时候要什么。\n- **请对方复述**：让接收人复述关键点，当场纠偏。\n- **明确接口与联系人**：谁对接外部、遇问题找谁。\n- **约定沟通节奏**：多久同步一次、用哪个渠道。\n\n## 第三步 · 交接收尾（确认与留痕）\n- **书面确认**：接收人回复「已接收并理解」。\n- **归档留痕**：交接清单与记录存入团队共享位置。\n- **更新任务状态**：在看板/系统中改负责人与进度。\n- **设过渡缓冲期**：留一段并行期，随时答疑。\n- **复盘后关闭**：确认无遗留事项后正式关闭交接。",
+            "brief_truncated": false
+          },
+          "execution_phase": {
+            "phase": "delivered",
+            "reason": "validated_output",
+            "transitions": [
+              "researching",
+              "finalizing",
+              "delivered"
+            ],
+            "finalization_reason": "model_completed"
+          },
+          "usage": {
+            "requests": 3,
+            "input_tokens": 11039,
+            "output_tokens": 1609,
+            "complete": true
+          },
+          "output_repairs": [
+            {
+              "raw_output": "```json\n{\n  \"report\": \"# 三步任务交接清单\\n\\n## 第一步 · 交接准备（离手前梳理）\\n- **明确交接范围**：写清任务目标、当前进度、截止时间。\\n- **整理关键资料**：文档、文件、账号权限归到一处，标注存放位置。\\n- **列风险与卡点**：已知问题、外部依赖方、容易出错的环节。\\n- **定标准与验收**：说清「做到什么算完成」。\\n- **指定接收人与备份人**：明确主责接收人及临时替补。\\n\\n## 第二步 · 交接沟通（同步对齐）\\n- **逐条过一遍**：当面或线上按清单口头说明，不留跳项。\\n- **讲清优先级与时间点**：先做什么、什么时候要什么。\\n- **请对方复述**：让接收人复述关键点，当场纠偏。\\n- **明确接口与联系人**：谁对接外部、遇问题找谁。\\n- **约定沟通节奏**：多长同步一次、用哪个渠道。\\n\\n## 第三步 · 交接收尾（确认与留痕）\\n- **书面确认**：接收人回复「已接收并理解」。\\n- **归档留痕**：交接清单与记录存入团队共享位置。\\n- **更新任务状态**：在看板/系统中改负责人与进度。\\n- **设过渡缓冲期**：留一段并行期，随时答疑。\\n- **复盘后关闭**：确认无遗留事项后正式关闭交接。\",\n  \"fields\": {},\n  \"sources\": {},\n  \"assumptions\": [\n    \"任务为通用小团队场景，未限定行业或工具，故动作要点采用通用表述。\",\n    \"「5 条」为每一步的说明粒度，接收方可根据实际裁剪至 3–4 条。\"\n  ],\n  \"conflicts\": [],\n  \"missing\": [],\n  \"limitations\": [\n    \"为一般性写作任务，未引用任何外部来源；如需贴合特定团队（如研发/运营）可进一步定制动作要点。\"\n  ],\n  \"follow_up\": [],\n  \"self_checks\": {\n    \"格式合规\": \"包含三个步骤标题，每步 5 条动作要点，均以简洁短语/短句呈现。\",\n    \"语言\": \"全文中文。\",\n    \"无外部内容\": \"未添加无关内容，未引入外部链接或来源。\",\n    \"任务完成\": \"已按「离手前梳理 / 同步对齐 / 确认与留痕」三步覆盖，可直接使用。\"\n  }\n}\n```",
+              "issues": [
+                {
+                  "loc": [],
+                  "msg": "Invalid JSON: expected value at line 1 column 1",
+                  "type": "json_invalid"
+                }
+              ]
+            }
+          ],
+          "error": null,
+          "started_at": "2026-10-11T09:40:56.127897+08:00",
+          "access": "available"
+        }
+      ],
+      "job_status": "SUCCESS",
+      "dependencies": [],
+      "messages": [],
+      "information_requests": [],
+      "dispatch_status": "completed"
+    }
+  ],
+  "chat": {
+    "chat": {
+      "node_id": "65f4b0c6-9004-40c2-940a-b9aa420c3287",
+      "research_id": "8e36646f-2c6d-432c-8e45-9969d7aa40b0",
+      "revision": 5,
+      "fork_message_id": null,
+      "fork_source_revision": null,
+      "inherited": [],
+      "messages": [
+        {
+          "id": "dcb8db25-5d9e-4c36-9b47-52e406a008fa",
+          "role": "user",
+          "content": "请委派一位专家，为小团队设计一份三步任务交接清单，完成后由你汇总。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": null
+        },
+        {
+          "id": "chat-reply:e73a96ac-d9a7-4fe0-a5d5-883387cd83b8",
+          "role": "assistant",
+          "content": "由于当前任务环境中没有可用的专家（find_experts 按多种查询与能力类型检索均无结果），我无法完成“委派专家”这一步，因此改为直接完成任务目标，并在此说明替代处理方式。\n\n---\n\n## 三步任务交接清单（小团队适用）\n\n**第 1 步 · 交接准备（离手前梳理）**\n\n- 用一段话写清任务目标与当前进度（完成度百分比），列明“已完成 / 未完成”事项。\n- 标注当前阻塞点与依赖项，以及关键决策及其原因。\n- 汇总接手人需要的资料位置：文件、链接、账号与访问权限、相关联系人和代码/文档版本。\n\n**第 2 步 · 交接沟通（同步对齐）**\n\n- 当面或线上交接，接手人复述理解，确认无歧义、无遗漏。\n- 明确接手后的“第一步行动”与优先级排序，而不是只给一堆待办。\n- 约定验收标准、截止时间与最终责任人，避免“接了但没人负责”的模糊地带。\n\n**第 3 步 · 交接收尾（确认与留痕）**\n\n- 双方共同确认交接内容，并把结果落到书面或协作工具（任务看板 / 文档）留痕。\n- 更新任务状态与交接人、交接时间，让第三人也能看明白现状。\n- 设定后续检查点或跟进机制，并留一个交接人可回访的联系渠道。\n\n---\n\n**执行说明**：本次未能按原始要求走“委派—专家产出—汇总”的协作路径，原因是没有匹配到任何可委派的专家会话或能力。我直接产出了这份清单并汇总如上。若你希望走严格的协作验证流程，需要先在该任务下注册/提供可用的专家能力或会话，我再按“委派 → 收报告 → 汇总”的链路重新执行。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": "e73a96ac-d9a7-4fe0-a5d5-883387cd83b8"
+        },
+        {
+          "id": "1f671876-ec8d-47a9-b288-3184c73384a3",
+          "role": "user",
+          "content": "请再试一次，仍由一位专家完成这份三步交接清单，完成后交给你汇总。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": null
+        },
+        {
+          "id": "chat-reply:5cd8313d-962d-4f95-8cae-a2e47836b9cf",
+          "role": "assistant",
+          "content": "## 三步任务交接清单（小团队适用）\n\n**第 1 步 · 交接准备（离手前梳理）**\n\n- 用一段话写清任务目标与当前进度（完成度百分比），列明“已完成 / 未完成”事项。\n- 标注当前阻塞点与依赖项，以及关键决策及其原因。\n- 汇总接手人需要的资料位置：文件、链接、账号与访问权限、相关联系人和代码/文档版本。\n\n**第 2 步 · 交接沟通（同步对齐）**\n\n- 当面或线上交接，接手人复述理解，确认无歧义、无遗漏。\n- 明确接手后的“第一步行动”与优先级排序，而不是只给一堆待办。\n- 约定验收标准、截止时间与最终责任人，避免“接了但没人负责”的模糊地带。\n\n**第 3 步 · 交接收尾（确认与留痕）**\n\n- 双方共同确认交接内容，并把结果落到书面或协作工具（任务看板 / 文档）留痕。\n- 更新任务状态与交接人、交接时间，让第三人也能看明白现状。\n- 设定后续检查点或跟进机制，并留一个交接人可回访的联系渠道。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": "5cd8313d-962d-4f95-8cae-a2e47836b9cf"
+        },
+        {
+          "id": "chat-reply:5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e",
+          "role": "assistant",
+          "content": "以下是专家完成、由我汇总后的三步任务交接清单（小团队适用）。专家已按「离手前梳理 → 同步对齐 → 确认与留痕」三步交付，可直接使用。\n\n## 三步任务交接清单\n\n### 第一步 · 交接准备（离手前梳理）\n- **明确交接范围**：写清任务目标、当前进度、截止时间。\n- **整理关键资料**：文档、文件、账号权限归到一处，标注存放位置。\n- **列风险与卡点**：已知问题、外部依赖方、容易出错的环节。\n- **定标准与验收**：说清「做到什么算完成」。\n- **指定接收人与备份人**：明确主责接收人及临时替补。\n\n### 第二步 · 交接沟通（同步对齐）\n- **逐条过一遍**：当面或线上按清单口头说明，不留跳项。\n- **讲清优先级与时间点**：先做什么、什么时候要什么。\n- **请对方复述**：让接收人复述关键点，当场纠偏。\n- **明确接口与联系人**：谁对接外部、遇问题找谁。\n- **约定沟通节奏**：多久同步一次、用哪个渠道。\n\n### 第三步 · 交接收尾（确认与留痕）\n- **书面确认**：接收人回复「已接收并理解」。\n- **归档留痕**：交接清单与记录存入团队共享位置。\n- **更新任务状态**：在看板/系统中改负责人与进度。\n- **设过渡缓冲期**：留一段并行期，随时答疑。\n- **复盘后关闭**：确认无遗留事项后正式关闭交接。\n\n---\n\n**说明（来自专家）**：本清单按通用小团队场景编写，未限定行业或工具；每一步 5 条是说明粒度，可按实际裁剪至 3–4 条。这是一般性写作任务，未引用外部来源；若需贴合研发/运营等特定团队，可进一步定制动作要点。",
+          "resource_refs": [],
+          "result_ids": [],
+          "assumptions": [],
+          "limitations": [],
+          "sender": null,
+          "sender_session_id": null,
+          "source_session_id": null,
+          "reply_to": null,
+          "task_id": null,
+          "spec_version": null,
+          "run_id": "5e2345a7-2d6a-4f53-b86c-6e1926eb9a3e"
+        }
+      ]
+    },
+    "upstream_updated": false
+  }
+}

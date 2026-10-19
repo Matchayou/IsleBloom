@@ -1,0 +1,336 @@
+Traceback (most recent call last):
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 126, in diagnosed
+    try: return await original_execute(self, *args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 60, in execute
+    assert request.input.messages[-1].content.endswith('identify missing basis')
+AssertionError: assert False
+ +  where False = <built-in method endswith of str object at 0x14198fa00>('identify missing basis')
+ +    where <built-in method endswith of str object at 0x14198fa00> = '{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier consultation directories desc...on.","self_checks":{},"sources":{}},"result_id":"task-result:dc2dccd2-94c8-4f80-bb3f-235f28602992","spec_version":1}]}'.endswith
+ +      where '{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier consultation directories desc...on.","self_checks":{},"sources":{}},"result_id":"task-result:dc2dccd2-94c8-4f80-bb3f-235f28602992","spec_version":1}]}' = Message(role='user', content='{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier ...n.","self_checks":{},"sources":{}},"result_id":"task-result:dc2dccd2-94c8-4f80-bb3f-235f28602992","spec_version":1}]}').content
+Traceback (most recent call last):
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 126, in diagnosed
+    try: return await original_execute(self, *args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 98, in execute
+    assert 'investigate denominator' in question['answer']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+FTraceback (most recent call last):
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 126, in diagnosed
+    try: return await original_execute(self, *args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 60, in execute
+    assert request.input.messages[-1].content.endswith('identify missing basis')
+AssertionError: assert False
+ +  where False = <built-in method endswith of str object at 0x141995c00>('identify missing basis')
+ +    where <built-in method endswith of str object at 0x141995c00> = '{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier consultation directories desc...on.","self_checks":{},"sources":{}},"result_id":"task-result:626f0151-c79b-4080-bde9-54847bb9bd48","spec_version":1}]}'.endswith
+ +      where '{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier consultation directories desc...on.","self_checks":{},"sources":{}},"result_id":"task-result:626f0151-c79b-4080-bde9-54847bb9bd48","spec_version":1}]}' = Message(role='user', content='{"current_instruction":"A: identify missing basis","history":[],"history_rule":"Earlier ...n.","self_checks":{},"sources":{}},"result_id":"task-result:626f0151-c79b-4080-bde9-54847bb9bd48","spec_version":1}]}').content
+Traceback (most recent call last):
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 126, in diagnosed
+    try: return await original_execute(self, *args)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chenyouran/Documents/ChatGPT/New project 2/tests/test_disagreement_followup.py", line 98, in execute
+    assert 'investigate denominator' in question['answer']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable
+F
+=================================== FAILURES ===================================
+________ test_two_sided_investigation_returns_to_original_experts[True] ________
+
+workspace = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x102e3ad20>, <agent_core.context.scopes.ScopeService obj...e.ProjectService object at 0x1033d5f10>, <agent_core.collaboration.service.CollaborationService object at 0x103823020>)
+b_available = True
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('b_available', [True, False])
+    async def test_two_sided_investigation_returns_to_original_experts(workspace, b_available):
+        _, _, research, tasks, projects, collaboration = workspace
+        node, ref, _ = await seeded(workspace)
+        tasks.engine = ScriptedEngine(lambda request: ([], {
+            'report': 'Preliminary finding; denominator and method need investigation.',
+            'fields': {}, 'sources': {}, 'assumptions': [], 'conflicts': [],
+            'missing': ['Comparable denominator and method'], 'limitations': [],
+            'follow_up': [], 'self_checks': {}, 'claims': []}))
+        originals = []
+        for side, expert in [('A', 'expert_search'), ('B', 'expert_synthesize')]:
+            intent = collaboration.delegate_task(command_id=f'original-{side}',
+                node_id=node.id, expert_id=expert, task_instruction=f'Review side {side}',
+                delivery_requirements='Identify missing calculation basis', resource_refs=(ref,))
+            receipt = (await collaboration.execute(intent.command_id))['receipts'][0]
+            originals.append((side, intent, receipt, tasks.ledger.get(receipt.run_id)))
+    
+        searched, fetched, supplemental = [], [], []
+    
+        class Provider:
+            async def search(self, query):
+                assert query in ('A calculation basis', 'B calculation basis')
+                side = query[0]
+                searched.append(side)
+                if side == 'B' and not b_available:
+                    return ()
+                return (Discovery(query=query, title=f'{side} calculation table',
+                    url=f'https://example.org/{side}', summary='Discovery only; read body.'),)
+    
+            async def fetch(self, target):
+                side = target.rsplit('/', 1)[1]
+                fetched.append(side)
+                return FetchedSource(url=target, actual_url=target, media_type='text/plain',
+                    content=f'Synthetic fixture {side}: matched quarter, same stores, no adjustment; 16 of 100.'.encode())
+    
+        class Engine:
+            async def execute(self, request, agent, tools, invoke):
+                def result(output):
+                    return RunResult(run_id=request.run_id, status='succeeded', output=output)
+    
+                if request.agent_id in ('expert_search', 'expert_synthesize') and not tools:
+                    # Ordinary questions only discuss fixed or attached material.
+                    assert not tools
+                    side = 'A' if request.agent_id == 'expert_search' else 'B'
+                    assert request.input.messages[-1].content.endswith('identify missing basis')
+                    return result(f'{side}: investigate denominator and adjustment method.')
+    
+                if request.agent_id in ('expert_search', 'expert_synthesize'):
+                    assert {'search_web', 'fetch_web'} <= {tool.name for tool in tools}
+                    payload = request.input.messages[0].content
+                    side = 'A' if 'Investigate side A' in payload else 'B'
+                    found = (await invoke('search_web', f'search-{side}',
+                        {'query': f'{side} calculation basis'})).value
+                    claims, missing = [], []
+                    if found.get('results'):
+                        body = (await invoke('fetch_web', f'fetch-{side}',
+                            {'ref': found['results'][0]['ref']})).value
+                        fragment = body['fragments'][0]
+                        report = f'{side}: new saved source says 16 of 100 with matching basis.'
+                        claims = [{'statement': report, 'citations': [{
+                            'ref': body['ref'], 'location': fragment['location'],
+                            'quote': f'Synthetic fixture {side}: matched quarter, same stores, no adjustment; 16 of 100.',
+                            'relation': 'supports', 'reasoning': 'Exact calculation basis in saved fixture.'}]}]
+                    else:
+                        report = 'No source body found for B; unresolved.'
+                        missing = ['No source body found for B']
+                        claims = [{'statement': 'B calculation basis remains unknown', 'missing': missing}]
+                    return result({'report': report, 'assumptions': [], 'conflicts': [],
+                        'missing': missing, 'limitations': ['Controlled synthetic fixture'],
+                        'follow_up': [], 'claims': claims})
+    
+                if 'delegate_task' in {t.name for t in tools}:
+                    catalog = (await invoke('find_experts', 'catalog', {})).value
+                    assert all({'search_web', 'fetch_web'} <= set(e['tools'])
+                        for e in catalog['experts'] if e['expert_id'] in ('expert_search', 'expert_synthesize'))
+                    await invoke('read_context', 'original-reports',
+                        {'result_ids': [r.result_id for _, _, r, _ in originals]})
+                    for side, intent, _, _ in originals:
+                        question = (await invoke('send_agent_message', f'question-{side}', {
+                            'task_id': intent.task_id, 'session_id': intent.session_id,
+                            'kind': 'question', 'requires_reply': True,
+                            'content': f'{side}: identify missing basis'})).value
+                        assert 'investigate denominator' in question['answer']
+                        followup = (await invoke('delegate_task', f'investigate-{side}', {
+                            'session_id': intent.session_id,
+                            'task_instruction': f'Investigate side {side}: denominator and adjustment method.',
+                            'delivery_requirements': 'Search, fetch body, report changed conclusion or unresolved gap.',
+                            'resource_refs': [ref.model_dump(mode='json')]})).value
+                        assert followup['status'] == 'accepted'
+                        assert followup['session_id'] == intent.session_id
+                        supplemental.append({'side': side, **followup})
+                    return result({'report': 'Both investigations accepted; results pending.', 'missing': [], 'claims': []})
+                assert {t.name for t in tools} <= {'read_context', 'read_source', 'search_source', 'get_task_status'}
+                for supplement in supplemental:
+                    receipt = collaboration.status(collaboration.query('intent_for_task', supplement['task_id']).command_id)['receipts'][0]
+                    supplement['result_id'] = receipt.result_id
+                reports = (await invoke('read_context', 'new-reports',
+                    {'result_ids': [s['result_id'] for s in supplemental]})).value['results']
+                for report in reports:
+                    if report['resource_refs']:
+                        bodies = (await invoke('read_context', 'body-' + report['result_id'],
+                            {'resource_refs': report['resource_refs']})).value
+                        assert bodies['sources']
+                return result({'report': 'Both now use 16 of 100; preliminary agreement.' if b_available
+                    else 'A now has calculation evidence; B remains unknown after search.',
+                    'missing': ['Independent review'] if b_available else ['B calculation basis', 'Independent review'],
+                    'claims': []})
+    
+        original_execute = Engine.execute
+        async def diagnosed(self, *args):
+            try: return await original_execute(self, *args)
+            except BaseException:
+                import traceback
+                traceback.print_exc()
+                raise
+        Engine.execute = diagnosed
+        engine = Engine()
+        tasks.engine = engine
+        research.engine = engine
+        research.search.provider = Provider()
+        research.execution_factory = lambda bindings, service: __import__(
+            'agent_core.app.research_execution', fromlist=['build_execution']).build_execution(
+                research.database, research.scopes, bindings, service, engine)
+        chat_service = ChatService(research, tasks)
+        chat = chat_service.read(node.id)
+        chat = chat_service.send(node.id, 'Investigate both gaps, return evidence to A and B, then reassess.',
+            chat.revision, 'investigate-both')
+        record = await research.submit(NodeCommand(command_id='manager-investigation',
+            research_id=node.research_id, node_id=node.id, kind='chat_reply',
+            expected_revision=research.node(node.id).revision, chat_revision=chat.revision,
+            limits=RunLimits(max_turns=12, timeout_seconds=180, max_calls=12)))
+        assert record.status == 'completed'
+        run = research.ledger.get(record.run_id)
+>       assert run.status == 'succeeded', run.result
+E       AssertionError: RunResult(run_id='edc92e6b-9387-420d-a5d1-506de3357d18', status='failed', output=None, usage=Usage(requests=0, input_t...engine_failed', origin='engine', message='Engine execution failed', retryable=False, cause_id=None), output_repairs=())
+E       assert 'failed' == 'succeeded'
+E         
+E         - succeeded
+E         + failed
+
+tests/test_disagreement_followup.py:149: AssertionError
+_______ test_two_sided_investigation_returns_to_original_experts[False] ________
+
+workspace = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x10717eff0>, <agent_core.context.scopes.ScopeService obj...e.ProjectService object at 0x10717e990>, <agent_core.collaboration.service.CollaborationService object at 0x10717ec00>)
+b_available = False
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize('b_available', [True, False])
+    async def test_two_sided_investigation_returns_to_original_experts(workspace, b_available):
+        _, _, research, tasks, projects, collaboration = workspace
+        node, ref, _ = await seeded(workspace)
+        tasks.engine = ScriptedEngine(lambda request: ([], {
+            'report': 'Preliminary finding; denominator and method need investigation.',
+            'fields': {}, 'sources': {}, 'assumptions': [], 'conflicts': [],
+            'missing': ['Comparable denominator and method'], 'limitations': [],
+            'follow_up': [], 'self_checks': {}, 'claims': []}))
+        originals = []
+        for side, expert in [('A', 'expert_search'), ('B', 'expert_synthesize')]:
+            intent = collaboration.delegate_task(command_id=f'original-{side}',
+                node_id=node.id, expert_id=expert, task_instruction=f'Review side {side}',
+                delivery_requirements='Identify missing calculation basis', resource_refs=(ref,))
+            receipt = (await collaboration.execute(intent.command_id))['receipts'][0]
+            originals.append((side, intent, receipt, tasks.ledger.get(receipt.run_id)))
+    
+        searched, fetched, supplemental = [], [], []
+    
+        class Provider:
+            async def search(self, query):
+                assert query in ('A calculation basis', 'B calculation basis')
+                side = query[0]
+                searched.append(side)
+                if side == 'B' and not b_available:
+                    return ()
+                return (Discovery(query=query, title=f'{side} calculation table',
+                    url=f'https://example.org/{side}', summary='Discovery only; read body.'),)
+    
+            async def fetch(self, target):
+                side = target.rsplit('/', 1)[1]
+                fetched.append(side)
+                return FetchedSource(url=target, actual_url=target, media_type='text/plain',
+                    content=f'Synthetic fixture {side}: matched quarter, same stores, no adjustment; 16 of 100.'.encode())
+    
+        class Engine:
+            async def execute(self, request, agent, tools, invoke):
+                def result(output):
+                    return RunResult(run_id=request.run_id, status='succeeded', output=output)
+    
+                if request.agent_id in ('expert_search', 'expert_synthesize') and not tools:
+                    # Ordinary questions only discuss fixed or attached material.
+                    assert not tools
+                    side = 'A' if request.agent_id == 'expert_search' else 'B'
+                    assert request.input.messages[-1].content.endswith('identify missing basis')
+                    return result(f'{side}: investigate denominator and adjustment method.')
+    
+                if request.agent_id in ('expert_search', 'expert_synthesize'):
+                    assert {'search_web', 'fetch_web'} <= {tool.name for tool in tools}
+                    payload = request.input.messages[0].content
+                    side = 'A' if 'Investigate side A' in payload else 'B'
+                    found = (await invoke('search_web', f'search-{side}',
+                        {'query': f'{side} calculation basis'})).value
+                    claims, missing = [], []
+                    if found.get('results'):
+                        body = (await invoke('fetch_web', f'fetch-{side}',
+                            {'ref': found['results'][0]['ref']})).value
+                        fragment = body['fragments'][0]
+                        report = f'{side}: new saved source says 16 of 100 with matching basis.'
+                        claims = [{'statement': report, 'citations': [{
+                            'ref': body['ref'], 'location': fragment['location'],
+                            'quote': f'Synthetic fixture {side}: matched quarter, same stores, no adjustment; 16 of 100.',
+                            'relation': 'supports', 'reasoning': 'Exact calculation basis in saved fixture.'}]}]
+                    else:
+                        report = 'No source body found for B; unresolved.'
+                        missing = ['No source body found for B']
+                        claims = [{'statement': 'B calculation basis remains unknown', 'missing': missing}]
+                    return result({'report': report, 'assumptions': [], 'conflicts': [],
+                        'missing': missing, 'limitations': ['Controlled synthetic fixture'],
+                        'follow_up': [], 'claims': claims})
+    
+                if 'delegate_task' in {t.name for t in tools}:
+                    catalog = (await invoke('find_experts', 'catalog', {})).value
+                    assert all({'search_web', 'fetch_web'} <= set(e['tools'])
+                        for e in catalog['experts'] if e['expert_id'] in ('expert_search', 'expert_synthesize'))
+                    await invoke('read_context', 'original-reports',
+                        {'result_ids': [r.result_id for _, _, r, _ in originals]})
+                    for side, intent, _, _ in originals:
+                        question = (await invoke('send_agent_message', f'question-{side}', {
+                            'task_id': intent.task_id, 'session_id': intent.session_id,
+                            'kind': 'question', 'requires_reply': True,
+                            'content': f'{side}: identify missing basis'})).value
+                        assert 'investigate denominator' in question['answer']
+                        followup = (await invoke('delegate_task', f'investigate-{side}', {
+                            'session_id': intent.session_id,
+                            'task_instruction': f'Investigate side {side}: denominator and adjustment method.',
+                            'delivery_requirements': 'Search, fetch body, report changed conclusion or unresolved gap.',
+                            'resource_refs': [ref.model_dump(mode='json')]})).value
+                        assert followup['status'] == 'accepted'
+                        assert followup['session_id'] == intent.session_id
+                        supplemental.append({'side': side, **followup})
+                    return result({'report': 'Both investigations accepted; results pending.', 'missing': [], 'claims': []})
+                assert {t.name for t in tools} <= {'read_context', 'read_source', 'search_source', 'get_task_status'}
+                for supplement in supplemental:
+                    receipt = collaboration.status(collaboration.query('intent_for_task', supplement['task_id']).command_id)['receipts'][0]
+                    supplement['result_id'] = receipt.result_id
+                reports = (await invoke('read_context', 'new-reports',
+                    {'result_ids': [s['result_id'] for s in supplemental]})).value['results']
+                for report in reports:
+                    if report['resource_refs']:
+                        bodies = (await invoke('read_context', 'body-' + report['result_id'],
+                            {'resource_refs': report['resource_refs']})).value
+                        assert bodies['sources']
+                return result({'report': 'Both now use 16 of 100; preliminary agreement.' if b_available
+                    else 'A now has calculation evidence; B remains unknown after search.',
+                    'missing': ['Independent review'] if b_available else ['B calculation basis', 'Independent review'],
+                    'claims': []})
+    
+        original_execute = Engine.execute
+        async def diagnosed(self, *args):
+            try: return await original_execute(self, *args)
+            except BaseException:
+                import traceback
+                traceback.print_exc()
+                raise
+        Engine.execute = diagnosed
+        engine = Engine()
+        tasks.engine = engine
+        research.engine = engine
+        research.search.provider = Provider()
+        research.execution_factory = lambda bindings, service: __import__(
+            'agent_core.app.research_execution', fromlist=['build_execution']).build_execution(
+                research.database, research.scopes, bindings, service, engine)
+        chat_service = ChatService(research, tasks)
+        chat = chat_service.read(node.id)
+        chat = chat_service.send(node.id, 'Investigate both gaps, return evidence to A and B, then reassess.',
+            chat.revision, 'investigate-both')
+        record = await research.submit(NodeCommand(command_id='manager-investigation',
+            research_id=node.research_id, node_id=node.id, kind='chat_reply',
+            expected_revision=research.node(node.id).revision, chat_revision=chat.revision,
+            limits=RunLimits(max_turns=12, timeout_seconds=180, max_calls=12)))
+        assert record.status == 'completed'
+        run = research.ledger.get(record.run_id)
+>       assert run.status == 'succeeded', run.result
+E       AssertionError: RunResult(run_id='7392dc86-e1ea-4149-b3cb-630243928b46', status='failed', output=None, usage=Usage(requests=0, input_t...engine_failed', origin='engine', message='Engine execution failed', retryable=False, cause_id=None), output_repairs=())
+E       assert 'failed' == 'succeeded'
+E         
+E         - succeeded
+E         + failed
+
+tests/test_disagreement_followup.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_disagreement_followup.py::test_two_sided_investigation_returns_to_original_experts[True]
+FAILED tests/test_disagreement_followup.py::test_two_sided_investigation_returns_to_original_experts[False]
+2 failed in 1.62s

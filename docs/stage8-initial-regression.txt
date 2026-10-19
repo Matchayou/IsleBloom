@@ -1,0 +1,54 @@
+................................................F....................... [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 65%]
+........................................................................ [ 87%]
+........................................                                 [100%]
+=================================== FAILURES ===================================
+________ test_same_frozen_task_input_direct_and_durable_business_state _________
+
+tmp_path = PosixPath('/private/var/folders/0r/rhgkwp1j59q0sj1g8xwn95800000gn/T/pytest-of-chenyouran/pytest-211/test_same_frozen_task_input_di0')
+
+    @pytest.mark.asyncio
+    async def test_same_frozen_task_input_direct_and_durable_business_state(tmp_path):
+        script = lambda request: ([], {'report':'same verified output'})
+        db = MemoryDatabase()
+        scopes = build_resources(db, tmp_path / 'blobs')
+        research = build_research(db, scopes)
+        root = research.create('Same fixed input')
+        scope = scopes.current(root.scope_id, 'local')
+        _, ref = scopes.ingest(scope, content=b'A 2025 CFO 100 capex 20 million USD',
+            name='report.txt', media_type='text/plain')
+        tasks = build_tasks(db, scopes, research, ScriptedEngine(script))
+        spec = tasks.create(research_id=root.id, kind='search', user_request='Find A',
+            required_refs=(ref,))
+        binding, snapshot, run_scope = tasks._prepare(spec)
+        clone = deepcopy(db)
+        clone_scopes = ScopeService(deepcopy(scopes.repository), deepcopy(scopes.resources))
+        clone_research = build_research(clone, clone_scopes)
+        clone_tasks = TaskService(clone, clone_scopes, clone_research, ScriptedEngine(script))
+        await tasks._execute_binding(spec, binding, snapshot, run_scope)
+>       await clone_tasks.run_durable(spec.id, spec.version, binding.id)
+
+tests/test_durable.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/agent_core/tasks/service.py:457: in run_durable
+    await self._execute_binding(spec, binding, snapshot, scope, durable=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.tasks.service.TaskService object at 0x15c645790>
+spec = TaskSpec(id='ac7e485b-4cfc-4e97-a1e5-13d14b0e109f', version=1, research_id='e078d8a6-c079-453d-856c-6a4180c9c02c', nod... blocking=True)), limits=RunLimits(max_turns=8, timeout_seconds=60, max_depth=1, max_calls=8), evidence_required=False)
+binding = TaskRun(id='0c3794dc-2c34-4bbb-bf43-252f70c48b98', task_id='ac7e485b-4cfc-4e97-a1e5-13d14b0e109f', spec_version=1, con...), missing_optional_refs=(), research_id='e078d8a6-c079-453d-856c-6a4180c9c02c', node_id=None, evidence_required=False)
+snapshot = ContextSnapshot(id='5a6a5b67-f6d9-44d4-9b47-8713f3ff236e', run_id='0c3794dc-2c34-4bbb-bf43-252f70c48b98', conversation...e6f9dc"}, "fragments": [{"location": "line:1", "text": "A 2025 CFO 100 capex 20 million USD", "kind": "text"}]}]}'),)))
+scope = RunScope(id='39fa145f-6215-4a4e-9300-41e3741a215b', owner='local', version=3, allowed=(ResourceRef(resource_id='6e439c...ted=(), tools=('read_source', 'search_source'), max_input_chars=30000, max_tool_chars=20000, web_urls=(), enabled=True)
+
+    async def _execute_binding(self, spec, binding, snapshot, scope, *, durable=False):
+        task_id = spec.id
+        self._validate_durable_access(spec, binding)
+>       asset, body = self.methods.method(spec.expert_id,binding.method_version)
+                      ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'method'
+
+src/agent_core/tasks/service.py:477: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_durable.py::test_same_frozen_task_input_direct_and_durable_business_state
+1 failed, 327 passed in 95.25s (0:01:35)

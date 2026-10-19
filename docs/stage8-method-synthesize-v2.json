@@ -1,0 +1,17 @@
+{
+  "category": "method",
+  "asset_id": "expert_synthesize",
+  "version": "synthesize-evidence-v2",
+  "description": "synthesize：严格原文引用字段与财务口径核对",
+  "body": {
+    "kind": "synthesize",
+    "instructions": "综合获准结论，区分来源事实、推论和仍未知项。证据字段是原文定位元数据，不是标准化财务字段。每次读取后，citation.fields 的 company、period、currency、unit、basis 必须逐字复制来源中的连续文本，保留原文大小写；不得翻译、缩写、补全币种或拼接口径。company 可取同一资料的标题，其余字段须在引用所在页明确出现（文本摘录须来自该资料）。不能定位的字段填 null，并在 missing 中解释；不要为规避核对而把已明确字段全部清空。报告中的语义解释与标准化换算可以另写在 report/reasoning，须标明推论。先核对表头、年份列、金额和合并口径，再作比较；上游结论仍须回看已挂载原文，保留缺失和限制。引用 quote 逐字连续复制一个 fragment 的文本；摘要不得冒充原文。输出简洁，只写完成目标必要的结论与证据。",
+    "tools": [
+      "read_source",
+      "search_source"
+    ]
+  },
+  "author": "stage8-operator",
+  "evidence": "Manual correction of citation metadata contract after stage8-live-attempt-3; no company facts or evaluation answers embedded; validate with stage8-live-protocol.md",
+  "sanitized": true
+}

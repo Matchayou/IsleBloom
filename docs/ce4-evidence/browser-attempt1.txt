@@ -1,0 +1,42 @@
+/Users/chenyouran/Documents/ChatGPT/New project 2/frontend/node_modules/playwright/lib/matchers/expect.js:221
+        return matcher.call(target, ...args);
+                       ^
+
+Je [Error]: expect(locator).toBeVisible() failed
+
+Locator:  getByRole('heading', { name: 'CE4 浏览器验收', exact: true })
+Expected: visible
+Received: <element(s) not found>
+Timeout:  5000ms
+
+Call log:
+[2m  - Expect "to.be.visible" with timeout 5000ms[22m
+[2m  - waiting for getByRole('heading', { name: 'CE4 浏览器验收', exact: true })[22m
+
+    at Proxy.<anonymous> (/Users/chenyouran/Documents/ChatGPT/New project 2/frontend/node_modules/playwright/lib/matchers/expect.js:221:24)
+    at open (file:///Users/chenyouran/Documents/ChatGPT/New%20project%202/frontend/scripts/verify-ce4-ui.mjs:12:72)
+    at async file:///Users/chenyouran/Documents/ChatGPT/New%20project%202/frontend/scripts/verify-ce4-ui.mjs:26:2 {
+  matcherResult: {
+    message: 'expect(locator).toBeVisible() failed\n' +
+      '\n' +
+      "Locator:  getByRole('heading', { name: 'CE4 浏览器验收', exact: true })\n" +
+      'Expected: visible\n' +
+      'Received: <element(s) not found>\n' +
+      'Timeout:  5000ms\n' +
+      '\n' +
+      'Call log:\n' +
+      '\x1B[2m  - Expect "to.be.visible" with timeout 5000ms\x1B[22m\n' +
+      "\x1B[2m  - waiting for getByRole('heading', { name: 'CE4 浏览器验收', exact: true })\x1B[22m\n",
+    pass: false,
+    actual: '<element(s) not found>',
+    name: 'toBeVisible',
+    expected: 'visible',
+    log: [
+      '  - Expect "to.be.visible" with timeout 5000ms',
+      "  - waiting for getByRole('heading', { name: 'CE4 浏览器验收', exact: true })"
+    ],
+    timeout: 5000
+  }
+}
+
+Node.js v25.6.1

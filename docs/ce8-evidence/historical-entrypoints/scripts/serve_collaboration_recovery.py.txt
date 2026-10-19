@@ -1,0 +1,15 @@
+"""Isolated scripted DBOS worker used by the collaboration crash test."""
+import os
+import sys
+from pathlib import Path
+
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.research_cli import main
+
+
+os.environ['DATABASE_URL'] = 'postgresql+psycopg://chenyouran@127.0.0.1:55449/collaboration_recovery_verify'
+PostgresDatabase.LOCK_PATH = Path('/private/tmp/collaboration-recovery-worker.lock')
+sys.argv = ['agent-research', '--storage', 'postgres', '--engine', 'scripted',
+    '--blobs', '/private/tmp/collaboration-recovery-verify-blobs',
+    'serve', '--port', '8784', '--durable']
+main()

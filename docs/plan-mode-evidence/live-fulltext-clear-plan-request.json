@@ -1,0 +1,7 @@
+{
+  "research_id": "0991d43b-1698-4ef4-91f1-1f7852d804c4",
+  "origin_node_id": "62b70f4e-70a8-40df-93d9-25d354f8bc4d",
+  "expected_chat_revision": 0,
+  "request_id": "fulltext-clear-contract-20261012-v1",
+  "request": "生成中文三步串行研究计划：比较 ReAct 与先规划、人工确认、再执行在研究型智能体中的机制、失败模式、适用场景、成本构成与可靠性。\n仅使用原始论文和官方工程文档，优先复用 sources 内已有 ReAct arXiv PDF/HTML 全文、OpenAI Agents SDK HITL、LangChain HITL 正文。规划时仅看现有元数据，不需调用工具；执行时用 search_source 定向核对已有正文，只有必需证据确实缺失才联网。不安排代码、实验或发布。\n步骤1：核对2-3份关键一级资料，交付标题/URL/全文状态/带位置短摘录的资料清单。步骤2依赖1：交付机制、失败模式、适用场景、成本构成的定性对照表和来源依据。步骤3依赖1和2：交付最终对照表、约1500字有来源报告、工作流建议及研究局限；仅read_source/search_source，不联网。\n本研究不要求实测费用、token数量、时延或失败率。缺少实测数字是允许的limitations，必须明确未知，不阻止已完成的定性报告；不能编造数字。分类标签可以是明确注明的分析归纳，不要求来源逐字使用同一中文标签。结构化blocking_missing只列真正未完成的必需交付，例如没有要求的对照表或没有可核对来源，不能把允许未知放进去。每步交付标准写清这一点，避免笼统要求未知标missing。\n冻结预算policy：max_runs=3,max_concurrency=1,timeout_seconds=1800,max_total_tokens=120000,completion=fail_fast。每步limits：max_turns=8,max_calls=6,timeout_seconds=600,max_depth=1。工具仅read_source/search_source/search_web/fetch_web，第三步仅read_source/search_source。研究目标明确，无必需问题，questions=[]。analysis不超过300字，步骤指令不超过300字。现在只生成计划，等待确认后由受控执行链执行。"
+}

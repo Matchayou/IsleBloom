@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-05",
+  "versions": {
+    "openai-agents": "0.22.2",
+    "dbos": "3.0.0",
+    "openai": "3.16.2",
+    "sqlalchemy": "2.0.43",
+    "psycopg": "3.2.10"
+  },
+  "commands": [
+    {
+      "argv": [
+        "docker",
+        "version"
+      ],
+      "exit_code": 1,
+      "stdout": "Client:\n Version:           29.0.1\n API version:       1.52\n Go version:        go1.25.4\n Git commit:        eedd969\n Built:             Fri Nov 14 16:16:57 2025\n OS/Arch:           darwin/arm64\n Context:           desktop-linux\n",
+      "stderr": "failed to connect to the docker API at unix:///Users/chenyouran/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /Users/chenyouran/.docker/run/docker.sock: connect: no such file or directory\n"
+    },
+    {
+      "argv": [
+        "docker",
+        "info",
+        "--format",
+        "{{json .SecurityOptions}}"
+      ],
+      "exit_code": 1,
+      "stdout": "null\n",
+      "stderr": "failed to connect to the docker API at unix:///Users/chenyouran/.docker/run/docker.sock; check if the path is correct and if the daemon is running: dial unix /Users/chenyouran/.docker/run/docker.sock: connect: no such file or directory\n"
+    }
+  ],
+  "sdk_public_api": {
+    "Model.get_response": "(self, system_instructions: 'str | None', input: 'str | list[TResponseInputItem]', model_settings: 'ModelSettings', tools: 'list[Tool]', output_schema: 'AgentOutputSchemaBase | None', handoffs: 'list[Handoff]', tracing: 'ModelTracing', *, previous_response_id: 'str | None', conversation_id: 'str | None', prompt: 'ResponsePromptParam | None') -> 'ModelResponse'",
+    "ModelResponse": "(output: 'list[TResponseOutputItem]', usage: 'Usage', response_id: 'str | None', request_id: 'str | None' = None, raw_usage: 'dict[str, Any] | None' = None) -> None",
+    "call_model_input_filter_available": true
+  },
+  "constraints": {
+    "historical_services_modified": false,
+    "historical_databases_used": false,
+    "paid_model_calls": 0,
+    "host_lock_bypassed": false
+  },
+  "desktop_launch_attempts": [
+    {
+      "command": "open -a Docker",
+      "exit_code": 1,
+      "error": "Unable to find application named Docker"
+    },
+    {
+      "command": "open /Applications/Docker.app",
+      "exit_code": 1,
+      "error": "NSOSStatusErrorDomain Code=-10827 kLSNoExecutableErr: The executable is missing"
+    },
+    {
+      "command": "open /Applications/Docker.app/Contents/MacOS/Docker Desktop.app",
+      "exit_code": 1,
+      "error": "NSOSStatusErrorDomain Code=-10827 kLSNoExecutableErr: The executable is missing"
+    }
+  ]
+}

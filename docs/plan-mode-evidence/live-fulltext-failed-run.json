@@ -1,0 +1,352 @@
+{
+  "binding": {
+    "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+    "node_id": "f9cb0f13-cbf6-4755-b5d4-7b81afb97f5a",
+    "command_id": "plan:9754c091-f9ca-4157-a168-c8792b89fd47:f9cb0f13-cbf6-4755-b5d4-7b81afb97f5a",
+    "node_revision": 1,
+    "context_snapshot_id": "01a44051-ebf8-40ae-901a-54775666fb44",
+    "goal": "核对 ReAct 原论文的机制证据并补齐一个官方\"先规划-人工确认-再执行\"来源，锁定 2-3 份可引用的关键一级资料。",
+    "instructions": "先对已提供的 arXiv abs 页(2210.03629)用 search_source 定位摘要，确认其仅为摘要页而非全文。再用 search_web/fetch_web 定位 ReAct 全文或其他一级资料，核对 thought/action/observation 交替机制细节。另检索一个官方人工确认/计划执行来源（官方文档或一级工程资料）。逐份记录出处与是否获取全文，不编造性能或费用数字。\n交付要求：2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。",
+    "instruction_version": 2,
+    "resource_refs": [
+      {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      }
+    ],
+    "result_ids": [],
+    "missing": [],
+    "limits": {
+      "max_turns": 8,
+      "timeout_seconds": 600.0,
+      "max_depth": 1,
+      "max_calls": 6
+    },
+    "chat_revision": null,
+    "notification_ids": [],
+    "evidence_required": false
+  },
+  "run": {
+    "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+    "conversation_id": null,
+    "process_id": "d217e274-f090-4232-aaba-3e6e081b97b6",
+    "request": {
+      "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+      "agent_id": "f9cb0f13-cbf6-4755-b5d4-7b81afb97f5a",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"content\":[{\"fragments\":[{\"kind\":\"text\",\"location\":\"#/texts/0\",\"text\":\"Computer Science > Computation and Language\"},{\"kind\":\"text\",\"location\":\"#/texts/1\",\"text\":\"[Submitted on 6 Oct 2022 (v1), last revised 10 Mar 2023 (this version, v3)]\"},{\"kind\":\"text\",\"location\":\"#/texts/2\",\"text\":\"Title:ReAct: Synergizing Reasoning and Acting in Language Models\"},{\"kind\":\"text\",\"location\":\"#/texts/3\",\"text\":\"Authors:Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, Yuan Cao\"},{\"kind\":\"text\",\"location\":\"#/texts/4\",\"text\":\"View a PDF of the paper titled ReAct: Synergizing Reasoning and Acting in Language Models, by Shunyu Yao and 6 other authors\"},{\"kind\":\"text\",\"location\":\"#/texts/5\",\"text\":\"View PDF HTML (experimental)\"},{\"kind\":\"text\",\"location\":\"#/texts/6\",\"text\":\"Abstract:While large language models (LLMs) have demonstrated impressive capabilities across tasks in language understanding and interactive decision making, their abilities for reasoning (e.g. chain-of-thought prompting) and acting (e.g. action plan generation) have primarily been studied as separate topics. In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with external sources, such as knowledge bases or environments, to gather additional information. We apply our approach, named ReAct, to a diverse set of language and decision making tasks and demonstrate its effectiveness over state-of-the-art baselines, as well as improved human interpretability and trustworthiness over methods without reasoning or acting components. Concretely, on question answering (HotpotQA) and fact verification (Fever), ReAct overcomes issues of hallucination and error propagation prevalent in chain-of-thought reasoning by interacting with a simple Wikipedia API, and generates human-like task-solving trajectories that are more interpretable than baselines without reasoning traces. On two interactive decision making benchmarks (ALFWorld and WebShop), ReAct outperforms imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, while being prompted with only one or two in-context examples. Project site with code: this https URL\"},{\"kind\":\"table\",\"location\":\"#/tables/0\",\"text\":\"|           |                                                                                                   |\\n|-----------|---------------------------------------------------------------------------------------------------|\\n| Comments: | v3 is the ICLR camera ready version with some typos fixed. Project site with code: this https URL |\\n| Subjects: | Computation and Language (cs.CL); Artificial Intelligence (cs.AI); Machine Learning (cs.LG)       |\\n| Cite as:  | arXiv:2210.03629 [cs.CL]                                                                          |\\n|           | (or  arXiv:2210.03629v3 [cs.CL] for this version)                                                 |\\n|           | https://doi.org/10.48550/arXiv.2210.03629 arXiv-issued DOI via DataCite                           |\"},{\"kind\":\"text\",\"location\":\"#/texts/7\",\"text\":\"Submission history\"},{\"kind\":\"text\",\"location\":\"#/texts/8\",\"text\":\"From: Shunyu Yao [view email]\"},{\"kind\":\"text\",\"location\":\"#/texts/9\",\"text\":\"[v1]\"},{\"kind\":\"text\",\"location\":\"#/texts/10\",\"text\":\"Thu, 6 Oct 2022 01:00:32 UTC (538 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/11\",\"text\":\"[v2]\"},{\"kind\":\"text\",\"location\":\"#/texts/12\",\"text\":\"Sun, 27 Nov 2022 22:55:54 UTC (538 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/13\",\"text\":\"[v3]\"},{\"kind\":\"text\",\"location\":\"#/texts/14\",\"text\":\"Fri, 10 Mar 2023 01:00:17 UTC (1,256 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/15\",\"text\":\"Full-text links:\"},{\"kind\":\"text\",\"location\":\"#/texts/16\",\"text\":\"Access Paper:\"},{\"kind\":\"text\",\"location\":\"#/texts/17\",\"text\":\"View a PDF of the paper titled ReAct: Synergizing Reasoning and Acting in Language Models, by Shunyu Yao and 6 other authors\"},{\"kind\":\"text\",\"location\":\"#/texts/18\",\"text\":\"View PDF\"},{\"kind\":\"text\",\"location\":\"#/texts/19\",\"text\":\"HTML (experimental)\"},{\"kind\":\"text\",\"location\":\"#/texts/20\",\"text\":\"TeX Source\"},{\"kind\":\"text\",\"location\":\"#/texts/21\",\"text\":\"view license\"},{\"kind\":\"text\",\"location\":\"#/texts/22\",\"text\":\"Current browse context:\"},{\"kind\":\"text\",\"location\":\"#/texts/23\",\"text\":\"cs.CL\"},{\"kind\":\"text\",\"location\":\"#/texts/24\",\"text\":\"< prev new Change to browse by:\"},{\"kind\":\"text\",\"location\":\"#/texts/25\",\"text\":\"cs\\ncs.AI\\ncs.LG\"},{\"kind\":\"text\",\"location\":\"#/texts/26\",\"text\":\"References & Citations\"},{\"kind\":\"text\",\"location\":\"#/texts/27\",\"text\":\"NASA ADS\"},{\"kind\":\"text\",\"location\":\"#/texts/28\",\"text\":\"Google Scholar\"},{\"kind\":\"text\",\"location\":\"#/texts/29\",\"text\":\"Semantic Scholar\"},{\"kind\":\"text\",\"location\":\"#/texts/30\",\"text\":\"13 blog links\"},{\"kind\":\"text\",\"location\":\"#/texts/31\",\"text\":\"(what is this?)\"},{\"kind\":\"text\",\"location\":\"#/texts/32\",\"text\":\"Loading...\"},{\"kind\":\"text\",\"location\":\"#/texts/33\",\"text\":\"BibTeX formatted citation\"},{\"kind\":\"text\",\"location\":\"#/texts/34\",\"text\":\"Data provided by:\"},{\"kind\":\"text\",\"location\":\"#/texts/35\",\"text\":\"Bookmark\"},{\"kind\":\"text\",\"location\":\"#/texts/36\",\"text\":\"Bibliographic Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/37\",\"text\":\"Bibliographic and Citation Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/38\",\"text\":\"Bibliographic Explorer Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/39\",\"text\":\"Bibliographic Explorer\"},{\"kind\":\"text\",\"location\":\"#/texts/40\",\"text\":\"(What is the Explorer?)\"},{\"kind\":\"text\",\"location\":\"#/texts/41\",\"text\":\"Connected Papers Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/42\",\"text\":\"Connected Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/43\",\"text\":\"(What is Connected Papers?)\"},{\"kind\":\"text\",\"location\":\"#/texts/44\",\"text\":\"Litmaps Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/45\",\"text\":\"Litmaps\"},{\"kind\":\"text\",\"location\":\"#/texts/46\",\"text\":\"(What is Litmaps?)\"},{\"kind\":\"text\",\"location\":\"#/texts/47\",\"text\":\"scite.ai Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/48\",\"text\":\"scite Smart Citations\"},{\"kind\":\"text\",\"location\":\"#/texts/49\",\"text\":\"(What are Smart Citations?)\"},{\"kind\":\"text\",\"location\":\"#/texts/50\",\"text\":\"Code, Data, Media\"},{\"kind\":\"text\",\"location\":\"#/texts/51\",\"text\":\"Code, Data and Media Associated with this Article\"},{\"kind\":\"text\",\"location\":\"#/texts/52\",\"text\":\"alphaXiv Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/53\",\"text\":\"alphaXiv\"},{\"kind\":\"text\",\"location\":\"#/texts/54\",\"text\":\"(What is alphaXiv?)\"},{\"kind\":\"text\",\"location\":\"#/texts/55\",\"text\":\"Links to Code Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/56\",\"text\":\"CatalyzeX Code Finder for Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/57\",\"text\":\"(What is CatalyzeX?)\"},{\"kind\":\"text\",\"location\":\"#/texts/58\",\"text\":\"DagsHub Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/59\",\"text\":\"DagsHub\"},{\"kind\":\"text\",\"location\":\"#/texts/60\",\"text\":\"(What is DagsHub?)\"},{\"kind\":\"text\",\"location\":\"#/texts/61\",\"text\":\"GotitPub Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/62\",\"text\":\"Gotit.pub\"},{\"kind\":\"text\",\"location\":\"#/texts/63\",\"text\":\"(What is GotitPub?)\"},{\"kind\":\"text\",\"location\":\"#/texts/64\",\"text\":\"Huggingface Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/65\",\"text\":\"Hugging Face\"},{\"kind\":\"text\",\"location\":\"#/texts/66\",\"text\":\"(What is Huggingface?)\"},{\"kind\":\"text\",\"location\":\"#/texts/67\",\"text\":\"ScienceCast Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/68\",\"text\":\"ScienceCast\"},{\"kind\":\"text\",\"location\":\"#/texts/69\",\"text\":\"(What is ScienceCast?)\"},{\"kind\":\"text\",\"location\":\"#/texts/70\",\"text\":\"Demos\"},{\"kind\":\"text\",\"location\":\"#/texts/71\",\"text\":\"Demos\"},{\"kind\":\"text\",\"location\":\"#/texts/72\",\"text\":\"Replicate Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/73\",\"text\":\"Replicate\"},{\"kind\":\"text\",\"location\":\"#/texts/74\",\"text\":\"(What is Replicate?)\"},{\"kind\":\"text\",\"location\":\"#/texts/75\",\"text\":\"Spaces Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/76\",\"text\":\"Hugging Face Spaces\"},{\"kind\":\"text\",\"location\":\"#/texts/77\",\"text\":\"(What is Spaces?)\"},{\"kind\":\"text\",\"location\":\"#/texts/78\",\"text\":\"Spaces Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/79\",\"text\":\"TXYZ.AI\"},{\"kind\":\"text\",\"location\":\"#/texts/80\",\"text\":\"(What is TXYZ.AI?)\"},{\"kind\":\"text\",\"location\":\"#/texts/81\",\"text\":\"Related Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/82\",\"text\":\"Recommenders and Search Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/83\",\"text\":\"Link to Influence Flower\"},{\"kind\":\"text\",\"location\":\"#/texts/84\",\"text\":\"Influence Flower\"},{\"kind\":\"text\",\"location\":\"#/texts/85\",\"text\":\"(What are Influence Flowers?)\"},{\"kind\":\"text\",\"location\":\"#/texts/86\",\"text\":\"Core recommender toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/87\",\"text\":\"CORE Recommender\"},{\"kind\":\"text\",\"location\":\"#/texts/88\",\"text\":\"(What is CORE?)\"},{\"kind\":\"text\",\"location\":\"#/texts/89\",\"text\":\"Author\"},{\"kind\":\"text\",\"location\":\"#/texts/90\",\"text\":\"Venue\"},{\"kind\":\"text\",\"location\":\"#/texts/91\",\"text\":\"Institution\"},{\"kind\":\"text\",\"location\":\"#/texts/92\",\"text\":\"Topic\"},{\"kind\":\"text\",\"location\":\"#/texts/93\",\"text\":\"About arXivLabs\"},{\"kind\":\"text\",\"location\":\"#/texts/94\",\"text\":\"arXivLabs: experimental projects with community collaborators\"},{\"kind\":\"text\",\"location\":\"#/texts/95\",\"text\":\"arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.\"},{\"kind\":\"text\",\"location\":\"#/texts/96\",\"text\":\"Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\"},{\"kind\":\"text\",\"location\":\"#/texts/97\",\"text\":\"Have an idea for a project that will add value for arXiv's community?\"},{\"kind\":\"text\",\"location\":\"#/texts/98\",\"text\":\"Learn more about arXivLabs\"},{\"kind\":\"text\",\"location\":\"#/texts/99\",\"text\":\".\"}],\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"}}],\"goal\":\"核对 ReAct 原论文的机制证据并补齐一个官方\\\"先规划-人工确认-再执行\\\"来源，锁定 2-3 份可引用的关键一级资料。\\n用户指令：先对已提供的 arXiv abs 页(2210.03629)用 search_source 定位摘要，确认其仅为摘要页而非全文。再用 search_web/fetch_web 定位 ReAct 全文或其他一级资料，核对 thought/action/observation 交替机制细节。另检索一个官方人工确认/计划执行来源（官方文档或一级工程资料）。逐份记录出处与是否获取全文，不编造性能或费用数字。\\n交付要求：2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。\\n缺失项：\",\"handoff\":{\"approved_by\":\"local\",\"approved_revision\":1,\"instruction\":\"Execute this approved step. Planning-only restrictions in historical requests have been superseded by approval; retain all research constraints.\",\"phase\":\"approved_plan_execution\",\"planning_history_ref\":\"76ac3c3e-b86c-4940-9d0c-38693f999a68\",\"proposal_id\":\"76ac3c3e-b86c-4940-9d0c-38693f999a68\",\"research_constraints\":\"\",\"step_id\":\"f9cb0f13-cbf6-4755-b5d4-7b81afb97f5a\"},\"sources\":[{\"actual_url\":\"https://arxiv.org/abs/2210.03629\",\"fetched_at\":\"2026-10-12T02:45:47.899414+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},\"url\":\"https://arxiv.org/abs/2210.03629\"}]}"
+          }
+        ],
+        "external_context": {},
+        "projection_exclusions": []
+      },
+      "limits": {
+        "max_turns": 8,
+        "timeout_seconds": 600.0,
+        "max_depth": 1,
+        "max_calls": 6
+      },
+      "depth": 1
+    },
+    "expected_revision": 0,
+    "status": "failed",
+    "result": {
+      "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "status": "failed",
+      "output": null,
+      "usage": {
+        "requests": 4,
+        "input_tokens": 45039,
+        "output_tokens": 3569,
+        "complete": true
+      },
+      "error": {
+        "code": "evidence_invalid",
+        "origin": "app",
+        "message": "Citation quote 'This content is not accessible here' does not occur in the saved source",
+        "retryable": false,
+        "cause_id": null
+      },
+      "output_repairs": []
+    },
+    "commit_id": "run:c1d7a358-f513-4da5-afc7-258e3dbec48d",
+    "created_at": "2026-10-12T12:17:34.860566+08:00"
+  },
+  "events": [
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 1,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "started",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:34.874923+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 2,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_00_bF5AkOR0g5e1C3xLuU6f2305",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "search_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:43.764385+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 3,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_00_bF5AkOR0g5e1C3xLuU6f2305",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "search_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:43.853430+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 4,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_01_SVxQwKuh9GDa2wuVTbWg3528",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "search_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:44.042628+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 5,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_01_SVxQwKuh9GDa2wuVTbWg3528",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "search_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:44.068529+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 6,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_02_JjKYjXi63Wr5iGekJYCD5607",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "search_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:44.222627+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 7,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_02_JjKYjXi63Wr5iGekJYCD5607",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "search_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:46.226798+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 8,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_03_MJ5hFmKhL5P7NoTEB0Uf8818",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "search_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:46.416336+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 9,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_03_MJ5hFmKhL5P7NoTEB0Uf8818",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "search_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:50.119016+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 10,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_00_3sVsPBhj93w5IdBBPZzD1338",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "fetch_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:17:56.028652+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 11,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_00_3sVsPBhj93w5IdBBPZzD1338",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "fetch_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:18:03.944402+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 12,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_01_KmX349YZ5hI1L6leRRtL0900",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "fetch_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:18:04.320806+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 13,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": "call_01_KmX349YZ5hI1L6leRRtL0900",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "fetch_web",
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:18:06.703411+08:00"
+    },
+    {
+      "root_run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+      "sequence": 14,
+      "event": {
+        "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+        "parent_run_id": "plan:76ac3c3e-b86c-4940-9d0c-38693f999a68:1:wave:0",
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "completed",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-12T12:18:36.360590+08:00"
+    }
+  ],
+  "context": {
+    "id": "01a44051-ebf8-40ae-901a-54775666fb44",
+    "run_id": "c1d7a358-f513-4da5-afc7-258e3dbec48d",
+    "conversation_id": null,
+    "scope_id": "ed23cace-7d33-4d62-adb4-891d736d3f79",
+    "scope_version": 3,
+    "scope": {
+      "id": "ed23cace-7d33-4d62-adb4-891d736d3f79",
+      "owner": "local",
+      "version": 3,
+      "allowed": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "grants": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        }
+      ],
+      "inherited": [],
+      "tools": [
+        "read_source",
+        "search_source",
+        "search_web",
+        "fetch_web"
+      ],
+      "max_input_chars": 30000,
+      "max_tool_chars": 20000,
+      "web_urls": [],
+      "enabled": true
+    },
+    "mounts": [
+      {
+        "scope_id": "ed23cace-7d33-4d62-adb4-891d736d3f79",
+        "scope_version": 3,
+        "ref": {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        "mode": "read_only"
+      }
+    ],
+    "result_mounts": [],
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "{\"content\":[{\"fragments\":[{\"kind\":\"text\",\"location\":\"#/texts/0\",\"text\":\"Computer Science > Computation and Language\"},{\"kind\":\"text\",\"location\":\"#/texts/1\",\"text\":\"[Submitted on 6 Oct 2022 (v1), last revised 10 Mar 2023 (this version, v3)]\"},{\"kind\":\"text\",\"location\":\"#/texts/2\",\"text\":\"Title:ReAct: Synergizing Reasoning and Acting in Language Models\"},{\"kind\":\"text\",\"location\":\"#/texts/3\",\"text\":\"Authors:Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, Yuan Cao\"},{\"kind\":\"text\",\"location\":\"#/texts/4\",\"text\":\"View a PDF of the paper titled ReAct: Synergizing Reasoning and Acting in Language Models, by Shunyu Yao and 6 other authors\"},{\"kind\":\"text\",\"location\":\"#/texts/5\",\"text\":\"View PDF HTML (experimental)\"},{\"kind\":\"text\",\"location\":\"#/texts/6\",\"text\":\"Abstract:While large language models (LLMs) have demonstrated impressive capabilities across tasks in language understanding and interactive decision making, their abilities for reasoning (e.g. chain-of-thought prompting) and acting (e.g. action plan generation) have primarily been studied as separate topics. In this paper, we explore the use of LLMs to generate both reasoning traces and task-specific actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with external sources, such as knowledge bases or environments, to gather additional information. We apply our approach, named ReAct, to a diverse set of language and decision making tasks and demonstrate its effectiveness over state-of-the-art baselines, as well as improved human interpretability and trustworthiness over methods without reasoning or acting components. Concretely, on question answering (HotpotQA) and fact verification (Fever), ReAct overcomes issues of hallucination and error propagation prevalent in chain-of-thought reasoning by interacting with a simple Wikipedia API, and generates human-like task-solving trajectories that are more interpretable than baselines without reasoning traces. On two interactive decision making benchmarks (ALFWorld and WebShop), ReAct outperforms imitation and reinforcement learning methods by an absolute success rate of 34% and 10% respectively, while being prompted with only one or two in-context examples. Project site with code: this https URL\"},{\"kind\":\"table\",\"location\":\"#/tables/0\",\"text\":\"|           |                                                                                                   |\\n|-----------|---------------------------------------------------------------------------------------------------|\\n| Comments: | v3 is the ICLR camera ready version with some typos fixed. Project site with code: this https URL |\\n| Subjects: | Computation and Language (cs.CL); Artificial Intelligence (cs.AI); Machine Learning (cs.LG)       |\\n| Cite as:  | arXiv:2210.03629 [cs.CL]                                                                          |\\n|           | (or  arXiv:2210.03629v3 [cs.CL] for this version)                                                 |\\n|           | https://doi.org/10.48550/arXiv.2210.03629 arXiv-issued DOI via DataCite                           |\"},{\"kind\":\"text\",\"location\":\"#/texts/7\",\"text\":\"Submission history\"},{\"kind\":\"text\",\"location\":\"#/texts/8\",\"text\":\"From: Shunyu Yao [view email]\"},{\"kind\":\"text\",\"location\":\"#/texts/9\",\"text\":\"[v1]\"},{\"kind\":\"text\",\"location\":\"#/texts/10\",\"text\":\"Thu, 6 Oct 2022 01:00:32 UTC (538 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/11\",\"text\":\"[v2]\"},{\"kind\":\"text\",\"location\":\"#/texts/12\",\"text\":\"Sun, 27 Nov 2022 22:55:54 UTC (538 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/13\",\"text\":\"[v3]\"},{\"kind\":\"text\",\"location\":\"#/texts/14\",\"text\":\"Fri, 10 Mar 2023 01:00:17 UTC (1,256 KB)\"},{\"kind\":\"text\",\"location\":\"#/texts/15\",\"text\":\"Full-text links:\"},{\"kind\":\"text\",\"location\":\"#/texts/16\",\"text\":\"Access Paper:\"},{\"kind\":\"text\",\"location\":\"#/texts/17\",\"text\":\"View a PDF of the paper titled ReAct: Synergizing Reasoning and Acting in Language Models, by Shunyu Yao and 6 other authors\"},{\"kind\":\"text\",\"location\":\"#/texts/18\",\"text\":\"View PDF\"},{\"kind\":\"text\",\"location\":\"#/texts/19\",\"text\":\"HTML (experimental)\"},{\"kind\":\"text\",\"location\":\"#/texts/20\",\"text\":\"TeX Source\"},{\"kind\":\"text\",\"location\":\"#/texts/21\",\"text\":\"view license\"},{\"kind\":\"text\",\"location\":\"#/texts/22\",\"text\":\"Current browse context:\"},{\"kind\":\"text\",\"location\":\"#/texts/23\",\"text\":\"cs.CL\"},{\"kind\":\"text\",\"location\":\"#/texts/24\",\"text\":\"< prev new Change to browse by:\"},{\"kind\":\"text\",\"location\":\"#/texts/25\",\"text\":\"cs\\ncs.AI\\ncs.LG\"},{\"kind\":\"text\",\"location\":\"#/texts/26\",\"text\":\"References & Citations\"},{\"kind\":\"text\",\"location\":\"#/texts/27\",\"text\":\"NASA ADS\"},{\"kind\":\"text\",\"location\":\"#/texts/28\",\"text\":\"Google Scholar\"},{\"kind\":\"text\",\"location\":\"#/texts/29\",\"text\":\"Semantic Scholar\"},{\"kind\":\"text\",\"location\":\"#/texts/30\",\"text\":\"13 blog links\"},{\"kind\":\"text\",\"location\":\"#/texts/31\",\"text\":\"(what is this?)\"},{\"kind\":\"text\",\"location\":\"#/texts/32\",\"text\":\"Loading...\"},{\"kind\":\"text\",\"location\":\"#/texts/33\",\"text\":\"BibTeX formatted citation\"},{\"kind\":\"text\",\"location\":\"#/texts/34\",\"text\":\"Data provided by:\"},{\"kind\":\"text\",\"location\":\"#/texts/35\",\"text\":\"Bookmark\"},{\"kind\":\"text\",\"location\":\"#/texts/36\",\"text\":\"Bibliographic Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/37\",\"text\":\"Bibliographic and Citation Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/38\",\"text\":\"Bibliographic Explorer Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/39\",\"text\":\"Bibliographic Explorer\"},{\"kind\":\"text\",\"location\":\"#/texts/40\",\"text\":\"(What is the Explorer?)\"},{\"kind\":\"text\",\"location\":\"#/texts/41\",\"text\":\"Connected Papers Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/42\",\"text\":\"Connected Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/43\",\"text\":\"(What is Connected Papers?)\"},{\"kind\":\"text\",\"location\":\"#/texts/44\",\"text\":\"Litmaps Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/45\",\"text\":\"Litmaps\"},{\"kind\":\"text\",\"location\":\"#/texts/46\",\"text\":\"(What is Litmaps?)\"},{\"kind\":\"text\",\"location\":\"#/texts/47\",\"text\":\"scite.ai Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/48\",\"text\":\"scite Smart Citations\"},{\"kind\":\"text\",\"location\":\"#/texts/49\",\"text\":\"(What are Smart Citations?)\"},{\"kind\":\"text\",\"location\":\"#/texts/50\",\"text\":\"Code, Data, Media\"},{\"kind\":\"text\",\"location\":\"#/texts/51\",\"text\":\"Code, Data and Media Associated with this Article\"},{\"kind\":\"text\",\"location\":\"#/texts/52\",\"text\":\"alphaXiv Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/53\",\"text\":\"alphaXiv\"},{\"kind\":\"text\",\"location\":\"#/texts/54\",\"text\":\"(What is alphaXiv?)\"},{\"kind\":\"text\",\"location\":\"#/texts/55\",\"text\":\"Links to Code Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/56\",\"text\":\"CatalyzeX Code Finder for Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/57\",\"text\":\"(What is CatalyzeX?)\"},{\"kind\":\"text\",\"location\":\"#/texts/58\",\"text\":\"DagsHub Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/59\",\"text\":\"DagsHub\"},{\"kind\":\"text\",\"location\":\"#/texts/60\",\"text\":\"(What is DagsHub?)\"},{\"kind\":\"text\",\"location\":\"#/texts/61\",\"text\":\"GotitPub Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/62\",\"text\":\"Gotit.pub\"},{\"kind\":\"text\",\"location\":\"#/texts/63\",\"text\":\"(What is GotitPub?)\"},{\"kind\":\"text\",\"location\":\"#/texts/64\",\"text\":\"Huggingface Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/65\",\"text\":\"Hugging Face\"},{\"kind\":\"text\",\"location\":\"#/texts/66\",\"text\":\"(What is Huggingface?)\"},{\"kind\":\"text\",\"location\":\"#/texts/67\",\"text\":\"ScienceCast Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/68\",\"text\":\"ScienceCast\"},{\"kind\":\"text\",\"location\":\"#/texts/69\",\"text\":\"(What is ScienceCast?)\"},{\"kind\":\"text\",\"location\":\"#/texts/70\",\"text\":\"Demos\"},{\"kind\":\"text\",\"location\":\"#/texts/71\",\"text\":\"Demos\"},{\"kind\":\"text\",\"location\":\"#/texts/72\",\"text\":\"Replicate Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/73\",\"text\":\"Replicate\"},{\"kind\":\"text\",\"location\":\"#/texts/74\",\"text\":\"(What is Replicate?)\"},{\"kind\":\"text\",\"location\":\"#/texts/75\",\"text\":\"Spaces Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/76\",\"text\":\"Hugging Face Spaces\"},{\"kind\":\"text\",\"location\":\"#/texts/77\",\"text\":\"(What is Spaces?)\"},{\"kind\":\"text\",\"location\":\"#/texts/78\",\"text\":\"Spaces Toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/79\",\"text\":\"TXYZ.AI\"},{\"kind\":\"text\",\"location\":\"#/texts/80\",\"text\":\"(What is TXYZ.AI?)\"},{\"kind\":\"text\",\"location\":\"#/texts/81\",\"text\":\"Related Papers\"},{\"kind\":\"text\",\"location\":\"#/texts/82\",\"text\":\"Recommenders and Search Tools\"},{\"kind\":\"text\",\"location\":\"#/texts/83\",\"text\":\"Link to Influence Flower\"},{\"kind\":\"text\",\"location\":\"#/texts/84\",\"text\":\"Influence Flower\"},{\"kind\":\"text\",\"location\":\"#/texts/85\",\"text\":\"(What are Influence Flowers?)\"},{\"kind\":\"text\",\"location\":\"#/texts/86\",\"text\":\"Core recommender toggle\"},{\"kind\":\"text\",\"location\":\"#/texts/87\",\"text\":\"CORE Recommender\"},{\"kind\":\"text\",\"location\":\"#/texts/88\",\"text\":\"(What is CORE?)\"},{\"kind\":\"text\",\"location\":\"#/texts/89\",\"text\":\"Author\"},{\"kind\":\"text\",\"location\":\"#/texts/90\",\"text\":\"Venue\"},{\"kind\":\"text\",\"location\":\"#/texts/91\",\"text\":\"Institution\"},{\"kind\":\"text\",\"location\":\"#/texts/92\",\"text\":\"Topic\"},{\"kind\":\"text\",\"location\":\"#/texts/93\",\"text\":\"About arXivLabs\"},{\"kind\":\"text\",\"location\":\"#/texts/94\",\"text\":\"arXivLabs: experimental projects with community collaborators\"},{\"kind\":\"text\",\"location\":\"#/texts/95\",\"text\":\"arXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.\"},{\"kind\":\"text\",\"location\":\"#/texts/96\",\"text\":\"Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\"},{\"kind\":\"text\",\"location\":\"#/texts/97\",\"text\":\"Have an idea for a project that will add value for arXiv's community?\"},{\"kind\":\"text\",\"location\":\"#/texts/98\",\"text\":\"Learn more about arXivLabs\"},{\"kind\":\"text\",\"location\":\"#/texts/99\",\"text\":\".\"}],\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"}}],\"goal\":\"核对 ReAct 原论文的机制证据并补齐一个官方\\\"先规划-人工确认-再执行\\\"来源，锁定 2-3 份可引用的关键一级资料。\\n用户指令：先对已提供的 arXiv abs 页(2210.03629)用 search_source 定位摘要，确认其仅为摘要页而非全文。再用 search_web/fetch_web 定位 ReAct 全文或其他一级资料，核对 thought/action/observation 交替机制细节。另检索一个官方人工确认/计划执行来源（官方文档或一级工程资料）。逐份记录出处与是否获取全文，不编造性能或费用数字。\\n交付要求：2-3 份关键资料清单，含出处、全文获取状态、机制相关摘录位置，明确 full text 或 missing 状态。\\n缺失项：\",\"handoff\":{\"approved_by\":\"local\",\"approved_revision\":1,\"instruction\":\"Execute this approved step. Planning-only restrictions in historical requests have been superseded by approval; retain all research constraints.\",\"phase\":\"approved_plan_execution\",\"planning_history_ref\":\"76ac3c3e-b86c-4940-9d0c-38693f999a68\",\"proposal_id\":\"76ac3c3e-b86c-4940-9d0c-38693f999a68\",\"research_constraints\":\"\",\"step_id\":\"f9cb0f13-cbf6-4755-b5d4-7b81afb97f5a\"},\"sources\":[{\"actual_url\":\"https://arxiv.org/abs/2210.03629\",\"fetched_at\":\"2026-10-12T02:45:47.899414+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},\"url\":\"https://arxiv.org/abs/2210.03629\"}]}"
+        }
+      ],
+      "external_context": {},
+      "projection_exclusions": []
+    }
+  }
+}

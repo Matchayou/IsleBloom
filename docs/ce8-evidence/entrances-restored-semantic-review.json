@@ -1,0 +1,33 @@
+{
+  "status": "passed_with_stated_limits",
+  "method": "Assistant read both complete reports, actual saved notes, both consultation answers, resumed manager summary, discussion and original synthetic source. Automatic control checks are separate.",
+  "http_successes": 35,
+  "control_checks": {
+    "all_four_entrances": true,
+    "manager_resumed": true,
+    "two_expert_sessions": true,
+    "expert_success": true,
+    "required_tools": true,
+    "source_marker_and_note": true,
+    "consultations_resolved": true,
+    "save_retry_without_model": true,
+    "pending_independent_review": true,
+    "real_http_success": true
+  },
+  "semantic_checks": {
+    "exact_source_marker": true,
+    "confirmed_units_seven_without_invented_unit": true,
+    "market_unknown_without_estimate": true,
+    "target_year_not_provided": true,
+    "two_consultations_preserve_unknown": true,
+    "manager_resumed_with_results": true,
+    "discussion_explains_unknown_without_rerunning": true,
+    "no_false_review_or_adoption": true
+  },
+  "limits": [
+    "Manager openly reported only partial reading of one expert report; the shared fixed source establishes the narrow facts, but this is not full report auditing or proof of broad disagreement resolution.",
+    "Both experts use the same synthetic source; agreement is not independent corroboration."
+  ],
+  "original_failure_preserved": "entrances-attempt1.json",
+  "implementation_manifest": "final-implementation.json"
+}

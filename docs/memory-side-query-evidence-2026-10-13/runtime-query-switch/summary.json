@@ -1,0 +1,82 @@
+{
+  "database": "memory_side_live_20261013_7c91",
+  "real_model": true,
+  "corpus": {
+    "cash": "分析企业财务时，优先检查经营活动产生的现金流量，不要用账面利润代替真实收款。",
+    "zones": "When scheduling meetings, convert time zones and show the local time for all participants.",
+    "approvals": "Ask for explicit approval before deleting production data or making irreversible changes.",
+    "garden": "修剪玫瑰时保留健康芽点，浇水前检查土壤湿度。",
+    "music": "练习钢琴时先慢速分手练习，再逐步提高节拍器速度。"
+  },
+  "quality": [
+    {
+      "case": "runtime_switch",
+      "fault": null,
+      "checks": {
+        "succeeded": true,
+        "initial_exact_match": true,
+        "runtime_exact_match": true,
+        "final_matches_tool": true,
+        "confirmed_usage": true,
+        "no_draft_leak": true,
+        "expected_side_requests": true,
+        "primary_requests_match_ledger": true,
+        "all_confirmed": true,
+        "no_retry_operations": true
+      },
+      "passed": true,
+      "initial_ids": [
+        "55d9f105-e777-4ee9-a57f-a448a6fc3741"
+      ],
+      "runtime_ids": [
+        "8bda2702-6938-48d7-889a-d4c68b64b7c5"
+      ],
+      "expected_ids": [
+        "55d9f105-e777-4ee9-a57f-a448a6fc3741"
+      ],
+      "http_before_kill": null,
+      "http_sends": [
+        {
+          "event": "sent",
+          "model": "deepseek-flash",
+          "purpose": "memory"
+        },
+        {
+          "event": "sent",
+          "model": "deepseek-flash",
+          "purpose": "task"
+        },
+        {
+          "event": "sent",
+          "model": "deepseek-flash",
+          "purpose": "memory"
+        },
+        {
+          "event": "sent",
+          "model": "deepseek-flash",
+          "purpose": "task"
+        }
+      ],
+      "run_id": "d697eb49e4b3400cb7b3adf5691ff6e6",
+      "usage": {
+        "requests": 4,
+        "input_tokens": 4610,
+        "output_tokens": 298,
+        "complete": true
+      },
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-side-query-evidence-2026-10-13/runtime-query-switch/runtime_switch-1/evidence.json"
+    }
+  ],
+  "recovery": [],
+  "passed": true,
+  "metrics": {
+    "queries": 1,
+    "exact_matches": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "recovery_passed": 0
+  }
+}

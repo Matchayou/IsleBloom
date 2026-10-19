@@ -1,0 +1,464 @@
+{
+  "synthetic_historical_fixtures": true,
+  "real_expert_and_consultation_models": true,
+  "instruction": "这是工具验收，全部内容是合成样本。请先读取你自己会话的历史报告正文，再向主助手索要同一主任务中专家 B（expert_synthesize）的阶段一初稿全文，收到授权后继续本任务。最终用简短表格列出两份原报告各自的内部标记、固定报告版本和复核状态。标记必须取自报告正文，资料文件及目录没有这些标记。不要猜测，不联网，不正式采用；拿不到报告则说明具体原因。不要重跑或覆盖原报告。",
+  "checks": {
+    "execution_succeeded": true,
+    "both_body_markers_read": true,
+    "peer_report_authorized": true,
+    "continued_same_task": true,
+    "original_reports_preserved": true,
+    "peer_source_authorized": true
+  },
+  "historical_reports": [
+    {
+      "run_id": "2b2daa56-113a-4d8a-a300-7968fc8162b5",
+      "conversation_id": null,
+      "process_id": "10db4367-3a19-4d04-be22-8a61c1e98658",
+      "request": {
+        "run_id": "2b2daa56-113a-4d8a-a300-7968fc8162b5",
+        "parent_run_id": null,
+        "agent_id": "expert_search",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"Task 4ccde724-b6f7-5f01-be4a-1b455db755dc v1: 专家 A 的阶段一合成初稿\\n交付要求：保留初稿\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\n固定交接记录：{\\\"id\\\": \\\"c134f569-11f3-5e4c-8fb1-2b7e897a7284\\\", \\\"research_id\\\": \\\"53ad456f-def1-42b4-98d5-2bdd078aa670\\\", \\\"sender_node_id\\\": \\\"6079d828-1b5d-491c-a869-b32fb8081345\\\", \\\"sender_chat_revision\\\": 1, \\\"user_message_id\\\": \\\"180a7d09-0f36-49c0-8962-c4d6a237c7cd\\\", \\\"user_instruction\\\": \\\"只对比本任务两份合成历史报告，不联网、不正式采用。\\\", \\\"manager_instruction\\\": \\\"专家 A 的阶段一合成初稿\\\", \\\"selected_messages\\\": [], \\\"expert_message_refs\\\": [], \\\"selected_results\\\": [], \\\"resource_refs\\\": [{\\\"resource_id\\\": \\\"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\\\", \\\"snapshot_id\\\": \\\"4507b2ad-c3b8-4a12-b728-6f572e1ed301\\\", \\\"parse_id\\\": \\\"98ff8e16-54b9-4898-98da-8f32aa7e6a50\\\"}], \\\"result_ids\\\": [], \\\"collaborator_session_ids\\\": [], \\\"delivery_requirements\\\": \\\"保留初稿\\\"}\", \"sources\": [{\"ref\": {\"resource_id\": \"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\", \"snapshot_id\": \"4507b2ad-c3b8-4a12-b728-6f572e1ed301\", \"parse_id\": \"98ff8e16-54b9-4898-98da-8f32aa7e6a50\"}, \"name\": \"own-input.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\", \"snapshot_id\": \"4507b2ad-c3b8-4a12-b728-6f572e1ed301\", \"parse_id\": \"98ff8e16-54b9-4898-98da-8f32aa7e6a50\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"合成验收输入；历史报告中的内部标记未写入本文件。\", \"kind\": \"text\"}]}]}"
+            }
+          ]
+        },
+        "limits": {
+          "max_turns": 10,
+          "timeout_seconds": 360.0,
+          "max_depth": 1,
+          "max_calls": 12
+        },
+        "depth": 0
+      },
+      "expected_revision": 0,
+      "status": "succeeded",
+      "result": {
+        "run_id": "2b2daa56-113a-4d8a-a300-7968fc8162b5",
+        "status": "succeeded",
+        "output": {
+          "report": "合成历史报告 A。内部标记：杉木-741。仅用于工具验收，待独立复核。",
+          "fields": {},
+          "sources": {},
+          "assumptions": [],
+          "conflicts": [],
+          "missing": [
+            "真实业务证据"
+          ],
+          "limitations": [],
+          "follow_up": [],
+          "self_checks": {},
+          "claims": []
+        },
+        "usage": {
+          "requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": true
+        },
+        "error": null,
+        "output_repairs": []
+      },
+      "commit_id": "run:2b2daa56-113a-4d8a-a300-7968fc8162b5",
+      "created_at": "2026-10-05T13:27:46.824940Z"
+    },
+    {
+      "run_id": "c199e3c0-716a-49e1-b815-ba2b14d54893",
+      "conversation_id": null,
+      "process_id": "10db4367-3a19-4d04-be22-8a61c1e98658",
+      "request": {
+        "run_id": "c199e3c0-716a-49e1-b815-ba2b14d54893",
+        "parent_run_id": null,
+        "agent_id": "expert_synthesize",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"Task 42be5c85-1a58-5d72-97bb-a195c54c1b62 v1: 专家 B 的阶段一合成初稿\\n交付要求：保留初稿\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\n固定交接记录：{\\\"id\\\": \\\"c8879db4-1293-5cca-84fc-5622bd7d95d2\\\", \\\"research_id\\\": \\\"53ad456f-def1-42b4-98d5-2bdd078aa670\\\", \\\"sender_node_id\\\": \\\"6079d828-1b5d-491c-a869-b32fb8081345\\\", \\\"sender_chat_revision\\\": 1, \\\"user_message_id\\\": \\\"180a7d09-0f36-49c0-8962-c4d6a237c7cd\\\", \\\"user_instruction\\\": \\\"只对比本任务两份合成历史报告，不联网、不正式采用。\\\", \\\"manager_instruction\\\": \\\"专家 B 的阶段一合成初稿\\\", \\\"selected_messages\\\": [], \\\"expert_message_refs\\\": [], \\\"selected_results\\\": [], \\\"resource_refs\\\": [{\\\"resource_id\\\": \\\"26d35fac-b760-48d9-a725-204de5b976d7\\\", \\\"snapshot_id\\\": \\\"57a5afb3-be26-4b21-af97-d44d47f01a59\\\", \\\"parse_id\\\": \\\"76fa042f-7c6d-4562-9de9-e99254665df7\\\"}], \\\"result_ids\\\": [], \\\"collaborator_session_ids\\\": [], \\\"delivery_requirements\\\": \\\"保留初稿\\\"}\", \"sources\": [{\"ref\": {\"resource_id\": \"26d35fac-b760-48d9-a725-204de5b976d7\", \"snapshot_id\": \"57a5afb3-be26-4b21-af97-d44d47f01a59\", \"parse_id\": \"76fa042f-7c6d-4562-9de9-e99254665df7\"}, \"name\": \"peer-input.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"26d35fac-b760-48d9-a725-204de5b976d7\", \"snapshot_id\": \"57a5afb3-be26-4b21-af97-d44d47f01a59\", \"parse_id\": \"76fa042f-7c6d-4562-9de9-e99254665df7\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"合成验收输入；本文件没有专家 B 报告的内部标记。\", \"kind\": \"text\"}]}]}"
+            }
+          ]
+        },
+        "limits": {
+          "max_turns": 10,
+          "timeout_seconds": 360.0,
+          "max_depth": 1,
+          "max_calls": 12
+        },
+        "depth": 0
+      },
+      "expected_revision": 0,
+      "status": "succeeded",
+      "result": {
+        "run_id": "c199e3c0-716a-49e1-b815-ba2b14d54893",
+        "status": "succeeded",
+        "output": {
+          "report": "合成历史报告 B。内部标记：青石-926。仅用于工具验收，待独立复核。",
+          "fields": {},
+          "sources": {},
+          "assumptions": [],
+          "conflicts": [],
+          "missing": [
+            "真实业务证据"
+          ],
+          "limitations": [],
+          "follow_up": [],
+          "self_checks": {},
+          "claims": []
+        },
+        "usage": {
+          "requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": true
+        },
+        "error": null,
+        "output_repairs": []
+      },
+      "commit_id": "run:c199e3c0-716a-49e1-b815-ba2b14d54893",
+      "created_at": "2026-10-05T13:27:46.900305Z"
+    }
+  ],
+  "run": {
+    "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+    "conversation_id": null,
+    "process_id": "10db4367-3a19-4d04-be22-8a61c1e98658",
+    "request": {
+      "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "parent_run_id": null,
+      "agent_id": "expert_search",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"goal\": \"Task 0bd37df9-ada5-5e60-a023-b07536b2c096 v1: 这是工具验收，全部内容是合成样本。请先读取你自己会话的历史报告正文，再向主助手索要同一主任务中专家 B（expert_synthesize）的阶段一初稿全文，收到授权后继续本任务。最终用简短表格列出两份原报告各自的内部标记、固定报告版本和复核状态。标记必须取自报告正文，资料文件及目录没有这些标记。不要猜测，不联网，不正式采用；拿不到报告则说明具体原因。不要重跑或覆盖原报告。\\n交付要求：简短中文报告，列出两个报告内部标记和待复核状态。\\nAcceptance: 1. 必需资料与依赖均获授权; 2. 按任务目标交付报告\\n固定交接记录：{\\\"id\\\": \\\"bfb5af78-20d4-51d1-8b50-a3ee771d5949\\\", \\\"research_id\\\": \\\"53ad456f-def1-42b4-98d5-2bdd078aa670\\\", \\\"sender_node_id\\\": \\\"6079d828-1b5d-491c-a869-b32fb8081345\\\", \\\"sender_chat_revision\\\": 1, \\\"user_message_id\\\": \\\"180a7d09-0f36-49c0-8962-c4d6a237c7cd\\\", \\\"user_instruction\\\": \\\"只对比本任务两份合成历史报告，不联网、不正式采用。\\\", \\\"manager_instruction\\\": \\\"这是工具验收，全部内容是合成样本。请先读取你自己会话的历史报告正文，再向主助手索要同一主任务中专家 B（expert_synthesize）的阶段一初稿全文，收到授权后继续本任务。最终用简短表格列出两份原报告各自的内部标记、固定报告版本和复核状态。标记必须取自报告正文，资料文件及目录没有这些标记。不要猜测，不联网，不正式采用；拿不到报告则说明具体原因。不要重跑或覆盖原报告。\\\", \\\"selected_messages\\\": [], \\\"expert_message_refs\\\": [], \\\"selected_results\\\": [], \\\"resource_refs\\\": [{\\\"resource_id\\\": \\\"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\\\", \\\"snapshot_id\\\": \\\"4507b2ad-c3b8-4a12-b728-6f572e1ed301\\\", \\\"parse_id\\\": \\\"98ff8e16-54b9-4898-98da-8f32aa7e6a50\\\"}], \\\"result_ids\\\": [], \\\"collaborator_session_ids\\\": [], \\\"delivery_requirements\\\": \\\"简短中文报告，列出两个报告内部标记和待复核状态。\\\"}\", \"sources\": [{\"ref\": {\"resource_id\": \"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\", \"snapshot_id\": \"4507b2ad-c3b8-4a12-b728-6f572e1ed301\", \"parse_id\": \"98ff8e16-54b9-4898-98da-8f32aa7e6a50\"}, \"name\": \"own-input.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"7db9dbc4-192d-4820-9e7d-3f1082e7aee2\", \"snapshot_id\": \"4507b2ad-c3b8-4a12-b728-6f572e1ed301\", \"parse_id\": \"98ff8e16-54b9-4898-98da-8f32aa7e6a50\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"合成验收输入；历史报告中的内部标记未写入本文件。\", \"kind\": \"text\"}]}]}"
+          }
+        ]
+      },
+      "limits": {
+        "max_turns": 10,
+        "timeout_seconds": 360.0,
+        "max_depth": 1,
+        "max_calls": 12
+      },
+      "depth": 0
+    },
+    "expected_revision": 0,
+    "status": "succeeded",
+    "result": {
+      "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "status": "succeeded",
+      "output": {
+        "report": "已从报告正文直接读取两份合成历史报告：(1) 专家 A（expert_search）历史报告，内部标记「杉木-741」，固定报告版本 spec_version=1（result_id=task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5），复核状态 delivery=pending_review、adoption=for_discussion；(2) 专家 B（expert_synthesize）阶段一初稿，内部标记「青石-926」，固定报告版本 spec_version=1（result_id=task-result:c199e3c0-716a-49e1-b815-ba2b14d54893），复核状态 delivery=pending_review、adoption=for_discussion。两个内部标记均取自报告正文本身；随附资料文件 own-input.txt（line:1「合成验收输入；历史报告中的内部标记未写入本文件。」）与 peer-input.txt（line:1「合成验收输入；本文件没有专家 B 报告的内部标记。」）均声明不含内部标记，互相印证。两份报告均未正式采用，未重跑或覆盖。全部内容为工具验收用合成样本。",
+        "fields": {
+          "报告A_内部标记": "杉木-741",
+          "报告A_固定报告版本": "spec_version=1",
+          "报告A_result_id": "task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5",
+          "报告A_expert_id": "expert_search",
+          "报告A_复核状态": "delivery=pending_review（待复核）; adoption=for_discussion（仅供讨论）",
+          "报告B_内部标记": "青石-926",
+          "报告B_固定报告版本": "spec_version=1",
+          "报告B_result_id": "task-result:c199e3c0-716a-49e1-b815-ba2b14d54893",
+          "报告B_expert_id": "expert_synthesize",
+          "报告B_复核状态": "delivery=pending_review（待复核）; adoption=for_discussion（仅供讨论）"
+        },
+        "sources": {
+          "task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5": "专家 A（expert_search）历史报告正文，本会话可直接读取（read_context 返回 output.report）",
+          "task-result:c199e3c0-716a-49e1-b815-ba2b14d54893": "专家 B（expert_synthesize）阶段一初稿正文，经主助手授权后由 read_context 直接读取",
+          "own-input.txt": "resource_id=7db9dbc4-192d-4820-9e7d-3f1082e7aee2, snapshot_id=4507b2ad-c3b8-4a12-b728-6f572e1ed301, parse_id=98ff8e16-54b9-4898-98da-8f32aa7e6a50（line:1，声明不含内部标记）",
+          "peer-input.txt": "resource_id=26d35fac-b760-48d9-a725-204de5b976d7, snapshot_id=57a5afb3-be26-4b21-af97-d44d47f01a59, parse_id=76fa042f-7c6d-4562-9de9-e99254665df7（line:1，声明不含专家B内部标记）",
+          "information:b9ee1253-615a-4cee-91cf-34005354472f": "主助手授权答复，提供专家 B 初稿全文定位，并授予读取授权"
+        },
+        "assumptions": [
+          "两份结果的 delivery/adoption 字段即任务所指的「复核状态」（pending_review＝待复核，for_discussion＝未正式采用）。",
+          "spec_version＝固定报告版本标识。"
+        ],
+        "conflicts": [],
+        "missing": [
+          "两份报告自述缺少的「真实业务证据」仍缺失（missing=[真实业务证据]），本次为合成样本验收，不影响本对比结论。",
+          "无其他缺失项；两份报告的标记、版本、复核状态均已从正文与元数据取得。"
+        ],
+        "limitations": [
+          "全部内容为合成样本，仅为工具验收，不构成任何正式采用或事实依据。",
+          "未联网，未使用任何外部来源。",
+          "未重跑或覆盖原报告，仅执行只读访问。"
+        ],
+        "follow_up": [
+          "如需正式采用，应待独立复核完成并变更 delivery/adoption 状态。"
+        ],
+        "self_checks": {
+          "标记是否取自正文": "是，两份标记均来自各自 output.report 正文原文",
+          "是否使用资料文件中的标记": "否，own-input.txt 与 peer-input.txt 均声明不含标记",
+          "是否联网": "否",
+          "是否重跑/覆盖": "否，全流程只读",
+          "是否正式采用": "否，均为 pending_review"
+        },
+        "claims": []
+      },
+      "usage": {
+        "requests": 8,
+        "input_tokens": 43132,
+        "output_tokens": 5373,
+        "complete": true
+      },
+      "error": null,
+      "output_repairs": [
+        {
+          "raw_output": "# 交付报告\n\n两份报告均已直接从各自报告正文读取（非仅凭主助手转述），未联网、未重跑、未覆盖、未正式采用。\n\n| 报告 | 内部标记（取自报告正文） | 固定报告版本 | 复核状态 |\n| --- | --- | --- | --- |\n| 专家 A（expert_search）历史报告 | 杉木-741 | spec_version=1（result_id: task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5，run_id 同） | delivery=pending_review（待复核）／adoption=for_discussion（仅供讨论） |\n| 专家 B（expert_synthesize）阶段一初稿 | 青石-926 | spec_version=1（result_id: task-result:c199e3c0-716a-49e1-b815-ba2b14d54893，run_id 同） | delivery=pending_review（待复核）／adoption=for_discussion（仅供讨论） |\n\n**标记来源核对**：A 的正文为\"合成历史报告 A。内部标记：杉木-741。仅用于工具验收，待独立复核。\"；B 的正文为\"合成历史报告 B。内部标记：青石-926。仅用于工具验收，待独立复核。\"。两份资料文件 own-input.txt（\"合成验收输入；历史报告中的内部标记未写入本文件。\"）与 peer-input.txt（\"合成验收输入；本文件没有专家 B 报告的内部标记。\"）均不含标记，与\"标记只存在于报告正文\"一致，二者不冲突。\n\n**说明**：两份报告均为 pending_review 的合成样本，不是独立复核结论，也不构成正式采用依据；两句均自述 missing=[\"真实业务证据\"]。\n\n---\n\n```json\n{\n  \"report\": \"已从报告正文直接读取两份合成历史报告：(1) 专家 A（expert_search）历史报告，内部标记「杉木-741」，固定报告版本 spec_version=1（result_id=task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5），复核状态 delivery=pending_review、adoption=for_discussion；(2) 专家 B（expert_synthesize）阶段一初稿，内部标记「青石-926」，固定报告版本 spec_version=1（result_id=task-result:c199e3c0-716a-49e1-b815-ba2b14d54893），复核状态 delivery=pending_review、adoption=for_discussion。两个内部标记均取自报告正文本身；随附资料文件 own-input.txt 与 peer-input.txt 正文均声明不含内部标记，互相印证。两份报告均未正式采用，未重跑或覆盖。全部内容为工具验收用合成样本。\",\n  \"fields\": {\n    \"报告A_内部标记\": \"杉木-741\",\n    \"报告A_固定报告版本\": \"spec_version=1\",\n    \"报告A_result_id\": \"task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5\",\n    \"报告A_expert_id\": \"expert_search\",\n    \"报告A_复核状态\": \"delivery=pending_review（待复核）; adoption=for_discussion（仅供讨论）\",\n    \"报告B_内部标记\": \"青石-926\",\n    \"报告B_固定报告版本\": \"spec_version=1\",\n    \"报告B_result_id\": \"task-result:c199e3c0-716a-49e1-b815-ba2b14d54893\",\n    \"报告B_expert_id\": \"expert_synthesize\",\n    \"报告B_复核状态\": \"delivery=pending_review（待复核）; adoption=for_discussion（仅供讨论）\"\n  },\n  \"sources\": {\n    \"task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5\": \"专家 A（expert_search）历史报告正文，本会话可直接读取（read_context 返回 output.report）\",\n    \"task-result:c199e3c0-716a-49e1-b815-ba2b14d54893\": \"专家 B（expert_synthesize）阶段一初稿正文，经主助手授权后由 read_context 直接读取\",\n    \"own-input.txt\": \"resource_id=7db9dbc4-192d-4820-9e7d-3f1082e7aee2, snapshot_id=4507b2ad-c3b8-4a12-b728-6f572e1ed301, parse_id=98ff8e16-54b9-4898-98da-8f32aa7e6a50（line:1，声明不含内部标记）\",\n    \"peer-input.txt\": \"resource_id=26d35fac-b760-48d9-a725-204de5b976d7, snapshot_id=57a5afb3-be26-4b21-af97-d44d47f01a59, parse_id=76fa042f-7c6d-4562-9de9-e99254665df7（line:1，声明不含专家B内部标记）\",\n    \"information:b9ee1253-615a-4cee-91cf-34005354472f\": \"主助手授权答复，提供专家 B 初稿全文定位，并授予读取授权\"\n  },\n  \"assumptions\": [\n    \"两份结果的 delivery/adoption 字段即任务所指的「复核状态」（pending_review＝待复核，for_discussion＝未正式采用）。\",\n    \"spec_version＝固定报告版本标识。\"\n  ],\n  \"conflicts\": [],\n  \"missing\": [\n    \"两份报告自述缺少的「真实业务证据」仍缺失（missing=[真实业务证据]），本次为合成样本验收，不影响本对比结论。\",\n    \"无其他缺失项；两份报告的标记、版本、复核状态均已从正文与元数据取得。\"\n  ],\n  \"limitations\": [\n    \"全部内容为合成样本，仅为工具验收，不构成任何正式采用或事实依据。\",\n    \"未联网，未使用任何外部来源。\",\n    \"未重跑或覆盖原报告，仅执行只读访问。\"\n  ],\n  \"follow_up\": [\n    \"如需正式采用，应待独立复核完成并变更 delivery/adoption 状态。\"\n  ],\n  \"self_checks\": {\n    \"标记是否取自正文\": \"是，两份标记均来自各自 output.report 正文原文\",\n    \"是否使用资料文件中的标记\": \"否，own-input.txt 与 peer-input.txt 均声明不含标记\",\n    \"是否联网\": \"否\",\n    \"是否重跑/覆盖\": \"否，全流程只读\",\n    \"是否正式采用\": \"否，均为 pending_review\"\n  },\n  \"claims\": []\n}\n```",
+          "issues": [
+            {
+              "type": "json_invalid",
+              "loc": [],
+              "msg": "Invalid JSON: expected value at line 1 column 1"
+            }
+          ]
+        }
+      ]
+    },
+    "commit_id": "run:b9ee1253-615a-4cee-91cf-34005354472f",
+    "created_at": "2026-10-05T13:27:47.012284Z"
+  },
+  "information_request": {
+    "id": "information:b9ee1253-615a-4cee-91cf-34005354472f",
+    "research_id": "53ad456f-def1-42b4-98d5-2bdd078aa670",
+    "task_id": "0bd37df9-ada5-5e60-a023-b07536b2c096",
+    "spec_version": 1,
+    "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+    "question": "请提供同一主任务中专家 B（expert_synthesize）的“阶段一初稿”全文。我需要该报告的正文（含内部标记）、固定报告版本（spec_version/版本标识）和复核状态字段。若该报告存在但我无读取授权，请明确说明；若不存在，也请说明。我的 result_id 未知，请按“expert_synthesize 的阶段一初稿”定位并授权。",
+    "progress": "已完成：读取本会话历史报告 A 正文（result_id=task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5，expert_search），其中内部标记为“杉木-741”，delivery=pending_review，adoption=for_discussion；已读取资源文件 own-input.txt，正文仅一行且不含任何内部标记。待办：获取专家 B（expert_synthesize）阶段一初稿全文后，汇总两份报告的内部标记、固定报告版本与复核状态。",
+    "resource_refs": [
+      {
+        "resource_id": "7db9dbc4-192d-4820-9e7d-3f1082e7aee2",
+        "snapshot_id": "4507b2ad-c3b8-4a12-b728-6f572e1ed301",
+        "parse_id": "98ff8e16-54b9-4898-98da-8f32aa7e6a50"
+      }
+    ],
+    "requested_result_ids": [],
+    "report_grants": [
+      {
+        "result_id": "task-result:c199e3c0-716a-49e1-b815-ba2b14d54893",
+        "task_id": "42be5c85-1a58-5d72-97bb-a195c54c1b62",
+        "spec_version": 1,
+        "run_id": "c199e3c0-716a-49e1-b815-ba2b14d54893"
+      },
+      {
+        "result_id": "task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5",
+        "task_id": "4ccde724-b6f7-5f01-be4a-1b455db755dc",
+        "spec_version": 1,
+        "run_id": "2b2daa56-113a-4d8a-a300-7968fc8162b5"
+      }
+    ],
+    "status": "resolved",
+    "attempts": 1,
+    "answer": {
+      "available": true,
+      "answer": "已按“expert_synthesize 的阶段一初稿”定位并读取到该报告正文，无需额外授权（该结果在本主任务中可直接读取）。现按交付要求给出两份报告的汇总（内容全部来自报告正文，未采用、未重跑、未覆盖原报告）。\n\n【专家 B（expert_synthesize）阶段一初稿 · 全文】\n正文：合成历史报告 B。内部标记：青石-926。仅用于工具验收，待独立复核。\n固定报告版本：spec_version = 1（result_id=task-result:c199e3c0-716a-49e1-b815-ba2b14d54893，run_id=c199e3c0-716a-49e1-b815-ba2b14d54893，expert_id=expert_synthesize）。\n复核状态：delivery = pending_review（待复核），adoption = for_discussion（仅供讨论）。\n附注：missing = [真实业务证据]，即该初稿自述缺少真实业务证据。\n\n【专家 A（expert_search）历史报告 · 全文】\n正文：合成历史报告 A。内部标记：杉木-741。仅用于工具验收，待独立复核。\n固定报告版本：spec_version = 1（result_id=task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5，expert_id=expert_search）。\n复核状态：delivery = pending_review（待复核），adoption = for_discussion（仅供讨论）。\n附注：missing = [真实业务证据]。\n\n【汇总表】\n| 报告 | 内部标记 | 固定报告版本 | 复核状态 |\n| --- | --- | --- | --- |\n| 专家 B（expert_synthesize）阶段一初稿 | 青石-926 | spec_version=1（result_id: task-result:c199e3c0-716a-49e1-b815-ba2b14d54893） | pending_review / for_discussion（待复核，未正式采用） |\n| 专家 A（expert_search）历史报告 | 杉木-741 | spec_version=1（result_id: task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5） | pending_review / for_discussion（待复核，未正式采用） |\n\n【关于标记来源的说明】两个内部标记（青石-926、杉木-741）均取自报告正文；随附资料 peer-input.txt 正文仅为“合成验收输入；本文件没有专家 B 报告的内部标记。”，own-input.txt 亦不含任何内部标记，与正文标记相互印证、不冲突。\n\n【免责】两份报告均为 pending_review 的合成样本，不是独立复核结论，也不构成正式采用依据；本答复仅为信息读取与汇总，未重跑或覆盖任何原报告。",
+      "missing": [],
+      "resource_refs": [
+        {
+          "resource_id": "26d35fac-b760-48d9-a725-204de5b976d7",
+          "snapshot_id": "57a5afb3-be26-4b21-af97-d44d47f01a59",
+          "parse_id": "76fa042f-7c6d-4562-9de9-e99254665df7"
+        }
+      ],
+      "message_ids": [
+        "180a7d09-0f36-49c0-8962-c4d6a237c7cd"
+      ],
+      "result_ids": [
+        "task-result:c199e3c0-716a-49e1-b815-ba2b14d54893",
+        "task-result:2b2daa56-113a-4d8a-a300-7968fc8162b5"
+      ]
+    },
+    "usage": {
+      "requests": 2,
+      "input_tokens": 6025,
+      "output_tokens": 1524,
+      "complete": true
+    }
+  },
+  "events": [
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 1,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "started",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:27:47.013430Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 2,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_0tzOJJ6IjobEAiPWEzGJ2599",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:01.491844Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 3,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_0tzOJJ6IjobEAiPWEzGJ2599",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:01.522303Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 4,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_01_FaeFJqDBVmSesFHQ9TwU5336",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "read_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:01.522984Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 5,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_01_FaeFJqDBVmSesFHQ9TwU5336",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "read_source",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:01.523628Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 6,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_1FWQrITJdkbVcJ8efDBx9098",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:03.484129Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 7,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_1FWQrITJdkbVcJ8efDBx9098",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:03.577266Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 8,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_OABO4kVQoYxjgFexAA8e2279",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "request_manager_information",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:06.482636Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 9,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_OABO4kVQoYxjgFexAA8e2279",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "request_manager_information",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:14.123729Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 10,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_F8QlLWVWSd8dGELAi1aS3631",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "started",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:16.894987Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 11,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": "call_00_F8QlLWVWSd8dGELAi1aS3631",
+        "child_run_id": null,
+        "phase": "tool",
+        "status": "completed",
+        "name": "read_context",
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:17.009681Z"
+    },
+    {
+      "root_run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+      "sequence": 12,
+      "event": {
+        "run_id": "b9ee1253-615a-4cee-91cf-34005354472f",
+        "parent_run_id": null,
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "completed",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-05T13:28:27.827035Z"
+    }
+  ]
+}

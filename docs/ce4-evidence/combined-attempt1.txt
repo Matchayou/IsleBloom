@@ -1,0 +1,30 @@
+.....F.................................................................. [ 37%]
+........................................................................ [ 75%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+__________ test_tool_timeout_leaves_uncertain_operation_and_finalizes __________
+
+controlled = (<agent_core.adapters.postgres.PostgresDatabase object at 0x10f0eddf0>, <agent_core.context.scopes.ScopeService object...jectService object at 0x10e32c7a0>, <agent_core.collaboration.service.CollaborationService object at 0x10e32c200>, ...)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e3104a0>
+
+    async def test_tool_timeout_leaves_uncertain_operation_and_finalizes(controlled,monkeypatch):
+        tasks,provider=controlled[3],controlled[-1]
+        spec,_=await task(controlled,max_turns=5,max_calls=5,timeout_seconds=4)
+        from agent_core.controlled.workspace import Workspace
+        from agent_core.contracts import ToolBinding,ToolResult,Value
+        class Args(Value):name:str;text:str
+        async def hang(_):await asyncio.Event().wait()
+        monkeypatch.setattr(Workspace,'bindings',lambda self:(ToolBinding('write_private_note','fixture stalled private write',Args,hang),))
+        provider.plans.append([call('write_private_note',name='draft',text='unknown'),answer({'report':'Tool completion unconfirmed; evidence insufficient.'})])
+        receipt=(await tasks.run(spec.id))['receipt'];result=tasks.ledger.get(receipt.run_id).result
+        assert result.status=='succeeded',result
+        assert 'investigation_timeout' in json.dumps(provider.requests[-1]['input']) and not provider.requests[-1]['tools']
+>       assert not result.usage.complete
+E       AssertionError: assert not True
+E        +  where True = Usage(requests=2, input_tokens=6, output_tokens=8, complete=True).complete
+E        +    where Usage(requests=2, input_tokens=6, output_tokens=8, complete=True) = RunResult(run_id='7dc05f76-0e50-4052-a077-7ce4708d529f', status='succeeded', output={'claims': [], 'fields': {}, 'repo...f_checks': {}}, usage=Usage(requests=2, input_tokens=6, output_tokens=8, complete=True), error=None, output_repairs=()).usage
+
+tests/test_controlled_delivery.py:139: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_controlled_delivery.py::test_tool_timeout_leaves_uncertain_operation_and_finalizes
+1 failed, 191 passed in 52.08s

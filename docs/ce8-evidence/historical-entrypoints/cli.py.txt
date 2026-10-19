@@ -1,0 +1,45 @@
+import argparse
+import asyncio
+import os
+
+from .composition import build
+
+
+async def run(args):
+    if args.engine == "openai":
+        if not os.environ.get("OPENAI_API_KEY"):
+            print("真实模型未运行：缺少 OPENAI_API_KEY。")
+            return 2
+        from .adapters.openai import OpenAIEngine
+        engine = OpenAIEngine()
+    else:
+        from .adapters.scripted import ScriptedEngine
+        from .composition import demo_script
+        engine = ScriptedEngine(demo_script)
+        print("ScriptedEngine：确定性演示，不代表真实模型语义验证。")
+    service = build(engine, lambda e: print(e.model_dump_json()))
+    if args.demo:
+        prompts = ["算出 12×8，再让表达专家把结果说成一句中文", "刚才结果是多少？"]
+        for prompt in prompts:
+            print(f"用户：{prompt}")
+            result = await service.send("demo", "assistant", prompt)
+            print(result.model_dump_json())
+            if result.status != "succeeded":
+                return 1
+    else:
+        while True:
+            prompt = await asyncio.to_thread(input, "你（/quit 退出）> ")
+            if prompt == "/quit":
+                break
+            print((await service.send("interactive", "assistant", prompt)).model_dump_json())
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--engine", choices=["scripted", "openai"], default="openai")
+    parser.add_argument("--demo", action="store_true")
+    try:
+        raise SystemExit(asyncio.run(run(parser.parse_args())))
+    except (KeyboardInterrupt, EOFError):
+        raise SystemExit(130)

@@ -1,0 +1,196 @@
+{
+  "execution": "controlled_tools",
+  "task_id": "8c8f9fa1-28a0-420a-b57e-498cbffe6734",
+  "run_id": "f0667abc-c6cd-4df3-b64c-40ab3ff79bfa",
+  "private_rebuild": {
+    "note": {
+      "name": "ce1_draft",
+      "sha256": "8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a",
+      "text": "Task 8c8f9fa1-28a0-420a-b57e-498cbffe6734 v1 — ce1_draft\n\nSource: ce1-source.txt (resource_id 9317c7e5-15ed-49e4-b5e1-3380a0a56e1e, snapshot ebeea7c6-8cc6-4313-9deb-06ad7392a52c, parse 4d94c3be-c662-4df9-9fb7-2d4f53cf25d9), parse_status=ready, missing=[].\nRead location: line:1 (whole file, single line).\n\nVerbatim text (line:1):\n\"SYNTHETIC acceptance data only. Marker: CE1-a115437d02204a48be2c1f01cfa850fe. Confirmed units: 7. Unconfirmed units: unknown.\"\n\nExtracted facts (as stated by the source, not verified externally):\n- Marker: CE1-a115437d02204a48be2c1f01cfa850fe\n- Confirmed units: 7\n- Unconfirmed units: unknown (stated as the literal token \"unknown\", not a number)\n- Nature: explicitly labelled \"SYNTHETIC acceptance data only\" => synthetic acceptance fixture, NOT real research findings.\n\nDraft report points:\n1. Marker = CE1-a115437d02204a48be2c1f01cfa850fe\n2. Confirmed count = 7\n3. Unknown count = \"unknown\" (no number given; cannot be resolved from this source)\n4. Distinction: content self-declares as synthetic acceptance data. Therefore no empirical/real-world conclusions may be drawn; it only serves as an acceptance/plumbing check.\n5. No web used; no extra sources requested; nothing invented.\n\nUnknowns / gaps: total unit population, definition of \"units\", date, author, why 7 are confirmed, whether unconfirmed units are counted elsewhere. Not derivable from the authorized source.\n",
+      "complete": true
+    },
+    "original_note_hashes": [
+      "8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a",
+      "8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a"
+    ],
+    "private_tools": [
+      "write_private_note",
+      "read_private_note"
+    ],
+    "source_tools": [
+      "read_source"
+    ]
+  },
+  "provider_http_statuses": [
+    200,
+    200,
+    200,
+    200
+  ],
+  "status": "succeeded",
+  "result": {
+    "run_id": "f0667abc-c6cd-4df3-b64c-40ab3ff79bfa",
+    "status": "succeeded",
+    "output": {
+      "claims": [],
+      "fields": {
+        "marker": "CE1-a115437d02204a48be2c1f01cfa850fe",
+        "task_id": "8c8f9fa1-28a0-420a-b57e-498cbffe6734",
+        "note_name": "ce1_draft",
+        "data_nature": "synthetic acceptance data only（合成验收数据，非真实研究结论）",
+        "note_sha256": "8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a",
+        "source_name": "ce1-source.txt",
+        "network_used": "否（不联网）",
+        "task_version": "v1",
+        "confirmed_units": "7",
+        "unconfirmed_units": "unknown",
+        "note_reread_complete": "true"
+      },
+      "report": "任务 8c8f9fa1-28a0-420a-b57e-498cbffe6734 v1 执行结果\n\n1) 读取动作与范围\n- 使用 read_source 读取唯一获授权资料 ce1-source.txt（resource_id 9317c7e5-15ed-49e4-b5e1-3380a0a56e1e / snapshot ebeea7c6-8cc6-4313-9deb-06ad7392a52c / parse 4d94c3be-c662-4df9-9fb7-2d4f53cf25d9），parse_status=ready，missing=[]（无缺失依赖）。\n- 文本位置：整份文件只有一行，位置 line:1。该行完整原文为：\n  “SYNTHETIC acceptance data only. Marker: CE1-a115437d02204a48be2c1f01cfa850fe. Confirmed units: 7. Unconfirmed units: unknown.”\n- 未联网、未使用其他来源、未编造任何数字或出处。任务允许范围内不存在需要查证的外部正文，因此无联网检索必要。\n\n2) 三项必需答案（均取自上述 line:1 原文，属“原文转述”，非外部核实事实）\n- 原文 Marker：CE1-a115437d02204a48be2c1f01cfa850fe（逐字符照录）。\n- 已确认数量（Confirmed units）：7。原文以数字形式给出，口径为“units（单位）”，未给出单位定义或时间范围。\n- 未知数量（Unconfirmed units）：原文写的是字面词 “unknown”，而不是数字。因此“未知数量”在原文中并未被量化为一个数值；不能把 “unknown” 折算为 0，也不能推测其具体取值。\n\n3) 合成验收资料 vs 真实研究结论——必须区分的性质\n- 该资料首句自我声明为 “SYNTHETIC acceptance data only”（仅为合成验收数据）。据此：\n  (a) 它属于合成/验收（acceptance）测试用夹具数据，其唯一用途是验证读取—笔记—重读这条交付链路是否通畅；\n  (b) 其中出现的 Marker、7、unknown 只应被视为“该合成样本中所填写的字段值”，不构成任何关于现实世界的经验发现、统计结论或研究结果；\n  (c) 本报告中不得由该资料推导任何行业、机构、产品或人群层面的结论。上面的 7 与 unknown 是“资料中的字符串内容”，不是已获证实的现实事实。\n\n4) 私有笔记链路（按要求执行并复核）\n- 使用 write_private_note 保存笔记，名称 ce1_draft，saved=true，bytes=1410，sha256=8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a。\n- 使用 read_private_note 重读 ce1_draft：complete=true，返回 sha256 与写入时一致（8799ab2dcd3a1cb5c466cf8da71793093f88fe2a362e8b2c59862e2e8bae536a），内容包含 Marker、Confirmed units: 7、Unconfirmed units: unknown 及合成资料声明。写入与重读一致，未出现损坏或截断。\n- 笔记属起草载体，不构成证据或授权；本报告的事实依据仅为上述已读正文 line:1。\n\n5) 缺口（无法从获授权资料得出）\n- “units” 的定义、7 个单位具体指什么、总单位规模、确认与未确认的划分规则。\n- 未确认数量为何以 “unknown” 而非数字表示，其真实取值。\n- 该合成资料的生成时间、生成方、以及 7 与 unknown 是否对应某个真实数据集的形态。\n以上均不在已授权正文中出现，按“没有可靠依据即明确缺口”的原则保留为未知，不做填补。",
+      "missing": [
+        "“units（单位）”的定义与计量口径。",
+        "未确认数量的实际数值（原文仅为 unknown）。",
+        "单位总数、确认/未确认的划分标准。",
+        "该合成资料的生成时间、生成方与用途背景。"
+      ],
+      "sources": {
+        "ce1-source.txt": "resource_id=9317c7e5-15ed-49e4-b5e1-3380a0a56e1e, snapshot_id=ebeea7c6-8cc6-4313-9deb-06ad7392a52c, parse_id=4d94c3be-c662-4df9-9fb7-2d4f53cf25d9；kind=upload，parse_status=ready，missing=[]；全文仅 line:1 一行。"
+      },
+      "conflicts": [
+        "无来源间冲突：本次仅有一份获授权资料、一处文本位置，无第二来源可比对。",
+        "内部表述张力（非事实冲突）：资料要求报告“未知数量”，但原文对未确认数量只给出 “unknown”，故不存在可报告的数值，只能报告“原文标注为 unknown”。"
+      ],
+      "follow_up": [
+        "若需报告未确认数量的具体数值，需提供包含该字段数值的获授权资料。",
+        "若需让 7 与 unknown 具备现实意义，需提供非合成来源，并明确 “units” 的口径与统计期间。",
+        "若验收目标是全链路完整性，建议补充第二份差异明显的资料以验证 Marker 与数量的对应关系。"
+      ],
+      "assumptions": [
+        "把 “Confirmed units: 7” 理解为“已确认单位数为 7”，即按原文最直白读法转述，未扩展口径。",
+        "把 “Unconfirmed units: unknown” 理解为“未确认单位数未被量化”，既不当作 0，也不填任何估计值。",
+        "首句 “SYNTHETIC acceptance data only” 被当作该资料关于自身性质的位置性陈述，因此其字段值仅作链路验收用途，不作为现实结论。"
+      ],
+      "limitations": [
+        "本报告全部事实仅来自单份合成验收资料的 line:1，样本量为 1，且该资料自述为合成数据，无法外推。",
+        "未联网、未读其他资料，因此无法对 7 或 unknown 做任何外部交叉验证——这是任务约束，也是本报告的固有边界。",
+        "私有笔记为草稿载体，不是证据或授权来源，本报告未以其内容作为事实依据。"
+      ],
+      "self_checks": {
+        "no_network": "未调用任何联网工具。",
+        "note_reread": "是，read_private_note 重读 ce1_draft，complete=true，sha256 与写入一致。",
+        "note_written": "是，write_private_note 保存 ce1_draft，saved=true，bytes=1410。",
+        "no_fabrication": "未添加任何原文之外的数值、出处或日期。",
+        "marker_verbatim": "CE1-a115437d02204a48be2c1f01cfa850fe（照录，未改动大小写或字符）。",
+        "read_source_used": "是，读取获授权资料 line:1，原文逐字回引。",
+        "claims_left_empty": "按要求 claims 为空数组，事实与位置在 report 中给出。",
+        "synthetic_vs_real": "已明确区分：该资料自述为合成验收数据，不作真实研究结论使用。",
+        "counting_distinction": "已确认数量=7（数值）；未知数量=unknown（非数值），未混同、未折算为 0。"
+      }
+    },
+    "usage": {
+      "requests": 4,
+      "input_tokens": 13343,
+      "output_tokens": 2825,
+      "complete": true
+    },
+    "error": null,
+    "output_repairs": []
+  },
+  "receipt": {
+    "result_id": "task-result:f0667abc-c6cd-4df3-b64c-40ab3ff79bfa",
+    "task_id": "8c8f9fa1-28a0-420a-b57e-498cbffe6734",
+    "spec_version": 1,
+    "run_id": "f0667abc-c6cd-4df3-b64c-40ab3ff79bfa",
+    "context_snapshot_id": "c8c99b02-19fa-456a-89d6-778a6c36fc50",
+    "model": "deepseek-flash",
+    "route_id": null,
+    "method_version": "synthesize-v2",
+    "method_digest": "21aaf8a6c075bee3046228169d859187ab7e74c1e163079c1d0f992fa1ebe53c",
+    "result_ids": [],
+    "resource_refs": [
+      {
+        "resource_id": "9317c7e5-15ed-49e4-b5e1-3380a0a56e1e",
+        "snapshot_id": "ebeea7c6-8cc6-4313-9deb-06ad7392a52c",
+        "parse_id": "4d94c3be-c662-4df9-9fb7-2d4f53cf25d9"
+      }
+    ],
+    "missing_optional_refs": [],
+    "program_checks": [
+      {
+        "number": 1,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Run output and fixed input identity checked",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "program",
+        "status": "passed",
+        "evidence": "Report present",
+        "reviewer": null
+      }
+    ],
+    "semantic_checks": [
+      {
+        "number": 1,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      },
+      {
+        "number": 2,
+        "checker": "semantic",
+        "status": "pending",
+        "evidence": "Independent review required",
+        "reviewer": null
+      }
+    ],
+    "assumptions": [
+      "把 “Confirmed units: 7” 理解为“已确认单位数为 7”，即按原文最直白读法转述，未扩展口径。",
+      "把 “Unconfirmed units: unknown” 理解为“未确认单位数未被量化”，既不当作 0，也不填任何估计值。",
+      "首句 “SYNTHETIC acceptance data only” 被当作该资料关于自身性质的位置性陈述，因此其字段值仅作链路验收用途，不作为现实结论。"
+    ],
+    "conflicts": [
+      "无来源间冲突：本次仅有一份获授权资料、一处文本位置，无第二来源可比对。",
+      "内部表述张力（非事实冲突）：资料要求报告“未知数量”，但原文对未确认数量只给出 “unknown”，故不存在可报告的数值，只能报告“原文标注为 unknown”。"
+    ],
+    "missing": [
+      "“units（单位）”的定义与计量口径。",
+      "未确认数量的实际数值（原文仅为 unknown）。",
+      "单位总数、确认/未确认的划分标准。",
+      "该合成资料的生成时间、生成方与用途背景。",
+      "conflict:无来源间冲突：本次仅有一份获授权资料、一处文本位置，无第二来源可比对。",
+      "conflict:内部表述张力（非事实冲突）：资料要求报告“未知数量”，但原文对未确认数量只给出 “unknown”，故不存在可报告的数值，只能报告“原文标注为 unknown”。"
+    ],
+    "limitations": [
+      "本报告全部事实仅来自单份合成验收资料的 line:1，样本量为 1，且该资料自述为合成数据，无法外推。",
+      "未联网、未读其他资料，因此无法对 7 或 unknown 做任何外部交叉验证——这是任务约束，也是本报告的固有边界。",
+      "私有笔记为草稿载体，不是证据或授权来源，本报告未以其内容作为事实依据。"
+    ],
+    "follow_up": [
+      "若需报告未确认数量的具体数值，需提供包含该字段数值的获授权资料。",
+      "若需让 7 与 unknown 具备现实意义，需提供非合成来源，并明确 “units” 的口径与统计期间。",
+      "若验收目标是全链路完整性，建议补充第二份差异明显的资料以验证 Marker 与数量的对应关系。"
+    ],
+    "delivery": "pending_review",
+    "adoption": "for_discussion",
+    "adoption_reason": null
+  },
+  "checks": {
+    "succeeded": true,
+    "save_retry_same_result": true,
+    "save_retry_no_model_call": true,
+    "source_read": true,
+    "model_called": true,
+    "marker_preserved": true,
+    "note_survived_rebuild": true,
+    "note_hash_preserved": true,
+    "note_tools_called": true,
+    "not_adopted": true
+  },
+  "limitations": [
+    "Controlled tools provide logical separation, not an OS security boundary."
+  ]
+}

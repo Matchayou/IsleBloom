@@ -1,0 +1,908 @@
+{
+  "real_model": "deepseek-flash",
+  "storage": "PostgreSQL",
+  "accepted_case_count": 14,
+  "accepted_cases": [
+    {
+      "directory": "live",
+      "case": "main_preference",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "1d35a659-73d4-4441-b601-9e97900250a7",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/main_preference/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 16873,
+        "output_tokens": 973,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "temporary_project",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "c58eaff6-b03b-4536-9057-f536edc3b46f",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/temporary_project/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 9145,
+        "output_tokens": 813,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "temporary_domain_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "004bcb4c-375f-4637-85a2-10858e73d559",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/temporary_domain_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 2,
+        "input_tokens": 8281,
+        "output_tokens": 524,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "foreign_project_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "foreign_unchanged": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "f8f21391-8ba8-4b3b-b439-b93f628d90db",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/foreign_project_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 2,
+        "input_tokens": 8433,
+        "output_tokens": 604,
+        "complete": true
+      }
+    },
+    {
+      "directory": "final-recovery",
+      "case": "correction",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "2e5c579b-84ba-4a7b-aaf1-91efbfe83384",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/final-recovery/correction/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 13301,
+        "output_tokens": 866,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "forget",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "25b59ad9-d430-40ad-9db0-f92e135db728",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/forget/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12855,
+        "output_tokens": 790,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "temporary_request",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "d078eeb1-73c7-43d8-ad9e-3bbae14afabc",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/temporary_request/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 8908,
+        "output_tokens": 539,
+        "complete": true
+      }
+    },
+    {
+      "directory": "live",
+      "case": "inferred_draft",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "6f774c9f-ffa5-4322-b34c-45b8af4195fe",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/inferred_draft/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12712,
+        "output_tokens": 1337,
+        "complete": true
+      }
+    },
+    {
+      "directory": "project-scope-retest",
+      "case": "project_to_user_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "5a88f376-07fb-414f-a004-7ca73bca4859",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/project-scope-retest/project_to_user_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12386,
+        "output_tokens": 1090,
+        "complete": true
+      }
+    },
+    {
+      "directory": "draft-confirmation",
+      "case": "draft_confirmation",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "085f0a8d-17ed-42ae-9789-44bf2bffba59",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/draft-confirmation/draft_confirmation/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 12796,
+        "output_tokens": 1100,
+        "complete": true
+      }
+    },
+    {
+      "directory": "conflicting-create",
+      "case": "conflicting_create_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "ec8d8e93-06d0-4da2-9b8f-e1c18a590c38",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/conflicting-create/conflicting_create_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 10243,
+        "output_tokens": 934,
+        "complete": true
+      }
+    },
+    {
+      "directory": "foreign-owner",
+      "case": "foreign_owner_denied",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "no_write_request": true,
+        "no_agent_memory": true,
+        "foreign_unchanged": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "f185f4fa-7ebb-477b-b472-23b508313418",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/foreign-owner/foreign_owner_denied/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 11958,
+        "output_tokens": 1525,
+        "complete": true
+      }
+    },
+    {
+      "directory": "handoff-write",
+      "case": "handoff_user_preference",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "3fe1b245-0c47-4f10-9121-6ce7e693d112",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/handoff-write/handoff_user_preference/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 15419,
+        "output_tokens": 1435,
+        "complete": true
+      }
+    },
+    {
+      "directory": "final-specialist",
+      "case": "specialist_candidate",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "independent_validation_required": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "20c86680-011f-4d91-960d-eab4a3a380ad",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/final-specialist/specialist_candidate/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 9263,
+        "output_tokens": 807,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [
+    {
+      "case": "correction",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true,
+        "real_sigkill": true,
+        "review_not_repeated": true,
+        "one_write_tool_operation": true
+      },
+      "run_id": "490783e8-0c16-40fb-955c-1d8910546bbb",
+      "evidence": "docs/memory-write-evidence-2026-10-13/final-recovery/after_intent/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 13362,
+        "output_tokens": 1345,
+        "complete": true
+      }
+    },
+    {
+      "case": "correction",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true,
+        "real_sigkill": true,
+        "review_not_repeated": true,
+        "one_write_tool_operation": true
+      },
+      "run_id": "2608c80c-a688-461a-b09b-157d432bc7e9",
+      "evidence": "docs/memory-write-evidence-2026-10-13/final-recovery/after_tool_receipt/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 9790,
+        "output_tokens": 617,
+        "complete": true
+      }
+    },
+    {
+      "case": "correction",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true,
+        "real_sigkill": true,
+        "review_not_repeated": true,
+        "one_write_tool_operation": true
+      },
+      "run_id": "b3235d28-4e39-4e0a-9600-fdb071299770",
+      "evidence": "docs/memory-write-evidence-2026-10-13/final-recovery/inside_business_commit/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 13258,
+        "output_tokens": 1133,
+        "complete": true
+      }
+    },
+    {
+      "case": "correction",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "one_revision": true,
+        "old_version_preserved": true,
+        "current_round_not_invalidated": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true,
+        "real_sigkill": true,
+        "review_not_repeated": true,
+        "one_write_tool_operation": true
+      },
+      "run_id": "f9040f55-7024-4eb2-b7dc-8f0bc36279f6",
+      "evidence": "docs/memory-write-evidence-2026-10-13/final-recovery/after_business_commit/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 3,
+        "input_tokens": 9827,
+        "output_tokens": 607,
+        "complete": true
+      }
+    }
+  ],
+  "retained_failed_attempts": [
+    {
+      "directory": "live",
+      "case": "specialist_candidate",
+      "passed": false,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": false,
+        "no_retry_operations": true,
+        "one_request": false,
+        "one_intent_execution": false,
+        "frozen_valid_during_write": false,
+        "published_atomically": false,
+        "http_matches_model_operations": true,
+        "operations_confirmed": false
+      },
+      "run_id": "114c213d-8ac3-41cc-9e34-3c018c7bd3e2",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/live/specialist_candidate/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 2,
+        "input_tokens": 2554,
+        "output_tokens": 723,
+        "complete": false
+      }
+    }
+  ],
+  "passed": true,
+  "test_suites": {
+    "final-targeted-results.xml": {
+      "tests": 38,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "regression-results.xml": {
+      "tests": 856,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 291
+    },
+    "postgres-results.xml": {
+      "tests": 43,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "write-contract-results.xml": {
+      "tests": 28,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  }
+}

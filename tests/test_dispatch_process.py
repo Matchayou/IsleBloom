@@ -1,0 +1,74 @@
+import json
+import os
+from pathlib import Path
+import selectors
+import subprocess
+import sys
+from uuid import uuid4
+
+import pytest
+from test_postgres_process import url
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def cli(url, *args):
+    if args[0] == 'compare':
+        command = [sys.executable, str(ROOT/'tests/legacy_record_fixture.py'), 'dispatch', args[args.index('--group-id')+1]]
+        if '--fail-expert' in args: command.append('fail')
+    else:
+        command = [sys.executable, '-m', 'agent_core.dispatch_cli', *args]
+    return subprocess.run(command, env=dict(os.environ, DATABASE_URL=url),
+        capture_output=True, text=True, timeout=20)
+
+
+
+def result(output):
+    return next(json.loads(line) for line in output.splitlines() if line.startswith('{"group_id":'))
+
+
+def test_comparison_query_new_process_and_partial_failure(url):
+    group = str(uuid4())
+    first = cli(url, 'compare', '请三个专家分别比较方案的成本、速度与限制', '--group-id', group)
+    assert first.returncode == 0, first.stdout + first.stderr
+    queried = cli(url, 'show', group)
+    assert queried.returncode == 0 and result(first.stdout) == result(queried.stdout)
+    group = str(uuid4())
+    failed = cli(url, 'compare', '请三个专家分别比较方案的成本、速度与限制', '--group-id', group,
+                 '--fail-expert', 'speed')
+    assert failed.returncode == 1 and any(i['status'] == 'failed' for i in result(failed.stdout)['items'])
+    queried = cli(url, 'show', group)
+    assert queried.returncode == 1
+    assert [r['status'] for r in result(queried.stdout)['items']] == ['completed', 'failed', 'completed']
+
+
+def test_sigkill_dispatch_no_reexecution_and_all_children_interrupted(url):
+    group = str(uuid4())
+    child = subprocess.Popen([sys.executable, '-u', str(ROOT / 'tests/stage2_crash_worker.py'), group],
+        env=dict(os.environ, TEST_DATABASE_URL=url), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    try:
+        selector = selectors.DefaultSelector()
+        selector.register(child.stdout, selectors.EVENT_READ)
+        raw = b''
+        while b'READY_TO_KILL\n' not in raw:
+            assert selector.select(timeout=15), raw.decode()
+            chunk = os.read(child.stdout.fileno(), 65536)
+            assert chunk, raw.decode()
+            raw += chunk
+        selector.close()
+        child.kill()
+        child.wait(timeout=10)
+        assert child.returncode == -9
+    finally:
+        if child.poll() is None:
+            child.kill()
+            child.wait(timeout=10)
+        child.stdout.close()
+    queried = cli(url, 'show', group)
+    assert queried.returncode == 1, queried.stdout + queried.stderr
+    saved = result(queried.stdout)
+    assert saved['status'] == 'interrupted'
+    assert [i['status'] for i in saved['items']] == ['interrupted'] * 3
+    assert all(i['result'] is None for i in saved['items'])
+    assert 'core_event' not in queried.stdout
+    assert result(cli(url, 'show', group).stdout) == saved

@@ -1,0 +1,1031 @@
+{
+  "model": "deepseek-flash",
+  "base_url": "https://api.deepseek.com",
+  "protocol": "responses",
+  "source_type": "frozen public annual-report excerpts",
+  "semantic_signoff": "pending independent review",
+  "template": [
+    {
+      "node": {
+        "id": "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "dbf8ae97-d612-4e11-93e7-b2f0e9dae21c",
+        "resource_refs": [
+          {
+            "resource_id": "49c61c8e-fcea-440c-9543-478c6b57c341",
+            "snapshot_id": "cea64d88-31b9-4074-9605-8899ad5ee008",
+            "parse_id": "f7a9ee25-10a0-4b3f-b3fc-ca890483f328"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "baab95ab-39fd-4e69-bb24-27c0d6911f42",
+            "node_id": "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+            "command_id": "plan:template:093addbc-a949-4ce5-b3d7-875f5021a092:3ea702f6-de71-4c7c-872c-ca7033307ee2",
+            "node_revision": 1,
+            "context_snapshot_id": "27cceebf-3d73-4f64-887f-cea915f73d74",
+            "goal": "2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "49c61c8e-fcea-440c-9543-478c6b57c341",
+                "snapshot_id": "cea64d88-31b9-4074-9605-8899ad5ee008",
+                "parse_id": "f7a9ee25-10a0-4b3f-b3fc-ca890483f328"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "baab95ab-39fd-4e69-bb24-27c0d6911f42",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "baab95ab-39fd-4e69-bb24-27c0d6911f42",
+              "parent_run_id": "template:093addbc-a949-4ce5-b3d7-875f5021a092:0",
+              "agent_id": "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"49c61c8e-fcea-440c-9543-478c6b57c341\", \"snapshot_id\": \"cea64d88-31b9-4074-9605-8899ad5ee008\", \"parse_id\": \"f7a9ee25-10a0-4b3f-b3fc-ca890483f328\"}, \"name\": \"tesla-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"49c61c8e-fcea-440c-9543-478c6b57c341\", \"snapshot_id\": \"cea64d88-31b9-4074-9605-8899ad5ee008\", \"parse_id\": \"f7a9ee25-10a0-4b3f-b3fc-ca890483f328\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 56, text 0: Tesla,\\tInc.\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 56, text 1: Consolidated\\tStatements\\tof\\tCash\\tFlows\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 56, text 2: (in\\tmillions)\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 56, text 3: Year\\tEnded\\tDecember\\t31,\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 56, text 4: 2025\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 56, text 5: 2024\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 56, text 6: 2023\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 56, text 7: Cash\\tFlows\\tfrom\\tOperating\\tActivities\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 56, text 69: Net\\tcash\\tprovided\\tby\\toperating\\tactivities\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 56, text 70: 14,747\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 56, text 71: 14,923\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 56, text 72: 13,256\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 13, text 13: Competition\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 13, text 14: Automotive\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 13, text 15: The\\tworldwide\\tautomotive\\tmarket\\tis\\thighly\\tcompetitive\\tand\\twe\\texpect\\tit\\twill\\tbecome\\teven\\tmore\\tcompetitive\\tin\\tthe\\tfuture\\tas\\ta\\tsignificant\\tand\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 13, text 16: growing\\tnumber\\tof\\testablished\\tand\\tnew\\tautomobile\\tmanufacturers,\\tas\\twell\\tas\\tother\\tcompanies,\\thave\\tentered,\\tor\\tare\\treported\\tto\\thave\\tplans\\tto\\tenter\\tthe\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 13, text 17: electric\\tvehicle\\tmarket.\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 45, text 23: (Dollars\\tin\\tmillions)\", \"kind\": \"text\"}, {\"location\": \"line:19\", \"text\": \"PDF page 45, text 24: 2025\", \"kind\": \"text\"}, {\"location\": \"line:20\", \"text\": \"PDF page 45, text 25: 2024\", \"kind\": \"text\"}, {\"location\": \"line:21\", \"text\": \"PDF page 45, text 26: 2023\", \"kind\": \"text\"}, {\"location\": \"line:22\", \"text\": \"PDF page 45, text 27: Net\\tcash\\tprovided\\tby\\toperating\\tactivities\", \"kind\": \"text\"}, {\"location\": \"line:23\", \"text\": \"PDF page 45, text 28: $\", \"kind\": \"text\"}, {\"location\": \"line:24\", \"text\": \"PDF page 45, text 29: 14,747\", \"kind\": \"text\"}, {\"location\": \"line:25\", \"text\": \"PDF page 45, text 57: Cash\\tFlows\\tfrom\\tInvesting\\tActivities\", \"kind\": \"text\"}, {\"location\": \"line:26\", \"text\": \"PDF page 45, text 58: Net\\tcash\\tflows\\tfrom\\tinvesting\\tactivities\\tand\\ttheir\\tvariability\\tacross\\teach\\tperiod\\trelated\\tprimarily\\tto\\tcapital\\texpenditures,\\twhich\\twere\\t$8.53\\tbillion\", \"kind\": \"text\"}, {\"location\": \"line:27\", \"text\": \"PDF page 45, text 59: and\\t$11.34\\tbillion\\tfor\\tthe\\tyears\\tended\\tDecember\\t31,\\t2025\\tand\\t2024,\\trespectively,\\tmainly\\tfor\\tglobal\\tAI\\tand\\toperational\\tinfrastructure\\tand\\tfactory\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "baab95ab-39fd-4e69-bb24-27c0d6911f42",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 3,
+                "input_tokens": 11635,
+                "output_tokens": 8501,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited basis is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:baab95ab-39fd-4e69-bb24-27c0d6911f42",
+            "created_at": "2026-10-03T00:43:09.656535+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "c9a0b0b5-ddc3-405c-806f-8cb342c7d2d0",
+        "resource_refs": [
+          {
+            "resource_id": "dea071bd-af16-4f67-a344-bdefa95f4390",
+            "snapshot_id": "1c683e96-fc89-4393-84aa-52eb117702bb",
+            "parse_id": "d25c7b30-3744-4d2e-9b54-59ea91401d04"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          240.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "c19b4c68-1363-4568-8ffc-272aa48dc12b",
+            "node_id": "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+            "command_id": "plan:template:093addbc-a949-4ce5-b3d7-875f5021a092:8e46141a-3acc-4319-a7ac-3c9bcba38162",
+            "node_revision": 1,
+            "context_snapshot_id": "8f3b1271-7b5c-419a-94ae-2a6a90e491e6",
+            "goal": "2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "dea071bd-af16-4f67-a344-bdefa95f4390",
+                "snapshot_id": "1c683e96-fc89-4393-84aa-52eb117702bb",
+                "parse_id": "d25c7b30-3744-4d2e-9b54-59ea91401d04"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "c19b4c68-1363-4568-8ffc-272aa48dc12b",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "c19b4c68-1363-4568-8ffc-272aa48dc12b",
+              "parent_run_id": "template:093addbc-a949-4ce5-b3d7-875f5021a092:0",
+              "agent_id": "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"dea071bd-af16-4f67-a344-bdefa95f4390\", \"snapshot_id\": \"1c683e96-fc89-4393-84aa-52eb117702bb\", \"parse_id\": \"d25c7b30-3744-4d2e-9b54-59ea91401d04\"}, \"name\": \"ford-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"dea071bd-af16-4f67-a344-bdefa95f4390\", \"snapshot_id\": \"1c683e96-fc89-4393-84aa-52eb117702bb\", \"parse_id\": \"d25c7b30-3744-4d2e-9b54-59ea91401d04\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 89, text 1: The following tables provide supplemental cash flow information (in millions):\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 89, text 2: For the Year Ended December 31, 2025\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 89, text 3: Cash flows from operating activities\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 89, text 4: Company\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 89, text 5: excluding\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 89, text 6: Ford Credit\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 89, text 7: Ford Credit\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 89, text 8: Eliminations\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 89, text 9: Consolidated\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 89, text 175: Net cash provided by/(used in) operating activities\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 89, text 176: $\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 89, text 177: 8,351\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 89, text 178: $\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 89, text 179: 12,931\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 89, text 180: $\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 89, text 181: -\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 89, text 182: $\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 89, text 183: 21,282\", \"kind\": \"text\"}, {\"location\": \"line:19\", \"text\": \"PDF page 24, text 11: Operational Risks\", \"kind\": \"text\"}, {\"location\": \"line:20\", \"text\": \"PDF page 24, text 12: Ford's long-term success depends on delivering the Ford+ plan, including improving cost competitiveness.\", \"kind\": \"text\"}, {\"location\": \"line:21\", \"text\": \"PDF page 24, text 24: balance sheet that provides the flexibility to invest in these opportunities are critical to the success of our Ford+ plan.  If\", \"kind\": \"text\"}, {\"location\": \"line:22\", \"text\": \"PDF page 24, text 25: we are unable to optimize our capital allocation among vehicles (and propulsion systems among our vehicles), services,\", \"kind\": \"text\"}, {\"location\": \"line:23\", \"text\": \"PDF page 24, text 26: technology, and other calls on capital, make sufficient and timely progress to become competitive on cost and quality and\", \"kind\": \"text\"}, {\"location\": \"line:24\", \"text\": \"PDF page 24, text 27: ensure that progress is sustainable, or we are otherwise not successful in executing Ford+ (or are delayed for reasons\", \"kind\": \"text\"}, {\"location\": \"line:25\", \"text\": \"PDF page 24, text 28: outside of our control), we may not be able to realize the full benefits of our plan, which could have an adverse effect on\", \"kind\": \"text\"}, {\"location\": \"line:26\", \"text\": \"PDF page 24, text 29: our financial condition or results of operations.  Furthermore, if we fail to make progress on our plan at the pace that\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "c19b4c68-1363-4568-8ffc-272aa48dc12b",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 4,
+                "input_tokens": 15614,
+                "output_tokens": 5169,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited currency is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:c19b4c68-1363-4568-8ffc-272aa48dc12b",
+            "created_at": "2026-10-03T00:43:09.672144+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "d24f1f79-46a6-47e1-a36c-b68b311f53de",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "cf04ef67-9ce0-4ea5-8d94-e54a33bbf8d1",
+        "resource_refs": [
+          {
+            "resource_id": "de332c3e-1c1d-408d-8042-58dccb336feb",
+            "snapshot_id": "aed58885-090c-4059-8c44-fb1dec7e2e69",
+            "parse_id": "e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          480.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "c945213c-8e3f-4ec9-8052-795e7ccdd940",
+            "node_id": "d24f1f79-46a6-47e1-a36c-b68b311f53de",
+            "command_id": "plan:template:093addbc-a949-4ce5-b3d7-875f5021a092:d24f1f79-46a6-47e1-a36c-b68b311f53de",
+            "node_revision": 1,
+            "context_snapshot_id": "298def0a-e806-4f6f-ba87-1aa5afbd4557",
+            "goal": "2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "de332c3e-1c1d-408d-8042-58dccb336feb",
+                "snapshot_id": "aed58885-090c-4059-8c44-fb1dec7e2e69",
+                "parse_id": "e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "c945213c-8e3f-4ec9-8052-795e7ccdd940",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "c945213c-8e3f-4ec9-8052-795e7ccdd940",
+              "parent_run_id": "template:093addbc-a949-4ce5-b3d7-875f5021a092:0",
+              "agent_id": "d24f1f79-46a6-47e1-a36c-b68b311f53de",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"de332c3e-1c1d-408d-8042-58dccb336feb\", \"snapshot_id\": \"aed58885-090c-4059-8c44-fb1dec7e2e69\", \"parse_id\": \"e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f\"}, \"name\": \"gm-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"de332c3e-1c1d-408d-8042-58dccb336feb\", \"snapshot_id\": \"aed58885-090c-4059-8c44-fb1dec7e2e69\", \"parse_id\": \"e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 61, text 0: GENERAL MOTORS COMPANY AND SUBSIDIARIES\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 61, text 1: CONSOLIDATED STATEMENTS OF CASH FLOWS\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 61, text 2: (In millions)\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 61, text 3: Years Ended December 31,\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 61, text 4: 2025\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 61, text 5: 2024\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 61, text 6: 2023\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 61, text 7: Cash flows from operating activities\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 61, text 8: Net income (loss)\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 61, text 9: $\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 61, text 10: 2,780\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 61, text 78: Net cash provided by (used in) operating activities\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 61, text 80: 26,867\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 61, text 82: 20,129\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 61, text 84: 20,930\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 17, text 3: Risks related to our competition and strategy\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 17, text 4: If we do not deliver new products, services, technologies, and customer experiences in response to increased competition\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 17, text 5: and changing consumer needs and preferences, our business could suffer.\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "c945213c-8e3f-4ec9-8052-795e7ccdd940",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 3,
+                "input_tokens": 12478,
+                "output_tokens": 7544,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited company is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:c945213c-8e3f-4ec9-8052-795e7ccdd940",
+            "created_at": "2026-10-03T00:43:09.683579+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "e7ac521d-c2a9-4335-a275-c2ba3fc15217",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。",
+        "instruction_version": 2,
+        "scope_id": "8a84ea1f-c347-4cd9-a95a-c0a335cacd35",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": "result:b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+        "position": [
+          720.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+            "node_id": "e7ac521d-c2a9-4335-a275-c2ba3fc15217",
+            "command_id": "plan:template:093addbc-a949-4ce5-b3d7-875f5021a092:e7ac521d-c2a9-4335-a275-c2ba3fc15217",
+            "node_revision": 1,
+            "context_snapshot_id": "26ce6ad2-e852-47fb-a9fc-fc452e9fd859",
+            "goal": "比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。",
+            "instructions": "只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。",
+            "instruction_version": 2,
+            "resource_refs": [],
+            "result_ids": [],
+            "missing": [
+              "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+              "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+              "d24f1f79-46a6-47e1-a36c-b68b311f53de"
+            ],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+              "parent_run_id": "template:093addbc-a949-4ce5-b3d7-875f5021a092:1",
+              "agent_id": "e7ac521d-c2a9-4335-a275-c2ba3fc15217",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。\\n用户指令：只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。\\n缺失项：3ea702f6-de71-4c7c-872c-ca7033307ee2, 8e46141a-3acc-4319-a7ac-3c9bcba38162, d24f1f79-46a6-47e1-a36c-b68b311f53de\", \"sources\": [], \"content\": []}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "succeeded",
+            "result": {
+              "run_id": "b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+              "status": "succeeded",
+              "output": {
+                "claims": [
+                  {
+                    "missing": [
+                      "三家公司名称、报告期、币种、单位与合并/单体口径",
+                      "三家公司现金流各项数据",
+                      "竞争风险数据或定性结论",
+                      "三个标记缺失项的正文"
+                    ],
+                    "citations": [],
+                    "statement": "本次交接未挂载任何来源（sources 与 content 均为空），因此无法对 2025 年汽车制造业三家公司的现金流与竞争风险进行任何数值比较或排序。"
+                  },
+                  {
+                    "missing": [
+                      "3ea702f6-de71-4c7c-872c-ca7033307ee2 的正文",
+                      "8e46141a-3acc-4319-a7ac-3c9bcba38162 的正文",
+                      "d24f1f79-46a6-47e1-a36c-b68b311f53de 的正文"
+                    ],
+                    "citations": [],
+                    "statement": "交接中标记的三个缺失项未提供正文，相关数值一律按缺失保留，未按零处理或估算。"
+                  }
+                ],
+                "report": "# 2025 汽车制造业三家公司现金流与竞争风险比较\n\n## 1. 资料可用性核对\n\n本次交接的 `sources` 为空、`content` 为空，没有可读取的已检查结果正文。因此**无法核对任何单位、期间、币种或数值**，也无法判断三家公司分别是谁。按“未知项不得按零处理”的要求，下表所有单元格标记为「缺失」，不填 0、不填估算值。\n\n## 2. 比较表\n\n| 比较维度 | 公司一 | 公司二 | 公司三 |\n|---|---|---|---|\n| 公司名称/代码 | 缺失 | 缺失 | 缺失 |\n| 报告期 | 缺失 | 缺失 | 缺失 |\n| 币种 | 缺失 | 缺失 | 缺失 |\n| 金额单位 | 缺失 | 缺失 | 缺失 |\n| 合并/单体口径 | 缺失 | 缺失 | 缺失 |\n| 经营活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 投资活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 筹资活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 现金及现金等价物净增加额 | 缺失 | 缺失 | 缺失 |\n| 自由现金流（如来源定义） | 缺失 | 缺失 | 缺失 |\n| 竞争风险相关指标/定性结论 | 缺失 | 缺失 | 缺失 |\n\n## 3. 结论与限制\n\n- 由于没有任何挂载来源，**不能给出任何数值结论、排序（最高/最低）或同比/环比判断**。\n- 无法区分绝对金额与比例，也无法执行“逐项核对表格全部行”的要求。\n- 交接中标记的三个缺失项（`3ea702f6-de71-4c7c-872c-ca7033307ee2`、`8e46141a-3acc-4319-a7ac-3c9bcba38162`、`d24f1f79-46a6-47e1-a36c-b68b311f53de`）未提供正文，按缺失保留，未作推断或补值。\n- 本结果不声称经过证据链验证。\n\n## 4. 补齐后可执行的分析路径\n\n1. 先确认三家公司名称，并统一报告期、币种、单位与合并/单体口径。\n2. 从现金流量表逐项抽取经营/投资/筹资活动净额与现金净增加额，核对合计关系。\n3. 在口径一致后计算比例类指标（如经营现金流/营收、自由现金流/营收），排序时才比较全部行。\n4. 竞争风险部分需来源明确给出指标或定性描述，否则同样标记缺失。\n",
+                "missing": [
+                  "三家公司名称与证券代码",
+                  "统一报告期（2025 年具体区间，如 2025 年度/2025Q3）",
+                  "币种",
+                  "金额单位",
+                  "合并或单体口径",
+                  "经营活动现金流净额数据",
+                  "投资活动现金流净额数据",
+                  "筹资活动现金流净额数据",
+                  "现金及现金等价物净增加额数据",
+                  "自由现金流及其定义",
+                  "竞争风险相关指标或定性结论",
+                  "缺失项 3ea702f6-de71-4c7c-872c-ca7033307ee2 的正文",
+                  "缺失项 8e46141a-3acc-4319-a7ac-3c9bcba38162 的正文",
+                  "缺失项 d24f1f79-46a6-47e1-a36c-b68b311f53de 的正文"
+                ]
+              },
+              "usage": {
+                "requests": 1,
+                "input_tokens": 1277,
+                "output_tokens": 1322,
+                "complete": true
+              },
+              "error": null
+            },
+            "commit_id": "run:b023eba0-edac-404b-9beb-c6dcb7f65d7d",
+            "created_at": "2026-10-03T00:43:40.347949+08:00"
+          }
+        }
+      ],
+      "output": "# 2025 汽车制造业三家公司现金流与竞争风险比较\n\n## 1. 资料可用性核对\n\n本次交接的 `sources` 为空、`content` 为空，没有可读取的已检查结果正文。因此**无法核对任何单位、期间、币种或数值**，也无法判断三家公司分别是谁。按“未知项不得按零处理”的要求，下表所有单元格标记为「缺失」，不填 0、不填估算值。\n\n## 2. 比较表\n\n| 比较维度 | 公司一 | 公司二 | 公司三 |\n|---|---|---|---|\n| 公司名称/代码 | 缺失 | 缺失 | 缺失 |\n| 报告期 | 缺失 | 缺失 | 缺失 |\n| 币种 | 缺失 | 缺失 | 缺失 |\n| 金额单位 | 缺失 | 缺失 | 缺失 |\n| 合并/单体口径 | 缺失 | 缺失 | 缺失 |\n| 经营活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 投资活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 筹资活动现金流净额 | 缺失 | 缺失 | 缺失 |\n| 现金及现金等价物净增加额 | 缺失 | 缺失 | 缺失 |\n| 自由现金流（如来源定义） | 缺失 | 缺失 | 缺失 |\n| 竞争风险相关指标/定性结论 | 缺失 | 缺失 | 缺失 |\n\n## 3. 结论与限制\n\n- 由于没有任何挂载来源，**不能给出任何数值结论、排序（最高/最低）或同比/环比判断**。\n- 无法区分绝对金额与比例，也无法执行“逐项核对表格全部行”的要求。\n- 交接中标记的三个缺失项（`3ea702f6-de71-4c7c-872c-ca7033307ee2`、`8e46141a-3acc-4319-a7ac-3c9bcba38162`、`d24f1f79-46a6-47e1-a36c-b68b311f53de`）未提供正文，按缺失保留，未作推断或补值。\n- 本结果不声称经过证据链验证。\n\n## 4. 补齐后可执行的分析路径\n\n1. 先确认三家公司名称，并统一报告期、币种、单位与合并/单体口径。\n2. 从现金流量表逐项抽取经营/投资/筹资活动净额与现金净增加额，核对合计关系。\n3. 在口径一致后计算比例类指标（如经营现金流/营收、自由现金流/营收），排序时才比较全部行。\n4. 竞争风险部分需来源明确给出指标或定性描述，否则同样标记缺失。\n"
+    }
+  ],
+  "instance": {
+    "id": "093addbc-a949-4ce5-b3d7-875f5021a092",
+    "asset_id": "three-company-research",
+    "version": "v2",
+    "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+    "parameters": {
+      "industry": "2025 汽车制造业",
+      "company_a": "Tesla",
+      "report_a": {
+        "resource_id": "49c61c8e-fcea-440c-9543-478c6b57c341",
+        "snapshot_id": "cea64d88-31b9-4074-9605-8899ad5ee008",
+        "parse_id": "f7a9ee25-10a0-4b3f-b3fc-ca890483f328"
+      },
+      "company_b": "Ford",
+      "report_b": {
+        "resource_id": "dea071bd-af16-4f67-a344-bdefa95f4390",
+        "snapshot_id": "1c683e96-fc89-4393-84aa-52eb117702bb",
+        "parse_id": "d25c7b30-3744-4d2e-9b54-59ea91401d04"
+      },
+      "company_c": "GM",
+      "report_c": {
+        "resource_id": "de332c3e-1c1d-408d-8042-58dccb336feb",
+        "snapshot_id": "aed58885-090c-4059-8c44-fb1dec7e2e69",
+        "parse_id": "e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f"
+      }
+    },
+    "fingerprint": "3b1fd24244fb65c59686138d4b8629b83812dde233733af336a0780b53ba3e77",
+    "template_digest": "659d7e70b0c5655974762690043c6105aab7921056d8f7334e34130403e1fb91",
+    "bindings": {
+      "3ea702f6-de71-4c7c-872c-ca7033307ee2": {
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-v1",
+        "method_digest": "1d3e334b4d07f639b0296b02072e3e31c950621d3c1e32607d20283ba5360ea2",
+        "asset_digest": "791b5f0e4146e48b6a47514f142e59e7b6363425d6f8546c4ae29d6f8e191403"
+      },
+      "8e46141a-3acc-4319-a7ac-3c9bcba38162": {
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-v1",
+        "method_digest": "1d3e334b4d07f639b0296b02072e3e31c950621d3c1e32607d20283ba5360ea2",
+        "asset_digest": "791b5f0e4146e48b6a47514f142e59e7b6363425d6f8546c4ae29d6f8e191403"
+      },
+      "d24f1f79-46a6-47e1-a36c-b68b311f53de": {
+        "expert_id": "expert_synthesize",
+        "method_version": "synthesize-v1",
+        "method_digest": "1d3e334b4d07f639b0296b02072e3e31c950621d3c1e32607d20283ba5360ea2",
+        "asset_digest": "791b5f0e4146e48b6a47514f142e59e7b6363425d6f8546c4ae29d6f8e191403"
+      },
+      "e7ac521d-c2a9-4335-a275-c2ba3fc15217": {
+        "expert_id": "expert_analyze",
+        "method_version": "analyze-v1",
+        "method_digest": "46aaab3facd0de31b8f7103603eb2a32d73d536a0e3500ea0e5f1824bebbd1b1",
+        "asset_digest": "7a9f21ae66779a36e41f68c635f39a75653408925999c206146222b0e9131ab7"
+      }
+    },
+    "plan": {
+      "id": "template:093addbc-a949-4ce5-b3d7-875f5021a092",
+      "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+      "steps": [
+        {
+          "node_id": "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+          "depends_on": []
+        },
+        {
+          "node_id": "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+          "depends_on": []
+        },
+        {
+          "node_id": "d24f1f79-46a6-47e1-a36c-b68b311f53de",
+          "depends_on": []
+        },
+        {
+          "node_id": "e7ac521d-c2a9-4335-a275-c2ba3fc15217",
+          "depends_on": [
+            "3ea702f6-de71-4c7c-872c-ca7033307ee2",
+            "8e46141a-3acc-4319-a7ac-3c9bcba38162",
+            "d24f1f79-46a6-47e1-a36c-b68b311f53de"
+          ]
+        }
+      ],
+      "policy": {
+        "max_concurrency": 3,
+        "max_runs": 4,
+        "max_total_tokens": null,
+        "timeout_seconds": 300.0,
+        "completion": "all_settled"
+      }
+    }
+  },
+  "manual": [
+    {
+      "node": {
+        "id": "6098a48c-4624-4b2d-86da-d9d82daf6553",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "8cdaf3f3-ffef-48ed-8886-562c75e01735",
+        "resource_refs": [
+          {
+            "resource_id": "49c61c8e-fcea-440c-9543-478c6b57c341",
+            "snapshot_id": "cea64d88-31b9-4074-9605-8899ad5ee008",
+            "parse_id": "f7a9ee25-10a0-4b3f-b3fc-ca890483f328"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "427bbe6d-6d3a-4bd9-a2e3-fd6c9b63f223",
+            "node_id": "6098a48c-4624-4b2d-86da-d9d82daf6553",
+            "command_id": "plan:8d171254-6e75-402a-bff5-bb40c6f83083:6098a48c-4624-4b2d-86da-d9d82daf6553",
+            "node_revision": 1,
+            "context_snapshot_id": "61c57cdc-fffd-4434-a181-4249780140ae",
+            "goal": "2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "49c61c8e-fcea-440c-9543-478c6b57c341",
+                "snapshot_id": "cea64d88-31b9-4074-9605-8899ad5ee008",
+                "parse_id": "f7a9ee25-10a0-4b3f-b3fc-ca890483f328"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "427bbe6d-6d3a-4bd9-a2e3-fd6c9b63f223",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "427bbe6d-6d3a-4bd9-a2e3-fd6c9b63f223",
+              "parent_run_id": "8d171254-6e75-402a-bff5-bb40c6f83083:0",
+              "agent_id": "6098a48c-4624-4b2d-86da-d9d82daf6553",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 Tesla 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"49c61c8e-fcea-440c-9543-478c6b57c341\", \"snapshot_id\": \"cea64d88-31b9-4074-9605-8899ad5ee008\", \"parse_id\": \"f7a9ee25-10a0-4b3f-b3fc-ca890483f328\"}, \"name\": \"tesla-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"49c61c8e-fcea-440c-9543-478c6b57c341\", \"snapshot_id\": \"cea64d88-31b9-4074-9605-8899ad5ee008\", \"parse_id\": \"f7a9ee25-10a0-4b3f-b3fc-ca890483f328\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 56, text 0: Tesla,\\tInc.\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 56, text 1: Consolidated\\tStatements\\tof\\tCash\\tFlows\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 56, text 2: (in\\tmillions)\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 56, text 3: Year\\tEnded\\tDecember\\t31,\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 56, text 4: 2025\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 56, text 5: 2024\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 56, text 6: 2023\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 56, text 7: Cash\\tFlows\\tfrom\\tOperating\\tActivities\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 56, text 69: Net\\tcash\\tprovided\\tby\\toperating\\tactivities\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 56, text 70: 14,747\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 56, text 71: 14,923\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 56, text 72: 13,256\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 13, text 13: Competition\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 13, text 14: Automotive\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 13, text 15: The\\tworldwide\\tautomotive\\tmarket\\tis\\thighly\\tcompetitive\\tand\\twe\\texpect\\tit\\twill\\tbecome\\teven\\tmore\\tcompetitive\\tin\\tthe\\tfuture\\tas\\ta\\tsignificant\\tand\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 13, text 16: growing\\tnumber\\tof\\testablished\\tand\\tnew\\tautomobile\\tmanufacturers,\\tas\\twell\\tas\\tother\\tcompanies,\\thave\\tentered,\\tor\\tare\\treported\\tto\\thave\\tplans\\tto\\tenter\\tthe\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 13, text 17: electric\\tvehicle\\tmarket.\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 45, text 23: (Dollars\\tin\\tmillions)\", \"kind\": \"text\"}, {\"location\": \"line:19\", \"text\": \"PDF page 45, text 24: 2025\", \"kind\": \"text\"}, {\"location\": \"line:20\", \"text\": \"PDF page 45, text 25: 2024\", \"kind\": \"text\"}, {\"location\": \"line:21\", \"text\": \"PDF page 45, text 26: 2023\", \"kind\": \"text\"}, {\"location\": \"line:22\", \"text\": \"PDF page 45, text 27: Net\\tcash\\tprovided\\tby\\toperating\\tactivities\", \"kind\": \"text\"}, {\"location\": \"line:23\", \"text\": \"PDF page 45, text 28: $\", \"kind\": \"text\"}, {\"location\": \"line:24\", \"text\": \"PDF page 45, text 29: 14,747\", \"kind\": \"text\"}, {\"location\": \"line:25\", \"text\": \"PDF page 45, text 57: Cash\\tFlows\\tfrom\\tInvesting\\tActivities\", \"kind\": \"text\"}, {\"location\": \"line:26\", \"text\": \"PDF page 45, text 58: Net\\tcash\\tflows\\tfrom\\tinvesting\\tactivities\\tand\\ttheir\\tvariability\\tacross\\teach\\tperiod\\trelated\\tprimarily\\tto\\tcapital\\texpenditures,\\twhich\\twere\\t$8.53\\tbillion\", \"kind\": \"text\"}, {\"location\": \"line:27\", \"text\": \"PDF page 45, text 59: and\\t$11.34\\tbillion\\tfor\\tthe\\tyears\\tended\\tDecember\\t31,\\t2025\\tand\\t2024,\\trespectively,\\tmainly\\tfor\\tglobal\\tAI\\tand\\toperational\\tinfrastructure\\tand\\tfactory\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "427bbe6d-6d3a-4bd9-a2e3-fd6c9b63f223",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 3,
+                "input_tokens": 12450,
+                "output_tokens": 9641,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited period is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:427bbe6d-6d3a-4bd9-a2e3-fd6c9b63f223",
+            "created_at": "2026-10-03T00:43:46.663189+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "3868088a-dc83-47ff-8fcb-8558f81a266f",
+        "resource_refs": [
+          {
+            "resource_id": "dea071bd-af16-4f67-a344-bdefa95f4390",
+            "snapshot_id": "1c683e96-fc89-4393-84aa-52eb117702bb",
+            "parse_id": "d25c7b30-3744-4d2e-9b54-59ea91401d04"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "0676a150-68df-4c92-ba2d-5e240437941b",
+            "node_id": "0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+            "command_id": "plan:8d171254-6e75-402a-bff5-bb40c6f83083:0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+            "node_revision": 1,
+            "context_snapshot_id": "d38c555f-c4e3-48e4-8ed4-87830ff95c43",
+            "goal": "2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "dea071bd-af16-4f67-a344-bdefa95f4390",
+                "snapshot_id": "1c683e96-fc89-4393-84aa-52eb117702bb",
+                "parse_id": "d25c7b30-3744-4d2e-9b54-59ea91401d04"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "0676a150-68df-4c92-ba2d-5e240437941b",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "0676a150-68df-4c92-ba2d-5e240437941b",
+              "parent_run_id": "8d171254-6e75-402a-bff5-bb40c6f83083:0",
+              "agent_id": "0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 Ford 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"dea071bd-af16-4f67-a344-bdefa95f4390\", \"snapshot_id\": \"1c683e96-fc89-4393-84aa-52eb117702bb\", \"parse_id\": \"d25c7b30-3744-4d2e-9b54-59ea91401d04\"}, \"name\": \"ford-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"dea071bd-af16-4f67-a344-bdefa95f4390\", \"snapshot_id\": \"1c683e96-fc89-4393-84aa-52eb117702bb\", \"parse_id\": \"d25c7b30-3744-4d2e-9b54-59ea91401d04\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 89, text 1: The following tables provide supplemental cash flow information (in millions):\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 89, text 2: For the Year Ended December 31, 2025\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 89, text 3: Cash flows from operating activities\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 89, text 4: Company\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 89, text 5: excluding\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 89, text 6: Ford Credit\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 89, text 7: Ford Credit\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 89, text 8: Eliminations\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 89, text 9: Consolidated\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 89, text 175: Net cash provided by/(used in) operating activities\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 89, text 176: $\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 89, text 177: 8,351\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 89, text 178: $\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 89, text 179: 12,931\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 89, text 180: $\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 89, text 181: -\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 89, text 182: $\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 89, text 183: 21,282\", \"kind\": \"text\"}, {\"location\": \"line:19\", \"text\": \"PDF page 24, text 11: Operational Risks\", \"kind\": \"text\"}, {\"location\": \"line:20\", \"text\": \"PDF page 24, text 12: Ford's long-term success depends on delivering the Ford+ plan, including improving cost competitiveness.\", \"kind\": \"text\"}, {\"location\": \"line:21\", \"text\": \"PDF page 24, text 24: balance sheet that provides the flexibility to invest in these opportunities are critical to the success of our Ford+ plan.  If\", \"kind\": \"text\"}, {\"location\": \"line:22\", \"text\": \"PDF page 24, text 25: we are unable to optimize our capital allocation among vehicles (and propulsion systems among our vehicles), services,\", \"kind\": \"text\"}, {\"location\": \"line:23\", \"text\": \"PDF page 24, text 26: technology, and other calls on capital, make sufficient and timely progress to become competitive on cost and quality and\", \"kind\": \"text\"}, {\"location\": \"line:24\", \"text\": \"PDF page 24, text 27: ensure that progress is sustainable, or we are otherwise not successful in executing Ford+ (or are delayed for reasons\", \"kind\": \"text\"}, {\"location\": \"line:25\", \"text\": \"PDF page 24, text 28: outside of our control), we may not be able to realize the full benefits of our plan, which could have an adverse effect on\", \"kind\": \"text\"}, {\"location\": \"line:26\", \"text\": \"PDF page 24, text 29: our financial condition or results of operations.  Furthermore, if we fail to make progress on our plan at the pace that\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "0676a150-68df-4c92-ba2d-5e240437941b",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 3,
+                "input_tokens": 13652,
+                "output_tokens": 9138,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited basis is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:0676a150-68df-4c92-ba2d-5e240437941b",
+            "created_at": "2026-10-03T00:43:46.642481+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "5d51446e-3cdd-48fb-99fe-50907ba83540",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+        "instruction_version": 2,
+        "scope_id": "d3fde3cf-564b-4ba6-88b5-d7dcc032ba19",
+        "resource_refs": [
+          {
+            "resource_id": "de332c3e-1c1d-408d-8042-58dccb336feb",
+            "snapshot_id": "aed58885-090c-4059-8c44-fb1dec7e2e69",
+            "parse_id": "e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f"
+          }
+        ],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": null,
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "379d9ad6-6381-4cba-a601-e29bbadf2a2f",
+            "node_id": "5d51446e-3cdd-48fb-99fe-50907ba83540",
+            "command_id": "plan:8d171254-6e75-402a-bff5-bb40c6f83083:5d51446e-3cdd-48fb-99fe-50907ba83540",
+            "node_revision": 1,
+            "context_snapshot_id": "4eccd807-9cbd-41a0-924e-fbaea5b0f1bc",
+            "goal": "2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。",
+            "instructions": "综合获准结论，区分来源事实、推论和仍未知项。",
+            "instruction_version": 2,
+            "resource_refs": [
+              {
+                "resource_id": "de332c3e-1c1d-408d-8042-58dccb336feb",
+                "snapshot_id": "aed58885-090c-4059-8c44-fb1dec7e2e69",
+                "parse_id": "e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f"
+              }
+            ],
+            "result_ids": [],
+            "missing": [],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "379d9ad6-6381-4cba-a601-e29bbadf2a2f",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "379d9ad6-6381-4cba-a601-e29bbadf2a2f",
+              "parent_run_id": "8d171254-6e75-402a-bff5-bb40c6f83083:0",
+              "agent_id": "5d51446e-3cdd-48fb-99fe-50907ba83540",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"2025 汽车制造业：分析 GM 的现金流与竞争风险，核对期间、单位、来源及缺失。\\n用户指令：综合获准结论，区分来源事实、推论和仍未知项。\\n缺失项：\", \"sources\": [{\"ref\": {\"resource_id\": \"de332c3e-1c1d-408d-8042-58dccb336feb\", \"snapshot_id\": \"aed58885-090c-4059-8c44-fb1dec7e2e69\", \"parse_id\": \"e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f\"}, \"name\": \"gm-2025-stage8.txt\", \"kind\": \"upload\", \"parse_status\": \"ready\", \"missing\": []}], \"content\": [{\"ref\": {\"resource_id\": \"de332c3e-1c1d-408d-8042-58dccb336feb\", \"snapshot_id\": \"aed58885-090c-4059-8c44-fb1dec7e2e69\", \"parse_id\": \"e2ca6f5e-4c5f-43f3-aca6-90c4494c9e3f\"}, \"fragments\": [{\"location\": \"line:1\", \"text\": \"PDF page 61, text 0: GENERAL MOTORS COMPANY AND SUBSIDIARIES\", \"kind\": \"text\"}, {\"location\": \"line:2\", \"text\": \"PDF page 61, text 1: CONSOLIDATED STATEMENTS OF CASH FLOWS\", \"kind\": \"text\"}, {\"location\": \"line:3\", \"text\": \"PDF page 61, text 2: (In millions)\", \"kind\": \"text\"}, {\"location\": \"line:4\", \"text\": \"PDF page 61, text 3: Years Ended December 31,\", \"kind\": \"text\"}, {\"location\": \"line:5\", \"text\": \"PDF page 61, text 4: 2025\", \"kind\": \"text\"}, {\"location\": \"line:6\", \"text\": \"PDF page 61, text 5: 2024\", \"kind\": \"text\"}, {\"location\": \"line:7\", \"text\": \"PDF page 61, text 6: 2023\", \"kind\": \"text\"}, {\"location\": \"line:8\", \"text\": \"PDF page 61, text 7: Cash flows from operating activities\", \"kind\": \"text\"}, {\"location\": \"line:9\", \"text\": \"PDF page 61, text 8: Net income (loss)\", \"kind\": \"text\"}, {\"location\": \"line:10\", \"text\": \"PDF page 61, text 9: $\", \"kind\": \"text\"}, {\"location\": \"line:11\", \"text\": \"PDF page 61, text 10: 2,780\", \"kind\": \"text\"}, {\"location\": \"line:12\", \"text\": \"PDF page 61, text 78: Net cash provided by (used in) operating activities\", \"kind\": \"text\"}, {\"location\": \"line:13\", \"text\": \"PDF page 61, text 80: 26,867\", \"kind\": \"text\"}, {\"location\": \"line:14\", \"text\": \"PDF page 61, text 82: 20,129\", \"kind\": \"text\"}, {\"location\": \"line:15\", \"text\": \"PDF page 61, text 84: 20,930\", \"kind\": \"text\"}, {\"location\": \"line:16\", \"text\": \"PDF page 17, text 3: Risks related to our competition and strategy\", \"kind\": \"text\"}, {\"location\": \"line:17\", \"text\": \"PDF page 17, text 4: If we do not deliver new products, services, technologies, and customer experiences in response to increased competition\", \"kind\": \"text\"}, {\"location\": \"line:18\", \"text\": \"PDF page 17, text 5: and changing consumer needs and preferences, our business could suffer.\", \"kind\": \"text\"}]}]}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "failed",
+            "result": {
+              "run_id": "379d9ad6-6381-4cba-a601-e29bbadf2a2f",
+              "status": "failed",
+              "output": null,
+              "usage": {
+                "requests": 4,
+                "input_tokens": 14113,
+                "output_tokens": 9943,
+                "complete": true
+              },
+              "error": {
+                "code": "evidence_invalid",
+                "origin": "app",
+                "message": "Cited company is not present in the parsed source",
+                "retryable": false,
+                "cause_id": null
+              }
+            },
+            "commit_id": "run:379d9ad6-6381-4cba-a601-e29bbadf2a2f",
+            "created_at": "2026-10-03T00:43:46.653196+08:00"
+          }
+        }
+      ],
+      "output": null
+    },
+    {
+      "node": {
+        "id": "2ad02447-8df1-448b-aecf-266d4eb65f57",
+        "research_id": "6495e6be-6684-482f-896f-13707f5a2abb",
+        "display_parent_id": null,
+        "goal": "比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。",
+        "allowed_tools": [
+          "read_source",
+          "search_source"
+        ],
+        "instructions": "只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。",
+        "instruction_version": 2,
+        "scope_id": "24e85190-ea3b-436a-b5da-0984acb3a54b",
+        "resource_refs": [],
+        "result_ids": [],
+        "selection": "selected",
+        "revision": 1,
+        "active_run_id": null,
+        "current_result_id": "result:bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+        "position": [
+          0.0,
+          0.0
+        ]
+      },
+      "runs": [
+        {
+          "binding": {
+            "run_id": "bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+            "node_id": "2ad02447-8df1-448b-aecf-266d4eb65f57",
+            "command_id": "plan:8d171254-6e75-402a-bff5-bb40c6f83083:2ad02447-8df1-448b-aecf-266d4eb65f57",
+            "node_revision": 1,
+            "context_snapshot_id": "188b9a59-f6ee-4288-8f9f-37d18a98b431",
+            "goal": "比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。",
+            "instructions": "只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。",
+            "instruction_version": 2,
+            "resource_refs": [],
+            "result_ids": [],
+            "missing": [
+              "6098a48c-4624-4b2d-86da-d9d82daf6553",
+              "0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+              "5d51446e-3cdd-48fb-99fe-50907ba83540"
+            ],
+            "limits": {
+              "max_turns": 8,
+              "timeout_seconds": 60.0,
+              "max_depth": 1,
+              "max_calls": 8
+            },
+            "chat_revision": null,
+            "evidence_required": false
+          },
+          "execution": {
+            "run_id": "bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+            "conversation_id": null,
+            "process_id": "07094661-8458-4e1f-b413-525226b0fc75",
+            "request": {
+              "run_id": "bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+              "parent_run_id": "8d171254-6e75-402a-bff5-bb40c6f83083:1",
+              "agent_id": "2ad02447-8df1-448b-aecf-266d4eb65f57",
+              "input": {
+                "messages": [
+                  {
+                    "role": "user",
+                    "content": "{\"goal\": \"比较 2025 汽车制造业 中三家公司的现金流与竞争风险；保留来源限制，输出比较表。\\n用户指令：只分析交接的已检查结果，核对单位、期间和数值，未知项不得按零处理。\\n缺失项：6098a48c-4624-4b2d-86da-d9d82daf6553, 0172d942-3c1d-4b3a-bfe3-bd3959647bf4, 5d51446e-3cdd-48fb-99fe-50907ba83540\", \"sources\": [], \"content\": []}"
+                  }
+                ]
+              },
+              "limits": {
+                "max_turns": 8,
+                "timeout_seconds": 60.0,
+                "max_depth": 1,
+                "max_calls": 8
+              },
+              "depth": 1
+            },
+            "expected_revision": 0,
+            "status": "succeeded",
+            "result": {
+              "run_id": "bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+              "status": "succeeded",
+              "output": {
+                "claims": [
+                  {
+                    "missing": [
+                      "sources 为空",
+                      "content 为空",
+                      "三家公司名称与财务数据",
+                      "报告期、币种、单位、合并/单体口径"
+                    ],
+                    "citations": [],
+                    "statement": "本次任务未挂载任何来源资料与结果正文，因此无法对 2025 年汽车制造业三家公司的现金流与竞争风险进行实质性比较。"
+                  },
+                  {
+                    "missing": [
+                      "现金流各项金额",
+                      "竞争风险定性信息",
+                      "可比口径说明"
+                    ],
+                    "citations": [],
+                    "statement": "在缺少来源的情况下，三家公司各项现金流指标与竞争风险均记为未知，且不按零处理，无法给出任何排序或最高/最低判断。"
+                  },
+                  {
+                    "missing": [
+                      "这三个标识对应的实际资料内容"
+                    ],
+                    "citations": [],
+                    "statement": "任务声明的三个缺失项标识为 6098a48c-4624-4b2d-86da-d9d82daf6553、0172d942-3c1d-4b3a-bfe3-bd3959647bf4、5d51446e-3cdd-48fb-99fe-50907ba83540。"
+                  }
+                ],
+                "report": "# 2025 汽车制造业三家公司现金流与竞争风险比较\n\n## 结论摘要\n\n本次任务**无法执行实质性比较**：挂载的可读资料为空（`sources` 与 `content` 均为空），没有任何交接的已检查结果可供引用。因此不存在可核对的报告期、币种、单位或合并/单体口径，也无法对三家公司进行现金流与竞争风险的事实性比较。所有数值结论均标记为未知，**不按零处理**。\n\n## 比较表（占位）\n\n| 对比项 | 公司 A | 公司 B | 公司 C |\n|---|---|---|---|\n| 资料来源 | 无 | 无 | 无 |\n| 报告期 | 未知 | 未知 | 未知 |\n| 币种 | 未知 | 未知 | 未知 |\n| 单位 | 未知 | 未知 | 未知 |\n| 合并/单体口径 | 未知 | 未知 | 未知 |\n| 经营活动现金流净额 | 未知 | 未知 | 未知 |\n| 投资活动现金流净额 | 未知 | 未知 | 未知 |\n| 筹资活动现金流净额 | 未知 | 未知 | 未知 |\n| 现金及现金等价物净增加额 | 未知 | 未知 | 未知 |\n| 竞争风险（定性） | 未知 | 未知 | 未知 |\n\n表中“未知”表示来源缺失，**不等于 0，也不表示无风险**；任何排序、最高/最低或比例判断均因缺少全部行数据而无法作出。\n\n## 缺失说明\n\n- 未挂载任何来源（`sources` 为空），无可引用的逐字原文，无法定位 `fragment.location`。\n- 未提供结果正文（`content` 为空），无法核对数值与表格逐项一致性。\n- 任务声明的三个缺失项标识：`6098a48c-4624-4b2d-86da-d9d82daf6553`、`0172d942-3c1d-4b3a-bfe3-bd3959647bf4`、`5d51446e-3cdd-48fb-99fe-50907ba83540`。\n- 三家公司名称、报告期、币种、单位、口径、现金流各项金额及竞争风险信息全部缺失。\n\n## 建议补充材料\n\n1. 三家公司的已检查结果正文（含公司名、报告期、币种、单位、合并/单体口径）。\n2. 现金流表原始数字（经营、投资、筹资、净增加额等）。\n3. 竞争风险相关描述性材料（市场份额、客户集中度、价格竞争、政策与产能等）。\n\n本报告不声称经过证据链验证。",
+                "missing": [
+                  "6098a48c-4624-4b2d-86da-d9d82daf6553",
+                  "0172d942-3c1d-4b3a-bfe3-bd3959647bf4",
+                  "5d51446e-3cdd-48fb-99fe-50907ba83540",
+                  "未挂载任何来源（sources 为空），无逐字原文与 fragment 定位",
+                  "未提供结果正文（content 为空），无法核对数值",
+                  "三家公司名称、报告期、币种、单位、合并/单体口径",
+                  "三家公司经营活动/投资活动/筹资活动现金流净额及现金净增加额",
+                  "三家公司竞争风险相关事实材料"
+                ]
+              },
+              "usage": {
+                "requests": 1,
+                "input_tokens": 1279,
+                "output_tokens": 1270,
+                "complete": true
+              },
+              "error": null
+            },
+            "commit_id": "run:bd7b97f5-dc4b-4d6b-88cf-43d687b64478",
+            "created_at": "2026-10-03T00:44:24.175270+08:00"
+          }
+        }
+      ],
+      "output": "# 2025 汽车制造业三家公司现金流与竞争风险比较\n\n## 结论摘要\n\n本次任务**无法执行实质性比较**：挂载的可读资料为空（`sources` 与 `content` 均为空），没有任何交接的已检查结果可供引用。因此不存在可核对的报告期、币种、单位或合并/单体口径，也无法对三家公司进行现金流与竞争风险的事实性比较。所有数值结论均标记为未知，**不按零处理**。\n\n## 比较表（占位）\n\n| 对比项 | 公司 A | 公司 B | 公司 C |\n|---|---|---|---|\n| 资料来源 | 无 | 无 | 无 |\n| 报告期 | 未知 | 未知 | 未知 |\n| 币种 | 未知 | 未知 | 未知 |\n| 单位 | 未知 | 未知 | 未知 |\n| 合并/单体口径 | 未知 | 未知 | 未知 |\n| 经营活动现金流净额 | 未知 | 未知 | 未知 |\n| 投资活动现金流净额 | 未知 | 未知 | 未知 |\n| 筹资活动现金流净额 | 未知 | 未知 | 未知 |\n| 现金及现金等价物净增加额 | 未知 | 未知 | 未知 |\n| 竞争风险（定性） | 未知 | 未知 | 未知 |\n\n表中“未知”表示来源缺失，**不等于 0，也不表示无风险**；任何排序、最高/最低或比例判断均因缺少全部行数据而无法作出。\n\n## 缺失说明\n\n- 未挂载任何来源（`sources` 为空），无可引用的逐字原文，无法定位 `fragment.location`。\n- 未提供结果正文（`content` 为空），无法核对数值与表格逐项一致性。\n- 任务声明的三个缺失项标识：`6098a48c-4624-4b2d-86da-d9d82daf6553`、`0172d942-3c1d-4b3a-bfe3-bd3959647bf4`、`5d51446e-3cdd-48fb-99fe-50907ba83540`。\n- 三家公司名称、报告期、币种、单位、口径、现金流各项金额及竞争风险信息全部缺失。\n\n## 建议补充材料\n\n1. 三家公司的已检查结果正文（含公司名、报告期、币种、单位、合并/单体口径）。\n2. 现金流表原始数字（经营、投资、筹资、净增加额等）。\n3. 竞争风险相关描述性材料（市场份额、客户集中度、价格竞争、政策与产能等）。\n\n本报告不声称经过证据链验证。"
+    }
+  ],
+  "all_steps_published": false
+}

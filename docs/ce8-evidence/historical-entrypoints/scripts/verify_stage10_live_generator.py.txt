@@ -1,0 +1,69 @@
+"""Exploratory real generator protocol test; does not create or publish a candidate."""
+import asyncio
+import json
+import os
+import sys
+import termios
+from pathlib import Path
+from agents import set_default_openai_api, set_default_openai_client
+from openai import AsyncOpenAI
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks, build_evaluation, build_evolution
+from agent_core.contracts import AgentSpec, Message, PreparedInput, RunRequest
+from agent_core.core import AgentCatalog, CoreRunner
+from agent_core.evolution.models import CandidateDraft
+
+ROOT=Path(__file__).resolve().parents[1]
+OUTPUT=ROOT/'docs/stage10-live-generator.json'
+LESSON='在同份来源中先锁定目标年度现金流表的金额单位，再核对各数值所在行；相邻年度、管理摘要和非金额单位不得替代表头口径。'
+
+async def main():
+ if sys.stdin.isatty():
+  settings=termios.tcgetattr(sys.stdin.fileno());settings[3]&=~termios.ECHO
+  termios.tcsetattr(sys.stdin.fileno(),termios.TCSANOW,settings)
+ print('READY_FOR_KEY',flush=True)
+ key=sys.stdin.readline().strip()
+ if not key:raise RuntimeError('No key supplied')
+ os.environ['OPENAI_API_KEY']=key;os.environ['OPENAI_MODEL']='deepseek-flash'
+ client=AsyncOpenAI(api_key=key,base_url='https://api.deepseek.com',max_retries=0,timeout=180)
+ report={'model':'deepseek-flash','phase':'exploratory_draft_only','publishable':False,
+  'reason':'Seven real baseline cases were independently source-checked and had no method-attributed factual error; this is not a Stage 10 candidate.',
+  'attempts':[]}
+ def save():OUTPUT.write_text(json.dumps(report,ensure_ascii=False,indent=2,default=str).replace(key,'[REDACTED]'))
+ db=None
+ try:
+  set_default_openai_client(client,use_for_tracing=False);set_default_openai_api('responses')
+  db=PostgresDatabase(os.environ['DATABASE_URL'])
+  scopes=build_resources(db,'/private/tmp/stage10-live-blobs')
+  research=build_research(db,scopes,OpenAIEngine())
+  tasks=build_tasks(db,scopes,research,OpenAIEngine())
+  evaluation=build_evaluation(db,tasks);build_evolution(db,tasks,evaluation)
+  base=tasks.methods.resolve('method','expert_extract')
+  prompt=json.dumps({'expert':'expert_extract','kind':base.body['kind'],
+   'current_instructions':base.body['instructions'],'current_examples':base.body['examples'],
+   'approved_reusable_lesson':LESSON,
+   'allowed_change':'Return JSON with instructions and examples only. Preserve task, tools, permissions and output contract.'},ensure_ascii=False)
+  report['base_version']=base.version;report['generator_prompt']=prompt;save()
+  runner=CoreRunner(OpenAIEngine(),AgentCatalog([AgentSpec('method_generator',
+   'Improve only the reusable method instructions and examples. Return the requested JSON; do not include case-specific facts.',
+   output_type=CandidateDraft,model='deepseek-flash')]))
+  for attempt in (1,2):
+   result=await runner.execute(RunRequest(agent_id='method_generator',
+    input=PreparedInput(messages=(Message(role='user',content=prompt),))))
+   row={'attempt':attempt,'status':result.status,
+    'error':result.error.model_dump(mode='json') if result.error else None,
+    'output':result.output,'usage':result.usage.model_dump(mode='json')}
+   report['attempts'].append(row);save()
+   print(f'generator attempt {attempt}: {result.status}',flush=True)
+   if result.status=='succeeded' or not result.error or result.error.code!='model_behavior':break
+  print('DRAFT_COMPLETE',flush=True)
+ except Exception as exc:
+  report['failure']={'type':type(exc).__name__,'message':str(exc).replace(key,'[REDACTED]')};save()
+  print('FAILED '+report['failure']['type'],flush=True)
+  raise SystemExit(1) from None
+ finally:
+  if db:db.close()
+  await client.close();os.environ.pop('OPENAI_API_KEY',None)
+
+if __name__=='__main__':asyncio.run(main())

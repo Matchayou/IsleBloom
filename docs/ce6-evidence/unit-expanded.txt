@@ -1,0 +1,73 @@
+..........F......sss...s.                                                [100%]
+=================================== FAILURES ===================================
+__________ test_runtime_summary_keeps_recent_groups_and_current_user ___________
+
+compactor = (<agent_core.context.compaction.Compactor object at 0x1092b3800>, <test_compaction.SummaryLedger object at 0x1092b3bc0...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}]}], <agent_core.controlled.workspace.Workspace object at 0x1092b3980>)
+
+    async def test_runtime_summary_keeps_recent_groups_and_current_user(compactor):
+        from agents.run import ModelInputData
+        from dataclasses import dataclass
+        c,ledger,calls,_=compactor
+        @dataclass
+        class Data:
+            model_data: object
+        items=[{'role':'user','content':'Current correction remains verbatim.'}]
+        for i in range(5):
+            items += [{'type':'function_call','call_id':str(i),'arguments':'{}','name':'read_source'},
+                      {'type':'function_call_output','call_id':str(i),'output':'Fact '+str(i)+' '+('a'*5000)}]
+>       result=await c.prepare(Data(ModelInputData(input=items,instructions='fixed')),lambda data:data.model_data)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_compaction.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <agent_core.context.compaction.Compactor object at 0x1092b3800>
+data = test_runtime_summary_keeps_recent_groups_and_current_user.<locals>.Data(model_data=ModelInputData(input=[{'role': 'use...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}], instructions='fixed'))
+projection = <function test_runtime_summary_keeps_recent_groups_and_current_user.<locals>.<lambda> at 0x1092518a0>
+
+    async def prepare(self, data, projection):
+        # Full archive and deterministic projection run before any summary request.
+        self.artifacts.save_text(dumps(data.model_data.input))
+        clean=[item for index,item in enumerate(data.model_data.input) if not (index and
+            item.get('role')=='user' and isinstance(item.get('content'),str) and item['content'] in self.rendered)]
+        data=replace(data,model_data=ModelInputData(input=clean,instructions=data.model_data.instructions))
+        try:projected=projection(data)
+        except ContextBudgetExceeded:projected=None
+        force=projected is None or getattr(projection,'force_compaction',False)
+        raw=deepcopy(data.model_data.input)
+        overlays=[]
+        for key,text in self.broker.request.input.external_context.items():
+            payload=json.loads(text)
+            if not isinstance(payload,dict):continue
+            for field in ('history','messages'):
+                history=payload.get(field)
+                if not isinstance(history,list) or len(history)<=2:continue
+                groups=[turn for turn in history[:-2]]
+                stream='business:'+field
+                sources=self.sources(stream,groups)
+                head=await self.compact(stream,sources,force=force)
+                if head:overlays.append(self.render(stream,head))
+        groups=complete_groups(raw)
+        old=groups[:-2]
+        if old:
+            sources=self.sources('runtime',[[item for _,item in group] for group in old])
+            head=await self.compact('runtime',sources,force=force)
+            if head:
+                covered={index for group in old[:head['cursor']] for index,_ in group}
+                raw=[item for index,item in enumerate(raw) if index not in covered]
+                overlays.append(self.render('runtime',head))
+        if not overlays:
+            if projected is None:raise ContextBudgetExceeded('No valid summary can fit required model input')
+            return projected
+        # Current instruction remains first; summaries are data after it, before recent turns.
+        merged=raw[:1]+overlays+raw[1:]
+        projected=projection(replace(data,model_data=ModelInputData(input=merged,instructions=data.model_data.instructions)))
+>       projection.exclusions.extend({'reason':'validated_incremental_summary','stream':json.loads(o['content'])['_controlled_summary']['stream'],
+        ^^^^^^^^^^^^^^^^^^^^^
+            'summary_artifact':json.loads(o['content'])['_controlled_summary']['summary_artifact']} for o in overlays)
+E       AttributeError: 'function' object has no attribute 'exclusions'
+
+src/agent_core/context/compaction.py:206: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_compaction.py::test_runtime_summary_keeps_recent_groups_and_current_user
+1 failed, 20 passed, 4 skipped in 0.93s

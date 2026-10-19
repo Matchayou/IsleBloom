@@ -1,0 +1,71 @@
+"""Real expert and manager information handoff using clearly synthetic local data."""
+import asyncio
+import json
+from pathlib import Path
+
+from dotenv import load_dotenv
+
+from agent_core.adapters.memory_ledger import MemoryDatabase
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.composition import build_projects, build_research, build_resources, build_tasks
+from agent_core.research.chat import ChatService
+
+
+async def main():
+    load_dotenv(Path(__file__).resolve().parents[1] / '.env')
+    rows = []
+    for available in (True, False):
+        db = MemoryDatabase()
+        try:
+            engine = OpenAIEngine()
+            scopes = build_resources(db, Path('/private/tmp/c2-information-live-blobs'))
+            research = build_research(db, scopes, engine)
+            tasks = build_tasks(db, scopes, research, engine)
+            projects = build_projects(db, research, tasks)
+            project = projects.create('C2 synthetic information handoff')
+            main = await projects.create_main_task(project.id, 'Synthetic information request')
+            node = research.query('list_nodes', main.research_id)[0]
+            root = research.research(main.research_id)
+            scope = scopes.current(root.scope_id, research.owner)
+            scope, ref = scopes.ingest(scope,
+                content='这是一份合成验收样本，只说明虚构产品 A 存在。没有市场规模和目标年份。不能用于真实业务结论。'.encode(),
+                name='synthetic-sample.txt', media_type='text/plain')
+            extra = None
+            if available:
+                _, extra = scopes.ingest(scope,
+                    content='合成验收专用：本任务目标年份为 2025 年。该年份是测试设定，不是市场事实。没有任何市场规模数据。'.encode(),
+                    name='target-year.txt', media_type='text/plain')
+            ChatService(research, tasks).send(node.id,
+                '请专家分析合成样本；必要时向主助手索要信息，无法提供则基于已有信息完成并说明缺口。', 0)
+            c = research.collaboration
+            intent = c.delegate_task(command_id='c2-information:' + node.id, node_id=node.id,
+                expert_id='expert_synthesize', resource_refs=(ref,),
+                task_instruction='整理合成样本。开始分析前需要确认目标年份，请向主助手索要目标年份，保存已知的合成样本说明。拿到答复后继续本任务；主助手没有年份则不再索要，完成可完成部分。不要编造市场规模。',
+                delivery_requirements='简短中文报告，说明年份是否取得，以及缺少市场规模；不编造真实结论。')
+            outcome = await c.execute(intent.command_id)
+            run = outcome['runs'][0]
+            record = tasks.ledger.get(run.id)
+            info = c.information.get(run.id)
+            rows.append({'case': 'available' if available else 'unavailable',
+                'synthetic_data': True, 'run_id': run.id, 'task_id': intent.task_id,
+                'run_count': len(outcome['runs']), 'spec_version': tasks.spec(intent.task_id).version,
+                'execution_status': record.status, 'error': record.result.error.model_dump() if record.result.error else None,
+                'information_request': info.model_dump(mode='json') if info else None,
+                'source_authorized': extra in outcome['receipts'][0].resource_refs if extra else False,
+                'expert_tools': [e.event.name for e in tasks.ledger.events(run.id)
+                    if e.event.phase == 'tool' and e.event.status == 'completed'],
+                'output': record.result.output, 'usage': record.result.usage.model_dump(),
+                'delivery': outcome['receipts'][0].delivery})
+            print(json.dumps({'case': rows[-1]['case'], 'status': record.status,
+                'requested': info is not None, 'answer_available': info.answer.available if info and info.answer else None}, ensure_ascii=False), flush=True)
+        finally:
+            db.close()
+    path = Path('docs/collaboration-c2-information-live-verification.json')
+    path.write_text(json.dumps(rows, ensure_ascii=False, indent=2) + '\n')
+    assert all(r['execution_status'] == 'succeeded' and r['information_request'] and r['run_count'] == 1 for r in rows)
+    assert rows[0]['information_request']['answer']['available'] and rows[0]['source_authorized']
+    assert not rows[1]['information_request']['answer']['available'] and rows[1]['output']['missing']
+
+
+if __name__ == '__main__':
+    asyncio.run(main())

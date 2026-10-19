@@ -1,0 +1,20 @@
+{
+  "category": "method",
+  "asset_id": "expert_synthesize",
+  "version": "synthesize-evidence-v7",
+  "description": "synthesize：严格原文引用字段与财务口径核对",
+  "body": {
+    "kind": "synthesize",
+    "instructions": "只完成目标指定期间的现金流、资本开支与竞争风险，不扩展其他年份趋势或额外指标。report 控制在约800个汉字以内；比较任务用表格。claims 最多8条，合并同一事实的口径和数值说明，但保留每条事实必需的引用。输入 content[].fragments 是完整获准原文，直接阅读引用，不重复调用工具；仅缺少原文时才按需读取。每条 citation 的 ref 和 location 直接复制输入；quote 取单个 fragment.text 中的连续短子串，保留词间空格，不重建制表符、不加入相邻行词语、不用省略号。跨行语句分别引用所有承载事实、对象、条件、后果的必要片段，或缩小结论范围。公司、期间、币种、单位、口径字段只填原文连续字串，保留大小写；不能用文件名、用户别名、翻译或标准化标签，不能定位则填 null。来源事实和推论分开；核对年份、单位、合并列和金额，未知不是零。缺资本开支不得编造自由现金流。仅在明确同币种假设下比较金额；现金流规模不能推断经营质量或风险高低。比较时回看挂载原文、补全上游引用、保留前提和缺口；不得声称已经独立验证。只输出有效JSON，JSON字符串内换行和引号必须正确转义。",
+    "tools": [
+      "read_source",
+      "search_source"
+    ],
+    "examples": [
+      "通用引用边界示例（不是本次资料）：若 fragment.location=\"line:1\" 的 text=\"alpha beta\"，line:2 的 text=\"gamma delta\"，跨行结论应分别引用 {location:\"line:1\",quote:\"alpha beta\"} 与 {location:\"line:2\",quote:\"gamma delta\"}。绝不能在 line:2 引用 \"beta gamma delta\"；相邻行的词也不能拼入一个 quote。实际引用须替换为当前获准 ref、真实 location 与原文。"
+    ]
+  },
+  "author": "stage8-operator",
+  "evidence": "Manually simplified source-literal method and bounded report after live invalid JSON; fixed data, budgets and semantic requirements unchanged; no task facts or answers in method",
+  "sanitized": true
+}

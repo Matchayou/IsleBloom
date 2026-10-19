@@ -1,0 +1,156 @@
+"""Scripted control walkthrough over three real, fixed 2025 annual reports.
+
+This proves storage, scope, evidence and chat transfer. It is not a model
+semantic evaluation or a live TinyFish Search and Fetch acceptance.
+"""
+import asyncio
+import json
+import os
+import re
+from pathlib import Path
+from uuid import uuid4
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.adapters.scripted import ScriptedEngine
+from agent_core.composition import build_resources, build_research, build_tasks
+from agent_core.research.chat import ChatService
+from agent_core.research.models import NodeCommand
+from agent_core.resources.snapshots import ResourceRef
+
+ROOT = Path('/tmp/stage5-public-2025')
+FILES = ('tesla-2025.pdf','ford-2025.pdf','gm-2025.pdf')
+DATA = {
+    'tesla-2025.pdf': {'name':'Tesla','page':56,'amount':'14,747','label':'Net cash provided by operating activities',
+        'fields':{'company':'Tesla, Inc.','period':'2025','currency':'$','unit':'(in millions)',
+                  'basis':'Consolidated Statements of Cash Flows'},
+        'risk_page':13,'risk':'The worldwide automotive market is highly competitive'},
+    'ford-2025.pdf': {'name':'Ford','page':89,'amount':'21,282','label':'Net cash provided by/(used in) operating activities',
+        'fields':{'company':'Ford Motor Company','period':'2025','currency':'$','unit':'in millions',
+                  'basis':'Consolidated'},
+        'risk_page':24,'risk':"Ford's long-term success depends on delivering the Ford+ plan, including improving cost competitiveness."},
+    'gm-2025.pdf': {'name':'GM','page':61,'amount':'26,867','label':'Net cash provided by (used in) operating activities',
+        'fields':{'company':'GENERAL MOTORS COMPANY AND SUBSIDIARIES','period':'2025','currency':'$',
+                  'unit':'(In millions)','basis':'CONSOLIDATED STATEMENTS OF CASH FLOWS'},
+        'risk_page':17,'risk':'If we do not deliver new products, services, technologies, and customer experiences in response to increased competition'},
+}
+
+
+def normal(text): return re.sub(r'\s+',' ',text).strip()
+
+
+def located(fragments,page,phrase):
+    found = [f for f in fragments if f.location.startswith(f'page:{page}:') and phrase in normal(f.text)]
+    if len(found) != 1: raise ValueError(f'Expected one located fragment on page {page}: {phrase}, got {len(found)}')
+    return found[0]
+
+
+def claims_for(name,ref,fragments):
+    info = DATA[name]
+    label = located(fragments,info['page'],info['label'])
+    value = located(fragments,info['page'],info['amount'])
+    risk = located(fragments,info['risk_page'],info['risk'])
+    def cite(f,quote,reasoning,fields=None):
+        return {'ref':ref.model_dump(),'location':f.location,'quote':quote,
+            'relation':'supports','reasoning':reasoning,'fields':fields or {}}
+    amount = {'statement':f"{info['name']} 2025 年合并经营活动现金流为 {info['amount']} 百万美元。",
+        'citations':[
+            cite(value,info['amount'],'数值列；2025 列及百万美元单位已由同页表头独立核对',info['fields'])]}
+    risk_claim = {'statement':f"{info['name']} 年报披露竞争相关风险。",
+        'citations':[cite(risk,info['risk'],'这是公司披露的风险表述，不证明风险已发生')]}
+    return amount,risk_claim
+
+
+async def main():
+    database = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        scopes = build_resources(database,os.environ['STAGE5_BLOBS'])
+        outputs = {}
+        def script(request):
+            if request.agent_id in outputs: return [],outputs[request.agent_id]
+            if request.agent_id.startswith('expert_'):
+                content = json.loads(request.input.messages[0].content)
+                name = content['sources'][0]['name']
+                return [],expert_outputs[name]
+            raise ValueError('No frozen scripted answer for this run')
+        engine = ScriptedEngine(script)
+        research = build_research(database,scopes,engine)
+        tasks = build_tasks(database,scopes,research,engine)
+        chat = ChatService(research,tasks)
+        case = research.create('2025 Tesla、Ford、GM 现金流与竞争风险比较 '+str(uuid4()))
+        scope = scopes.current(case.scope_id,case.owner)
+        refs,fragments = {},{}
+        for name in FILES:
+            scope,ref = scopes.ingest(scope,content=(ROOT/name).read_bytes(),name=name,media_type='application/pdf')
+            refs[name] = ref
+            fragments[name] = scopes.resources.read(ref)
+        source_claims = {name:claims_for(name,refs[name],fragments[name]) for name in FILES}
+        expert_outputs = {name:{'report':f"{DATA[name]['name']} 2025 经营现金流见固定年报；竞争风险是披露，不是已发生事实。",
+            'claims':list(source_claims[name]),'fields':{},'sources':{},'missing':[],
+            'limitations':['脚本控制产物；独立语义复核待完成']} for name in FILES}
+        main_chat = await chat.start(case.id,'主线')
+        expert_receipts = []
+        for name in FILES:
+            spec = tasks.create(research_id=case.id,node_id=main_chat.node_id,kind='synthesize',
+                user_request=f'核对 {DATA[name]["name"]} 2025 现金流和竞争风险',required_refs=(refs[name],),
+                evidence_required=True)
+            execution = await tasks.run(spec.id)
+            expert_receipts.append(execution['receipt'].result_id)
+            if execution['receipt'].delivery != 'pending_review':
+                raise ValueError(f'Expert receipt did not reach independent review: {name}')
+        mount = NodeCommand(command_id=str(uuid4()),research_id=case.id,kind='mount',node_id=main_chat.node_id,
+            resource_refs=tuple(refs.values()))
+        await research.submit(mount)
+        comparison = {
+            'report':'# 2025 年现金流与竞争风险比较（脚本控制样本）\n\n'
+                '| 公司 | 合并经营活动现金流（百万美元） | 年报披露的竞争风险 |\n|---|---:|---|\n'
+                '| Tesla | 14,747 | 全球汽车市场竞争加剧 |\n'
+                '| Ford | 21,282 | Ford+ 执行与成本竞争力 |\n'
+                '| GM | 26,867 | 新产品、技术与客户体验应对竞争 |\n\n'
+                '以上均为各公司 2025 年度合并报表口径。Ford Credit、GM Financial 等业务结构不同，'
+                '不能仅按绝对经营现金流排序判断经营质量。风险是公司披露，非已发生损失。'
+                '选择 Tesla 继续核对资本开支与现金流覆盖，选择是研究优先级，不是投资建议。',
+            'missing':['公开年报未单独证明未来竞争结果','未对三家公司业务结构调整现金流可比性'],
+            'claims':[claim for name in FILES for claim in source_claims[name]]}
+        outputs[main_chat.node_id] = comparison
+        sent = chat.send(main_chat.node_id,'比较三家公司 2025 年现金流和竞争风险，并选择一家续研',0)
+        main_reply = NodeCommand(command_id=str(uuid4()),research_id=case.id,kind='chat_reply',
+            node_id=main_chat.node_id,chat_revision=sent.revision,evidence_required=True)
+        await research.submit(main_reply)
+        comparison_version = research.node(main_chat.node_id).current_result_id
+        main_chat = chat.read(main_chat.node_id)
+        report_message = main_chat.messages[-1]
+        branch = await chat.branch(main_chat.node_id,report_message.id,'Tesla 资本开支续研',main_chat.revision)
+        tesla_ref = refs['tesla-2025.pdf']
+        page = fragments['tesla-2025.pdf']
+        capex_line = next(f for f in page
+            if f.location.startswith('page:45:') and 'capital expenditures, which were $8.53 billion' in normal(f.text))
+        continuation = {'report':'# Tesla 续研（脚本控制样本）\n\n2025 年经营活动现金流为 14,747 百万美元；'
+            '年报说明资本开支约 8.53 十亿美元。按这两个披露数作简单差额约 6.22 十亿美元，'
+            '但这不是公司正式自由现金流指标；投资和融资项目仍需进一步核对。',
+            'missing':['尚未核对资本开支与正式自由现金流定义的差异'],
+            'claims':[source_claims['tesla-2025.pdf'][0],{
+                'statement':'Tesla 披露 2025 年资本开支约 8.53 十亿美元。',
+                'citations':[{'ref':tesla_ref.model_dump(),'location':capex_line.location,
+                    'quote':'capital expenditures, which were $8.53 billion','relation':'supports',
+                    'reasoning':'年报经营回顾的资本开支表述'}]}]}
+        outputs[branch.node_id] = continuation
+        branch_sent = chat.send(branch.node_id,'仅续研 Tesla 资本开支与现金流覆盖',branch.revision)
+        await research.submit(NodeCommand(command_id=str(uuid4()),research_id=case.id,kind='chat_reply',
+            node_id=branch.node_id,chat_revision=branch_sent.revision,evidence_required=True))
+        branch_chat = chat.read(branch.node_id)
+        transfer = chat.transfer(branch.node_id,branch_chat.messages[-1].id,main_chat.node_id,
+            main_chat.revision,research.node(main_chat.node_id).revision)
+        adopted = chat.adopt(transfer.id)
+        result = {'research_id':case.id,'main_node':main_chat.node_id,'branch_node':branch.node_id,
+            'expert_receipts':expert_receipts,'comparison_result':comparison_version,
+            'continuation_result':research.node(branch.node_id).current_result_id,
+            'transfer_id':adopted.id,'transfer_status':adopted.status,
+            'sample_refs':{name:ref.model_dump() for name,ref in refs.items()},
+            'semantic_status':'scripted_control_only; expert receipts pending independent review',
+            'external_search_status':'not_run_without_authorized_TinyFish_key'}
+        Path('docs/stage5-control-case.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
+        print(json.dumps(result,ensure_ascii=False,indent=2))
+    finally:
+        database.close()
+
+
+if __name__=='__main__': asyncio.run(main())

@@ -1,0 +1,124 @@
+{
+  "checks": {
+    "preflight_main:succeeded": {
+      "passed": false,
+      "detail": {
+        "code": "model_request_failed",
+        "origin": "engine",
+        "message": "Provider request failed (APIStatusError; HTTP 402)",
+        "retryable": false,
+        "cause_id": null
+      }
+    },
+    "preflight_execution:succeeded": {
+      "passed": false,
+      "detail": {
+        "code": "model_request_failed",
+        "origin": "engine",
+        "message": "Provider request failed (APIStatusError; HTTP 402)",
+        "retryable": false,
+        "cause_id": null
+      }
+    },
+    "preflight_main:raw_user": {
+      "passed": true
+    },
+    "preflight_execution:raw_user": {
+      "passed": true
+    }
+  },
+  "stages": {
+    "preflight_main": {
+      "run_id": "6d69945c-f7eb-44c9-83b3-39f1ac11e73b",
+      "result": {
+        "run_id": "6d69945c-f7eb-44c9-83b3-39f1ac11e73b",
+        "status": "failed",
+        "output": null,
+        "usage": {
+          "requests": 1,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": false
+        },
+        "error": {
+          "code": "model_request_failed",
+          "origin": "engine",
+          "message": "Provider request failed (APIStatusError; HTTP 402)",
+          "retryable": false,
+          "cause_id": null
+        },
+        "output_repairs": []
+      },
+      "mode": "assistant",
+      "agent": {
+        "mode": "assistant",
+        "id": "1059af58-48e1-4f01-acbc-c1555d355c35",
+        "instructions": ""
+      }
+    },
+    "preflight_failure": {
+      "type": "AssertionError",
+      "message": "preflight_main:succeeded"
+    },
+    "preflight_execution": {
+      "run_id": "819db627-f125-4917-81e0-da50c8da2e50",
+      "result": {
+        "run_id": "819db627-f125-4917-81e0-da50c8da2e50",
+        "status": "failed",
+        "output": null,
+        "usage": {
+          "requests": 1,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": false
+        },
+        "error": {
+          "code": "model_request_failed",
+          "origin": "engine",
+          "message": "Provider request failed (APIStatusError; HTTP 402)",
+          "retryable": false,
+          "cause_id": null
+        },
+        "output_repairs": []
+      },
+      "mode": "execution",
+      "agent": {
+        "mode": "temporary",
+        "id": "temporary:39522822-a544-4bd0-8817-0aed5db2d45a",
+        "instructions": "完成本次单一任务，保留用户原话。"
+      }
+    },
+    "preflight_execution_failure": {
+      "type": "AssertionError",
+      "message": "preflight_execution:succeeded"
+    }
+  },
+  "configuration": {
+    "api": "responses",
+    "endpoint": "https://api.deepseek.com",
+    "execution_model": "deepseek-flash",
+    "manager_model": "deepseek-v4-pro",
+    "credential": "present",
+    "real_model": true,
+    "source_data": "synthetic acceptance documents; responses are real model output"
+  },
+  "audit": {
+    "controlled_runs": 2,
+    "operations": 4,
+    "responded_models": 0,
+    "http_statuses": []
+  },
+  "acceptance_status": "blocked",
+  "blocking_reason": "Both configured models returned HTTP 402; DeepSeek documents this as insufficient account balance.",
+  "not_executed": {
+    "main_delegation": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "temporary_execution_with_tools": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "specialist_execution_with_tools": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "planning": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "expert_discussion": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "manager_information": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "domain_candidate_generation": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "domain_validation_publication": "Blocked by real provider HTTP 402; not accepted or counted as passed.",
+    "published_memory_skill_retrieval": "Blocked by real provider HTTP 402; not accepted or counted as passed."
+  }
+}

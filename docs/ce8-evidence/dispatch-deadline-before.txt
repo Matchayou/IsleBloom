@@ -1,0 +1,44 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______ test_single_task_dispatch_preserves_admitted_deadline[memory-30] _______
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x111238320>, <agent_core.context.scopes.ScopeService obj...8bcc2ad222', snapshot_id='33d35baf-5165-4419-b887-7e99d2924d74', parse_id='56d3fb8d-cdf9-4ebc-81fc-c4abd1f8586f'), ...)
+seconds = 30
+
+    @pytest.mark.parametrize('seconds', [30, 360])
+    async def test_single_task_dispatch_preserves_admitted_deadline(app, seconds):
+        from agent_core.contracts import RunLimits
+        *_, engine, tasks = app
+        spec = create_extract(app, limits=RunLimits(timeout_seconds=seconds))
+        result = await tasks.run(spec.id)
+        group = tasks.ledger.get_dispatch(result['group'].group_id)
+>       assert group.plan.policy.timeout_seconds == seconds
+E       AssertionError: assert 120 == 30
+E        +  where 120 = DispatchPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled').timeout_seconds
+E        +    where DispatchPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled') = DispatchPlan(group_id='34197582-3cba-4e45-9d2d-30a9f06e4399', items=(DispatchItem(key='5ec6ca7f-179b-4d65-a546-8d4b0fe...chPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0).policy
+E        +      where DispatchPlan(group_id='34197582-3cba-4e45-9d2d-30a9f06e4399', items=(DispatchItem(key='5ec6ca7f-179b-4d65-a546-8d4b0fe...chPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0) = DispatchGroup(plan=DispatchPlan(group_id='34197582-3cba-4e45-9d2d-30a9f06e4399', items=(DispatchItem(key='5ec6ca7f-179..._runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0), status='settled', reasons={}).plan
+
+tests/test_tasks.py:67: AssertionError
+______ test_single_task_dispatch_preserves_admitted_deadline[memory-360] _______
+
+app = (<agent_core.adapters.memory_ledger.MemoryDatabase object at 0x116543590>, <agent_core.context.scopes.ScopeService obj...d79a252ee2', snapshot_id='2660dd90-be63-4046-8182-d38f3650a019', parse_id='aca42bd5-81aa-4794-8771-243b3802c2f3'), ...)
+seconds = 360
+
+    @pytest.mark.parametrize('seconds', [30, 360])
+    async def test_single_task_dispatch_preserves_admitted_deadline(app, seconds):
+        from agent_core.contracts import RunLimits
+        *_, engine, tasks = app
+        spec = create_extract(app, limits=RunLimits(timeout_seconds=seconds))
+        result = await tasks.run(spec.id)
+        group = tasks.ledger.get_dispatch(result['group'].group_id)
+>       assert group.plan.policy.timeout_seconds == seconds
+E       AssertionError: assert 120 == 360
+E        +  where 120 = DispatchPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled').timeout_seconds
+E        +    where DispatchPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled') = DispatchPlan(group_id='66b80a8c-4c0f-4480-81de-b5e3662124a0', items=(DispatchItem(key='c4f6a2ab-5383-4353-9a11-0aba582...chPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0).policy
+E        +      where DispatchPlan(group_id='66b80a8c-4c0f-4480-81de-b5e3662124a0', items=(DispatchItem(key='c4f6a2ab-5383-4353-9a11-0aba582...chPolicy(max_concurrency=1, max_runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0) = DispatchGroup(plan=DispatchPlan(group_id='66b80a8c-4c0f-4480-81de-b5e3662124a0', items=(DispatchItem(key='c4f6a2ab-538..._runs=1, max_total_tokens=None, timeout_seconds=120, completion='all_settled'), depth=0), status='settled', reasons={}).plan
+
+tests/test_tasks.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_tasks.py::test_single_task_dispatch_preserves_admitted_deadline[memory-30]
+FAILED tests/test_tasks.py::test_single_task_dispatch_preserves_admitted_deadline[memory-360]
+2 failed, 24 deselected in 0.99s

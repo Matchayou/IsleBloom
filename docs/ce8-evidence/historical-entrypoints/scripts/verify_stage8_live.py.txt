@@ -1,0 +1,116 @@
+"""Live Stage 8 acceptance with authorized credentials supplied only via environment.
+
+Uses frozen public annual-report excerpts, existing SDK and existing ResearchPlan.
+Does not claim an improvement in quality/cost or replace independent semantic review.
+"""
+import asyncio
+import json
+import os
+from pathlib import Path
+from uuid import uuid4
+from agents import set_default_openai_api,set_default_openai_client
+from openai import AsyncOpenAI, DefaultAsyncHttpxClient
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.app.api import serial
+from agent_core.evidence.service import _canonical
+from agent_core.composition import build_resources,build_research,build_tasks
+from agent_core.research.models import NodeCommand,PlanStep,ResearchPlan
+
+ROOT=Path(__file__).resolve().parents[1]
+
+
+async def main():
+    if not os.environ.get('OPENAI_API_KEY'): raise RuntimeError('Configure OPENAI_API_KEY locally; do not write it into artifacts')
+    os.environ['OPENAI_MODEL']='deepseek-flash'
+    provider_responses=[]
+    async def observe_response(response):
+        if not response.request.url.path.endswith('/responses'): return
+        await response.aread()
+        try: value=response.json()
+        except ValueError: return
+        provider_responses.append(dict(id=value.get('id'),status=value.get('status'),incomplete_details=value.get('incomplete_details'),error=value.get('error'),usage=value.get('usage'),texts=[part.get('text','') for item in value.get('output',[]) if item.get('type')=='message' for part in item.get('content',[]) if part.get('type')=='output_text']))
+    client=AsyncOpenAI(api_key=os.environ['OPENAI_API_KEY'],base_url='https://api.deepseek.com',max_retries=0,timeout=180,http_client=DefaultAsyncHttpxClient(event_hooks={'response':[observe_response]}))
+    set_default_openai_client(client,use_for_tracing=False)
+    set_default_openai_api('responses')
+    try:
+        available=[model.id for model in (await client.models.list()).data]
+        if 'deepseek-flash' not in available: raise RuntimeError('Configured model is unavailable for this account')
+        print('Authenticated; configured DeepSeek model is available',flush=True)
+    except Exception as exc:
+        await client.close()
+        message=str(exc).replace(os.environ['OPENAI_API_KEY'],'[REDACTED]')
+        print(type(exc).__name__+': '+message,flush=True)
+        raise RuntimeError('DeepSeek preflight failed; no workflow started') from None
+    db=PostgresDatabase(os.environ['DATABASE_URL'])
+    report={'model':'deepseek-flash','base_url':'https://api.deepseek.com','protocol':'responses','provider_responses':provider_responses,'source_type':'frozen public annual-report excerpts','input_manifest':'docs/stage8-live-input-manifest.json','semantic_signoff':'pending independent review'}
+    try:
+        scopes=build_resources(db,'/private/tmp/stage8-pg-20261003/blobs')
+        class ObservedEngine(OpenAIEngine):
+            async def execute(self,*args):
+                try:
+                    result=await super().execute(*args)
+                    report.setdefault('model_outputs',{})[result.run_id]=serial(result)
+                    print('Model completed '+result.run_id,flush=True)
+                    return result
+                except Exception as exc:
+                    message=str(exc).replace(os.environ['OPENAI_API_KEY'],'[REDACTED]')
+                    report.setdefault('engine_errors',[]).append(dict(type=type(exc).__name__,message=message))
+                    print(type(exc).__name__+': '+message,flush=True)
+                    raise
+        engine=ObservedEngine()
+        research=build_research(db,scopes,engine);tasks=build_tasks(db,scopes,research,engine)
+        root=research.create('Stage 8 live template and equivalent manual research '+str(uuid4()))
+        scope=scopes.current(root.scope_id,'local');refs=[]
+        for company in ('tesla','ford','gm'):
+            original=(ROOT/f'docs/stage5-packets/{company}-2025.txt').read_text()
+            content=(ROOT/f'docs/stage8-packets/{company}-2025.txt').read_text()
+            assert _canonical(original)==_canonical(content) and len(original.splitlines())==len(content.splitlines())
+            scope,ref=scopes.ingest(scope,content=content.encode(),name=company+'-2025-stage8.txt',media_type='text/plain')
+            refs.append(ref.model_dump(mode='json'))
+        for kind in ('synthesize','analyze'):
+            asset=tasks.methods.save(json.loads((ROOT/f'config/{kind}-evidence-v7.json').read_text()))
+            head=tasks.methods.query('head','method',asset.asset_id)
+            if head!=asset.version: tasks.methods.publish('method',asset.asset_id,asset.version,head,'stage8-operator','Explicit citation contract repair; live acceptance, not automatic promotion')
+        template=tasks.methods.save(json.loads((ROOT/'config/three-company-workflow.json').read_text()))
+        active=tasks.methods.query('head','workflow',template.asset_id)
+        if active!=template.version: tasks.methods.publish('workflow',template.asset_id,template.version,active,'stage8-live-operator','Frozen template control tests passed')
+        parameters={'industry':'2025 汽车制造业'}
+        for key,name,ref in zip(('a','b','c'),('Tesla','Ford','GM'),refs):
+            parameters['company_'+key]=name;parameters['report_'+key]=ref
+        compiled=await tasks.methods.instantiate(instance_id=str(uuid4()),asset_id=template.asset_id,version=template.version,research_id=root.id,parameters=parameters)
+        manual_nodes=[]
+        for planned in compiled['plan']['steps']:
+            node=research.node(planned['node_id'])
+            manual=await research.submit(NodeCommand(command_id=str(uuid4()),research_id=root.id,kind='create',goal=node.goal,instructions=node.instructions,resource_refs=node.resource_refs,allowed_tools=node.allowed_tools))
+            manual_nodes.append(manual.node_id)
+        manual_plan=ResearchPlan(research_id=root.id,policy=ResearchPlan.model_validate(compiled['plan']).policy,
+            steps=tuple(PlanStep(node_id=n,depends_on=tuple(manual_nodes[:3]) if index==3 else (),limits=ResearchPlan.model_validate(compiled['plan']).steps[index].limits) for index,n in enumerate(manual_nodes)))
+        for mode,execute,nodes in (
+            ('template',lambda:tasks.methods.run(compiled['id']),[s['node_id'] for s in compiled['plan']['steps']]),
+            ('manual',lambda:research.run_plan(manual_plan),manual_nodes)):
+            print('Executing '+mode,flush=True)
+            await execute()
+            records=[]
+            for node_id in nodes:
+                node=research.node(node_id)
+                runs=research.query('list_runs',node_id)
+                bindings=[]
+                for binding in runs:
+                    record=research.ledger.get(binding.run_id)
+                    bindings.append(dict(binding=serial(binding),execution=serial(record)))
+                records.append(dict(node=serial(node),runs=bindings,
+                    output=research.read_result(node.current_result_id)[1] if node.current_result_id else None))
+            report[mode]=records
+            report['instance']=compiled
+            (ROOT/'docs/stage8-live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+        report['all_steps_published']=all(item['output'] for mode in ('template','manual') for item in report[mode])
+        (ROOT/'docs/stage8-live.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+        text='\n\n'.join(f"## {mode}: {item['node']['goal']}\n\nResult: {item['node']['current_result_id']}\n\n" + (item['output'] or 'NO RESULT') for mode in ('template','manual') for item in report[mode])
+        (ROOT/'docs/stage8-live-reports.md').write_text(text+'\n')
+        if not report['all_steps_published']: raise RuntimeError('Live workflow has incomplete steps; inspect persisted acceptance records')
+    finally:
+        db.close();await client.close()
+
+
+if __name__=='__main__': asyncio.run(main())

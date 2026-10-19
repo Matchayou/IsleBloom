@@ -1,0 +1,56 @@
+{
+  "real_model": true,
+  "model": "deepseek-flash",
+  "cases": [
+    {
+      "case": "handoff_user_preference",
+      "passed": true,
+      "checks": {
+        "run_succeeded": true,
+        "usage_confirmed": true,
+        "no_retry_operations": true,
+        "one_request": true,
+        "one_intent_execution": true,
+        "frozen_valid_during_write": true,
+        "published_atomically": true,
+        "namespace_bound": true,
+        "correct_state": true,
+        "correct_content": true,
+        "http_matches_model_operations": true,
+        "operations_confirmed": true
+      },
+      "run_id": "3fe1b245-0c47-4f10-9121-6ce7e693d112",
+      "evidence": "/Users/chenyouran/Documents/ChatGPT/New project 2/docs/memory-write-evidence-2026-10-13/handoff-write/handoff_user_preference/evidence.json",
+      "http_sends": [
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "memory_write_review",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        },
+        {
+          "event": "sent",
+          "purpose": "task",
+          "model": "deepseek-flash"
+        }
+      ],
+      "usage": {
+        "requests": 4,
+        "input_tokens": 15419,
+        "output_tokens": 1435,
+        "complete": true
+      }
+    }
+  ],
+  "recovery": [],
+  "passed": true
+}

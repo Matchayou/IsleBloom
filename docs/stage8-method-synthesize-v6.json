@@ -1,0 +1,20 @@
+{
+  "category": "method",
+  "asset_id": "expert_synthesize",
+  "version": "synthesize-evidence-v6",
+  "description": "synthesize：严格原文引用字段与财务口径核对",
+  "body": {
+    "kind": "synthesize",
+    "instructions": "每个 quote 是单个 fragment.text 的连续子串。优先选短片段；不加相邻片段词语、不加省略号、不拼成完整句子。需要相邻内容时增加另一条 citation。\n引用完整性检查：一条结论包含的每个重要事实都必须由该条 citations 中的原文共同支持，不能只引用句子前半句而省略承载对象、条件或后果的后半句。跨 fragment 的句子应分别引用必要相邻片段，或将结论缩小到所引原文确实支持的范围；不要用附近有该内容代替本条明确引用。比较输出须重新检查这些引用，不能照抄上游不完整的引用。区分绝对现金流规模与经营质量、风险高低；金额大小不能直接推出后两者，缺同币种确认时只作明确有条件的数值比较。\n综合获准结论，区分来源事实、推论和仍未知项。证据字段是原文定位元数据，不是标准化财务字段。每次读取后，citation.fields 的 company、period、currency、unit、basis 必须逐字复制来源中的连续文本，保留原文大小写；不得翻译、缩写、补全币种或拼接口径。company 可取同一资料的标题，其余字段须在引用所在页明确出现（文本摘录须来自该资料）。不能定位的字段填 null，并在 missing 中解释；不要为规避核对而把已明确字段全部清空。报告中的语义解释与标准化换算可以另写在 report/reasoning，须标明推论。先核对表头、年份列、金额和合并口径，再作比较；上游结论仍须回看已挂载原文，保留缺失和限制。引用 quote 逐字连续复制一个 fragment 的文本；摘要不得冒充原文。输出简洁，只写完成目标必要的结论与证据。输入 content[].fragments 是已获准的固定原文及准确 location；这些片段已经完整提供时直接核对和引用，不要重复调用工具搜索或读取相同资料。只有所需原文未出现在输入中才使用工具；小材料每个 ref 用一次 read_source（location=null）完整读取，复用已读内容；大材料按需搜索。聚焦目标指定的期间与指标，正文简洁，不扩展无关历年趋势、比率或旁支计算；逐项列清金额、单位、口径、风险和缺口，引用仅覆盖支持这些重要结论所需的片段。元数据仅从 content[].fragments[].text 中逐字取值，不能用文件名、用户给出的公司别名或 sources.name 充当 company；正文没有法定全名时可保留原文短名或 null。quote 只截取足以支持结论的连续短原文，不必复制整行或 PDF 位置前缀，保留词间空格；不要手工重建制表符，引用 location 直接复制 fragment.location。",
+    "tools": [
+      "read_source",
+      "search_source"
+    ],
+    "examples": [
+      "通用引用边界示例（不是本次资料）：若 fragment.location=\"line:1\" 的 text=\"alpha beta\"，line:2 的 text=\"gamma delta\"，跨行结论应分别引用 {location:\"line:1\",quote:\"alpha beta\"} 与 {location:\"line:2\",quote:\"gamma delta\"}。绝不能在 line:2 引用 \"beta gamma delta\"；相邻行的词也不能拼入一个 quote。实际引用须替换为当前获准 ref、真实 location 与原文。"
+    ]
+  },
+  "author": "stage8-operator",
+  "evidence": "Manual complete-citation boundary example after stage8-live-attempt-7; no task facts or test answers embedded; fixed-input equivalence only, no quality-improvement claim",
+  "sanitized": true
+}

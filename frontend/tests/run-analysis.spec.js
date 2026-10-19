@@ -1,0 +1,27 @@
+import {test,expect} from '@playwright/test';
+const event=(sequence,name,status)=>({sequence,name,status,phase:'tool',run_id:'current',occurred_at:'2026-10-13T02:00:00Z',duration_seconds:status==='started'?null:2,error_code:status==='failed'?'tool_failed':null});
+const current={run_id:'current',agent_id:'agent-a',kind:'node',object_id:'node-a',status:'failed',created_at:'2026-10-13T02:00:00Z',elapsed_seconds:3,usage:{input_tokens:100,output_tokens:20,complete:true},unconfirmed_operations:0,models:[],failure:{sequence:2,error_code:'tool_failed',origin:'tool'},timeline:[event(1,'search','started'),event(2,'search','failed')]};
+const baseline={...current,run_id:'baseline',agent_id:'agent-b',status:'succeeded',failure:null,usage:{input_tokens:70,output_tokens:10,complete:true},timeline:[event(1,'read','started')]};
+test('replay, failure jump, baseline comparison, refresh denial',async({page})=>{
+ let denied=false;const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.route('**/api/run_analysis?**',route=>route.fulfill({json:denied?{runs:[],unavailable_runs:2}:{runs:[current,baseline],unavailable_runs:0}}));
+ await page.goto('/tests/run-analysis.html');
+ await expect(page.getByRole('heading',{name:'运行分析'})).toBeVisible();
+ await expect(page.getByRole('listitem')).toHaveCount(2);
+ await page.getByRole('button',{name:'回到起点'}).click();
+ await expect(page.getByRole('listitem')).toHaveCount(0);
+ await page.getByRole('button',{name:'播放',exact:true}).click();
+ await expect(page.getByRole('listitem')).toHaveCount(2);
+ await page.getByRole('button',{name:'定位首个失败事件'}).click();
+ await expect(page.getByRole('listitem').last()).toContainText('tool_failed');
+ await page.getByLabel('对比基线').selectOption('baseline');
+ await expect(page.getByText('相对基线的变化')).toBeVisible();
+ await expect(page.getByText(/总 token：\+40/)).toBeVisible();
+ await page.screenshot({path:decodeURIComponent(new URL('../../docs/run-analysis-preview.png',import.meta.url).pathname),fullPage:true});
+ await page.getByLabel('查看运行').selectOption('baseline');
+ await expect(page.getByText('相对基线的变化')).toHaveCount(0);
+ denied=true;await page.getByRole('button',{name:'刷新运行记录'}).click();
+ await expect(page.getByText(/2 次运行当前无权读取/)).toBeVisible();
+ await expect(page.getByRole('listitem')).toHaveCount(0);
+ expect(errors).toEqual([]);
+});

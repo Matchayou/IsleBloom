@@ -1,0 +1,155 @@
+{
+  "base_url": "http://127.0.0.1:8768",
+  "configured_model": "deepseek-flash",
+  "synthetic_only": true,
+  "passed": false,
+  "checks": [
+    {
+      "binding": {
+        "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+        "node_id": "f7d79a31-f242-48bf-a65c-dfc4aa3752df",
+        "command_id": "23a4245a-2349-454f-b2a6-c8acb9e7ae10",
+        "node_revision": 1,
+        "context_snapshot_id": "bcc65e39-c0e2-48eb-8b94-d069347fabac",
+        "goal": "真实模型验收 · 问答与资料工具",
+        "instructions": "",
+        "instruction_version": 1,
+        "resource_refs": [],
+        "result_ids": [],
+        "missing": [],
+        "limits": {
+          "max_turns": 8,
+          "timeout_seconds": 60.0,
+          "max_depth": 1,
+          "max_calls": 8
+        },
+        "chat_revision": 1,
+        "evidence_required": false
+      },
+      "run": {
+        "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+        "conversation_id": null,
+        "process_id": "e0324361-528f-49e5-854a-1b65cb43ff21",
+        "request": {
+          "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+          "parent_run_id": null,
+          "agent_id": "f7d79a31-f242-48bf-a65c-dfc4aa3752df",
+          "input": {
+            "messages": [
+              {
+                "role": "user",
+                "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"84263fe4-ccd1-4481-878b-f8b5687fddb6\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+              }
+            ]
+          },
+          "limits": {
+            "max_turns": 8,
+            "timeout_seconds": 60.0,
+            "max_depth": 1,
+            "max_calls": 8
+          },
+          "depth": 0
+        },
+        "expected_revision": 0,
+        "status": "failed",
+        "result": {
+          "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+          "status": "failed",
+          "output": null,
+          "usage": {
+            "requests": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "complete": false
+          },
+          "error": {
+            "code": "model_behavior",
+            "origin": "engine",
+            "message": "Model violated SDK protocol or output contract: Invalid JSON when parsing model output",
+            "retryable": false,
+            "cause_id": null
+          }
+        },
+        "commit_id": "run:af32e742-8ee3-4f16-bf64-3af22cde00bd",
+        "created_at": "2026-10-03T12:12:27.393574Z"
+      },
+      "events": [
+        {
+          "root_run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+          "sequence": 1,
+          "event": {
+            "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "started",
+            "name": null,
+            "error": null
+          },
+          "occurred_at": "2026-10-03T12:12:27.395295Z"
+        },
+        {
+          "root_run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+          "sequence": 2,
+          "event": {
+            "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+            "parent_run_id": null,
+            "tool_call_id": null,
+            "child_run_id": null,
+            "phase": "run",
+            "status": "failed",
+            "name": null,
+            "error": {
+              "code": "model_behavior",
+              "origin": "engine",
+              "message": "Model violated SDK protocol or output contract: Invalid JSON when parsing model output",
+              "retryable": false,
+              "cause_id": null
+            }
+          },
+          "occurred_at": "2026-10-03T12:12:30.628969Z"
+        }
+      ],
+      "context": {
+        "id": "bcc65e39-c0e2-48eb-8b94-d069347fabac",
+        "run_id": "af32e742-8ee3-4f16-bf64-3af22cde00bd",
+        "conversation_id": null,
+        "scope_id": "0c012d0a-e697-4fb2-a679-7f66f0832b43",
+        "scope_version": 1,
+        "scope": {
+          "id": "0c012d0a-e697-4fb2-a679-7f66f0832b43",
+          "owner": "local",
+          "version": 1,
+          "allowed": [],
+          "grants": [],
+          "inherited": [],
+          "tools": [
+            "read_source",
+            "search_source"
+          ],
+          "max_input_chars": 30000,
+          "max_tool_chars": 20000,
+          "web_urls": [],
+          "enabled": true
+        },
+        "mounts": [],
+        "result_mounts": [],
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：真实模型验收 · 问答与资料工具\\n当前分支完整获准对话：[{\\\"id\\\": \\\"84263fe4-ccd1-4481-878b-f8b5687fddb6\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"这是一道自包含算术题，无需外部资料：146 乘以 7 等于多少？请用一句中文回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "research_id": "c4bd7f63-3195-41e7-9357-8dceae69ddb1",
+  "node_id": "f7d79a31-f242-48bf-a65c-dfc4aa3752df",
+  "error": {
+    "type": "AssertionError",
+    "message": "{'run_id': 'af32e742-8ee3-4f16-bf64-3af22cde00bd', 'status': 'failed', 'output': None, 'usage': {'requests': 0, 'input_tokens': 0, 'output_tokens': 0, 'complete': False}, 'error': {'code': 'model_behavior', 'origin': 'engine', 'message': 'Model violated SDK protocol or output contract: Invalid JSON when parsing model output', 'retryable': False, 'cause_id': None}}"
+  }
+}

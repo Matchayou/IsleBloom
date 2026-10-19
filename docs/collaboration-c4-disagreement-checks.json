@@ -1,0 +1,80 @@
+{
+  "synthetic_data": true,
+  "semantic_gate": "not_passed",
+  "attempts": [
+    {
+      "attempt": 1,
+      "evidence": "collaboration-c4-disagreement-verification.json",
+      "run_id": "53dd6f4a-9db7-469b-9158-15c0e512ed7c",
+      "status": "succeeded",
+      "completed_tools": [
+        "find_experts",
+        "read_context",
+        "read_source",
+        "read_context",
+        "read_context",
+        "send_agent_message",
+        "send_agent_message"
+      ],
+      "expert_versions_runs_receipts_outputs_unchanged": true
+    },
+    {
+      "attempt": 2,
+      "evidence": "collaboration-c4-disagreement-attempt-2.json",
+      "run_id": "9d06564d-f1b9-4cb4-8483-b360400b7f10",
+      "status": "succeeded",
+      "completed_tools": [
+        "read_context"
+      ],
+      "expert_versions_runs_receipts_outputs_unchanged": true
+    },
+    {
+      "attempt": 3,
+      "evidence": "collaboration-c4-disagreement-attempt-3.json",
+      "run_id": "f6a214be-8364-420b-a4a0-75ec97ccdc76",
+      "status": "failed",
+      "completed_tools": [],
+      "expert_versions_runs_receipts_outputs_unchanged": true
+    },
+    {
+      "attempt": 4,
+      "evidence": "collaboration-c4-disagreement-attempt-4.json",
+      "run_id": "946b4d1a-5fa3-42e1-8ae2-766f9ef5c39f",
+      "status": "failed",
+      "completed_tools": [],
+      "expert_versions_runs_receipts_outputs_unchanged": true
+    },
+    {
+      "attempt": 5,
+      "evidence": "collaboration-c4-disagreement-attempt-5.json",
+      "run_id": "50c25a77-93bc-4a49-99d2-4bef3e490953",
+      "status": "succeeded",
+      "completed_tools": [
+        "find_experts",
+        "read_context",
+        "read_context",
+        "send_agent_message",
+        "send_agent_message",
+        "read_source"
+      ],
+      "manager_succeeded": true,
+      "expert_versions_runs_receipts_outputs_unchanged": true,
+      "no_network_tools": true,
+      "no_formal_adoption": true,
+      "semantic_review": {
+        "status": "not_passed",
+        "improved": [
+          "report bodies read and discussed",
+          "facts, inferences and unknowns distinguished",
+          "normalized contradiction explicitly unknown",
+          "absence of conflict wording rejected as contradiction test"
+        ],
+        "remaining": [
+          "report section 4.3 still prohibits subtraction instead of limiting interpretation",
+          "overlapping basis descriptions still listed together without explaining overlap"
+        ]
+      }
+    }
+  ],
+  "previous_api_failure_user_explanation": "User reported insufficient API balance for attempts 3 and 4; tool logs themselves only recorded engine_failed."
+}

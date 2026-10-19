@@ -1,0 +1,29 @@
+
+==================================== ERRORS ====================================
+_____________________ ERROR collecting tests/test_core.py ______________________
+tests/test_core.py:7: in <module>
+    from legacy_composition import build, MultiplyInput
+tests/legacy_composition.py:8: in <module>
+    from legacy_conversation import ConversationService
+tests/legacy_conversation.py:8: in <module>
+    class ConversationService:
+tests/legacy_conversation.py:9: in ConversationService
+    def __init__(self, runner: ExecutePort, store: ConversationStore):
+                                                   ^^^^^^^^^^^^^^^^^
+E   NameError: name 'ConversationStore' is not defined
+_________________ ERROR collecting tests/test_sdk_contract.py __________________
+tests/test_sdk_contract.py:13: in <module>
+    from legacy_composition import MultiplyInput
+tests/legacy_composition.py:8: in <module>
+    from legacy_conversation import ConversationService
+tests/legacy_conversation.py:8: in <module>
+    class ConversationService:
+tests/legacy_conversation.py:9: in ConversationService
+    def __init__(self, runner: ExecutePort, store: ConversationStore):
+                                                   ^^^^^^^^^^^^^^^^^
+E   NameError: name 'ConversationStore' is not defined
+=========================== short test summary info ============================
+ERROR tests/test_core.py - NameError: name 'ConversationStore' is not defined
+ERROR tests/test_sdk_contract.py - NameError: name 'ConversationStore' is not...
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.90s

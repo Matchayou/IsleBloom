@@ -1,0 +1,314 @@
+"""Live Stage 5 acceptance. Requires the configured TinyFish and DeepSeek keys.
+
+Run with DATABASE_URL, STAGE5_BLOBS, OPENAI_BASE_URL, OPENAI_MODEL and
+OPENAI_API_KEY set. STAGE5_CREDENTIAL_FILE may supply the last three values
+without placing a key on the command line. This creates a new research case.
+"""
+import argparse
+import asyncio
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+from time import monotonic
+from uuid import uuid4
+
+import httpx
+
+from agent_core.adapters.openai import OpenAIEngine
+from agent_core.adapters.postgres import PostgresDatabase
+from agent_core.composition import build_resources, build_research, build_tasks
+from agent_core.contracts import RunLimits
+from agent_core.evidence.search import TinyFishSearchProvider
+from agent_core.research.chat import ChatService
+from agent_core.research.models import NodeCommand
+
+
+FILES = ('tesla-2025.pdf', 'ford-2025.pdf', 'gm-2025.pdf')
+PDF_ROOT = Path('/tmp/stage5-public-2025')
+PDF_HASHES = {
+    'tesla-2025.pdf': '65dd654744c3d7cfad92dbee66706a6f7e808b59adbb213cdffcdedeb968135a',
+    'ford-2025.pdf': '636d1c1a3790fccca4ad8a9db0807f667ccdf8ee41fc22d2ef65a09160a23845',
+    'gm-2025.pdf': '417d855c389a33ea06ad898676964e1c456500bf53ac1a3650e837ad2539baae',
+}
+QUERY = '2025 年 特斯拉 福特 通用汽车 年报 经营现金流 比较'
+GM_URL = 'https://news.gm.com.cn/zh/home.detail.html/Pages/news/cn/zh/2026/jan/0127-gm-earnings.html'
+PACKET_SELECTION = {
+    'tesla-2025.pdf': {56: (*range(0, 8), *range(69, 73)),
+                       13: (*range(13, 18),), 45: (*range(23, 30), *range(57, 60))},
+    'ford-2025.pdf': {89: (*range(1, 10), *range(175, 184)),
+                      24: (11, 12, *range(24, 30))},
+    'gm-2025.pdf': {61: (*range(0, 11), 78, 80, 82, 84),
+                    17: (3, 4, 5)},
+}
+
+
+def stamp():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def write(path, value):
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, default=str) + '\n')
+
+
+class TracedTinyFish(TinyFishSearchProvider):
+    def __init__(self, client):
+        super().__init__(client=client)
+        self.calls = []
+
+    async def _request(self, method, endpoint, **kwargs):
+        call = {'started_at': stamp(), 'method': method, 'endpoint': endpoint}
+        started = monotonic()
+        try:
+            payload = await super()._request(method, endpoint, **kwargs)
+            call['payload'] = payload
+            return payload
+        except Exception as exc:
+            call['error_type'] = type(exc).__name__
+            call['error'] = str(exc)
+            raise
+        finally:
+            call['elapsed_ms'] = round((monotonic() - started) * 1000)
+            call['finished_at'] = stamp()
+            self.calls.append(call)
+
+
+class CapturedEngine(OpenAIEngine):
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+
+    async def execute(self, request, spec, tools, invoke):
+        result = await super().execute(request, spec, tools, invoke)
+        with self.path.open('a') as handle:
+            handle.write(json.dumps({'time': stamp(), 'run_id': request.run_id,
+                                     'requested_model': spec.model,
+                                     'result': result.model_dump(mode='json')},
+                                    ensure_ascii=False) + '\n')
+        return result
+
+
+def output_for(research, result_id):
+    version = research.check_result(result_id)
+    record = research.ledger.get(version.run_id)
+    bundle = research.evidence.read(result_id)
+    located = []
+    for item in bundle.evidence:
+        resolved = research.evidence.locate(result_id, item.id)
+        located.append({'evidence_id': item.id, 'ref': item.ref.model_dump(mode='json'),
+                        'location': item.location, 'quote': item.quote,
+                        'fragment_text': resolved['fragment'].text,
+                        'snapshot_id': resolved['snapshot'].id})
+    return {'result_id': result_id, 'run_id': version.run_id,
+            'context_snapshot_id': version.context_snapshot_id,
+            'run_status': record.status, 'usage': record.result.usage.model_dump(mode='json'),
+            'output': record.result.output, 'bundle': bundle.model_dump(mode='json'),
+            'located_citations': located}
+
+
+async def command(research, case_id, kind, node_id=None, **kwargs):
+    return await research.submit(NodeCommand(command_id=str(uuid4()),
+        research_id=case_id, kind=kind, node_id=node_id, **kwargs))
+
+
+async def resume_web(args):
+    report_path = Path(args.report)
+    report = json.loads(report_path.read_text())
+    database = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        scopes = build_resources(database, os.environ['STAGE5_BLOBS'])
+        engine = CapturedEngine(Path(args.model_raw))
+        research = build_research(database, scopes, engine)
+        build_tasks(database, scopes, research, engine)
+        nodes = [node for node in research.query('list_nodes', report['research_id'])
+                 if node.goal.startswith('仅根据已抓取的通用汽车中文官网正文')]
+        if len(nodes) != 1:
+            raise ValueError('Expected one original web analysis node')
+        node = nodes[0]
+        previous = research.query('list_runs', node.id)[0]
+        record = research.ledger.get(previous.run_id)
+        report['web_first_attempt'] = {'run_id': previous.run_id,
+            'status': record.status,
+            'error': record.result.error.model_dump(mode='json') if record.result.error else None,
+            'raw_model_output_line': 3}
+        web_ref = report['web']['ref']
+        await command(research, report['research_id'], 'continue', node.id,
+            goal='继续分析同一固定网页。报告中逐项写明主体、2025 年、美元、亿美元和“调整后汽车业务现金流”口径；'
+                 '所有 citation.fields 设为空对象 {}，不要在该字段填写推断或改写后的词。'
+                 '结构化 claim 逐字引用网页片段，并明确它不同于合并经营活动现金流。',
+            resource_refs=(web_ref,), limits=RunLimits(max_turns=8, timeout_seconds=240, max_calls=8))
+        result_id = research.node(node.id).current_result_id
+        report['web_claims'] = output_for(research, result_id)
+        if not report['web_claims']['bundle']['claims']:
+            raise ValueError('Real web analysis omitted structured claims')
+        report['status'] = 'model_outputs_published_semantic_review_pending'
+        report['finished_at'] = stamp()
+        write(report_path, report)
+        return 0
+    finally:
+        database.close()
+
+
+async def run(args):
+    if os.environ.get('STAGE5_CREDENTIAL_FILE'):
+        credentials = json.loads(Path(os.environ['STAGE5_CREDENTIAL_FILE']).read_text())
+        os.environ['OPENAI_API_KEY'] = credentials['api_key']
+        os.environ['OPENAI_BASE_URL'] = credentials['base_url']
+        os.environ['OPENAI_MODEL'] = 'deepseek-flash'
+    required = ('DATABASE_URL', 'STAGE5_BLOBS', 'TINYFISH_API_KEY',
+                'OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_MODEL')
+    missing = [name for name in required if not os.environ.get(name)]
+    if missing:
+        raise RuntimeError('Missing environment variable names: ' + ', '.join(missing))
+    if args.resume_web:
+        return await resume_web(args)
+    report_path, raw_path = Path(args.report), Path(args.raw)
+    model_raw_path = Path(args.model_raw)
+    model_raw_path.write_text('')
+    report = {'started_at': stamp(), 'status': 'running',
+              'model_display': 'DeepSeek-V4.1-Flash',
+              'model_request_id': os.environ['OPENAI_MODEL'],
+              'model_base_url': os.environ['OPENAI_BASE_URL'],
+              'tinyfish_mcp': 'not_available_in_this_codex_session',
+              'human_signoff': 'pending'}
+    raw = {'started_at': report['started_at'], 'calls': []}
+    write(report_path, report)
+    database = PostgresDatabase(os.environ['DATABASE_URL'])
+    try:
+        scopes = build_resources(database, os.environ['STAGE5_BLOBS'])
+        engine = CapturedEngine(model_raw_path)
+        research = build_research(database, scopes, engine)
+        build_tasks(database, scopes, research, engine)
+        case = research.create('真实 Stage 5：2025 Tesla Ford GM 现金流、风险与中文官网资料')
+        report['research_id'] = case.id
+        scope = scopes.current(case.scope_id, case.owner)
+        refs = {}
+        for name in FILES:
+            content = (PDF_ROOT / name).read_bytes()
+            if hashlib.sha256(content).hexdigest() != PDF_HASHES[name]:
+                raise ValueError(f'Fixed annual report changed: {name}')
+            scope, ref = scopes.ingest(scope, content=content,
+                                      name=name, media_type='application/pdf')
+            refs[name] = ref
+        report['pdf_refs'] = {name: ref.model_dump(mode='json') for name, ref in refs.items()}
+        packet_dir = Path('docs/stage5-packets')
+        packet_dir.mkdir(exist_ok=True)
+        packets = {}
+        report['packets'] = {}
+        for name in FILES:
+            originals = scopes.resources.read(refs[name])
+            lines, mapping = [], []
+            for page, indices in PACKET_SELECTION[name].items():
+                for index in indices:
+                    matches = [f for f in originals if f.location.startswith(
+                        f'page:{page}:#/texts/{index}:')]
+                    if len(matches) != 1:
+                        raise ValueError(f'Original PDF fragment missing: {name} page {page} text {index}')
+                    fragment = matches[0]
+                    line = f'PDF page {page}, text {index}: {fragment.text}'
+                    lines.append(line)
+                    mapping.append({'packet_line': len(lines), 'original_location': fragment.location,
+                                    'original_text': fragment.text})
+            packet_path = packet_dir / name.replace('.pdf', '.txt')
+            packet_path.write_text('\n'.join(lines) + '\n')
+            scope, packet_ref = scopes.ingest(scope, content=packet_path.read_bytes(),
+                                              name=f'{name} verified page extracts',
+                                              media_type='text/plain')
+            packets[name] = packet_ref
+            report['packets'][name] = {'ref': packet_ref.model_dump(mode='json'),
+                                       'original_pdf_ref': refs[name].model_dump(mode='json'),
+                                       'path': str(packet_path), 'source_map': mapping}
+        write(report_path, report)
+
+        statuses = []
+        async def on_response(response):
+            statuses.append({'time': stamp(), 'url': str(response.request.url),
+                             'status': response.status_code})
+        async with httpx.AsyncClient(timeout=150, follow_redirects=False, trust_env=False,
+                                     event_hooks={'response': [on_response]}) as client:
+            provider = TracedTinyFish(client)
+            research.search.provider = provider
+            discoveries = await research.search.discover(case.id, QUERY)
+            report['discovery'] = [{'ref': d['ref'].model_dump(mode='json'),
+                                    'title': d['title'], 'url': d['url'],
+                                    'kind': d['kind']} for d in discoveries]
+            selected = next(d for d in discoveries if d['url'] == GM_URL)
+            report['selected_discovery'] = selected['ref'].model_dump(mode='json')
+            fetched = await research.search.fetch(case.id, selected['ref'])
+            web_ref = fetched['ref']
+            report['web'] = {'url': fetched['url'], 'ref': web_ref.model_dump(mode='json'),
+                             'parse': fetched['parse'].model_dump(mode='json')}
+            raw['calls'] = provider.calls
+            raw['http_responses'] = statuses
+            write(raw_path, raw)
+            write(report_path, report)
+
+        chat = ChatService(research, research.chat_tasks)
+        main = await chat.start(case.id, '比较三家公司 2025 年合并经营现金流和竞争风险')
+        await command(research, case.id, 'mount', main.node_id, resource_refs=tuple(packets.values()))
+        sent = chat.send(main.node_id,
+            '请从三份固定年报生成 2025 年 Tesla、Ford、GM 合并经营活动现金流比较表，逐一核对'
+            '公司、期间、美元、百万美元单位、合并报表口径，并概述各公司披露的竞争风险。'
+            'Ford 使用合并现金流量表 2025 列。每个重要事实写结构化 claim 和逐字引用。'
+            '明确三家公司金融业务结构不同，绝对金额不能直接代表经营质量。'
+            '如数值或口径不能从来源定位，明确列为 missing。'
+            'citation.fields 仅填来源中逐字出现的字符串；拿不准的字段填 null。'
+            'period 只写 2025，currency 只写 $，不要写 FY2025、USD 或推断出的字段。', main.revision)
+        await command(research, case.id, 'chat_reply', main.node_id,
+                      chat_revision=sent.revision,
+                      limits=RunLimits(max_turns=14, timeout_seconds=360, max_calls=12))
+        main_result = research.node(main.node_id).current_result_id
+        report['comparison'] = output_for(research, main_result)
+        if not report['comparison']['bundle']['claims']:
+            raise ValueError('Real comparison omitted structured claims')
+        report['main_node'] = main.node_id
+        write(report_path, report)
+
+        main = chat.read(main.node_id)
+        branch = await chat.branch(main.node_id, main.messages[-1].id,
+                                   'Tesla 资本开支与经营现金流续研', main.revision)
+        branch_sent = chat.send(branch.node_id,
+            '只对 Tesla 续研：核对 2025 年资本开支及与经营现金流的简单差额。'
+            '区分计算值与公司正式自由现金流指标，并以固定年报逐字引用支持事实。',
+            branch.revision)
+        await command(research, case.id, 'chat_reply', branch.node_id,
+                      chat_revision=branch_sent.revision,
+                      limits=RunLimits(max_turns=10, timeout_seconds=300, max_calls=8))
+        continuation = research.node(branch.node_id).current_result_id
+        report['continuation'] = output_for(research, continuation)
+        if not report['continuation']['bundle']['claims']:
+            raise ValueError('Real continuation omitted structured claims')
+        branch = chat.read(branch.node_id)
+        transfer = chat.transfer(branch.node_id, branch.messages[-1].id, main.node_id,
+                                 main.revision, research.node(main.node_id).revision)
+        report['transfer'] = {'id': transfer.id, 'status': chat.adopt(transfer.id).status}
+        write(report_path, report)
+
+        web_node = await command(research, case.id, 'create', goal=
+            '仅根据已抓取的通用汽车中文官网正文，归纳 2025 年调整后汽车业务现金流及其口径。'
+            '不得将它写成合并经营活动现金流；必要事实用逐字引用。'
+            '所有 citation.fields 设为空对象 {}；主体、期间、币种、单位与口径写在报告中。',
+            resource_refs=(web_ref,))
+        await command(research, case.id, 'run', web_node.node_id,
+                      limits=RunLimits(max_turns=8, timeout_seconds=240, max_calls=8))
+        report['web_claims'] = output_for(research,
+                                          research.node(web_node.node_id).current_result_id)
+        if not report['web_claims']['bundle']['claims']:
+            raise ValueError('Real web analysis omitted structured claims')
+        report['status'] = 'model_outputs_published_semantic_review_pending'
+        report['finished_at'] = stamp()
+        write(report_path, report)
+        return 0
+    finally:
+        database.close()
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--report', default='docs/stage5-live-eval.json')
+    parser.add_argument('--raw', default='docs/stage5-tinyfish-raw.json')
+    parser.add_argument('--model-raw', default='docs/stage5-model-raw.jsonl')
+    parser.add_argument('--resume-web', action='store_true')
+    args = parser.parse_args()
+    raise SystemExit(asyncio.run(run(args)))

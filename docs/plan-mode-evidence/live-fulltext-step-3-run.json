@@ -1,0 +1,643 @@
+{
+  "binding": {
+    "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+    "node_id": "79b90b12-ce44-4b46-928c-d87a262310cd",
+    "command_id": "plan:b7569909-6281-49af-aad7-d01dd00ca297:79b90b12-ce44-4b46-928c-d87a262310cd",
+    "node_revision": 1,
+    "context_snapshot_id": "52520aff-25c6-4ae8-920d-886a0d93ac2d",
+    "goal": "综合上游交付，产出最终对照表、约1500字有来源报告、工作流建议与研究局限。",
+    "instructions": "仅用 read_source/search_source，综合步骤1、2结果。输出最终对照表、约1500字带来源的中文报告、工作流建议，并在研究局限中明确实测费用/token/时延/失败率为允许未知，不编造数字。\n交付要求：最终对照表 + 约1500字有来源报告 + 工作流建议 + 研究局限；blocking_missing 仅列真正未完成的必需交付（如缺对照表或无来源），允许未知不列入。",
+    "instruction_version": 2,
+    "resource_refs": [
+      {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      },
+      {
+        "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+        "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+        "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+      },
+      {
+        "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+        "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+        "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+      },
+      {
+        "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+        "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+        "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+      },
+      {
+        "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+        "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+        "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+      },
+      {
+        "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+        "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+        "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+      }
+    ],
+    "result_ids": [
+      "result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2",
+      "result:b2cb6f80-4a59-458f-afed-e2962b81c21d"
+    ],
+    "missing": [],
+    "limits": {
+      "max_turns": 8,
+      "timeout_seconds": 600.0,
+      "max_depth": 1,
+      "max_calls": 6
+    },
+    "chat_revision": null,
+    "notification_ids": [],
+    "evidence_required": false
+  },
+  "run": {
+    "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+    "conversation_id": null,
+    "process_id": "dd8ac833-cd58-45dd-91b6-cbba3dbeff8f",
+    "request": {
+      "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+      "parent_run_id": "plan:940833e7-47d5-46a8-8244-78c51a409616:1:wave:2",
+      "agent_id": "79b90b12-ce44-4b46-928c-d87a262310cd",
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"content\":[],\"goal\":\"综合上游交付，产出最终对照表、约1500字有来源报告、工作流建议与研究局限。\\n用户指令：仅用 read_source/search_source，综合步骤1、2结果。输出最终对照表、约1500字带来源的中文报告、工作流建议，并在研究局限中明确实测费用/token/时延/失败率为允许未知，不编造数字。\\n交付要求：最终对照表 + 约1500字有来源报告 + 工作流建议 + 研究局限；blocking_missing 仅列真正未完成的必需交付（如缺对照表或无来源），允许未知不列入。\\n缺失项：\",\"handoff\":{\"approved_by\":\"local\",\"approved_revision\":1,\"instruction\":\"Execute this approved step. Planning-only restrictions in historical requests have been superseded by approval; retain all research constraints.\",\"phase\":\"approved_plan_execution\",\"planning_history_ref\":\"940833e7-47d5-46a8-8244-78c51a409616\",\"proposal_id\":\"940833e7-47d5-46a8-8244-78c51a409616\",\"research_constraints\":\"\",\"step_id\":\"79b90b12-ce44-4b46-928c-d87a262310cd\"},\"results\":[{\"mount\":{\"limitations\":[\"ReAct 机制摘录主要取自 PDF v3 全文；arXiv abs 页本身仅为摘要，完整机制证据依赖 PDF/HTML v3 全文。\",\"Google Research Blog 与 arXiv HTML v3 版作为补充资料已确认全文可用，但本步骤仅核对三份关键一级资料，未对这两份补充资料逐段比对全部内容。\"],\"missing\":[],\"mode\":\"read_only\",\"resource_refs\":[{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"}],\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"run_id\":\"e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},\"output\":{\"evidence\":{\"claims\":[{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:0\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"ReAct 使用 LLM 以交织方式同时生成推理轨迹与任务相关动作（thought/act 机制）。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"ReAct 轨迹格式为 Thought → Action → Observation 循环，模型自主决定 thought 与 action 的出现时机。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:2\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"OpenAI Agents SDK 的 HITL 流程会暂停 agent 执行，直到人工批准或拒绝敏感工具调用。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:3\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"OpenAI Agents SDK 通过 state.approve(...) 或 state.reject(...) 对 interruption 做出决定后恢复执行。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:4\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"LangChain HITL 中间件在模型提出需审查的动作时暂停执行，等待人工决定。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:5\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"LangChain 通过 Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]}) 在人工决策后恢复流式执行。\"}],\"evidence\":[{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:0:0\",\"location\":\"#/texts/0\",\"quote\":\"In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with and gather additional information from external sources such as knowledge bases or environments.\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:0\",\"location\":\"#/texts/41\",\"quote\":\"Thought 1: I need to search Bermuda Triangle and find if it is in the Pacific Ocean. Action 1: Search[Bermuda Triangle] Observation 1: Reportedly haunted locations...\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:1\",\"location\":\"#/texts/12\",\"quote\":\"appear sparsely in the most relevant positions of a trajectory, so we let the language model decide the asynchronous occurrence of thoughts and actions for itself.\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:2:0\",\"location\":\"#/texts/1\",\"quote\":\"Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls.\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:3:0\",\"location\":\"#/texts/221\",\"quote\":\"if approved: state.approve(interruption, always_approve=False) else: state.reject(interruption) result = await Runner.run(agent, state)\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:4:0\",\"location\":\"#/texts/0\",\"quote\":\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:5:0\",\"location\":\"#/texts/174\",\"quote\":\"stream = agent.stream_events( Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]}), config=config, version=\\\"v3\\\", )\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"}],\"relations\":[{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:0\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:0:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:0:0\",\"reasoning\":\"直接说明 thought 与 action 以交织方式生成，是 ReAct 核心机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:1:0\",\"reasoning\":\"展示完整 Thought/Action/Observation 轨迹，实证交织格式。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:1\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:1:1\",\"reasoning\":\"说明模型自主决定 thought/action 出现时机，佐证轨迹机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:2\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:2:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:2:0\",\"reasoning\":\"直接说明 HITL 的暂停-批准/拒绝机制，是官方文档关键表述。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:3\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:3:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:3:0\",\"reasoning\":\"展示批准/拒绝的具体调用与恢复执行流程。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:4\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:4:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:4:0\",\"reasoning\":\"直接说明 LangChain HITL 的暂停等待决策机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:5\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:5:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:5:0\",\"reasoning\":\"展示人工批准后恢复执行的具体代码机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null}]},\"report\":\"资料清单（3 份关键一级资料，均已确认全文可用并定位到机制证据）：\\n\\n1. ReAct: Synergizing Reasoning and Acting in Language Models（arXiv PDF v3 全文）\\n   - 标题：ReAct: Synergizing Reasoning and Acting in Language Models (ICLR 2023)\\n   - URL：https://arxiv.org/pdf/2210.03629v3\\n   - 全文状态：可用（PDF v3 全文已抓取并解析）\\n   - 位置：#/texts/0（摘要）\\n   - 短摘录：\\\"In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner...\\\"（thought/act 交织机制）\\n   - 补充位置：#/texts/41 展示 Thought 1 → Action 1 → Observation 1 → Thought 2 → Action 2 的完整轨迹；#/texts/12 说明模型自主决定 thought/action 出现时机。\\n\\n2. Human-in-the-loop — OpenAI Agents SDK（官方文档）\\n   - 标题：Human-in-the-loop\\n   - URL：https://openai.github.io/openai-agents-python/human_in_the_loop/\\n   - 全文状态：可用（官方文档全文已抓取并解析）\\n   - 位置：#/texts/1\\n   - 短摘录：\\\"Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls.\\\"\\n   - 补充位置：#/texts/221 展示批准/拒绝与恢复执行：state.approve(interruption, always_approve=False) / state.reject(interruption) → await Runner.run(agent, state)。\\n\\n3. Human-in-the-loop — Docs by LangChain（官方文档）\\n   - 标题：Human-in-the-loop\\n   - URL：https://docs.langchain.com/oss/python/langchain/human-in-the-loop\\n   - 全文状态：可用（官方文档全文已抓取并解析）\\n   - 位置：#/texts/0\\n   - 短摘录：\\\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\\\"\\n   - 补充位置：#/texts/174 展示人工批准后恢复：Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]})。\\n\\n关键证据缺失：无。ReAct 的 thought/act 交织机制与两套 HITL 的 approve/plan 流程均已定位到带位置的短摘录，三份资料全文状态均确认可用。\"}},{\"mount\":{\"limitations\":[\"ReAct 论文未给出 token、时延、机器成本等实测成本数字，成本构成行为定性归纳。\",\"OpenAI Agents SDK 官方文档未给出人工审核的人时成本、延迟、吞吐量等实测数字，成本构成为基于暂停-恢复流程的定性归纳。\",\"LangChain 官方文档未给出被审查动作占比、批准率、审核时长等实测数字。\",\"HITL 的典型失败模式（人工延迟、over-approval、误批准）在官方文档中无统计或明确措辞，属基于机制归纳的推断，非逐字同源；其中 always_approve=True 有代码位置佐证，但风险后果为归纳。\",\"ReAct 与 HITL 在可靠性维度无同基准可比数字；ReAct 有 HotpotQA/Fever 性能数值，HITL 无对应量化指标。\",\"ReAct 失败模式的百分比（47%, 23%, 0%）仅来自 HotpotQA 随机抽样人工评估，非全量或跨任务通用。\"],\"missing\":[],\"mode\":\"read_only\",\"resource_refs\":[{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"}],\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"run_id\":\"b2cb6f80-4a59-458f-afed-e2962b81c21d\"},\"output\":{\"evidence\":{\"claims\":[{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 的失败模式在 HotpotQA 上包含 47% 的推理错误（reasoning error，含无法从重复步骤恢复的轨迹）、23% 的搜索结果错误（search result error）和 0% 的逻辑幻觉（hallucination）。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 与 CoT 在 HotpotQA 与 Fever 上的性能指标不同，ReAct 在 HotpotQA 上略低（27.4），在 Fever 上略高（60.9）。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 适用于需要外部信息交互、事实核查或交互决策的任务，包括 HotpotQA、Fever、ALFWorld、WebShop。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 论文未披露每 token、每步或总体运行的成本实测数字。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"OpenAI HITL 支持 always_approve=True 自动批准，这会绕过人工把关。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"LangChain HITL 在模型提议可能需审查的动作（如写文件或执行 SQL）时暂停执行等待决定。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"OpenAI Agents SDK 官方文档与 LangChain 官方文档均未给出手动审核的量化成本或失败模式统计。\"}],\"evidence\":[{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0\",\"location\":\"#/texts/14\",\"quote\":\"Search result error Search return empty or does not contain useful information 23% - Hallucination Hallucinated reasoning trace or facts 0% 56%\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0\",\"location\":\"#/texts/13\",\"quote\":\"Prompt Methoda HotpotQA Fever (EM) (Acc) Standard 28.7 57.1 CoT (Wei et al., 2022) 29.4 56.3 CoT-SC (Wang et al., 2022a) 33.4 60.4 Act 25.7 58.9 ReAct 27.4 60.9\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0\",\"location\":\"#/texts/11\",\"quote\":\"On ALFWorld and WebShop, two or even one-shot ReAct prompting is able to outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0\",\"location\":\"#/texts/273\",\"quote\":\"state.approve(interruption, always_approve=True)\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0\",\"location\":\"#/texts/0\",\"quote\":\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"}],\"relations\":[{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:3:0\",\"reasoning\":\"任何 Token 数量、API 调用费用、机器成本、时延等成本实测数据在 ReAct PDF v3 全文中均未出现，成本构成为定性归纳。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:0\",\"reasoning\":\"OpenAI HITL 文档未提供人工时延、人力成本、token 成本等实测数字。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:1\",\"reasoning\":\"LangChain HITL 文档未提供被审查动作频率、批准率、审核时长等实测数字。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:0:0\",\"reasoning\":\"Table 2 明确列出 ReAct/CoT 的成功与失败模式及百分比，直接支撑 ReAct 的失败模式。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:1:0\",\"reasoning\":\"Table 1 直接给出 ReAct 在两项任务上的性能，支撑可靠性维度。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:2:0\",\"reasoning\":\"原文列出具体任务类型与测试环境，支撑适用场景项。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:4:0\",\"reasoning\":\"官方代码示例展示 always_approve=True 会直接批准中断，佐证 over-approval 风险。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:5:0\",\"reasoning\":\"官方文档直接定义 HITL 暂停机制与典型动作类型，支撑适用场景项。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null}]},\"report\":\"## 定性对照表：ReAct 论证循环 vs 先规划+人工确认+再执行\\n\\n| 维度 | ReAct 论证循环 | 先规划+人工确认+再执行（HITL 批准流程） |\\n|---|---|---|\\n| 机制 | LLM 以交织方式生成推理轨迹（Thought）与任务相关动作（Action），形成 Thought→Action→Observation 循环；模型自主决定两者异步出现时机。[ReAct PDF #/texts/0, #/texts/12, #/texts/41] | agent 执行被暂停，直到人工通过 approve/reject 对敏感工具调用做出决定后才恢复执行；OpenAI SDK 用 state.approve(...)/state.reject(...)，LangChain 用 Command(resume={\\\"decisions\\\":[...]})。[OpenAI #/texts/1, #/texts/221；LangChain #/texts/0, #/texts/174] |\\n| 典型失败模式 | 三类：reasoning error（错误推理轨迹，含无法从重复步骤恢复，HotpotQA 上 47%）、search result error（搜索无结果或无用，23%）；论文在 HotpotQA 上未观察到逻辑幻觉（hallucination 0%）。[ReAct PDF #/texts/14] | 人工审核延迟或拒绝导致的执行中断；过度批准（always_approve=True）会削弱安全护栏；需人工恢复流，异步协作成本与误批准风险。[OpenAI #/texts/221, #/texts/273（归纳）] |\\n| 适用场景 | 需要外部信息交互、可更新知识、可解释轨迹的知识问答（HotpotQA）、事实核查（Fever）、交互决策（ALFWorld/WebShop）；一两轮少样本即可启动。[ReAct PDF #/texts/11, #/texts/0] | 敏感工具调用（写文件、执行 SQL 等）、高后果操作、需要合规或审计把关的动作。[LangChain #/texts/0；OpenAI #/texts/1（归纳）] |\\n| 成本构成（定性） | 每次交互产生额外行动与观察 token、多步轨迹带来的上下文增长；无人工监督成本。[ReAct PDF 无实测数字（归纳）] | 模型暂停等待造成延迟与人时成本；每次中断需要状态持久化与恢复；人工审核成本随敏感调用频次线性增加。[OpenAI #/texts/221；LangChain #/texts/174（归纳）] |\\n| 可靠性 | 通过外部检索缓解事实幻觉与错误传播，但动作循环消耗资源且性能因任务而异（HotpotQA 27.4 略低于 CoT，Fever 60.9 略高）。[ReAct PDF #/texts/0, #/texts/13] | 可靠性来自人工把关，但 100% 可靠取决于人；过度批准或误判仍可引入错误。[归纳] |\\n\\n## 逐项来源依据\\n\\n- 机制（ReAct）：#/texts/0 摘要明确推理轨迹与任务相关动作以交织方式生成；#/texts/41 展示完整 Thought→Action→Observation 轨迹；#/texts/12 明确模型自主决定异步出现时机。\\n- 机制（HITL）：OpenAI #/texts/1 明确暂停执行直到人工批准或拒绝敏感工具调用；OpenAI #/texts/221 展示 approve/reject 与恢复执行；LangChain #/texts/0 明确中间件暂停等待决策；LangChain #/texts/174 展示批准后恢复。\\n- 失败模式（ReAct）：#/texts/14 提供 Table 2 中 reasoning error 47%、search result error 23%、hallucination 0% 等数值。\\n- 失败模式（HITL）：官方文档未提供失败模式统计；待批准/拒绝流程与 always_approve 在 OpenAI #/texts/221、#/texts/273 有代码佐证，具体风险评估属归纳。\\n- 适用场景（ReAct）：#/texts/11 明确适用于 HotpotQA、Fever、ALFWorld、WebShop 等任务；#/texts/0 强调通过 Wikipedia API 交互。\\n- 适用场景（HITL）：LangChain #/texts/0 明确写文件、执行 SQL 等需审查动作。\\n- 成本构成：两份 HITL 官方文档与 ReAct 论文均未提供 token 数量、时延或人力成本的实测数值，定性描述基于流程机制归纳。\\n- 可靠性：ReAct 论文 #/texts/0 与 #/texts/13 提供任务表现数据（HotpotQA EM 27.4、Fever Acc 60.9）；HITL 可靠性来源为人工把关本身，属流程归纳。\"}}],\"source_reading\":\"Use search_source on each listed full ref to find located fragments; use read_source for small documents only.\",\"sources\":[{\"actual_url\":\"https://arxiv.org/abs/2210.03629\",\"fetched_at\":\"2026-10-12T02:45:47.899414+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},\"url\":\"https://arxiv.org/abs/2210.03629\"},{\"actual_url\":\"https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/\",\"fetched_at\":\"2026-10-12T03:53:08.399712+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"ReAct: Synergizing Reasoning and Acting in Language ...\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},\"url\":\"https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/\"},{\"actual_url\":\"https://openai.github.io/openai-agents-python/human_in_the_loop/\",\"fetched_at\":\"2026-10-12T03:53:15.657923+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Human-in-the-loop - OpenAI Agents SDK\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"url\":\"https://openai.github.io/openai-agents-python/human_in_the_loop/\"},{\"actual_url\":\"https://arxiv.org/html/2210.03629v3\",\"fetched_at\":\"2026-10-12T04:17:59.632361+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},\"url\":\"https://arxiv.org/html/2210.03629v3\"},{\"actual_url\":\"https://docs.langchain.com/oss/python/langchain/human-in-the-loop\",\"fetched_at\":\"2026-10-12T04:18:06.321492+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Human-in-the-loop - Docs by LangChain\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"url\":\"https://docs.langchain.com/oss/python/langchain/human-in-the-loop\"},{\"actual_url\":\"https://arxiv.org/pdf/2210.03629v3\",\"fetched_at\":\"2026-10-12T04:23:50.548745+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models [PDF full text]\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"url\":\"https://arxiv.org/pdf/2210.03629v3\"}]}"
+          }
+        ],
+        "external_context": {},
+        "projection_exclusions": []
+      },
+      "limits": {
+        "max_turns": 8,
+        "timeout_seconds": 600.0,
+        "max_depth": 1,
+        "max_calls": 6
+      },
+      "depth": 1
+    },
+    "expected_revision": 0,
+    "status": "succeeded",
+    "result": {
+      "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+      "status": "succeeded",
+      "output": {
+        "claims": [
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with and gather additional information from external sources such as knowledge bases or environments.",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/0",
+                "relation": "supports",
+                "reasoning": "摘要直接说明推理轨迹与动作以交织方式生成，是ReAct机制的核心表述。"
+              },
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "Thought 1: I need to search Bermuda Triangle and find if it is in the Pacific Ocean. Action 1: Search[Bermuda Triangle] Observation 1: Reportedly haunted locations...",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/41",
+                "relation": "supports",
+                "reasoning": "实证展示完整Thought→Action→Observation轨迹，佐证交织循环。"
+              },
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "appear sparsely in the most relevant positions of a trajectory, so we let the language model decide the asynchronous occurrence of thoughts and actions for itself.",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/12",
+                "relation": "supports",
+                "reasoning": "明确模型自主决定thought/action出现时机。"
+              }
+            ],
+            "statement": "ReAct 使用 LLM 以交织方式生成推理轨迹与任务相关动作，形成 Thought→Action→Observation 循环；模型自主决定思想与动作的异步出现时机。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f",
+                  "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+                  "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67"
+                },
+                "quote": "Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls.",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/1",
+                "relation": "supports",
+                "reasoning": "官方文档直接定义HITL的暂停-批准/拒绝机制。"
+              },
+              {
+                "ref": {
+                  "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f",
+                  "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+                  "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67"
+                },
+                "quote": "if approved: state.approve(interruption, always_approve=False) else: state.reject(interruption) result = await Runner.run(agent, state)",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/221",
+                "relation": "supports",
+                "reasoning": "展示批准/拒绝后的具体调用与恢复执行流程。"
+              }
+            ],
+            "statement": "OpenAI Agents SDK 的 HITL 流程会暂停 agent 执行，直到人工批准或拒绝敏感工具调用，再用 state.approve(...)/state.reject(...) 恢复执行。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77",
+                  "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+                  "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b"
+                },
+                "quote": "When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/0",
+                "relation": "supports",
+                "reasoning": "官方文档直接说明暂停等待决策机制，并列出写文件、执行SQL等典型审查动作。"
+              },
+              {
+                "ref": {
+                  "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77",
+                  "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+                  "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b"
+                },
+                "quote": "stream = agent.stream_events( Command(resume={\"decisions\": [{\"type\": \"approve\"}]}), config=config, version=\"v3\", )",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/174",
+                "relation": "supports",
+                "reasoning": "展示人工批准后恢复流式执行的具体代码机制。"
+              }
+            ],
+            "statement": "LangChain 的 HITL 中间件在模型提议需审查的动作时暂停执行等待决定，人工决定后通过 Command(resume={\"decisions\":[{\"type\":\"approve\"}]}) 恢复流式执行。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "Search result error Search return empty or does not contain useful information 23% - Hallucination Hallucinated reasoning trace or facts 0% 56%",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/14",
+                "relation": "supports",
+                "reasoning": "Table 2 直接给出失败模式分类与百分比，支撑失败模式维度。reasoning error的47%来自上游已校验claim同源表格，本摘录覆盖search result error与hallucination。"
+              }
+            ],
+            "statement": "ReAct 在 HotpotQA 上失败模式为 reasoning error 47%、search result error 23%、hallucination 0%，来自随机抽样人工评估。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "Prompt Methoda HotpotQA Fever (EM) (Acc) Standard 28.7 57.1 CoT (Wei et al., 2022) 29.4 56.3 CoT-SC (Wang et al., 2022a) 33.4 60.4 Act 25.7 58.9 ReAct 27.4 60.9",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/13",
+                "relation": "supports",
+                "reasoning": "Table 1 直接给出ReAct在HotpotQA与Fever上的性能，支撑可靠性维度。"
+              }
+            ],
+            "statement": "ReAct 在 HotpotQA 上 27.4、Fever 上 60.9，与 CoT/CoT-SC/Act 对比略有差异，不构成对 HITL 的同基准可靠性比较。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f",
+                  "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+                  "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67"
+                },
+                "quote": "state.approve(interruption, always_approve=True)",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/273",
+                "relation": "supports",
+                "reasoning": "官方代码示例展示always_approve=True会自动批准中断，佐证过度批准风险。"
+              }
+            ],
+            "statement": "OpenAI Agents SDK 支持 state.approve(interruption, always_approve=True) 自动批准中断，构成过度批准风险的代码佐证。"
+          },
+          {
+            "missing": [],
+            "citations": [
+              {
+                "ref": {
+                  "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02",
+                  "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+                  "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f"
+                },
+                "quote": "On ALFWorld and WebShop, two or even one-shot ReAct prompting is able to outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances",
+                "fields": {
+                  "unit": null,
+                  "basis": null,
+                  "period": null,
+                  "company": null,
+                  "currency": null
+                },
+                "location": "#/texts/11",
+                "relation": "supports",
+                "reasoning": "直接支撑ReAct的少样本泛化与典型任务场景。"
+              }
+            ],
+            "statement": "ReAct 适用于需要外部信息交互、事实核查与交互决策的任务，可在 ALFWorld/WebShop 上以一两轮少样本超越 103~105 训练实例的模仿或强化学习方法。"
+          },
+          {
+            "missing": [
+              "ReAct PDF v3 全文未披露 token数量、API费用、机器成本、时延实测数字。",
+              "OpenAI HITL 官方文档未提供人工时延、人力成本、token成本、审核吞吐量实测数字。",
+              "LangChain HITL 官方文档未提供被审查动作占比、批准率、审核时长实测数字。"
+            ],
+            "citations": [],
+            "statement": "三份关键来源均未披露实测费用、token、时延与失败率统计，成本构成只能作定性归纳。"
+          }
+        ],
+        "report": "## 一、定性对照表：ReAct 论证循环 vs 先规划+人工确认+再执行\n\n| 维度 | ReAct 论证循环 | 先规划+人工确认+再执行（HITL 批准流程） |\n|---|---|---|\n| 核心机制 | LLM 以交织方式（interleaved manner）同时生成推理轨迹（Thought）与任务相关动作（Action），形成 Thought→Action→Observation 循环；模型自主决定两者异步出现的时机。 | Agent 执行被暂停，直到人工通过 approve/reject 对敏感工具调用做出决定后恢复执行；OpenAI Agents SDK 用 state.approve(...)/state.reject(...)，LangChain 用 Command(resume={\"decisions\":[...]})。 |\n| 控制权归属 | 完全交给模型：LLM 自主决定何时思考、何时动作、何时观察。 | 关键节点交给人工：敏感动作必须经人批准才执行，控制权在拦截点转移。 |\n| 典型失败模式 | 三类：reasoning error（错误推理轨迹，含无法从重复步骤恢复）、search result error（搜索无结果或无用）；HotpotQA 随机抽样中 reasoning error 47%、search result error 23%、hallucination 0%。 | 人工审核延迟或拒绝导致执行中断；过度批准（always_approve=True）绕过人工把关；误批准/误拒绝风险。 |\n| 适用场景 | 需要外部信息交互、可更新知识、可解释轨迹的知识问答（HotpotQA）、事实核查（Fever）、交互决策（ALFWorld/WebShop）；一两轮少样本即可启动。 | 敏感工具调用（写文件、执行 SQL 等）、高后果操作、需要合规或审计把关的动作。 |\n| 成本构成（定性） | 每次交互产生额外行动与观察 token，多步轨迹带来的上下文增长；无人工监督成本；论文未给实测数字。 | 模型暂停等待造成延迟与人时成本；每次中断需要状态持久化与恢复；人工审核成本随敏感调用频次线性增加；官方文档未给实测数字。 |\n| 可靠性来源 | 通过外部检索缓解事实幻觉与错误传播，但性能因任务而异（HotpotQA 27.4 略低于 CoT，Fever 60.9 略高）。 | 来自人工把关本身，但可靠性取决于人；过度批准或误判仍可引入错误。 |\n\n## 二、来源依据\n\n### 2.1 ReAct 机制与性能\n\nReAct 论文摘要直接描述核心机制：“In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner”（#/texts/0）。轨迹格式为 Thought→Action→Observation 循环，论文实证展示“Thought 1: I need to search Bermuda Triangle…… Action 1: Search[Bermuda Triangle] Observation 1……”（#/texts/41），并说明“we let the language model decide the asynchronous occurrence of thoughts and actions for itself”（#/texts/12），即模型自主决定思考与动作时机。\n\n性能方面，论文 Table 1 给出 HotpotQA 上 ReAct 为 27.4、CoT 为 29.4、CoT-SC 为 33.4、Act 为 25.7；Fever 上 ReAct 为 60.9、CoT 为 56.3、CoT-SC 为 60.4、Act 为 58.9（#/texts/13）。失败模式取自 Table 2 的人工评估抽样：#/texts/14 显示 reasoning error 47%、search result error 23%、hallucination 0%（56% 为相邻列数值，属表格排版保留，不并入本体百分比）。任务泛化证据为“On ALFWorld and WebShop, two or even one-shot ReAct prompting is able to outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances”（#/texts/11）。\n\n### 2.2 两套 HITL 机制\n\nOpenAI Agents SDK 官方文档明确：“Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls”（#/texts/1）。恢复执行经由代码示例 state.approve(interruption, always_approve=False) / state.reject(interruption) → await Runner.run(agent, state)（#/texts/221）。另存在 state.approve(interruption, always_approve=True)（#/texts/273），可以自动批准中断，构成过度批准风险的代码佐证。LangChain 文档描述：“When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision”（#/texts/0），批准后以 Command(resume={\"decisions\": [{\"type\": \"approve\"}]}) 恢复流式执行（#/texts/174）。两者差异仅在 API 形式：OpenAI 用 interruption 对象加 state 方法，LangChain 用中间件加 Command 恢复。\n\n### 2.3 成本与可靠性缺失确认\n\nReAct PDF v3 全文未给出任何 token 数量、API 费用、机器成本、时延的实测数字；OpenAI HITL 文档与 LangChain HITL 文档均未给出人工时延、人力成本、审核吞吐量或被审查动作占比的量化统计。对照表中成本构成列仅作基于流程机制的定性归纳，未编造数字。可靠性方面，HITL 官方文档未提供任何失败模式统计；always_approve=True 的精确风险后果属归纳而非原文陈述。ReAct 与 HITL 在可靠性维度无同基准可比数字，ReAct 有任务性能数值，HITL 无对应量化指标。\n\n## 三、工作流建议\n\n1. **默认采用 HITL 拦截敏感动作，内部复杂推理用 ReAct 式循环。** ReAct 适合需要外部检索与多步推理的知识密集型任务，HITL 适合写文件、执行 SQL 等有副作用或高后果动作。两者可以叠加：在 ReAct 推理循环中，当 Action 属于敏感类型时，由中间件暂停等待人工批准。\n\n2. **对『审批通过后自动放行同类动作』要慎用。** OpenAI 的 always_approve=True 能降低重复审核成本，但会绕过人工把关。建议将自动批准限制为已审计的只读查询、白名单操作或低风险动作，写操作与删除操作不得自动放行。\n\n3. **用可观测性补齐 HITL 的可靠性缺口。** 官方文档没有提供失败模式统计，工程落地上应自建日志采集：中断频率、批准/拒绝率、端到端时延、每次中断的 waiting time。实测失败率与拒绝率产出后，可与 HITL 机制描述结合形成真实可靠性基线。\n\n4. **成本预估靠自测而非论文/文档。** 三个来源都缺少 token、费用与延迟实测值，依赖它们做预算会失真。应在 PoC 阶段测量每轮 ReAct 轨迹的平均 token、每类敏感动作的 HITL 中断时延、人力审核时长，才能形成可比的“ReAct 自主循环 vs HITL 暂停等待”成本曲线。\n\n5. **HITL 的可靠性上限取决于人。** 若审核员快速点“批准”而不看内容，有效可靠性会退化到接近无监督执行；应在工作流中周期性复核已批准动作样本，并对拒绝率异常低的动作类型重新评估风险阈值。\n\n## 四、研究局限\n\n- **实测费用不可得。** ReAct 论文及两份 HITL 官方文档均未提供 API 调用费用、机器成本、token 成本实测数字。\n- **Token/时延实测不可得。** 没有任何来源给出每轮轨迹 token 数、人工审核时延、暂停等待时长或端到端延迟实测数字。\n- **失败率实测不可得。** ReAct 的 47%/23%/0% 仅来自 HotpotQA 随机抽样人工评估，非全量或跨任务通用；HITL 没有任何失败率统计。\n- **可靠性维度无同基准可比数字。** 本报告未对 ReAct 与 HITL 进行数字意义上的可靠性对比，仅作定性机制对照。\n- **热点失败模式为机制归纳。** 人工延迟、over-approval、误批准未在官方文档中出现逐字表述；always_approve=True 有代码位置佐证，但风险后果属推断。\n- **本报告有限资料边界。** 本步骤仅综合两份已校验的上游结果；前序步骤未对本轮 mentions 中的 Google Research Blog 与 arXiv HTML v3 补充资料逐段比对，这两份的正文未被纳入本表证据。",
+        "limitations": [
+          "实测费用（API调用、机器成本）在全部来源中均无量值，不编造。",
+          "token数量、人工审核时延、暂停等待时长、端到端延迟实测数字全部缺失，保留为允许未知。",
+          "HITL失败率无任何官方统计；ReAct失败率47%/23%/0%仅来自HotpotQA随机抽样，非全量通用。",
+          "ReAct与HITL在可靠性维度无可比数字，仅作定性对照。",
+          "人工延迟、over-approval、误批准等HITL典型失败模式为基于暂停恢复流程的归纳，非官方逐字表述；always_approve=True风险后果也属推断。",
+          "Google Research Blog与arXiv HTML v3版补充资料未在本阶段逐段比对，正文未纳入本对照表。"
+        ],
+        "blocking_missing": []
+      },
+      "usage": {
+        "requests": 2,
+        "input_tokens": 27214,
+        "output_tokens": 6602,
+        "complete": true
+      },
+      "error": null,
+      "output_repairs": []
+    },
+    "commit_id": "run:e1c23d06-55e1-46f5-96e5-ccc857b14101",
+    "created_at": "2026-10-12T14:24:21.220976+08:00"
+  },
+  "events": [
+    {
+      "root_run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+      "sequence": 1,
+      "event": {
+        "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+        "parent_run_id": "plan:940833e7-47d5-46a8-8244-78c51a409616:1:wave:2",
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "started",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-12T14:24:21.992478+08:00"
+    },
+    {
+      "root_run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+      "sequence": 2,
+      "event": {
+        "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+        "parent_run_id": "plan:940833e7-47d5-46a8-8244-78c51a409616:1:wave:2",
+        "tool_call_id": null,
+        "child_run_id": null,
+        "phase": "run",
+        "status": "completed",
+        "name": null,
+        "error": null
+      },
+      "occurred_at": "2026-10-12T14:26:53.916163+08:00"
+    }
+  ],
+  "context": {
+    "id": "52520aff-25c6-4ae8-920d-886a0d93ac2d",
+    "run_id": "e1c23d06-55e1-46f5-96e5-ccc857b14101",
+    "conversation_id": null,
+    "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+    "scope_version": 8,
+    "scope": {
+      "id": "908783df-f5b3-433d-bb42-18abebeb2049",
+      "owner": "local",
+      "version": 8,
+      "allowed": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        }
+      ],
+      "grants": [
+        {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        }
+      ],
+      "inherited": [],
+      "tools": [
+        "read_source",
+        "search_source"
+      ],
+      "max_input_chars": 30000,
+      "max_tool_chars": 20000,
+      "web_urls": [],
+      "enabled": true
+    },
+    "mounts": [
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+          "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+          "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+        },
+        "mode": "read_only"
+      },
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+          "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+          "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+        },
+        "mode": "read_only"
+      },
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        "mode": "read_only"
+      },
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+          "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+          "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+        },
+        "mode": "read_only"
+      },
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        "mode": "read_only"
+      },
+      {
+        "scope_id": "908783df-f5b3-433d-bb42-18abebeb2049",
+        "scope_version": 8,
+        "ref": {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        },
+        "mode": "read_only"
+      }
+    ],
+    "result_mounts": [
+      {
+        "result_id": "result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2",
+        "run_id": "e7a3c189-1e64-4f1e-b181-984dd68bf5d2",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          },
+          {
+            "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+            "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+            "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+          },
+          {
+            "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+            "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+            "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+          },
+          {
+            "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+            "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+            "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+          },
+          {
+            "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+            "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+            "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+          },
+          {
+            "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+            "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+            "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+          }
+        ],
+        "missing": [],
+        "limitations": [
+          "ReAct 机制摘录主要取自 PDF v3 全文；arXiv abs 页本身仅为摘要，完整机制证据依赖 PDF/HTML v3 全文。",
+          "Google Research Blog 与 arXiv HTML v3 版作为补充资料已确认全文可用，但本步骤仅核对三份关键一级资料，未对这两份补充资料逐段比对全部内容。"
+        ],
+        "mode": "read_only"
+      },
+      {
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "run_id": "b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "resource_refs": [
+          {
+            "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+            "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+            "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+          },
+          {
+            "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+            "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+            "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+          },
+          {
+            "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+            "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+            "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+          },
+          {
+            "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+            "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+            "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+          },
+          {
+            "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+            "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+            "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+          },
+          {
+            "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+            "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+            "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+          }
+        ],
+        "missing": [],
+        "limitations": [
+          "ReAct 论文未给出 token、时延、机器成本等实测成本数字，成本构成行为定性归纳。",
+          "OpenAI Agents SDK 官方文档未给出人工审核的人时成本、延迟、吞吐量等实测数字，成本构成为基于暂停-恢复流程的定性归纳。",
+          "LangChain 官方文档未给出被审查动作占比、批准率、审核时长等实测数字。",
+          "HITL 的典型失败模式（人工延迟、over-approval、误批准）在官方文档中无统计或明确措辞，属基于机制归纳的推断，非逐字同源；其中 always_approve=True 有代码位置佐证，但风险后果为归纳。",
+          "ReAct 与 HITL 在可靠性维度无同基准可比数字；ReAct 有 HotpotQA/Fever 性能数值，HITL 无对应量化指标。",
+          "ReAct 失败模式的百分比（47%, 23%, 0%）仅来自 HotpotQA 随机抽样人工评估，非全量或跨任务通用。"
+        ],
+        "mode": "read_only"
+      }
+    ],
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "{\"content\":[],\"goal\":\"综合上游交付，产出最终对照表、约1500字有来源报告、工作流建议与研究局限。\\n用户指令：仅用 read_source/search_source，综合步骤1、2结果。输出最终对照表、约1500字带来源的中文报告、工作流建议，并在研究局限中明确实测费用/token/时延/失败率为允许未知，不编造数字。\\n交付要求：最终对照表 + 约1500字有来源报告 + 工作流建议 + 研究局限；blocking_missing 仅列真正未完成的必需交付（如缺对照表或无来源），允许未知不列入。\\n缺失项：\",\"handoff\":{\"approved_by\":\"local\",\"approved_revision\":1,\"instruction\":\"Execute this approved step. Planning-only restrictions in historical requests have been superseded by approval; retain all research constraints.\",\"phase\":\"approved_plan_execution\",\"planning_history_ref\":\"940833e7-47d5-46a8-8244-78c51a409616\",\"proposal_id\":\"940833e7-47d5-46a8-8244-78c51a409616\",\"research_constraints\":\"\",\"step_id\":\"79b90b12-ce44-4b46-928c-d87a262310cd\"},\"results\":[{\"mount\":{\"limitations\":[\"ReAct 机制摘录主要取自 PDF v3 全文；arXiv abs 页本身仅为摘要，完整机制证据依赖 PDF/HTML v3 全文。\",\"Google Research Blog 与 arXiv HTML v3 版作为补充资料已确认全文可用，但本步骤仅核对三份关键一级资料，未对这两份补充资料逐段比对全部内容。\"],\"missing\":[],\"mode\":\"read_only\",\"resource_refs\":[{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"}],\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"run_id\":\"e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},\"output\":{\"evidence\":{\"claims\":[{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:0\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"ReAct 使用 LLM 以交织方式同时生成推理轨迹与任务相关动作（thought/act 机制）。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"ReAct 轨迹格式为 Thought → Action → Observation 循环，模型自主决定 thought 与 action 的出现时机。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:2\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"OpenAI Agents SDK 的 HITL 流程会暂停 agent 执行，直到人工批准或拒绝敏感工具调用。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:3\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"OpenAI Agents SDK 通过 state.approve(...) 或 state.reject(...) 对 interruption 做出决定后恢复执行。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:4\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"LangChain HITL 中间件在模型提出需审查的动作时暂停执行，等待人工决定。\"},{\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:5\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"statement\":\"LangChain 通过 Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]}) 在人工决策后恢复流式执行。\"}],\"evidence\":[{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:0:0\",\"location\":\"#/texts/0\",\"quote\":\"In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner, allowing for greater synergy between the two: reasoning traces help the model induce, track, and update action plans as well as handle exceptions, while actions allow it to interface with and gather additional information from external sources such as knowledge bases or environments.\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:0\",\"location\":\"#/texts/41\",\"quote\":\"Thought 1: I need to search Bermuda Triangle and find if it is in the Pacific Ocean. Action 1: Search[Bermuda Triangle] Observation 1: Reportedly haunted locations...\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:1\",\"location\":\"#/texts/12\",\"quote\":\"appear sparsely in the most relevant positions of a trajectory, so we let the language model decide the asynchronous occurrence of thoughts and actions for itself.\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:2:0\",\"location\":\"#/texts/1\",\"quote\":\"Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls.\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:3:0\",\"location\":\"#/texts/221\",\"quote\":\"if approved: state.approve(interruption, always_approve=False) else: state.reject(interruption) result = await Runner.run(agent, state)\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:4:0\",\"location\":\"#/texts/0\",\"quote\":\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:5:0\",\"location\":\"#/texts/174\",\"quote\":\"stream = agent.stream_events( Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]}), config=config, version=\\\"v3\\\", )\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\"}],\"relations\":[{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:0\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:0:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:0:0\",\"reasoning\":\"直接说明 thought 与 action 以交织方式生成，是 ReAct 核心机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:1:0\",\"reasoning\":\"展示完整 Thought/Action/Observation 轨迹，实证交织格式。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:1\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:1:1\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:1:1\",\"reasoning\":\"说明模型自主决定 thought/action 出现时机，佐证轨迹机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:2\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:2:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:2:0\",\"reasoning\":\"直接说明 HITL 的暂停-批准/拒绝机制，是官方文档关键表述。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:3\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:3:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:3:0\",\"reasoning\":\"展示批准/拒绝的具体调用与恢复执行流程。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:4\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:4:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:4:0\",\"reasoning\":\"直接说明 LangChain HITL 的暂停等待决策机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:claim:5\",\"evidence_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:evidence:5:0\",\"id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2:link:5:0\",\"reasoning\":\"展示人工批准后恢复执行的具体代码机制。\",\"relation\":\"supports\",\"result_id\":\"result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2\",\"review_reason\":null}]},\"report\":\"资料清单（3 份关键一级资料，均已确认全文可用并定位到机制证据）：\\n\\n1. ReAct: Synergizing Reasoning and Acting in Language Models（arXiv PDF v3 全文）\\n   - 标题：ReAct: Synergizing Reasoning and Acting in Language Models (ICLR 2023)\\n   - URL：https://arxiv.org/pdf/2210.03629v3\\n   - 全文状态：可用（PDF v3 全文已抓取并解析）\\n   - 位置：#/texts/0（摘要）\\n   - 短摘录：\\\"In this paper, we explore the use of LLMs to generate both reasoning traces and task-speciﬁc actions in an interleaved manner...\\\"（thought/act 交织机制）\\n   - 补充位置：#/texts/41 展示 Thought 1 → Action 1 → Observation 1 → Thought 2 → Action 2 的完整轨迹；#/texts/12 说明模型自主决定 thought/action 出现时机。\\n\\n2. Human-in-the-loop — OpenAI Agents SDK（官方文档）\\n   - 标题：Human-in-the-loop\\n   - URL：https://openai.github.io/openai-agents-python/human_in_the_loop/\\n   - 全文状态：可用（官方文档全文已抓取并解析）\\n   - 位置：#/texts/1\\n   - 短摘录：\\\"Use the human-in-the-loop (HITL) flow to pause agent execution until a person approves or rejects sensitive tool calls.\\\"\\n   - 补充位置：#/texts/221 展示批准/拒绝与恢复执行：state.approve(interruption, always_approve=False) / state.reject(interruption) → await Runner.run(agent, state)。\\n\\n3. Human-in-the-loop — Docs by LangChain（官方文档）\\n   - 标题：Human-in-the-loop\\n   - URL：https://docs.langchain.com/oss/python/langchain/human-in-the-loop\\n   - 全文状态：可用（官方文档全文已抓取并解析）\\n   - 位置：#/texts/0\\n   - 短摘录：\\\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\\\"\\n   - 补充位置：#/texts/174 展示人工批准后恢复：Command(resume={\\\"decisions\\\": [{\\\"type\\\": \\\"approve\\\"}]})。\\n\\n关键证据缺失：无。ReAct 的 thought/act 交织机制与两套 HITL 的 approve/plan 流程均已定位到带位置的短摘录，三份资料全文状态均确认可用。\"}},{\"mount\":{\"limitations\":[\"ReAct 论文未给出 token、时延、机器成本等实测成本数字，成本构成行为定性归纳。\",\"OpenAI Agents SDK 官方文档未给出人工审核的人时成本、延迟、吞吐量等实测数字，成本构成为基于暂停-恢复流程的定性归纳。\",\"LangChain 官方文档未给出被审查动作占比、批准率、审核时长等实测数字。\",\"HITL 的典型失败模式（人工延迟、over-approval、误批准）在官方文档中无统计或明确措辞，属基于机制归纳的推断，非逐字同源；其中 always_approve=True 有代码位置佐证，但风险后果为归纳。\",\"ReAct 与 HITL 在可靠性维度无同基准可比数字；ReAct 有 HotpotQA/Fever 性能数值，HITL 无对应量化指标。\",\"ReAct 失败模式的百分比（47%, 23%, 0%）仅来自 HotpotQA 随机抽样人工评估，非全量或跨任务通用。\"],\"missing\":[],\"mode\":\"read_only\",\"resource_refs\":[{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"}],\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"run_id\":\"b2cb6f80-4a59-458f-afed-e2962b81c21d\"},\"output\":{\"evidence\":{\"claims\":[{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 的失败模式在 HotpotQA 上包含 47% 的推理错误（reasoning error，含无法从重复步骤恢复的轨迹）、23% 的搜索结果错误（search result error）和 0% 的逻辑幻觉（hallucination）。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 与 CoT 在 HotpotQA 与 Fever 上的性能指标不同，ReAct 在 HotpotQA 上略低（27.4），在 Fever 上略高（60.9）。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 适用于需要外部信息交互、事实核查或交互决策的任务，包括 HotpotQA、Fever、ALFWorld、WebShop。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"ReAct 论文未披露每 token、每步或总体运行的成本实测数字。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"OpenAI HITL 支持 always_approve=True 自动批准，这会绕过人工把关。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"LangChain HITL 在模型提议可能需审查的动作（如写文件或执行 SQL）时暂停执行等待决定。\"},{\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"statement\":\"OpenAI Agents SDK 官方文档与 LangChain 官方文档均未给出手动审核的量化成本或失败模式统计。\"}],\"evidence\":[{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0\",\"location\":\"#/texts/14\",\"quote\":\"Search result error Search return empty or does not contain useful information 23% - Hallucination Hallucinated reasoning trace or facts 0% 56%\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0\",\"location\":\"#/texts/13\",\"quote\":\"Prompt Methoda HotpotQA Fever (EM) (Acc) Standard 28.7 57.1 CoT (Wei et al., 2022) 29.4 56.3 CoT-SC (Wang et al., 2022a) 33.4 60.4 Act 25.7 58.9 ReAct 27.4 60.9\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0\",\"location\":\"#/texts/11\",\"quote\":\"On ALFWorld and WebShop, two or even one-shot ReAct prompting is able to outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0\",\"location\":\"#/texts/273\",\"quote\":\"state.approve(interruption, always_approve=True)\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"},{\"fields\":{\"basis\":null,\"company\":null,\"currency\":null,\"period\":null,\"unit\":null},\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0\",\"location\":\"#/texts/0\",\"quote\":\"When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\"}],\"relations\":[{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:3:0\",\"reasoning\":\"任何 Token 数量、API 调用费用、机器成本、时延等成本实测数据在 ReAct PDF v3 全文中均未出现，成本构成为定性归纳。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:0\",\"reasoning\":\"OpenAI HITL 文档未提供人工时延、人力成本、token 成本等实测数字。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6\",\"evidence_id\":null,\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:1\",\"reasoning\":\"LangChain HITL 文档未提供被审查动作频率、批准率、审核时长等实测数字。\",\"relation\":\"missing\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:0:0\",\"reasoning\":\"Table 2 明确列出 ReAct/CoT 的成功与失败模式及百分比，直接支撑 ReAct 的失败模式。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:1:0\",\"reasoning\":\"Table 1 直接给出 ReAct 在两项任务上的性能，支撑可靠性维度。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:2:0\",\"reasoning\":\"原文列出具体任务类型与测试环境，支撑适用场景项。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:4:0\",\"reasoning\":\"官方代码示例展示 always_approve=True 会直接批准中断，佐证 over-approval 风险。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null},{\"assessment\":\"unreviewed\",\"claim_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5\",\"evidence_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0\",\"id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:5:0\",\"reasoning\":\"官方文档直接定义 HITL 暂停机制与典型动作类型，支撑适用场景项。\",\"relation\":\"supports\",\"result_id\":\"result:b2cb6f80-4a59-458f-afed-e2962b81c21d\",\"review_reason\":null}]},\"report\":\"## 定性对照表：ReAct 论证循环 vs 先规划+人工确认+再执行\\n\\n| 维度 | ReAct 论证循环 | 先规划+人工确认+再执行（HITL 批准流程） |\\n|---|---|---|\\n| 机制 | LLM 以交织方式生成推理轨迹（Thought）与任务相关动作（Action），形成 Thought→Action→Observation 循环；模型自主决定两者异步出现时机。[ReAct PDF #/texts/0, #/texts/12, #/texts/41] | agent 执行被暂停，直到人工通过 approve/reject 对敏感工具调用做出决定后才恢复执行；OpenAI SDK 用 state.approve(...)/state.reject(...)，LangChain 用 Command(resume={\\\"decisions\\\":[...]})。[OpenAI #/texts/1, #/texts/221；LangChain #/texts/0, #/texts/174] |\\n| 典型失败模式 | 三类：reasoning error（错误推理轨迹，含无法从重复步骤恢复，HotpotQA 上 47%）、search result error（搜索无结果或无用，23%）；论文在 HotpotQA 上未观察到逻辑幻觉（hallucination 0%）。[ReAct PDF #/texts/14] | 人工审核延迟或拒绝导致的执行中断；过度批准（always_approve=True）会削弱安全护栏；需人工恢复流，异步协作成本与误批准风险。[OpenAI #/texts/221, #/texts/273（归纳）] |\\n| 适用场景 | 需要外部信息交互、可更新知识、可解释轨迹的知识问答（HotpotQA）、事实核查（Fever）、交互决策（ALFWorld/WebShop）；一两轮少样本即可启动。[ReAct PDF #/texts/11, #/texts/0] | 敏感工具调用（写文件、执行 SQL 等）、高后果操作、需要合规或审计把关的动作。[LangChain #/texts/0；OpenAI #/texts/1（归纳）] |\\n| 成本构成（定性） | 每次交互产生额外行动与观察 token、多步轨迹带来的上下文增长；无人工监督成本。[ReAct PDF 无实测数字（归纳）] | 模型暂停等待造成延迟与人时成本；每次中断需要状态持久化与恢复；人工审核成本随敏感调用频次线性增加。[OpenAI #/texts/221；LangChain #/texts/174（归纳）] |\\n| 可靠性 | 通过外部检索缓解事实幻觉与错误传播，但动作循环消耗资源且性能因任务而异（HotpotQA 27.4 略低于 CoT，Fever 60.9 略高）。[ReAct PDF #/texts/0, #/texts/13] | 可靠性来自人工把关，但 100% 可靠取决于人；过度批准或误判仍可引入错误。[归纳] |\\n\\n## 逐项来源依据\\n\\n- 机制（ReAct）：#/texts/0 摘要明确推理轨迹与任务相关动作以交织方式生成；#/texts/41 展示完整 Thought→Action→Observation 轨迹；#/texts/12 明确模型自主决定异步出现时机。\\n- 机制（HITL）：OpenAI #/texts/1 明确暂停执行直到人工批准或拒绝敏感工具调用；OpenAI #/texts/221 展示 approve/reject 与恢复执行；LangChain #/texts/0 明确中间件暂停等待决策；LangChain #/texts/174 展示批准后恢复。\\n- 失败模式（ReAct）：#/texts/14 提供 Table 2 中 reasoning error 47%、search result error 23%、hallucination 0% 等数值。\\n- 失败模式（HITL）：官方文档未提供失败模式统计；待批准/拒绝流程与 always_approve 在 OpenAI #/texts/221、#/texts/273 有代码佐证，具体风险评估属归纳。\\n- 适用场景（ReAct）：#/texts/11 明确适用于 HotpotQA、Fever、ALFWorld、WebShop 等任务；#/texts/0 强调通过 Wikipedia API 交互。\\n- 适用场景（HITL）：LangChain #/texts/0 明确写文件、执行 SQL 等需审查动作。\\n- 成本构成：两份 HITL 官方文档与 ReAct 论文均未提供 token 数量、时延或人力成本的实测数值，定性描述基于流程机制归纳。\\n- 可靠性：ReAct 论文 #/texts/0 与 #/texts/13 提供任务表现数据（HotpotQA EM 27.4、Fever Acc 60.9）；HITL 可靠性来源为人工把关本身，属流程归纳。\"}}],\"source_reading\":\"Use search_source on each listed full ref to find located fragments; use read_source for small documents only.\",\"sources\":[{\"actual_url\":\"https://arxiv.org/abs/2210.03629\",\"fetched_at\":\"2026-10-12T02:45:47.899414+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"a610b432-288c-4b5e-a5be-d48c4078394c\",\"resource_id\":\"66080beb-be4d-45dd-abae-b0fe49bfb1d0\",\"snapshot_id\":\"c4231166-bd95-4813-be69-2260904a8a59\"},\"url\":\"https://arxiv.org/abs/2210.03629\"},{\"actual_url\":\"https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/\",\"fetched_at\":\"2026-10-12T03:53:08.399712+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"ReAct: Synergizing Reasoning and Acting in Language ...\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"87a034e6-12fa-404f-89e7-d10d1bdd101c\",\"resource_id\":\"91381bf1-033e-4039-bd82-2524c446f26b\",\"snapshot_id\":\"b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3\"},\"url\":\"https://research.google/blog/react-synergizing-reasoning-and-acting-in-language-models/\"},{\"actual_url\":\"https://openai.github.io/openai-agents-python/human_in_the_loop/\",\"fetched_at\":\"2026-10-12T03:53:15.657923+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Human-in-the-loop - OpenAI Agents SDK\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"564fe4cf-5340-4a9c-9385-757fb40f017f\",\"resource_id\":\"8d44b58b-5a86-4187-bf5f-18f7ed17a909\",\"snapshot_id\":\"9a19e67c-024c-4d69-8563-14c345ea2d67\"},\"url\":\"https://openai.github.io/openai-agents-python/human_in_the_loop/\"},{\"actual_url\":\"https://arxiv.org/html/2210.03629v3\",\"fetched_at\":\"2026-10-12T04:17:59.632361+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"eb6dbfa8-005a-494f-90b9-3bd8504a4739\",\"resource_id\":\"b3aa0c13-10a4-45a6-b825-cf727526f4e7\",\"snapshot_id\":\"539f0c76-9203-4b2b-8ace-0b1923e4aba5\"},\"url\":\"https://arxiv.org/html/2210.03629v3\"},{\"actual_url\":\"https://docs.langchain.com/oss/python/langchain/human-in-the-loop\",\"fetched_at\":\"2026-10-12T04:18:06.321492+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Human-in-the-loop - Docs by LangChain\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"0a69f21e-20a8-4ff4-a8fc-c9d80575ab77\",\"resource_id\":\"9410bee8-8c3a-4b67-99cd-8bbb20446953\",\"snapshot_id\":\"e2b00339-e6c2-424e-a9d9-0b4f73552a2b\"},\"url\":\"https://docs.langchain.com/oss/python/langchain/human-in-the-loop\"},{\"actual_url\":\"https://arxiv.org/pdf/2210.03629v3\",\"fetched_at\":\"2026-10-12T04:23:50.548745+00:00\",\"kind\":\"web\",\"missing\":[],\"name\":\"Synergizing Reasoning and Acting in Language Models [PDF full text]\",\"parse_status\":\"ready\",\"ref\":{\"parse_id\":\"d23f6822-9b4a-44d9-a2c5-7f59b5d31e02\",\"resource_id\":\"890e90ce-605d-4cfa-8a65-37ba244449c6\",\"snapshot_id\":\"c6360841-9a5f-47fa-abfa-1b37a6c53a7f\"},\"url\":\"https://arxiv.org/pdf/2210.03629v3\"}]}"
+        }
+      ],
+      "external_context": {},
+      "projection_exclusions": []
+    }
+  }
+}

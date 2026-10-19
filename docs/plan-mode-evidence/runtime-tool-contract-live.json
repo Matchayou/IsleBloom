@@ -1,0 +1,35 @@
+{
+  "model": "deepseek-v4-pro",
+  "status": "succeeded",
+  "result": {
+    "run_id": "db130ba7-773c-4f01-813e-d72807997732",
+    "status": "succeeded",
+    "output": {
+      "claims": [],
+      "report": "协议测试通过",
+      "missing": []
+    },
+    "usage": {
+      "requests": 3,
+      "input_tokens": 6237,
+      "output_tokens": 326,
+      "complete": true
+    },
+    "error": null,
+    "output_repairs": [
+      {
+        "raw_output": "<｜｜DSML｜｜tool_calls>\n<｜｜DSML｜｜invoke name=\"read_source\">\n<｜｜DSML｜｜parameter name=\"ref\" string=\"true\">{\"resource_id\":\"3bf64665-5d07-413d-9ace-e1931b25c0a1\",\"snapshot_id\":\"7ae05280-c4df-4b92-b79b-20c5cebefbfd\",\"parse_id\":\"dfb6b8aa-c390-4294-9d33-bfa05a7000b9\"}</｜｜DSML｜｜parameter>\n</｜｜DSML｜｜invoke>\n</｜｜DSML｜｜tool_calls>",
+        "issues": [
+          {
+            "loc": [],
+            "msg": "Provider returned textual tool-call markup instead of the structured final response. Tools remain closed; return the final JSON with supported evidence and explicit gaps.",
+            "type": "model_protocol"
+          }
+        ]
+      }
+    ]
+  },
+  "run_id": "db130ba7-773c-4f01-813e-d72807997732",
+  "isolated_fixture": true,
+  "tool_count": 1
+}

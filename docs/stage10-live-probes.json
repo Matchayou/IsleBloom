@@ -1,0 +1,193 @@
+{
+  "model": "deepseek-flash",
+  "phase": "additional_development_baseline",
+  "runs": [
+    {
+      "source_name": "fictional-jingchuan.txt",
+      "source_text": "虚构镜川公司。两张现金流表。上表：2024 年，单位：元人民币，经营现金流 900000，购建固定资产支出 200000。下表：2025 年，单位：万元人民币，经营活动现金流量净额 12.3，购建固定资产支付的现金 4.5。请勿把上表单位套用于下表。",
+      "task_id": "63489c18-3ec6-43fa-a76c-83951253a4dd",
+      "runs": [
+        {
+          "attempt": 1,
+          "run_id": "2466beea-ba82-454d-9ff4-ebea0988aee6",
+          "result_id": "task-result:2466beea-ba82-454d-9ff4-ebea0988aee6",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "万元人民币",
+              "period": "2025 年",
+              "company": "虚构镜川公司",
+              "capital_expenditure": "4.5",
+              "operating_cash_flow": "12.3"
+            },
+            "report": "本次只读取了一个已授权来源：fictional-jingchuan.txt（resource_id b81a766c-af23-43fc-97f9-bc0cfaa70e83，snapshot e3d2af66-512b-435d-b299-214a63c5a3e5，parse 2d7ebf15-0456-4813-83d5-ef5a48c5aaa8）。该文件为纯文本，全文仅 1 行（line:1），无页码，故以行号定位。line:1 明确说明共两张现金流表，并要求『请勿把上表单位套用于下表』：上表为 2024 年、单位元人民币、经营现金流 900000、购建固定资产支出 200000；下表为 2025 年、单位万元人民币、经营活动现金流量净额 12.3、购建固定资产支付的现金 4.5。按任务要求以 2025 年（下表）为准，公司取材料中给出的名称『虚构镜川公司』（line:1），期间取 2025 年（line:1），经营现金流取 12.3（line:1），资本开支取『购建固定资产支付的现金』4.5（line:1），单位取其原有单位『万元人民币』（line:1）。所有数值均按原文照录，未做任何换算或缩放，未将上表的『元人民币』单位套用到下表。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-jingchuan.txt，line:1：『单位：万元人民币』（2025 年下表）；同句警示『请勿把上表单位套用于下表』",
+              "period": "fictional-jingchuan.txt，line:1：『下表：2025 年，单位：万元人民币』",
+              "company": "fictional-jingchuan.txt（resource_id b81a766c-af23-43fc-97f9-bc0cfaa70e83），line:1：『虚构镜川公司。两张现金流表。』",
+              "capital_expenditure": "fictional-jingchuan.txt，line:1：『购建固定资产支付的现金 4.5』（2025 年下表）",
+              "operating_cash_flow": "fictional-jingchuan.txt，line:1：『经营活动现金流量净额 12.3』（2025 年下表）"
+            },
+            "conflicts": [
+              "line:1 同时载有 2024 年上表（单位元人民币，经营现金流 900000、购建固定资产支出 200000）与 2025 年下表（单位万元人民币，经营活动现金流量净额 12.3、购建固定资产支付的现金 4.5）。两者单位与量级不同，任务指定以 2025 年为准，已采用下表数值，未做换算；若误用上表单位会产生数量级冲突。"
+            ],
+            "follow_up": [],
+            "assumptions": [],
+            "limitations": [
+              "来源为单行纯文本，无页码，仅可用行号 line:1 定位。",
+              "材料为虚构文本，仅一句话描述表格，未提供报表科目全称、报告日期、审计意见或表内其他行项。",
+              "两表数值量级差异巨大且单位不同（元 vs 万元），无法在不做换算的前提下交叉验证彼此一致性。"
+            ],
+            "self_checks": {
+              "unit": "单位为万元人民币（下表原单位），未套用上表的元人民币",
+              "period": "已明确取 2025 年（下表），未误用 2024 年上表",
+              "company": "已在 line:1 定位到公司名称『虚构镜川公司』",
+              "no_conversion": "所有数值保持原文，未做任何单位或数量级换算",
+              "capital_expenditure": "已取『购建固定资产支付的现金』4.5，对应 capex，未换算",
+              "operating_cash_flow": "已按原文照录 12.3，未换算"
+            }
+          },
+          "usage": {
+            "requests": 1,
+            "input_tokens": 2077,
+            "output_tokens": 1212,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    },
+    {
+      "source_name": "fictional-xinglan.txt",
+      "source_text": "虚构星澜公司。2025 年现金流量表（金额单位：RMB 千元）。经营活动产生的现金流量净额 52,400；购建固定资产支付的现金 8,300。同页另列股本（单位：百万股），该股数单位不适用于现金流。",
+      "task_id": "cafade14-9aaf-4e9e-9626-1944c83cf56f",
+      "runs": [
+        {
+          "attempt": 1,
+          "run_id": "faf8d61c-b22d-4ce0-8a32-1d598a03c1c6",
+          "result_id": "task-result:faf8d61c-b22d-4ce0-8a32-1d598a03c1c6",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "RMB 千元",
+              "period": "2025 年",
+              "company": "虚构星澜公司",
+              "capital_expenditure": "8,300",
+              "operating_cash_flow": "52,400"
+            },
+            "report": "以虚构星澜公司 2025 年现金流量表为准提取字段。来源为上传文件 fictional-xinglan.txt，唯一文本片段位于 line:1（parse_id b50edda4-54c4-4add-986f-4ee5ccd3bd9d，snapshot_id 434d40fb-6300-4a86-9e4d-095a1da39c9e）。原文表述：“虚构星澜公司。2025 年现金流量表（金额单位：RMB 千元）。经营活动产生的现金流量净额 52,400；购建固定资产支付的现金 8,300。同页另列股本（单位：百万股），该股数单位不适用于现金流。”据此：公司为虚构星澜公司；期间为 2025 年（现金流量表期间）；经营现金流（经营活动产生的现金流量净额）为 52,400；资本开支（购建固定资产支付的现金，对应 capital_expenditure）为 8,300；金额单位为 RMB 千元，对上述两项现金流数值均适用。原文数值保持原样，未做任何换算。同页提及的“股本（单位：百万股）”为股数单位，原文明确其不适用于现金流，故未用于本任务字段的单位判定。五项必需字段（company、period、operating_cash_flow、capital_expenditure、unit）均已从材料中直接获得，无缺失项。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-xinglan.txt, line:1：“金额单位：RMB 千元”",
+              "period": "fictional-xinglan.txt, line:1：“2025 年现金流量表”",
+              "company": "fictional-xinglan.txt, line:1（parse_id b50edda4-54c4-4add-986f-4ee5ccd3bd9d）：“虚构星澜公司”",
+              "capital_expenditure": "fictional-xinglan.txt, line:1：“购建固定资产支付的现金 8,300”（capex）",
+              "operating_cash_flow": "fictional-xinglan.txt, line:1：“经营活动产生的现金流量净额 52,400”"
+            },
+            "conflicts": [],
+            "follow_up": [
+              "如需核对，可索取该现金流量表完整页面（含表头、期间起止日期、全部经营活动与投资活动明细行）以验证 52,400 与 8,300 的口径与期间。",
+              "如需确认“购建固定资产支付的现金”是否覆盖全部资本开支定义，可索取现金流量表投资活动部分与附注。"
+            ],
+            "assumptions": [
+              "“资本开支”按任务指定对应原文科目“购建固定资产支付的现金”（capex），未额外增列其他资本性支出科目。",
+              "期间按原文“2025 年现金流量表”理解为 2025 年度报告期口径。"
+            ],
+            "limitations": [
+              "材料仅为一个文本片段，未提供现金流量表的完整行项目、页眉页脚或审计意见，无法交叉验证数值的完整性与是否经审计。",
+              "材料为虚构示例文档，数值不具备现实财务可比性；本报告仅做原文提取，不做真实性判断。"
+            ],
+            "self_checks": {
+              "no_conversion": "是，未对 52,400 与 8,300 做任何单位换算。",
+              "unit_explicit": "是，原文“金额单位：RMB 千元”。",
+              "sources_located": "是，全部字段指向 fictional-xinglan.txt line:1 的具体原文表述。",
+              "period_identified": "是，原文标明“2025 年现金流量表”。",
+              "company_identified": "是，原文首句给出“虚构星澜公司”。",
+              "no_memory_reliance": "是，仅使用本任务上传材料，未引用历史任务或记忆作为事实来源。",
+              "unit_misuse_avoided": "是，已排除同页“股本（单位：百万股）”，原文注明该股数单位不适用于现金流。",
+              "capital_expenditure_parseable": "是，8,300 为可解析数值，保留原文写法。",
+              "operating_cash_flow_parseable": "是，52,400 为可解析数值，保留原文写法（含千分位逗号）。"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4448,
+            "output_tokens": 1154,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    },
+    {
+      "source_name": "fictional-linyuan.txt",
+      "source_text": "虚构林源公司。管理摘要（单位：百万元人民币）列 2025 经营现金流 18.2、投资支出 3.1；后附经审阅的 2025 现金流量表（单位：万元人民币）列经营活动产生的现金流量净额 1,820、购建固定资产支付的现金 310。本任务以附表原始行项目及其单位为准，不取管理摘要口径。",
+      "task_id": "9ce0c6cd-1938-4c9d-868b-9ed54cf8bfa3",
+      "runs": [
+        {
+          "attempt": 1,
+          "run_id": "46249c8d-c89b-46a8-b027-b632be9a146e",
+          "result_id": "task-result:46249c8d-c89b-46a8-b027-b632be9a146e",
+          "status": "succeeded",
+          "error": null,
+          "output": {
+            "claims": [],
+            "fields": {
+              "unit": "万元人民币",
+              "period": "2025年",
+              "company": "虚构林源公司",
+              "capital_expenditure": "310",
+              "operating_cash_flow": "1,820"
+            },
+            "report": "已读取唯一授权材料 fictional-linyuan.txt（资源 9df681be-46d0-4a24-b9ed-cf8f6f22a1b2，快照 7046be07-cdb1-4ba6-902f-d889e62cafbf，解析 dad91073-8fd4-440c-80d2-3e3036bff911），全部内容位于 line:1（单段文本，无分页）。该段包含两套口径：一是管理摘要（单位：百万元人民币），列 2025 年经营现金流 18.2、投资支出 3.1；二是后附经审阅的 2025 年现金流量表（单位：万元人民币），列经营活动产生的现金流量净额 1,820、购建固定资产支付的现金 310。按本任务要求以附表原始行项目及其单位为准、不取管理摘要口径：公司=虚构林源公司，期间=2025 年，经营现金流=1,820（经营活动产生的现金流量净额，line:1），资本开支=310（购建固定资产支付的现金，line:1），单位=万元人民币（line:1 附表标注）。数值按原文保留，未做任何换算（未将 1,820、310 换算为 0.182 亿元或与百万元口径合并）。管理摘要的 18.2 与 3.1 因单位口径不同且任务明确排除，未采用，仅作为口径冲突记录。",
+            "missing": [],
+            "sources": {
+              "unit": "fictional-linyuan.txt，line:1：\"2025 现金流量表（单位：万元人民币）\"",
+              "period": "fictional-linyuan.txt，line:1：\"后附经审阅的 2025 现金流量表（单位：万元人民币）\"",
+              "company": "fictional-linyuan.txt（resource_id 9df681be-46d0-4a24-b9ed-cf8f6f22a1b2），line:1：\"虚构林源公司。\"",
+              "capital_expenditure": "fictional-linyuan.txt，line:1：\"购建固定资产支付的现金 310\"（附表口径）",
+              "operating_cash_flow": "fictional-linyuan.txt，line:1：\"经营活动产生的现金流量净额 1,820\"（附表口径）"
+            },
+            "conflicts": [
+              "管理摘要（单位：百万元人民币）列 2025 经营现金流 18.2、投资支出 3.1，与附表（单位：万元人民币）的 1,820、310 口径不同；按任务与材料说明，以附表原始行项目及其单位为准。"
+            ],
+            "follow_up": [
+              "如需与管理摘要核对，请补充百万元口径与万元口径之间的换算依据或原始报表页。"
+            ],
+            "assumptions": [
+              "将附表中\"经营活动产生的现金流量净额\"对应为 operating_cash_flow，\"购建固定资产支付的现金\"对应为 capital_expenditure（材料中的 capex）。",
+              "期间按附表与摘要共同指向的会计年度 2025 记录，未进一步区分年度/季度。"
+            ],
+            "limitations": [
+              "材料仅含单段文本（line:1）且为虚构示例，未提供报表完整页面、页眉页脚、审计意见编号或最小单位说明（如\"万元\"是否为精确单位、是否四舍五入）。",
+              "仅依据本任务输入，未读取或引用任何其他来源或历史资料。"
+            ],
+            "self_checks": {
+              "unit_stated": "是，万元人民币（附表）",
+              "basis_choice": "采用附表口径，未采用管理摘要口径（任务要求）",
+              "period_found": "是，line:1 明确写出 2025",
+              "company_found": "是，line:1 明确写出公司名称",
+              "no_conversion": "是，未做单位换算，保留原文数值",
+              "source_locations_provided": "是，fields 各项均在 sources 中标明文件与 line:1 原文片段",
+              "capital_expenditure_parsable": "是，310，数值可解析",
+              "operating_cash_flow_parsable": "是，1,820（去千分位为 1820），数值可解析"
+            }
+          },
+          "usage": {
+            "requests": 2,
+            "input_tokens": 4729,
+            "output_tokens": 1343,
+            "complete": true
+          },
+          "delivery": "pending_review"
+        }
+      ]
+    }
+  ],
+  "research_id": "32d1b214-acf2-4c8b-a8f8-aa7b3e879f2a"
+}

@@ -1,0 +1,518 @@
+{
+  "status": "passed_after_fixes",
+  "real_provider": {
+    "api": "responses",
+    "endpoint": "https://api.deepseek.com",
+    "execution_model": "deepseek-flash",
+    "manager_model": "deepseek-v4-pro",
+    "credential": "present",
+    "real_model": true,
+    "source_data": "synthetic acceptance documents; responses are real model output"
+  },
+  "matrix": [
+    {
+      "entrance": "preflight_main",
+      "run_id": "c1e87d1c-d8fa-4cfc-9142-6f21ce9bb83e",
+      "status": "succeeded",
+      "usage": {
+        "requests": 1,
+        "input_tokens": 2783,
+        "output_tokens": 36,
+        "complete": true
+      },
+      "input_sha256": "4c4297075c74b1613e5ebc66d3c561da3683c9a4cef1ec0e268617012bda3081",
+      "raw_user_sha256": "f0ce63eccaddc6c3e4ec22d6a0d6ce5fccd6fee65a57edbdf93b0eb5d756126f",
+      "memory_namespaces": [
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "preflight_execution",
+      "run_id": "99115afb-5796-48cd-82f3-a6d63746ef94",
+      "status": "succeeded",
+      "usage": {
+        "requests": 1,
+        "input_tokens": 2293,
+        "output_tokens": 56,
+        "complete": true
+      },
+      "input_sha256": "6c5f20093497465aaa83d49370acee10b43f3a52270f13c8ca9af168f258c975",
+      "raw_user_sha256": "d07e7864dfeca60209ab3f3362741fcc7b79d68a516bb300a69d98da6bbeeae4",
+      "memory_namespaces": [
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "main",
+      "run_id": "7b90988b-11c4-41c1-8bfa-6139319960e5",
+      "status": "succeeded",
+      "usage": {
+        "requests": 6,
+        "input_tokens": 53260,
+        "output_tokens": 5982,
+        "complete": true
+      },
+      "input_sha256": "decd6381dfc6794ffae03906ea884343199fd9b448e141ea2a55e1eb0316dde0",
+      "raw_user_sha256": "da9b48df110d7f0f173e06fd6254d529107f843b6c11f233de7f24880a9df471",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "read_context",
+        "read_context",
+        "delegate_task",
+        "delegate_task"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "temporary",
+      "run_id": "0d75df04-2f08-4489-9d39-3a87af4cf6e1",
+      "status": "succeeded",
+      "usage": {
+        "requests": 6,
+        "input_tokens": 45674,
+        "output_tokens": 3398,
+        "complete": true
+      },
+      "input_sha256": "73a5dbcbfd58826f9da68d7ffcae96173503159f8683d60d2b8fc1a462cfc2a2",
+      "raw_user_sha256": "da9b48df110d7f0f173e06fd6254d529107f843b6c11f233de7f24880a9df471",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "read_source",
+        "request_manager_information",
+        "read_source"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "specialist",
+      "run_id": "9e872c3f-6a25-4e15-a72e-dacfc5d2cbe1",
+      "status": "succeeded",
+      "usage": {
+        "requests": 11,
+        "input_tokens": 81100,
+        "output_tokens": 5517,
+        "complete": true
+      },
+      "input_sha256": "3adfac216a9dc162248d01cedad9f8c7974fa31f3903940bdff6fa34953c7711",
+      "raw_user_sha256": "da9b48df110d7f0f173e06fd6254d529107f843b6c11f233de7f24880a9df471",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "specialist",
+          "scope_id": "expert_synthesize"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "read_source",
+        "request_manager_information",
+        "read_source"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "temporary_consultation",
+      "run_id": "information:0d75df04-2f08-4489-9d39-3a87af4cf6e1:manager:1",
+      "status": "succeeded",
+      "usage": {
+        "requests": 2,
+        "input_tokens": 10699,
+        "output_tokens": 1297,
+        "complete": true
+      },
+      "input_sha256": "d555d353ac0ab129d1447b0409e7b56d7bee59419b9f31ed897be074f8eeb99c",
+      "raw_user_sha256": "da9b48df110d7f0f173e06fd6254d529107f843b6c11f233de7f24880a9df471",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "read_information"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "specialist_consultation",
+      "run_id": "information:9e872c3f-6a25-4e15-a72e-dacfc5d2cbe1:manager:1",
+      "status": "succeeded",
+      "usage": {
+        "requests": 6,
+        "input_tokens": 39521,
+        "output_tokens": 1343,
+        "complete": true
+      },
+      "input_sha256": "b29e93b7b36cac4c38086a62080c75bf7d75899b834120489240c395614e2373",
+      "raw_user_sha256": "da9b48df110d7f0f173e06fd6254d529107f843b6c11f233de7f24880a9df471",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "read_information",
+        "read_information",
+        "read_information",
+        "read_information"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "planning",
+      "run_id": "e1f45c53-1773-49e9-8489-b0abefe48154",
+      "status": "succeeded",
+      "usage": {
+        "requests": 8,
+        "input_tokens": 50684,
+        "output_tokens": 2978,
+        "complete": true
+      },
+      "input_sha256": "4d1ae1015b1d4e446d8044629860e914bc396990776278c19185a70b1ec9b28e",
+      "raw_user_sha256": "9ca1b44450f48daccb34bf9084a9be39bb3be2dc7f71850dc6af7f82039b403e",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "search_tools",
+        "read_skill_resource",
+        "read_source",
+        "read_skill_resource",
+        "read_source",
+        "read_skill_resource"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "discussion",
+      "run_id": "27b704c4-ad5e-44fb-97c2-623c947319e3",
+      "status": "succeeded",
+      "usage": {
+        "requests": 2,
+        "input_tokens": 17999,
+        "output_tokens": 1320,
+        "complete": true
+      },
+      "input_sha256": "c7a9a9c53ffd51abfa6cb2d4deb3825ccb19f3d3e6c753f76447ee6ec6ef0b3e",
+      "raw_user_sha256": "40344ed67a324e9227938651aea5f3c28c093bffc6d76c43830f763c30f6975e",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "951f37fb-017d-45c0-9550-45b1a2bceaec"
+        },
+        {
+          "scope": "specialist",
+          "scope_id": "expert_synthesize"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "read_context",
+        "read_context"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "learning_source",
+      "run_id": "b3aaeb36-c9bd-4dae-a834-241ae6da1296",
+      "status": "succeeded",
+      "usage": {
+        "requests": 4,
+        "input_tokens": 28469,
+        "output_tokens": 3094,
+        "complete": true
+      },
+      "input_sha256": "9be3d2aecb6c79495cb5417372f1a703ad30a91d074be4824e7615d971b5164e",
+      "raw_user_sha256": "2cadf82fae0c845489bfa4c2c81d90e14c52cda9399a36288de56e9f1705f841",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "024868e5-f60f-4418-a2e4-99506ac7d49f"
+        },
+        {
+          "scope": "specialist",
+          "scope_id": "expert_synthesize"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "search_context",
+        "read_source",
+        "read_source"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "domain_generate",
+      "run_id": "ab6e521c-d3eb-4c3d-8ebc-58cbe780b5fc",
+      "status": "succeeded",
+      "usage": {
+        "requests": 4,
+        "input_tokens": 16570,
+        "output_tokens": 1456,
+        "complete": true
+      },
+      "input_sha256": "b6c333a3370242f8df186ec2916cac938951389046fc9de893b1cb0205d1887f",
+      "raw_user_sha256": "2cadf82fae0c845489bfa4c2c81d90e14c52cda9399a36288de56e9f1705f841",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "024868e5-f60f-4418-a2e4-99506ac7d49f"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "read_context_page",
+        "read_context_page"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "domain_verify",
+      "run_id": "65466497-046f-49a9-9576-855b291ee16e",
+      "status": "succeeded",
+      "usage": {
+        "requests": 2,
+        "input_tokens": 9196,
+        "output_tokens": 3353,
+        "complete": true
+      },
+      "input_sha256": "556ab9a16b5a76272cc6a518866b50e913b5b08008424ec13b707fc6d7a74902",
+      "raw_user_sha256": "2cadf82fae0c845489bfa4c2c81d90e14c52cda9399a36288de56e9f1705f841",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "024868e5-f60f-4418-a2e4-99506ac7d49f"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "read_context_page"
+      ],
+      "controlled": "controlled_tools"
+    },
+    {
+      "entrance": "retrieval",
+      "run_id": "95e885e3-f137-4a9b-8017-6e642754df06",
+      "status": "succeeded",
+      "usage": {
+        "requests": 2,
+        "input_tokens": 14110,
+        "output_tokens": 1264,
+        "complete": true
+      },
+      "input_sha256": "ebf8034b447c2961dd61756a33f20a7eb92ac5d2529f8be0ae94b97a43430174",
+      "raw_user_sha256": "6c91e04d7afe00d8f8a076b31cbe7f4095917f15be28cc5339c2cf2be5a0bf29",
+      "memory_namespaces": [
+        {
+          "scope": "project",
+          "scope_id": "024868e5-f60f-4418-a2e4-99506ac7d49f"
+        },
+        {
+          "scope": "specialist",
+          "scope_id": "expert_synthesize"
+        },
+        {
+          "scope": "user",
+          "scope_id": null
+        }
+      ],
+      "called_tools": [
+        "load_skill",
+        "search_memory",
+        "read_source"
+      ],
+      "controlled": "controlled_tools"
+    }
+  ],
+  "final_scenarios_http200": 47,
+  "confirmed_model_calls_including_history": 109,
+  "confirmed_tokens_including_history": {
+    "input_tokens": 766728,
+    "output_tokens": 79234
+  },
+  "unresolved_historical_operations": [
+    {
+      "run_id": "57c482f3-c854-4d31-8705-a258b889b3cc",
+      "id": "model:5",
+      "kind": "model",
+      "status": "unconfirmed",
+      "usage": null
+    },
+    {
+      "run_id": "8bc91851-20e5-4702-9a6c-91252274a568",
+      "id": "tool:call_00_sEOMwPziP3DEaEpvX1fb7614",
+      "kind": "tool",
+      "status": "unconfirmed",
+      "usage": null
+    },
+    {
+      "run_id": "information:8bc91851-20e5-4702-9a6c-91252274a568:manager:1",
+      "id": "model:1",
+      "kind": "model",
+      "status": "unconfirmed",
+      "usage": null
+    }
+  ],
+  "publication": {
+    "id": "b3aaeb36-c9bd-4dae-a834-241ae6da1296",
+    "candidate_digest": "776fdba85e8ea740f23aec5dcedb2e0728701b3974eb5a77d9b19b3cd49cbc99",
+    "validation_digest": "8a4b1ee4adef6e579bd7286a0a870fee7128b7fa68f549d4527fb567bf34f097",
+    "memory_id": "domain-memory:b3aaeb36-c9bd-4dae-a834-241ae6da1296",
+    "skill_name": "domain-dbcd347e5799a9c9d6c4d814"
+  },
+  "publication_role_isolation": true,
+  "quarantine_observed": true,
+  "frozen_resume_proven": true,
+  "domain_history": [
+    {
+      "run_id": "9e872c3f-6a25-4e15-a72e-dacfc5d2cbe1",
+      "state": "rejected",
+      "reason": "Candidate leaks source-specific values",
+      "publication": false
+    },
+    {
+      "run_id": "25529daf-c37e-4f4f-b40c-fb6ab21abf30",
+      "state": "rejected",
+      "reason": "候选的 memory/skill 内容由轨迹中的实际报告、claim reasoning 和 tool_events 逐字支持：轨迹明确将原文 unknown 作为已知缺失原样保留、拒绝从记忆或历史推断未出现数值、要求照抄原文并附完整 ResourceRef 与片段位置。这些原则在轨迹中呈现为可重复流程（写明步骤 1-5），且候选未承载任何固定项目值、资源 ID 或个人身份信息，可迁移至新的固定来源核对任务。权限方面，候选仅允许 read_source 与 search_source，符合轨迹的 offline/获准目录边界，未包含越权、覆盖用户决定或恶意指令。evidence_quotes 均取自轨迹正文与工具事件，未使用候选或 self_checks 作为佐证。",
+      "publication": false
+    },
+    {
+      "run_id": "c1f7e49d-b55f-4fde-b85e-ee768166ca3f",
+      "state": "failed",
+      "reason": "Conflict: Domain generate failed or has unconfirmed usage",
+      "publication": false
+    },
+    {
+      "run_id": "4c6d268d-5d04-4e49-a6a2-649e3b177abb",
+      "state": "rejected",
+      "reason": "evidence_quotes[4] is not a verbatim trajectory substring",
+      "publication": false
+    },
+    {
+      "run_id": "3191735f-d8f1-4c6d-afff-5e9d1d916176",
+      "state": "rejected",
+      "reason": "generalizable",
+      "publication": false
+    },
+    {
+      "run_id": "9639fe7f-424a-4469-b85f-b76bba041d52",
+      "state": "rejected",
+      "reason": "Candidate expands the published tool contract",
+      "publication": false
+    },
+    {
+      "run_id": "8bc91851-20e5-4702-9a6c-91252274a568",
+      "state": "recorded",
+      "reason": null,
+      "publication": false
+    },
+    {
+      "run_id": "b3aaeb36-c9bd-4dae-a834-241ae6da1296",
+      "state": "published",
+      "reason": "候选流程由轨迹支持：轨迹报告明确记录了实际读取两个获准来源、按事实/unknown 二分判定字段、以逐字字符串交付并附 ResourceRef 与位置的步骤。候选中的工具限制（read_source/search_source）与轨迹实际使用的工具（read_source，另有 load_skill/search_context 辅助但非证据源）无冲突；候选未将轨迹自身的 report、tool 事件、memory 或 history 计为证据，符合可迁移的核对方法论：同一专精角色在任何按 published tool contract 提供获准目录的项目中可复用，不依赖本合成样本的特定文件名或数值。隐私方面，候选正文未保留任何具体资源标识、文件名、数值、身份信息，只有通用工具名与方法描述。权限方面，候选要求 allowed sources 仅指获准目录资源，并排除报告/事件/记忆作为证据，维护了用户优先与权限边界；未包含恶意或越权指令。允许的限制为：需要交付逐字 excerpt 时，轨迹中已包含原文短句可作引文，未出现改写合并。",
+      "publication": true
+    },
+    {
+      "run_id": "3487349a-ccd9-47dd-aaf4-bb6e1d8adb32",
+      "state": "recorded",
+      "reason": null,
+      "publication": false
+    },
+    {
+      "run_id": "95e885e3-f137-4a9b-8017-6e642754df06",
+      "state": "recorded",
+      "reason": null,
+      "publication": false
+    }
+  ],
+  "denied_historical_operations": [
+    {
+      "run_id": "d7f26a03-afa5-4745-abe0-2d4d1c426e3a",
+      "id": "tool:call_00_AZidzVCYr1leTVLFNaSv9548",
+      "kind": "private",
+      "status": "denied",
+      "usage": null
+    },
+    {
+      "run_id": "65466497-046f-49a9-9576-855b291ee16e",
+      "id": "tool:call_00_vQZFtRiDP2Hnas9NjtTT3373",
+      "kind": "private",
+      "status": "denied",
+      "usage": null
+    }
+  ],
+  "final_regression": {
+    "tests": 796,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  }
+}

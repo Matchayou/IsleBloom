@@ -1,0 +1,269 @@
+{
+  "version": {
+    "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+    "node_id": "1f0ef481-eeda-4bc5-96a0-8e5944e67d45",
+    "version": 1,
+    "run_id": "b2cb6f80-4a59-458f-afed-e2962b81c21d",
+    "context_snapshot_id": "1093ed18-7701-4473-982e-d717cfecae1f",
+    "instruction_version": 2,
+    "completion": "complete",
+    "missing": [],
+    "limitations": [
+      "ReAct 论文未给出 token、时延、机器成本等实测成本数字，成本构成行为定性归纳。",
+      "OpenAI Agents SDK 官方文档未给出人工审核的人时成本、延迟、吞吐量等实测数字，成本构成为基于暂停-恢复流程的定性归纳。",
+      "LangChain 官方文档未给出被审查动作占比、批准率、审核时长等实测数字。",
+      "HITL 的典型失败模式（人工延迟、over-approval、误批准）在官方文档中无统计或明确措辞，属基于机制归纳的推断，非逐字同源；其中 always_approve=True 有代码位置佐证，但风险后果为归纳。",
+      "ReAct 与 HITL 在可靠性维度无同基准可比数字；ReAct 有 HotpotQA/Fever 性能数值，HITL 无对应量化指标。",
+      "ReAct 失败模式的百分比（47%, 23%, 0%）仅来自 HotpotQA 随机抽样人工评估，非全量或跨任务通用。"
+    ],
+    "resource_refs": [
+      {
+        "resource_id": "66080beb-be4d-45dd-abae-b0fe49bfb1d0",
+        "snapshot_id": "c4231166-bd95-4813-be69-2260904a8a59",
+        "parse_id": "a610b432-288c-4b5e-a5be-d48c4078394c"
+      },
+      {
+        "resource_id": "91381bf1-033e-4039-bd82-2524c446f26b",
+        "snapshot_id": "b1dc7fcc-1b8f-4aad-b73e-3b437e921ce3",
+        "parse_id": "87a034e6-12fa-404f-89e7-d10d1bdd101c"
+      },
+      {
+        "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+        "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+        "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+      },
+      {
+        "resource_id": "b3aa0c13-10a4-45a6-b825-cf727526f4e7",
+        "snapshot_id": "539f0c76-9203-4b2b-8ace-0b1923e4aba5",
+        "parse_id": "eb6dbfa8-005a-494f-90b9-3bd8504a4739"
+      },
+      {
+        "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+        "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+        "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+      },
+      {
+        "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+        "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+        "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+      }
+    ]
+  },
+  "output": "## 定性对照表：ReAct 论证循环 vs 先规划+人工确认+再执行\n\n| 维度 | ReAct 论证循环 | 先规划+人工确认+再执行（HITL 批准流程） |\n|---|---|---|\n| 机制 | LLM 以交织方式生成推理轨迹（Thought）与任务相关动作（Action），形成 Thought→Action→Observation 循环；模型自主决定两者异步出现时机。[ReAct PDF #/texts/0, #/texts/12, #/texts/41] | agent 执行被暂停，直到人工通过 approve/reject 对敏感工具调用做出决定后才恢复执行；OpenAI SDK 用 state.approve(...)/state.reject(...)，LangChain 用 Command(resume={\"decisions\":[...]})。[OpenAI #/texts/1, #/texts/221；LangChain #/texts/0, #/texts/174] |\n| 典型失败模式 | 三类：reasoning error（错误推理轨迹，含无法从重复步骤恢复，HotpotQA 上 47%）、search result error（搜索无结果或无用，23%）；论文在 HotpotQA 上未观察到逻辑幻觉（hallucination 0%）。[ReAct PDF #/texts/14] | 人工审核延迟或拒绝导致的执行中断；过度批准（always_approve=True）会削弱安全护栏；需人工恢复流，异步协作成本与误批准风险。[OpenAI #/texts/221, #/texts/273（归纳）] |\n| 适用场景 | 需要外部信息交互、可更新知识、可解释轨迹的知识问答（HotpotQA）、事实核查（Fever）、交互决策（ALFWorld/WebShop）；一两轮少样本即可启动。[ReAct PDF #/texts/11, #/texts/0] | 敏感工具调用（写文件、执行 SQL 等）、高后果操作、需要合规或审计把关的动作。[LangChain #/texts/0；OpenAI #/texts/1（归纳）] |\n| 成本构成（定性） | 每次交互产生额外行动与观察 token、多步轨迹带来的上下文增长；无人工监督成本。[ReAct PDF 无实测数字（归纳）] | 模型暂停等待造成延迟与人时成本；每次中断需要状态持久化与恢复；人工审核成本随敏感调用频次线性增加。[OpenAI #/texts/221；LangChain #/texts/174（归纳）] |\n| 可靠性 | 通过外部检索缓解事实幻觉与错误传播，但动作循环消耗资源且性能因任务而异（HotpotQA 27.4 略低于 CoT，Fever 60.9 略高）。[ReAct PDF #/texts/0, #/texts/13] | 可靠性来自人工把关，但 100% 可靠取决于人；过度批准或误判仍可引入错误。[归纳] |\n\n## 逐项来源依据\n\n- 机制（ReAct）：#/texts/0 摘要明确推理轨迹与任务相关动作以交织方式生成；#/texts/41 展示完整 Thought→Action→Observation 轨迹；#/texts/12 明确模型自主决定异步出现时机。\n- 机制（HITL）：OpenAI #/texts/1 明确暂停执行直到人工批准或拒绝敏感工具调用；OpenAI #/texts/221 展示 approve/reject 与恢复执行；LangChain #/texts/0 明确中间件暂停等待决策；LangChain #/texts/174 展示批准后恢复。\n- 失败模式（ReAct）：#/texts/14 提供 Table 2 中 reasoning error 47%、search result error 23%、hallucination 0% 等数值。\n- 失败模式（HITL）：官方文档未提供失败模式统计；待批准/拒绝流程与 always_approve 在 OpenAI #/texts/221、#/texts/273 有代码佐证，具体风险评估属归纳。\n- 适用场景（ReAct）：#/texts/11 明确适用于 HotpotQA、Fever、ALFWorld、WebShop 等任务；#/texts/0 强调通过 Wikipedia API 交互。\n- 适用场景（HITL）：LangChain #/texts/0 明确写文件、执行 SQL 等需审查动作。\n- 成本构成：两份 HITL 官方文档与 ReAct 论文均未提供 token 数量、时延或人力成本的实测数值，定性描述基于流程机制归纳。\n- 可靠性：ReAct 论文 #/texts/0 与 #/texts/13 提供任务表现数据（HotpotQA EM 27.4、Fever Acc 60.9）；HITL 可靠性来源为人工把关本身，属流程归纳。",
+  "inputs": [
+    "result:e7a3c189-1e64-4f1e-b181-984dd68bf5d2"
+  ],
+  "evidence": {
+    "claims": [
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "ReAct 的失败模式在 HotpotQA 上包含 47% 的推理错误（reasoning error，含无法从重复步骤恢复的轨迹）、23% 的搜索结果错误（search result error）和 0% 的逻辑幻觉（hallucination）。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "ReAct 与 CoT 在 HotpotQA 与 Fever 上的性能指标不同，ReAct 在 HotpotQA 上略低（27.4），在 Fever 上略高（60.9）。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "ReAct 适用于需要外部信息交互、事实核查或交互决策的任务，包括 HotpotQA、Fever、ALFWorld、WebShop。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "ReAct 论文未披露每 token、每步或总体运行的成本实测数字。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "OpenAI HITL 支持 always_approve=True 自动批准，这会绕过人工把关。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "LangChain HITL 在模型提议可能需审查的动作（如写文件或执行 SQL）时暂停执行等待决定。"
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "statement": "OpenAI Agents SDK 官方文档与 LangChain 官方文档均未给出手动审核的量化成本或失败模式统计。"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "ref": {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        },
+        "location": "#/texts/14",
+        "quote": "Search result error Search return empty or does not contain useful information 23% - Hallucination Hallucinated reasoning trace or facts 0% 56%",
+        "fields": {
+          "company": null,
+          "period": null,
+          "currency": null,
+          "unit": null,
+          "basis": null
+        }
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "ref": {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        },
+        "location": "#/texts/13",
+        "quote": "Prompt Methoda HotpotQA Fever (EM) (Acc) Standard 28.7 57.1 CoT (Wei et al., 2022) 29.4 56.3 CoT-SC (Wang et al., 2022a) 33.4 60.4 Act 25.7 58.9 ReAct 27.4 60.9",
+        "fields": {
+          "company": null,
+          "period": null,
+          "currency": null,
+          "unit": null,
+          "basis": null
+        }
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "ref": {
+          "resource_id": "890e90ce-605d-4cfa-8a65-37ba244449c6",
+          "snapshot_id": "c6360841-9a5f-47fa-abfa-1b37a6c53a7f",
+          "parse_id": "d23f6822-9b4a-44d9-a2c5-7f59b5d31e02"
+        },
+        "location": "#/texts/11",
+        "quote": "On ALFWorld and WebShop, two or even one-shot ReAct prompting is able to outperform imitation or reinforcement learning methods trained with 103∼ 105 task instances",
+        "fields": {
+          "company": null,
+          "period": null,
+          "currency": null,
+          "unit": null,
+          "basis": null
+        }
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "ref": {
+          "resource_id": "8d44b58b-5a86-4187-bf5f-18f7ed17a909",
+          "snapshot_id": "9a19e67c-024c-4d69-8563-14c345ea2d67",
+          "parse_id": "564fe4cf-5340-4a9c-9385-757fb40f017f"
+        },
+        "location": "#/texts/273",
+        "quote": "state.approve(interruption, always_approve=True)",
+        "fields": {
+          "company": null,
+          "period": null,
+          "currency": null,
+          "unit": null,
+          "basis": null
+        }
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "ref": {
+          "resource_id": "9410bee8-8c3a-4b67-99cd-8bbb20446953",
+          "snapshot_id": "e2b00339-e6c2-424e-a9d9-0b4f73552a2b",
+          "parse_id": "0a69f21e-20a8-4ff4-a8fc-c9d80575ab77"
+        },
+        "location": "#/texts/0",
+        "quote": "When a model proposes an action that might require review—for example, writing to a file or executing SQL—the middleware can pause execution and wait for a decision.",
+        "fields": {
+          "company": null,
+          "period": null,
+          "currency": null,
+          "unit": null,
+          "basis": null
+        }
+      }
+    ],
+    "relations": [
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:3:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:3",
+        "evidence_id": null,
+        "relation": "missing",
+        "reasoning": "任何 Token 数量、API 调用费用、机器成本、时延等成本实测数据在 ReAct PDF v3 全文中均未出现，成本构成为定性归纳。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6",
+        "evidence_id": null,
+        "relation": "missing",
+        "reasoning": "OpenAI HITL 文档未提供人工时延、人力成本、token 成本等实测数字。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:gap:6:1",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:6",
+        "evidence_id": null,
+        "relation": "missing",
+        "reasoning": "LangChain HITL 文档未提供被审查动作频率、批准率、审核时长等实测数字。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:0:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:0",
+        "evidence_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:0:0",
+        "relation": "supports",
+        "reasoning": "Table 2 明确列出 ReAct/CoT 的成功与失败模式及百分比，直接支撑 ReAct 的失败模式。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:1:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:1",
+        "evidence_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:1:0",
+        "relation": "supports",
+        "reasoning": "Table 1 直接给出 ReAct 在两项任务上的性能，支撑可靠性维度。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:2:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:2",
+        "evidence_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:2:0",
+        "relation": "supports",
+        "reasoning": "原文列出具体任务类型与测试环境，支撑适用场景项。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:4:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:4",
+        "evidence_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:4:0",
+        "relation": "supports",
+        "reasoning": "官方代码示例展示 always_approve=True 会直接批准中断，佐证 over-approval 风险。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      },
+      {
+        "id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:link:5:0",
+        "result_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d",
+        "claim_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:claim:5",
+        "evidence_id": "result:b2cb6f80-4a59-458f-afed-e2962b81c21d:evidence:5:0",
+        "relation": "supports",
+        "reasoning": "官方文档直接定义 HITL 暂停机制与典型动作类型，支撑适用场景项。",
+        "assessment": "unreviewed",
+        "review_reason": null
+      }
+    ]
+  }
+}

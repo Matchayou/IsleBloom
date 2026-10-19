@@ -1,0 +1,546 @@
+{
+  "base_url": "http://127.0.0.1:8770",
+  "passed": false,
+  "research_id": "a7600d67-7485-45b4-98f4-7896f3826e22",
+  "node_id": "e37900ab-50bb-4c00-aed1-7b60692b97f4",
+  "run": {
+    "binding": {
+      "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+      "node_id": "e37900ab-50bb-4c00-aed1-7b60692b97f4",
+      "command_id": "cef42342-a47b-4a07-a585-6ac1346db154",
+      "node_revision": 1,
+      "context_snapshot_id": "a5db4269-2258-4e1f-bce2-45a5382bd2cb",
+      "goal": "自主联网搜索与引用验收",
+      "instructions": "",
+      "instruction_version": 1,
+      "resource_refs": [],
+      "result_ids": [],
+      "missing": [],
+      "limits": {
+        "max_turns": 12,
+        "timeout_seconds": 180.0,
+        "max_depth": 1,
+        "max_calls": 12
+      },
+      "chat_revision": 1,
+      "evidence_required": false
+    },
+    "run": {
+      "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+      "conversation_id": null,
+      "process_id": "3096383c-1b84-4118-a4d2-eba4708438d7",
+      "request": {
+        "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "parent_run_id": null,
+        "agent_id": "e37900ab-50bb-4c00-aed1-7b60692b97f4",
+        "input": {
+          "messages": [
+            {
+              "role": "user",
+              "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"6721fe6a-2280-421c-9ced-e5461d5f2bd4\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+            }
+          ]
+        },
+        "limits": {
+          "max_turns": 12,
+          "timeout_seconds": 180.0,
+          "max_depth": 1,
+          "max_calls": 12
+        },
+        "depth": 0
+      },
+      "expected_revision": 0,
+      "status": "failed",
+      "result": {
+        "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "status": "failed",
+        "output": null,
+        "usage": {
+          "requests": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "complete": false
+        },
+        "error": {
+          "code": "call_limit",
+          "origin": "core",
+          "message": "Tool call limit exceeded",
+          "retryable": false,
+          "cause_id": null
+        }
+      },
+      "commit_id": "run:04095fbc-eac3-463e-b847-fefcb075d38c",
+      "created_at": "2026-10-03T12:37:33.713834Z"
+    },
+    "events": [
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 1,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "started",
+          "name": null,
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:33.716153Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 2,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_6rJdkkrRRhqAO5B90Mhi9156",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:37.144245Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 3,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_6rJdkkrRRhqAO5B90Mhi9156",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:42.057961Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 4,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_zb6gNlKALh249CyTxxCa9756",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:42.058372Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 5,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_zb6gNlKALh249CyTxxCa9756",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:44.054069Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 6,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_KtBiNDSw1HDIufaLfddY9291",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:52.856298Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 7,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_KtBiNDSw1HDIufaLfddY9291",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:58.359347Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 8,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_TNlw7Re0fv44uTkOQVOG4659",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:37:58.360037Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 9,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_TNlw7Re0fv44uTkOQVOG4659",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:01.332418Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 10,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_02_MLmj00eJm7pCboS1Orm14883",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:01.333109Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 11,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_02_MLmj00eJm7pCboS1Orm14883",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:05.045642Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 12,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_siv9RwBtOHuHLt5k8PCi8758",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:08.097675Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 13,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_siv9RwBtOHuHLt5k8PCi8758",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:08.118989Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 14,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_SNLU0EoRLBUFOtuHYZ4w9437",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:08.120392Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 15,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_SNLU0EoRLBUFOtuHYZ4w9437",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:08.134131Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 16,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_L90O9IkuPoW1Rel1ANX23108",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:10.841320Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 17,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_L90O9IkuPoW1Rel1ANX23108",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:14.370229Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 18,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_ysONEATq6ggAWnYsZuDL0943",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:14.371492Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 19,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_ysONEATq6ggAWnYsZuDL0943",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:18.474644Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 20,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_Y0aANrqZf1GShLo1ZVtF0065",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:23.524915Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 21,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_Y0aANrqZf1GShLo1ZVtF0065",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "fetch_web",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:26.131084Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 22,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_ET_zJAlZIwRV2zKo01wx60l0531",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:28.125157Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 23,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_ET_zJAlZIwRV2zKo01wx60l0531",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:28.151959Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 24,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_ET_67vKzv2EMpUaD0DPX3bz2184",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:28.153621Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 25,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_01_ET_67vKzv2EMpUaD0DPX3bz2184",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "completed",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:28.170179Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 26,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_aIecdyu2skWIxwAyaPvc5720",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "started",
+          "name": "search_source",
+          "error": null
+        },
+        "occurred_at": "2026-10-03T12:38:32.268289Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 27,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": "call_00_aIecdyu2skWIxwAyaPvc5720",
+          "child_run_id": null,
+          "phase": "tool",
+          "status": "failed",
+          "name": "search_source",
+          "error": {
+            "code": "call_limit",
+            "origin": "core",
+            "message": "Tool call limit exceeded",
+            "retryable": false,
+            "cause_id": null
+          }
+        },
+        "occurred_at": "2026-10-03T12:38:32.271048Z"
+      },
+      {
+        "root_run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+        "sequence": 28,
+        "event": {
+          "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+          "parent_run_id": null,
+          "tool_call_id": null,
+          "child_run_id": null,
+          "phase": "run",
+          "status": "failed",
+          "name": null,
+          "error": {
+            "code": "call_limit",
+            "origin": "core",
+            "message": "Tool call limit exceeded",
+            "retryable": false,
+            "cause_id": null
+          }
+        },
+        "occurred_at": "2026-10-03T12:38:32.274146Z"
+      }
+    ],
+    "context": {
+      "id": "a5db4269-2258-4e1f-bce2-45a5382bd2cb",
+      "run_id": "04095fbc-eac3-463e-b847-fefcb075d38c",
+      "conversation_id": null,
+      "scope_id": "983a124a-ff28-4902-b546-282e80c530a6",
+      "scope_version": 1,
+      "scope": {
+        "id": "983a124a-ff28-4902-b546-282e80c530a6",
+        "owner": "local",
+        "version": 1,
+        "allowed": [],
+        "grants": [],
+        "inherited": [],
+        "tools": [
+          "fetch_web",
+          "read_source",
+          "search_source",
+          "search_web"
+        ],
+        "max_input_chars": 30000,
+        "max_tool_chars": 20000,
+        "web_urls": [],
+        "enabled": true
+      },
+      "mounts": [],
+      "result_mounts": [],
+      "input": {
+        "messages": [
+          {
+            "role": "user",
+            "content": "{\"goal\": \"研究目标：自主联网搜索与引用验收\\n当前分支完整获准对话：[{\\\"id\\\": \\\"6721fe6a-2280-421c-9ced-e5461d5f2bd4\\\", \\\"role\\\": \\\"user\\\", \\\"content\\\": \\\"现在最新的 iPhone 型号是什么？请核实 Apple 官方信息，给出来源链接和支持答案的原文引用。简洁回答。\\\", \\\"resource_refs\\\": [], \\\"result_ids\\\": [], \\\"assumptions\\\": [], \\\"limitations\\\": []}]\", \"sources\": [], \"content\": []}"
+          }
+        ]
+      }
+    }
+  },
+  "error": "{'run_id': '04095fbc-eac3-463e-b847-fefcb075d38c', 'status': 'failed', 'output': None, 'usage': {'requests': 0, 'input_tokens': 0, 'output_tokens': 0, 'complete': False}, 'error': {'code': 'call_limit', 'origin': 'core', 'message': 'Tool call limit exceeded', 'retryable': False, 'cause_id': None}}"
+}
